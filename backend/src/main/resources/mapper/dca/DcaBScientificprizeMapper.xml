@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.dca.dao.DcaBScientificprizeMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.dca.entity.DcaBScientificprize">
+                    <id column="id" property="id"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="sp_project_name" property="spProjectName"/>
+                    <result column="sr_project_grade" property="srProjectGrade"/>
+                    <result column="sr_project_level" property="srProjectLevel"/>
+                    <result column="sr_prize_dept" property="srPrizeDept"/>
+                    <result column="sr_prize_date" property="srPrizeDate"/>
+                    <result column="sr_prize_ranknum" property="srPrizeRanknum"/>
+                    <result column="audit_name" property="auditName"/>
+                    <result column="audit_grade" property="auditGrade"/>
+                    <result column="audit_rank" property="auditRank"/>
+                    <result column="audit_state" property="auditState"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="auditMan" property="auditMan"/>
+                    <result column="auditManName" property="auditManName"/>
+                    <result column="auditDate" property="auditDate"/>
+                    <result column="auditSuggestion" property="auditSuggestion"/>
+                    <result column="IsUse" property="IsUse"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, file_id, display_index, file_url, user_account_name, user_account, sp_project_name, sr_project_grade, sr_project_level, sr_prize_dept, sr_prize_date, sr_prize_ranknum, audit_name, audit_grade, audit_rank, audit_state, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
+    </sql>
+    <update id="updateDcaBScientificprize" parameterType="cc.mrbird.febs.dca.entity.DcaBScientificprize">
+        update dca_b_scientificprize
+        <trim prefix="set" suffixOverrides=",">
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="spProjectName != null">sp_project_name=#{spProjectName},</if>
+<if test="srProjectGrade != null">sr_project_grade=#{srProjectGrade},</if>
+<if test="srProjectLevel != null">sr_project_level=#{srProjectLevel},</if>
+<if test="srPrizeDept != null">sr_prize_dept=#{srPrizeDept},</if>
+<if test="srPrizeDate != null">sr_prize_date=#{srPrizeDate},</if>
+<if test="srPrizeRanknum != null">sr_prize_ranknum=#{srPrizeRanknum},</if>
+<if test="auditName != null">audit_name=#{auditName},</if>
+<if test="auditGrade != null">audit_grade=#{auditGrade},</if>
+<if test="auditRank != null">audit_rank=#{auditRank},</if>
+<if test="auditState != null">audit_state=#{auditState},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="auditMan != null">auditMan=#{auditMan},</if>
+<if test="auditManName != null">auditManName=#{auditManName},</if>
+<if test="auditDate != null">auditDate=#{auditDate},</if>
+<if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
+<if test="IsUse != null">IsUse=#{IsUse},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findDcaBScientificprize" resultType="cc.mrbird.febs.dca.entity.DcaBScientificprize" parameterType="cc.mrbird.febs.dca.entity.DcaBScientificprize">
+        select  *  from dca_b_scientificprize
+        where  1=1
+            <if test="dcaBScientificprize.id != null and dcaBScientificprize.id != ''"> and dcaBScientificprize.id =#{ dcaBScientificprize.id} </if>
+            <if test="dcaBScientificprize.fileId != null and dcaBScientificprize.fileId != ''"> and dcaBScientificprize.file_id like concat('%', #{ dcaBScientificprize.fileId} ,'%')</if>
+        <if test="dcaBScientificprize.displayIndex != null"> and dcaBScientificprize.display_index =#{ dcaBScientificprize.displayIndex} </if>
+            <if test="dcaBScientificprize.fileUrl != null and dcaBScientificprize.fileUrl != ''"> and dcaBScientificprize.file_url like concat('%', #{ dcaBScientificprize.fileUrl} ,'%')</if>
+            <if test="dcaBScientificprize.userAccountName != null and dcaBScientificprize.userAccountName != ''"> and dcaBScientificprize.user_account_name like concat('%', #{ dcaBScientificprize.userAccountName} ,'%')</if>
+            <if test="dcaBScientificprize.userAccount != null and dcaBScientificprize.userAccount != ''"> and dcaBScientificprize.user_account like concat('%', #{ dcaBScientificprize.userAccount} ,'%')</if>
+            <if test="dcaBScientificprize.spProjectName != null and dcaBScientificprize.spProjectName != ''"> and dcaBScientificprize.sp_project_name like concat('%', #{ dcaBScientificprize.spProjectName} ,'%')</if>
+            <if test="dcaBScientificprize.srProjectGrade != null and dcaBScientificprize.srProjectGrade != ''"> and dcaBScientificprize.sr_project_grade like concat('%', #{ dcaBScientificprize.srProjectGrade} ,'%')</if>
+            <if test="dcaBScientificprize.srProjectLevel != null and dcaBScientificprize.srProjectLevel != ''"> and dcaBScientificprize.sr_project_level like concat('%', #{ dcaBScientificprize.srProjectLevel} ,'%')</if>
+            <if test="dcaBScientificprize.srPrizeDept != null and dcaBScientificprize.srPrizeDept != ''"> and dcaBScientificprize.sr_prize_dept like concat('%', #{ dcaBScientificprize.srPrizeDept} ,'%')</if>
+        <if test="dcaBScientificprize.srPrizeDateFrom!= null">
+            AND dcaBScientificprize.sr_prize_date <![CDATA[ >= ]]>  #{dcaBScientificprize.srPrizeDateFrom}
+        </if>
+        <if test="dcaBScientificprize.srPrizeDateTo!= null">
+            AND dcaBScientificprize.sr_prize_date <![CDATA[ <= ]]>  #{dcaBScientificprize.srPrizeDateTo}
+        </if>
+        <if test="dcaBScientificprize.srPrizeRanknum != null"> and dcaBScientificprize.sr_prize_ranknum =#{ dcaBScientificprize.srPrizeRanknum} </if>
+            <if test="dcaBScientificprize.auditName != null and dcaBScientificprize.auditName != ''"> and dcaBScientificprize.audit_name like concat('%', #{ dcaBScientificprize.auditName} ,'%')</if>
+            <if test="dcaBScientificprize.auditGrade != null and dcaBScientificprize.auditGrade != ''"> and dcaBScientificprize.audit_grade like concat('%', #{ dcaBScientificprize.auditGrade} ,'%')</if>
+            <if test="dcaBScientificprize.auditRank != null and dcaBScientificprize.auditRank != ''"> and dcaBScientificprize.audit_rank like concat('%', #{ dcaBScientificprize.auditRank} ,'%')</if>
+        <if test="dcaBScientificprize.auditState != null"> and dcaBScientificprize.audit_state =#{ dcaBScientificprize.auditState} </if>
+        <if test="dcaBScientificprize.state != null"> and dcaBScientificprize.state =#{ dcaBScientificprize.state} </if>
+        <if test="dcaBScientificprize.isDeletemark != null"> and dcaBScientificprize.IS_DELETEMARK =#{ dcaBScientificprize.isDeletemark} </if>
+        <if test="dcaBScientificprize.createTimeFrom!= null">
+            AND dcaBScientificprize.CREATE_TIME <![CDATA[ >= ]]>  #{dcaBScientificprize.createTimeFrom}
+        </if>
+        <if test="dcaBScientificprize.createTimeTo!= null">
+            AND dcaBScientificprize.CREATE_TIME <![CDATA[ <= ]]>  #{dcaBScientificprize.createTimeTo}
+        </if>
+        <if test="dcaBScientificprize.modifyTimeFrom!= null">
+            AND dcaBScientificprize.MODIFY_TIME <![CDATA[ >= ]]>  #{dcaBScientificprize.modifyTimeFrom}
+        </if>
+        <if test="dcaBScientificprize.modifyTimeTo!= null">
+            AND dcaBScientificprize.MODIFY_TIME <![CDATA[ <= ]]>  #{dcaBScientificprize.modifyTimeTo}
+        </if>
+            <if test="dcaBScientificprize.auditMan != null and dcaBScientificprize.auditMan != ''"> and dcaBScientificprize.auditMan like concat('%', #{ dcaBScientificprize.auditMan} ,'%')</if>
+            <if test="dcaBScientificprize.auditManName != null and dcaBScientificprize.auditManName != ''"> and dcaBScientificprize.auditManName like concat('%', #{ dcaBScientificprize.auditManName} ,'%')</if>
+        <if test="dcaBScientificprize.auditDateFrom!= null">
+            AND dcaBScientificprize.auditDate <![CDATA[ >= ]]>  #{dcaBScientificprize.auditDateFrom}
+        </if>
+        <if test="dcaBScientificprize.auditDateTo!= null">
+            AND dcaBScientificprize.auditDate <![CDATA[ <= ]]>  #{dcaBScientificprize.auditDateTo}
+        </if>
+            <if test="dcaBScientificprize.auditSuggestion != null and dcaBScientificprize.auditSuggestion != ''"> and dcaBScientificprize.auditSuggestion like concat('%', #{ dcaBScientificprize.auditSuggestion} ,'%')</if>
+</select>
+
+</mapper>
