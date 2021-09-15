@@ -154,6 +154,9 @@
                     <a-select-option value="湖北省专业技术职务资格证书">
                       湖北省专业技术职务资格证书
                     </a-select-option>
+                     <a-select-option value="住院医师规范化培训合格证书">
+                      住院医师规范化培训合格证书
+                    </a-select-option>
                     <a-select-option value="其他资质">
                       其他资质
                     </a-select-option>

@@ -1112,7 +1112,7 @@ export default {
           dataIndex: "indexHao",
         },
         {
-          title: "顺序号",
+          title: "确认顺序号",
           dataIndex: "confirmIndex",
         },
 
@@ -1793,7 +1793,7 @@ export default {
     columns() {
       let cls = [
         {
-          title: "顺序号",
+          title: "确认顺序号",
           dataIndex: "confirmIndex",
           width: 100,
           scopedSlots: { customRender: "confirmIndex" },

@@ -272,4 +272,6 @@ private  List<DcaBCopyEssaypublish> dcaBEssaypublishList;
      */
     private String dbxcgbs;
 
+    private String gwdj;
+
 }

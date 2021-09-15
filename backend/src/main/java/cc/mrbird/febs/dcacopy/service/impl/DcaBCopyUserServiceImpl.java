@@ -463,6 +463,7 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
 
 
         int comIndex =dcaBReportList.size()>0?dcaBReportList.get(0).getConfirmIndex():0;
+        customApplyFirst.setGwdj(dcaBReportList.size()>0?dcaBReportList.get(0).getGwdj():"");
         customApplyFirst.setConfirmIndex(String.valueOf(comIndex==0?"":comIndex));
 
         customApplyFirst.setDbxcgbs(dcaBReportList.size()>0?dcaBReportList.get(0).getDbxcgbs():"");

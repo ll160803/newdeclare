@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.dcacopy.dao.DcaBCopyTeacheryjMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.dcacopy.entity.DcaBCopyTeacheryj">
+                    <id column="id" property="id"/>
+                    <result column="dca_year" property="dcaYear"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="teach_name" property="teachName"/>
+                    <result column="teach_date" property="teachDate"/>
+                    <result column="teach_content" property="teachContent"/>
+                    <result column="rank_num" property="rankNum"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="auditMan" property="auditMan"/>
+                    <result column="auditManName" property="auditManName"/>
+                    <result column="auditDate" property="auditDate"/>
+                    <result column="auditSuggestion" property="auditSuggestion"/>
+                    <result column="IsUse" property="IsUse"/>
+                    <result column="display_index" property="displayIndex"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dca_year, file_id, file_url, user_account_name, user_account, teach_name, teach_date, teach_content, rank_num, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
+    </sql>
+    <update id="updateDcaBCopyTeacheryj" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopyTeacheryj">
+        update dca_b_copy_teacheryj
+        <trim prefix="set" suffixOverrides=",">
+<if test="dcaYear != null">dca_year=#{dcaYear},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="teachName != null">teach_name=#{teachName},</if>
+<if test="teachDate != null">teach_date=#{teachDate},</if>
+<if test="teachContent != null">teach_content=#{teachContent},</if>
+<if test="rankNum != null">rank_num=#{rankNum},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="auditMan != null">auditMan=#{auditMan},</if>
+<if test="auditManName != null">auditManName=#{auditManName},</if>
+<if test="auditDate != null">auditDate=#{auditDate},</if>
+<if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
+<if test="IsUse != null">IsUse=#{IsUse},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findDcaBCopyTeacheryj" resultType="cc.mrbird.febs.dcacopy.entity.DcaBCopyTeacheryj" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopyTeacheryj">
+        select  *  from dca_b_copy_teacheryj
+        where  1=1
+            <if test="dcaBCopyTeacheryj.id != null and dcaBCopyTeacheryj.id != ''"> and dca_b_copy_teacheryj.id =#{ dcaBCopyTeacheryj.id} </if>
+            <if test="dcaBCopyTeacheryj.dcaYear != null and dcaBCopyTeacheryj.dcaYear != ''"> and dca_b_copy_teacheryj.dca_year like concat('%', #{ dcaBCopyTeacheryj.dcaYear} ,'%')</if>
+            <if test="dcaBCopyTeacheryj.fileId != null and dcaBCopyTeacheryj.fileId != ''"> and dca_b_copy_teacheryj.file_id like concat('%', #{ dcaBCopyTeacheryj.fileId} ,'%')</if>
+            <if test="dcaBCopyTeacheryj.fileUrl != null and dcaBCopyTeacheryj.fileUrl != ''"> and dca_b_copy_teacheryj.file_url like concat('%', #{ dcaBCopyTeacheryj.fileUrl} ,'%')</if>
+            <if test="dcaBCopyTeacheryj.userAccountName != null and dcaBCopyTeacheryj.userAccountName != ''"> and dca_b_copy_teacheryj.user_account_name like concat('%', #{ dcaBCopyTeacheryj.userAccountName} ,'%')</if>
+            <if test="dcaBCopyTeacheryj.userAccount != null and dcaBCopyTeacheryj.userAccount != ''"> and dca_b_copy_teacheryj.user_account like concat('%', #{ dcaBCopyTeacheryj.userAccount} ,'%')</if>
+            <if test="dcaBCopyTeacheryj.teachName != null and dcaBCopyTeacheryj.teachName != ''"> and dca_b_copy_teacheryj.teach_name like concat('%', #{ dcaBCopyTeacheryj.teachName} ,'%')</if>
+        <if test="dcaBCopyTeacheryj.teachDateFrom!= null">
+            AND dca_b_copy_teacheryj.teach_date <![CDATA[ >= ]]>  #{dcaBCopyTeacheryj.teachDateFrom}
+        </if>
+        <if test="dcaBCopyTeacheryj.teachDateTo!= null">
+            AND dca_b_copy_teacheryj.teach_date <![CDATA[ <= ]]>  #{dcaBCopyTeacheryj.teachDateTo}
+        </if>
+            <if test="dcaBCopyTeacheryj.teachContent != null and dcaBCopyTeacheryj.teachContent != ''"> and dca_b_copy_teacheryj.teach_content like concat('%', #{ dcaBCopyTeacheryj.teachContent} ,'%')</if>
+        <if test="dcaBCopyTeacheryj.rankNum != null"> and dca_b_copy_teacheryj.rank_num =#{ dcaBCopyTeacheryj.rankNum} </if>
+        <if test="dcaBCopyTeacheryj.state != null"> and dca_b_copy_teacheryj.state =#{ dcaBCopyTeacheryj.state} </if>
+        <if test="dcaBCopyTeacheryj.isDeletemark != null"> and dca_b_copy_teacheryj.IS_DELETEMARK =#{ dcaBCopyTeacheryj.isDeletemark} </if>
+        <if test="dcaBCopyTeacheryj.createTimeFrom!= null">
+            AND dca_b_copy_teacheryj.CREATE_TIME <![CDATA[ >= ]]>  #{dcaBCopyTeacheryj.createTimeFrom}
+        </if>
+        <if test="dcaBCopyTeacheryj.createTimeTo!= null">
+            AND dca_b_copy_teacheryj.CREATE_TIME <![CDATA[ <= ]]>  #{dcaBCopyTeacheryj.createTimeTo}
+        </if>
+        <if test="dcaBCopyTeacheryj.modifyTimeFrom!= null">
+            AND dca_b_copy_teacheryj.MODIFY_TIME <![CDATA[ >= ]]>  #{dcaBCopyTeacheryj.modifyTimeFrom}
+        </if>
+        <if test="dcaBCopyTeacheryj.modifyTimeTo!= null">
+            AND dca_b_copy_teacheryj.MODIFY_TIME <![CDATA[ <= ]]>  #{dcaBCopyTeacheryj.modifyTimeTo}
+        </if>
+            <if test="dcaBCopyTeacheryj.auditMan != null and dcaBCopyTeacheryj.auditMan != ''"> and dca_b_copy_teacheryj.auditMan like concat('%', #{ dcaBCopyTeacheryj.auditMan} ,'%')</if>
+            <if test="dcaBCopyTeacheryj.auditManName != null and dcaBCopyTeacheryj.auditManName != ''"> and dca_b_copy_teacheryj.auditManName like concat('%', #{ dcaBCopyTeacheryj.auditManName} ,'%')</if>
+        <if test="dcaBCopyTeacheryj.auditDateFrom!= null">
+            AND dca_b_copy_teacheryj.auditDate <![CDATA[ >= ]]>  #{dcaBCopyTeacheryj.auditDateFrom}
+        </if>
+        <if test="dcaBCopyTeacheryj.auditDateTo!= null">
+            AND dca_b_copy_teacheryj.auditDate <![CDATA[ <= ]]>  #{dcaBCopyTeacheryj.auditDateTo}
+        </if>
+            <if test="dcaBCopyTeacheryj.auditSuggestion != null and dcaBCopyTeacheryj.auditSuggestion != ''"> and dca_b_copy_teacheryj.auditSuggestion like concat('%', #{ dcaBCopyTeacheryj.auditSuggestion} ,'%')</if>
+        <if test="dcaBCopyTeacheryj.displayIndex != null"> and dca_b_copy_teacheryj.display_index =#{ dcaBCopyTeacheryj.displayIndex} </if>
+</select>
+
+</mapper>

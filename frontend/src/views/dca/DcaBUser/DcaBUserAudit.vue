@@ -427,7 +427,9 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.search()
+           // that.search()
+           that.deleteCurrent(record);
+            that.freshTabs();
             // that.freshTabs()
             that.loading = false
           }).catch(() => {
@@ -438,7 +440,13 @@ export default {
         }
       })
     },
-
+    deleteCurrent (record){
+       var dataR= this.dataSource;
+       dataR= dataR.filter(function (x) {
+             return !(x.userAccount==record.userAccount && x.dcaYear == record.dcaYear);
+            });
+            this.dataSource =dataR;
+    },
     fetchUseraudit () {
       this.$get('dcaDAuditinfo/userAudit', {
       }).then((r) => {
@@ -641,6 +649,9 @@ export default {
           break
         case "助理会计师":
           name = "其他"
+          break
+        case "助理研究员":
+          name = "研究"
           break
       }
       return name

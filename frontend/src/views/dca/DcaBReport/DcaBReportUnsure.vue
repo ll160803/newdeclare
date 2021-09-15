@@ -213,7 +213,7 @@ export default {
         sortOrder = sortedInfo.order
       }
       this.fetch2({
-        sortField: "user_account",
+        sortField: "paixu1,pingshenfenzu,paixu2,paixu3,paixu4,convert(kspaixu using gbk) collate gbk_chinese_ci,cast(ksrank as unsigned integer) ",
         sortOrder: "ascend",
         ...this.queryParams
       })
@@ -234,7 +234,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.pagination.defaultCurrent
       }
-      params.sortField = "user_account"
+      params.sortField = "paixu1,pingshenfenzu,paixu2,paixu3,paixu4,convert(kspaixu using gbk) collate gbk_chinese_ci,cast(ksrank as unsigned integer)   "
       params.sortOrder = "ascend"
       let that = this
       that.$get('dcaBReport', {
@@ -349,7 +349,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.paginationInfo.defaultCurrent
       }
-      params.sortField = "user_account"
+      params.sortField = "paixu1,pingshenfenzu,paixu2,paixu3,paixu4,convert(kspaixu using gbk) collate gbk_chinese_ci,cast(ksrank as unsigned integer)   "
       params.sortOrder = "ascend"
       params.userAccount = userAccount
       let that = this
@@ -396,7 +396,7 @@ export default {
       this.sortedInfo = sorter
       this.paginationInfo = pagination
       this.fetch2({
-        sortField: "user_account",
+        sortField: "paixu1,pingshenfenzu,paixu2,paixu3,paixu4,convert(kspaixu using gbk) collate gbk_chinese_ci,cast(ksrank as unsigned INTEGER)  ",
         sortOrder: "ascend",
         ...this.queryParams
       })
@@ -1165,6 +1165,11 @@ export default {
           dataIndex: 'borad',
           width: 150,
         },
+         {
+          title: '任现职以来出国时长（月）',
+          dataIndex: 'chuguonianyue',
+          width: 60
+        },
         {
           title: '支援情况',
           dataIndex: 'help',
@@ -1174,6 +1179,11 @@ export default {
           title: '其他指令性支援情况',
           dataIndex: 'qtzlxzy',
           width: 150,
+        },
+         {
+          title: '支援类型',
+          dataIndex: 'zhiyuanchuguo',
+          width: 60
         },
         {
           title: '时长（月）',
@@ -1209,7 +1219,7 @@ export default {
       let dataJson = JSON.stringify(json)
 
       this.$export('dcaUserAudit/excelBigTable', {
-        sortField: 'user_account',
+        sortField: "paixu1,pingshenfenzu,paixu2,paixu3,paixu4,convert(kspaixu using gbk) collate gbk_chinese_ci,cast(ksrank as unsigned integer) ",
         sortOrder: 'ascend',
         state: this.state,
         excelIndex: 0,
@@ -1349,53 +1359,64 @@ export default {
               width: 100,
               scopedSlots: { customRender: 'ifdaitou' }
             },
-            {
-              title: '医疗评分',
+              {
+              title: "医疗评价",
               children: [
                 {
-                  title: '医务等级',
-                  dataIndex: 'ylpfdj2',
-                  width: 100,
-                  customRender: (text, row, index) => {
-                    return row.ylpfdj
-                  }
+                  title: "医办",
+                  children: [
+                    {
+                      title: "等级",
+                      dataIndex: "ylpfdj2",
+                      width: 100,
+                      customRender: (text, row, index) => {
+                        return row.ylpfdj;
+                      },
+                    },
+                    {
+                      title: "评分",
+                      dataIndex: "ylpfbfz",
+                      width: 80,
+                    },
+                  ],
                 },
                 {
-                  title: '医务评分',
-                  dataIndex: 'ylpfbfz',
-                  width: 80,
+                  title: "门办",
+                  children: [
+                    {
+                      title: "等级",
+                      dataIndex: "mzylpfdj2",
+                      width: 100,
+                      customRender: (text, row, index) => {
+                        return row.mzylpfdj;
+                      },
+                    },
+                    {
+                      title: "评分",
+                      dataIndex: "mzylpf",
+                      width: 80,
+                    },
+                  ],
                 },
-                {
-                  title: '门办等级',
-                  dataIndex: 'mzylpfdj2',
-                  width: 100,
-                  customRender: (text, row, index) => {
-                    return row.mzylpfdj
-                  }
-                },
-                {
-                  title: '门办评分',
-                  dataIndex: 'mzylpf',
-                  width: 80,
-                },
-              ]
+              ],
             },
             {
-              title: '教学评分',
+              title: "临床学院评价",
               children: [
                 {
-                  title: '教学等级',
-                  dataIndex: 'jxpfdj2',
+                  title: "等级",
+                  dataIndex: "jxpfdj2",
                   width: 100,
                   customRender: (text, row, index) => {
-                    return row.jxpfdj
-                  }
-                }, {
-                  title: '教学评分',
-                  dataIndex: 'jxpf',
+                    return row.jxpfdj;
+                  },
+                },
+                {
+                  title: "评分",
+                  dataIndex: "jxpf",
                   width: 80,
                 },
-              ]
+              ],
             },
 
             {
@@ -1736,56 +1757,64 @@ export default {
             {
               title: '9',
               children: [
-                {
-                  title: '医疗评分',
+               {
+                  title: "医疗评价",
                   children: [
                     {
-                      title: '等级',
-                      dataIndex: 'ylpfdj',
-                      width: 100
+                      title: "医办",
+                      children: [
+                        {
+                          title: "等级",
+                          dataIndex: "ylpfdj",
+                          width: 100,
+                        },
+                        {
+                          title: "评分",
+                          dataIndex: "ylpfbfz2",
+                          width: 80,
+                          customRender: (text, row, index) => {
+                            return row.ylpfbfz;
+                          },
+                        },
+                      ],
                     },
                     {
-                      title: '分数',
-                      dataIndex: 'ylpfbfz2',
-                      width: 80,
-                      customRender: (text, row, index) => {
-                        return row.ylpfbfz
-                      }
+                      title: "门办",
+                      children: [
+                        {
+                          title: "等级",
+                          dataIndex: "mzylpfdj",
+                          width: 100,
+                        },
+                        {
+                          title: "评分",
+                          dataIndex: "mzylpf2",
+                          width: 80,
+                          customRender: (text, row, index) => {
+                            return row.mzylpf;
+                          },
+                        },
+                      ],
                     },
-                    {
-                      title: '门办等级',
-                      dataIndex: 'mzylpfdj',
-                      width: 100
-                    },
-                    {
-                      title: '门办分数',
-                      dataIndex: 'mzylpf2',
-                      width: 80,
-                      customRender: (text, row, index) => {
-                        return row.mzylpf
-                      }
-                    },
-                  ]
+                  ],
                 },
                 {
-                  title: '教学评分',
+                  title: "临床学院评价",
                   children: [
                     {
-                      title: '等级',
-                      dataIndex: 'jxpfdj234',
+                      title: "等级",
+                      dataIndex: "jxpfdj",
                       width: 100,
-                      customRender: (text, row, index) => {
-                        return row.jxpfdj
-                      }
-                    }, {
-                      title: '分数',
-                      dataIndex: 'jxpf2',
+                    },
+                    {
+                      title: "评分",
+                      dataIndex: "jxpf2",
                       width: 80,
                       customRender: (text, row, index) => {
-                        return row.jxpf
-                      }
+                        return row.jxpf;
+                      },
                     },
-                  ]
+                  ],
                 },
                 {
                   title: '评分合计',
@@ -2239,6 +2268,11 @@ export default {
           scopedSlots: { customRender: 'splitHang' }
         },
         {
+          title: '任现职以来出国时长（月）',
+          dataIndex: 'chuguonianyue',
+          width: 120
+        },
+        {
           title: '任现职以来参加指令性支援情况',
           children: [
             {
@@ -2252,6 +2286,11 @@ export default {
               dataIndex: 'qtzlxzy',
               width: 150,
               scopedSlots: { customRender: 'splitHang' }
+            },
+            {
+              title: '支援类型',
+              dataIndex: 'zhiyuanchuguo',
+              width: 100
             },
             {
               title: '时长（月）',

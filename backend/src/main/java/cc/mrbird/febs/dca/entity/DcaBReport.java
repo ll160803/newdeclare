@@ -836,6 +836,9 @@ private static final long serialVersionUID=1L;
         @ExcelField(value ="审核人姓名")
     private String auditManName;
 
+    private String chuguonianyue;
+    private String zhiyuanchuguo;
+
     /**
      * 审核时间
      */

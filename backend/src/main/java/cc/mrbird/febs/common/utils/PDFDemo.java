@@ -5853,7 +5853,7 @@ public class PDFDemo {
         //(系、所)
 
         listCells.add(generatePdfValue(pdfStyle1, titleCover_4_1, tilteColus, 30));
-        listCells.add(generatePdfValue(pdfStyle2, " ", valueColus, 30));
+        listCells.add(generatePdfValue(pdfStyle2, customApplyFirst.getKs(), valueColus, 30));
         listCells.add(generatePdfValue(pdfStyle3, " ", valueColus2, 30));
 
         //现任岗位
@@ -6105,7 +6105,11 @@ public class PDFDemo {
         listCells = new ArrayList<>();
         //region 第二页
         String title2_1_1 = "个人思想政治及师德师风表现情况";
-        String value2_1_1 = customApplyFirst.getGrsxzzjsdsf();
+        String value2_1_1 = customApplyFirst.getGrsxzzjsdsf()==null?"":customApplyFirst.getGrsxzzjsdsf();
+        float grH= 300f;
+        if(value2_1_1.length()>800){
+            grH= value2_1_1.length()*0.25f;
+        }
         String title2_2_1 = "任现职以来完成教学、人才培养情况";
         String title2_3_1 = "起止年月";
         String title2_3_2 = "讲授课程名称及其它教学任务";
@@ -6139,8 +6143,8 @@ public class PDFDemo {
 
         pdfStyleex.setHorizontalAlignment(Element.ALIGN_LEFT);
         pdfStyleex.setVerticalAlignment(Element.ALIGN_TOP);
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getGrsxzzjsdsf(), numColumns, 200));
-        cell = new PdfPCell(new Phrase(value2_1_1, font));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getGrsxzzjsdsf(), numColumns, grH,fontgr));
+      //  cell = new PdfPCell(new Phrase(value2_1_1, font));
 
         listCells.add(generatePdfValue(pdfStyle_t, title2_2_1, numColumns, 0, Element.ALIGN_LEFT, Element.ALIGN_TOP));
 
@@ -7705,7 +7709,11 @@ public class PDFDemo {
         listCells = new ArrayList<>();
         //region 第二页
         String title2_1_1 = "个人思想政治及师德师风表现情况";
-        String value2_1_1 = customApplyFirst.getGrsxzzjsdsf();
+        String value2_1_1 = customApplyFirst.getGrsxzzjsdsf()==null?"":customApplyFirst.getGrsxzzjsdsf();
+        float grH= 300f;
+        if(value2_1_1.length()>800){
+            grH= value2_1_1.length()*0.25f;
+        }
         String title2_2_1 = "任现职以来完成教学、人才培养情况";
         String title2_3_1 = "起止年月";
         String title2_3_2 = "讲授课程名称及其它教学任务";
@@ -7739,8 +7747,8 @@ public class PDFDemo {
 
         pdfStyleex.setHorizontalAlignment(Element.ALIGN_LEFT);
         pdfStyleex.setVerticalAlignment(Element.ALIGN_TOP);
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getGrsxzzjsdsf(), numColumns, 200));
-        cell = new PdfPCell(new Phrase(value2_1_1, font));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getGrsxzzjsdsf(), numColumns, grH,fontgr));
+      //  cell = new PdfPCell(new Phrase(value2_1_1, font))
 
         listCells.add(generatePdfValue(pdfStyle_t, title2_2_1, numColumns, 0, Element.ALIGN_LEFT, Element.ALIGN_TOP));
 
@@ -9341,9 +9349,10 @@ public class PDFDemo {
 
         pdfStyle.setFont(fontCover1);
 
-        //gaoji
+        //gaojic
 
-        listCells.add(generatePdfValue(pdfStyle, "高级职称申报附件材料", numColumns, 200, fontCover2));
+        String pdfName=(customApplyFirst.getGwdj().equals("正高") || customApplyFirst.getGwdj().equals("副高"))?"高级职称申报附件材料":"中初级职称申报附件材料";
+        listCells.add(generatePdfValue(pdfStyle, pdfName, numColumns, 200, fontCover2));
 
         //姓        名
         PdfStyle pdfStyle1 = new PdfStyle();
@@ -9999,7 +10008,12 @@ public class PDFDemo {
         listCells = new ArrayList<>();
         //region 第二页
         String title2_1_1 = "个人思想政治及师德师风表现情况";
-        String value2_1_1 = customApplyFirst.getGrsxzzjsdsf();
+        String value2_1_1 = customApplyFirst.getGrsxzzjsdsf()==null?"":customApplyFirst.getGrsxzzjsdsf();
+        float grH= 300f;
+        if(value2_1_1.length()>800){
+            grH= value2_1_1.length()*0.25f;
+        }
+
 
 
 
@@ -10027,7 +10041,7 @@ public class PDFDemo {
 
         pdfStyleex.setVerticalAlignment(Element.ALIGN_TOP);
         pdfStyleex.setHorizontalAlignment(Element.ALIGN_LEFT);
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getGrsxzzjsdsf(), numColumns, 200));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getGrsxzzjsdsf(), numColumns, grH, fontgr));
 
 
 

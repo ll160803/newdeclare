@@ -510,7 +510,6 @@ public class DcaBUser implements Serializable {
                 this.add("助理工程师");
                 this.add("助理馆员");
                 this.add("助理会计师");
-                this.add("助理研究员");
             }
         };
         if (listCj.contains(npPositionName)) {

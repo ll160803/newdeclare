@@ -1,6 +1,6 @@
 <template>
-  <a-card class="card-area" title="何时何地受何奖励及处分">
-    <div>
+  <a-card title="主要科研业绩">
+        <div>
       <a-button
         @click="handleAdd"
         type="primary"
@@ -20,37 +20,40 @@
       bordered
       :scroll="scroll"
     >
-     
       <template
-        slot="ppStartTime"
+        slot="achievementName"
         slot-scope="text, record"
       >
         <div v-if="record.state==3 || record.state==1">
-          {{text==""|| text==null?"":text.substr(0,10)}}
+          {{text}}
         </div>
         <div v-else>
-          <a-date-picker
-            :defaultValue="(text=='' || text==null)?'':moment(text, dateFormat)"
-            @change="(e,f) => handleChange(e,f,record,'ppStartTime')"
-          />
+          <a-textarea
+            @blur="e => inputChange(e.target.value,record,'achievementName')"
+            :value="record.achievementName"
+          >
+          </a-textarea>
         </div>
       </template>
       <template
-        slot="ppEndTime"
+        slot="rankIndex"
         slot-scope="text, record"
       >
         <div v-if="record.state==3 || record.state==1">
-          {{text==""|| text==null?"":text.substr(0,10)}}
+          {{text}}
         </div>
         <div v-else>
-          <a-date-picker
-            :defaultValue="(text=='' || text==null)?'':moment(text, dateFormat)"
-            @change="(e,f) => handleChange(e,f,record,'ppEndTime')"
-          />
+          <a-input-number
+            style="width: 100%"
+            @blur="e => inputChange(e.target.value,record,'rankIndex')"
+            :value="record.rankIndex"
+            :precision="0"
+          >
+          </a-input-number>
         </div>
       </template>
-         <template
-        slot="ppCategory"
+        <template
+        slot="achievementGrade"
         slot-scope="text, record"
       >
         <div v-if="record.state==3 || record.state==1">
@@ -58,36 +61,38 @@
         </div>
         <div v-else>
           <a-select
-            :value="record.ppCategory"
+            :value="record.achievementGrade"
             style="width: 100%"
-            @change="(e,f) => handleSelectChange(e,f,record,'ppCategory')"
+            @change="(e,f) => handleSelectChange(e,f,record,'achievementGrade')"
           >
-            <a-select-option value="奖励">
-              奖励
+            <a-select-option value="一">
+              一
             </a-select-option>
-            <a-select-option value="处分">
-              处分
+            <a-select-option value="二">
+              二
+            </a-select-option>
+            <a-select-option value="三">
+              三
             </a-select-option>
           </a-select>
         </div>
       </template>
       <template
-        slot="ppPartment"
+        slot="achievementDate"
         slot-scope="text, record"
       >
         <div v-if="record.state==3 || record.state==1">
-          {{text}}
+          {{text==""|| text==null?"":text.substr(0,10)}}
         </div>
         <div v-else>
-          <a-textarea
-            @blur="e => inputChange(e.target.value,record,'ppPartment')"
-            :value="record.ppPartment"
-          >
-          </a-textarea>
+          <a-date-picker
+            :defaultValue="(text=='' || text==null)?'':moment(text, dateFormat)"
+            @change="(e,f) => handleChange(e,f,record,'achievementDate')"
+          />
         </div>
       </template>
-       <template
-        slot="ppLb"
+      <template
+        slot="achievementDefine"
         slot-scope="text, record"
       >
         <div v-if="record.state==3 || record.state==1">
@@ -95,14 +100,14 @@
         </div>
         <div v-else>
           <a-textarea
-            @blur="e => inputChange(e.target.value,record,'ppLb')"
-            :value="record.ppLb"
+            @blur="e => inputChange(e.target.value,record,'achievementDefine')"
+            :value="record.achievementDefine"
           >
           </a-textarea>
         </div>
       </template>
       <template
-        slot="ppContent"
+        slot="achievementContent"
         slot-scope="text, record"
       >
         <div v-if="record.state==3 || record.state==1">
@@ -110,20 +115,11 @@
         </div>
         <div v-else>
           <a-textarea
-            @blur="e => inputChange(e.target.value,record,'ppContent')"
-            :value="record.ppContent"
+            @blur="e => inputChange(e.target.value,record,'achievementContent')"
+            :value="record.achievementContent"
           >
           </a-textarea>
         </div>
-      </template>
-      <template
-        slot="isUse"
-        slot-scope="text, record"
-      >
-        <a-checkbox
-          @change="e => onIsUseChange(e,record,'isUse')"
-          :checked="text"
-        ></a-checkbox>
       </template>
       <template
         slot="fileId"
@@ -142,9 +138,18 @@
             block
             @click="OpenFile(record)"
           >
-             {{record.fileId!=null &&record.fileId !=''?'已上传':'上传' }}
+            {{record.fileId!=null &&record.fileId !=''?'已上传':'上传' }}
           </a-button>
         </div>
+      </template>
+      <template
+        slot="isUse"
+        slot-scope="text, record"
+      >
+        <a-checkbox
+          @change="e => onIsUseChange(e,record,'isUse')"
+          :checked="text"
+        ></a-checkbox>
       </template>
     </a-table>
     <div>
@@ -186,7 +191,7 @@ export default {
         fileId: ''
       },
       scroll: {
-        x: 1400,
+        x: 1300,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
     }
@@ -219,17 +224,14 @@ export default {
       this.editRecord["fileUrl"] = fileUrl
       //this.dataSource =[...dataSource]
     },
-     handleSelectChange (value, option, record, filedName) {
-      console.info(value)
-      record[filedName] = value
-    },
     onSelectChange (selectedRowKeys, selectedRows) {
+      // console.log(selectedRows)
       if (selectedRows.length > 0) {
         if (selectedRows[0].state != 3 && selectedRows[0].state != 1) {
           this.selectedRowKeys = selectedRowKeys
         }
       }
-      else{
+      else {
         this.selectedRowKeys = selectedRowKeys
       }
     },
@@ -241,6 +243,10 @@ export default {
       console.info(value)
       record[filedName] = value
     },
+    handleSelectChange (value, option, record, filedName) {
+      console.info(value)
+      record[filedName] = value
+    },
     onIsUseChange (e, record, filedName) {
       record[filedName] = e.target.checked;
     },
@@ -249,33 +255,33 @@ export default {
         this.dataSource.push({
           id: (this.idNums + i + 1).toString(),
           state: 0,
-          fileId: '',
-          fileUrl: '',
-          ppStartTime: '',
-          ppEndTime: '',
-          ppContent: '',
-          ppCategory: '',
+          achievementName: '',
+          rankIndex: '',
+          achievementDate: '',
+          achievementDefine: '',
+          achievementContent: '',
+          achievementGrade: '',
           isUse: false
         })
       }
       this.idNums = this.idNums + 4
     },
     handleSave () {
-       const dataSourceAll = [...this.dataSource]
-      const dataSource = dataSourceAll.filter(p=>p.state==0 ||p.state==2)
+      const dataSourceAll = [...this.dataSource]
+      const dataSource = dataSourceAll.filter(p => p.state == 0 || p.state == 2)
       let dataAdd = []
       dataSource.forEach(element => {
-        if (element.fileId != '' || element.fileUrl != '' || element.ppStartTime != '' || element.ppEndTime != '' || element.ppContent != '') {
+        if (element.achievementName != '' || element.rankIndex != '' || element.achievementDate != '' || element.achievementDefine != '' || element.achievementContent != '') {
           dataAdd.push(element)
         }
       });
-      if (dataAdd.length < 0) {
+      if (dataAdd.length === 0) {
         this.$message.warning('请填写数据！！！')
       }
       else {
         let jsonStr = JSON.stringify(dataAdd)
         this.loading = true
-        this.$post('dcaBPrizeorpunish/addNew', {
+        this.$post('dcaBSciachievement/addNew', {
           jsonStr: jsonStr,
           state: 0
         }).then(() => {
@@ -295,27 +301,27 @@ export default {
         content: '当您点击确定按钮后，信息将不能修改',
         centered: true,
         onOk () {
-           const dataSourceAll = [...that.dataSource]
-      const dataSource = dataSourceAll.filter(p=>p.state==0 ||p.state==2)
+          const dataSourceAll = [...that.dataSource]
+          const dataSource = dataSourceAll.filter(p => p.state == 0 || p.state == 2)
           let dataAdd = []
           dataSource.forEach(element => {
-            if (element.fileId != '' || element.fileUrl != '' || element.ppStartTime != '' || element.ppEndTime != '' || element.ppContent != '') {
+            if (element.achievementName != '' || element.rankIndex != '' || element.achievementDate != '' || element.achievementDefine != '' || element.achievementContent != '') {
               dataAdd.push(element)
             }
           });
-          if (dataAdd.length < 0) {
+          if (dataAdd.length === 0) {
             that.$message.warning('请填写数据！！！')
           }
           else {
             let jsonStr = JSON.stringify(dataAdd)
             that.loading = true
-            that.$post('dcaBPrizeorpunish/addNew', {
+            that.$post('dcaBSciachievement/addNew', {
               jsonStr: jsonStr,
               state: 1
             }).then(() => {
               //this.reset()
               that.$message.success('提交成功')
-               that.fetch()
+              that.fetch()
               that.CustomVisiable = false //提交之后 不能再修改
               that.loading = false
             }).catch(() => {
@@ -344,14 +350,14 @@ export default {
           let dcaBPatentIds = that.selectedRowKeys.join(',')
           const dataSource = [...that.dataSource];
           let new_dataSource = dataSource.filter(p => that.selectedRowKeys.indexOf(p.id) < 0)
-          that.$put('dcaBPrizeorpunish', {
-            id: that.selectedRowKeys[0],
-            isDeletemark: 0
-          }).then(() => {
-
-          }).catch(() => {
-
-          })
+          that.$put('dcaBSciachievement', {
+                        id: that.selectedRowKeys[0],
+                        isDeletemark: 0
+                    }).then(() => {
+                        
+                    }).catch(() => {
+                        
+                    })
           that.dataSource = new_dataSource
           that.$message.success('删除成功')
           that.selectedRowKeys = []
@@ -362,7 +368,7 @@ export default {
       })
     },
     fetch () {
-      this.$get('dcaBPrizeorpunish/custom', {
+      this.$get('dcaBSciachievement/custom', {
       }).then((r) => {
         let data = r.data
         this.dataSource = data.rows
@@ -371,12 +377,12 @@ export default {
           this.dataSource.push({
             id: (this.idNums + i + 1).toString(),
             state: 0,
-            fileId: '',
-            fileUrl: '',
-            ppStartTime: '',
-            ppEndTime: '',
-            ppContent: '',
-            ppCategory: '',
+            achievementName: '',
+            rankIndex: '',
+            achievementDate: '',
+            achievementDefine: '',
+            achievementContent: '',
+            achievementGrade: '',
             isUse: false
           })
           this.idNums = this.idNums + 4
@@ -386,39 +392,36 @@ export default {
   },
   computed: {
     columns () {
-      return [
+      return [{
+        title: '名称',
+        dataIndex: 'achievementName',
+        width: 250,
+        scopedSlots: { customRender: 'achievementName' }
+      },
       {
-        title: '奖励/处分时间',
-        dataIndex: 'ppStartTime',
+        title: '排名',
+        dataIndex: 'rankIndex',
+        width: 80,
+        scopedSlots: { customRender: 'rankIndex' }
+      },
+      {
+        title: '获得时间',
+        dataIndex: 'achievementDate',
+        width: 120,
+        scopedSlots: { customRender: 'achievementDate' }
+      },
+      {
+        title: '期限',
+        dataIndex: 'achievementDefine',
+        width: 80,
+        scopedSlots: { customRender: 'achievementDefine' }
+      },
+      {
+        title: '备注',
+        dataIndex: 'achievementContent',
         width: 130,
-        scopedSlots: { customRender: 'ppStartTime' }
+        scopedSlots: { customRender: 'achievementContent' }
       },
-     
-       {
-        title: '奖励/处分',
-        dataIndex: 'ppCategory',
-        width: 100,
-        scopedSlots: { customRender: 'ppCategory' }
-      },
-      {
-        title: '奖励/处分名称',
-        dataIndex: 'ppContent',
-        width: 200,
-        scopedSlots: { customRender: 'ppContent' }
-      },
-       {
-        title: '授奖/处分部门',
-        dataIndex: 'ppPartment',
-        width: 150,
-        scopedSlots: { customRender: 'ppPartment' }
-      },
-      {
-        title: '类别',
-        dataIndex: 'ppLb',
-        width: 100,
-        scopedSlots: { customRender: 'ppLb' }
-      },
-     
       {
         title: '状态',
         dataIndex: 'state',

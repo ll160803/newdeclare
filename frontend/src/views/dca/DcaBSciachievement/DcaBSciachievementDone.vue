@@ -6,6 +6,7 @@
         :columns="columns"
         :data-source="dataSource"
         :rowKey="record => record.id"
+        :pagination="pagination"
         @change="handleTableChange"
         bordered
         :scroll="scroll"
@@ -55,7 +56,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1400,
+        x: 1600,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -88,7 +89,7 @@ export default {
       }
       params.sortField = "userAccount"
       params.sortOrder = "descend"
-      this.$get('dcaBCourseclass/audit', {
+      this.$get('dcaBSciachievement/audit', {
         state: this.state,
         ...params
       }).then((r) => {
@@ -127,7 +128,7 @@ export default {
       params.sortField = "userAccount"
       params.sortOrder = "descend"
       params.userAccount = userAccount
-      this.$get('dcaBCourseclass/audit', {
+      this.$get('dcaBSciachievement/audit', {
         state: this.state,
         ...params
       }).then((r) => {
@@ -157,36 +158,48 @@ export default {
           title: '序号',
           dataIndex: 'auditXuhao',
           width: 60,
+          fixed: 'left'
         },
         {
           title: '发薪号',
           dataIndex: 'userAccount',
           width: 80,
-          scopedSlots: { customRender: 'userAccount' }
+          scopedSlots: { customRender: 'userAccount' },
+          fixed: 'left'
         },
         {
           title: '姓名',
           dataIndex: 'userAccountName',
-          width: 80
+          width: 80,
+          fixed: 'left'
         },
         {
-          title: '课程名称',
-          dataIndex: 'course',
-          width: 130
-        },
-        {
-          title: '等级',
-          dataIndex: 'grade',
-          width: 130
+          title: '名称',
+          dataIndex: 'achievementName',
+          width: 250,
+          fixed: 'left'
         },
         {
           title: '排名',
-          dataIndex: 'ranknum',
-          width: 130
+          dataIndex: 'rankIndex',
+          width: 80,
+          fixed: 'left'
+        },
+         
+        {
+          title: '获得时间',
+          dataIndex: 'achievementDate',
+          width: 130,
+          fixed: 'left'
         },
         {
-          title: '时间',
-          dataIndex: 'coruseDate',
+          title: '期限',
+          dataIndex: 'achievementDefine',
+          width: 80
+        },
+        {
+          title: '备注',
+          dataIndex: 'achievementContent',
           width: 130
         },
         {
@@ -210,8 +223,7 @@ export default {
         },
         {
           title: '审核意见',
-          dataIndex: 'auditSuggestion',
-          width: 120
+          dataIndex: 'auditSuggestion'
         },
         {
           title: '经审核是否构成职称晋升条件',

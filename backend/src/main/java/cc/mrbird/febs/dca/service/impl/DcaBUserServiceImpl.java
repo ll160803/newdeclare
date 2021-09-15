@@ -1215,7 +1215,7 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
         if (nameF.contains(".99")) {
             nameF_d = NumberUtil.add(nameF_d, 0.01D);
         }
-        InsertDynamic(auditdynamicList, userAccount, String.format("%.2f", nameF_d), auditTitleType);
+        InsertDynamic(auditdynamicList, userAccount, String.format("%.2f", nameF_d).replace(".00",""), auditTitleType);
     }
 
     /**
@@ -1235,7 +1235,7 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
         if (nameF.contains(".99")) {
             nameF_d = NumberUtil.add(nameF_d, 0.01D);
         }
-        InsertDynamic(auditdynamicList, userAccount, String.format("%.2f", nameF_d), auditTitleType);
+        InsertDynamic(auditdynamicList, userAccount, String.format("%.2f", nameF_d).replace(".00",""), auditTitleType);
     }
 
     /**
@@ -1290,7 +1290,10 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
         dcaBReport.setYear(user.getDcaYear());
         dcaBReport.setGwdj(user.getGwdj());
         dcaBReport.setSexName(user.getSexName());
-        dcaBReport.setXl(user.getXl());
+        if(dcaBReport.getXl()==null || dcaBReport.getXl().equals("")){
+            dcaBReport.setXl(user.getXl());
+        }
+
         dcaBReport.setPositionName(user.getPositionName());
         if (user.getSchoolDate() != null) {
             dcaBReport.setSchoolDate(DateUtil.format(user.getSchoolDate(), "yyyyMM"));
@@ -1438,7 +1441,15 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
          * 医疗评分ylpfbfz   医疗评分等级 ylpfdj
          */
         List<DcaBAuditdynamic> listYwcYlpf = auditdynamicAuditList.stream().filter(p -> p.getAuditTitletype().equals("ylpfbfz") ||p.getAuditTitletype().equals("hlylpf")).collect(Collectors.toList());
+        List<DcaBAuditdynamic> listYwcYlpf2 = auditdynamicAuditList.stream().filter(p -> p.getAuditTitletype().equals("zypf52")).collect(Collectors.toList());
+        List<DcaBAuditdynamic> listYwcYlpf3 = auditdynamicAuditList.stream().filter(p -> p.getAuditTitletype().equals("zypfbfz58")).collect(Collectors.toList());
+        List<DcaBAuditdynamic> listYwcYlpf4= auditdynamicAuditList.stream().filter(p -> p.getAuditTitletype().equals("zypfyjxl")).collect(Collectors.toList());
+
+
         List<DcaBAuditdynamic> listYwcYlpfdj = auditdynamicAuditList.stream().filter(p -> p.getAuditTitletype().equals("ylpfdj")||p.getAuditTitletype().equals("hlylpfdj")).collect(Collectors.toList());
+        List<DcaBAuditdynamic> listYwcYlpfdj2 = auditdynamicAuditList.stream().filter(p -> p.getAuditTitletype().equals("zypfdj52")).collect(Collectors.toList());
+        List<DcaBAuditdynamic> listYwcYlpfdj3 = auditdynamicAuditList.stream().filter(p -> p.getAuditTitletype().equals("zypfdj59")).collect(Collectors.toList());
+        List<DcaBAuditdynamic> listYwcYlpfdj4= auditdynamicAuditList.stream().filter(p -> p.getAuditTitletype().equals("zypfdjyjxl")).collect(Collectors.toList());
 
         /**
          *   教学评分  jxpf  教学评分等级  jxpfdjhljxpfbfz
@@ -1593,13 +1604,94 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
             /**
              * 医疗评分+教学评分
              */
-            Optional<DcaBAuditdynamic> ywzylpf2 = listYwcYlpf.stream()
-                    .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
-            InsertDynamic(auditdynamicList, userAccount, String.valueOf(!ywzylpf2.isPresent() ? "" : GetNullStr(ywzylpf2.get().getAuditResult())), "ylpfbfz");
+            String pf ="";
+            String pfdj ="";
+            if("中级,初级".contains(user.getGwdj())) {
+                Optional<DcaBAuditdynamic> ywzylpf2 = listYwcYlpf.stream()
+                        .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+                if(ywzylpf2.isPresent()){
+                    pf = GetNullStr(ywzylpf2.get().getAuditResult());
+                }
+                else {
+                    Optional<DcaBAuditdynamic> ywzylpf22 = listYwcYlpf2.stream()
+                            .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+                    if(ywzylpf22.isPresent()){
+                        pf = GetNullStr(ywzylpf22.get().getAuditResult());
+                    }
+                    else {
+                        Optional<DcaBAuditdynamic> ywzylpf23 = listYwcYlpf3.stream()
+                                .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+                        if(ywzylpf23.isPresent()){
+                            pf = GetNullStr(ywzylpf23.get().getAuditResult());
+                        }
+                        else {
+                            Optional<DcaBAuditdynamic> ywzylpf24 = listYwcYlpf4.stream()
+                                    .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+                            if(ywzylpf24.isPresent()){
+                                pf = GetNullStr(ywzylpf24.get().getAuditResult());
+                            }
+                        }
+                    }
+                }
+                InsertDynamic(auditdynamicList, userAccount, pf, "ylpfbfz");
 
-            Optional<DcaBAuditdynamic> ylpfdj222 = listYwcYlpfdj.stream()
-                    .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
-            InsertDynamic(auditdynamicList, userAccount, String.valueOf(!ylpfdj222.isPresent() ? "" : GetNullStr(ylpfdj222.get().getAuditResult())), "ylpfdj");
+                Optional<DcaBAuditdynamic> ylpfdj222 = listYwcYlpfdj.stream()
+                        .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+
+                if(ylpfdj222.isPresent()){
+                    pfdj =GetNullStr(ylpfdj222.get().getAuditResult());
+                }
+                else {
+                    Optional<DcaBAuditdynamic> ylpfdj2222 = listYwcYlpfdj2.stream()
+                            .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+
+                    if(ylpfdj2222.isPresent()){
+                        pfdj =GetNullStr(ylpfdj2222.get().getAuditResult());
+                        if(pfdj!=""){
+                            pfdj="专"+pfdj;
+                        }
+                    }
+                    else {
+                        Optional<DcaBAuditdynamic> ylpfdj2223 = listYwcYlpfdj3.stream()
+                                .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+
+                        if(ylpfdj2223.isPresent()){
+                            pfdj =GetNullStr(ylpfdj2223.get().getAuditResult());
+                            if(pfdj!=""){
+                                pfdj="专"+pfdj;
+                            }
+                        }
+                        else {
+                            Optional<DcaBAuditdynamic> ylpfdj2224 = listYwcYlpfdj4.stream()
+                                    .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+                            if(ylpfdj2224.isPresent()){
+                                pfdj = GetNullStr(ylpfdj2224.get().getAuditResult());
+                                if(pfdj!=""){
+                                    pfdj="专"+pfdj;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                InsertDynamic(auditdynamicList, userAccount, pfdj, "ylpfdj");
+            }
+            else {
+
+                Optional<DcaBAuditdynamic> ywzylpf2 = listYwcYlpf.stream()
+                        .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+                if(ywzylpf2.isPresent()){
+                    pf= GetNullStr(ywzylpf2.get().getAuditResult());
+                }
+                InsertDynamic(auditdynamicList, userAccount, pf, "ylpfbfz");
+
+                Optional<DcaBAuditdynamic> ylpfdj222 = listYwcYlpfdj.stream()
+                        .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
+                InsertDynamic(auditdynamicList, userAccount, String.valueOf(!ylpfdj222.isPresent() ? "" : GetNullStr(ylpfdj222.get().getAuditResult())), "ylpfdj");
+
+            }
+
+
 
             Optional<DcaBAuditdynamic> jxpf222 = listjxpf.stream()
                     .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
@@ -1624,13 +1716,9 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
             }
 
             double ylpfvalue = 0D;
-            if (ywzylpf2.isPresent()) {
-                if (ywzylpf2.get() != null) {
-                    String yv = GetNullStrNumber(ywzylpf2.get().getAuditResult());
-                    ylpfvalue = Double.parseDouble(yv.trim());
-                    log.info("yw:" + ylpfvalue);
-                }
-            }
+
+            ylpfvalue = Double.parseDouble(GetNullStrNumber(pf));
+
             // ylpfvalue = Convert.toDouble(!ywzylpf2.isPresent() ? "0" :GetNullStrNumber(ywzylpf2.get().getAuditResult()));
 
             // double jxpfvalue = Convert.toDouble(!jxpf222.isPresent() ? "0" : GetNullStrNumber(jxpf222.get().getAuditResult()));
@@ -1851,7 +1939,7 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
 
 
             InsertDynamic(auditdynamicList_zhurenyishi, userAccount, ssu_lb, "sciDjlb");
-            InsertDynamic(auditdynamicList_zhurenyishi, userAccount, ssu_fund, "sciDjfund");
+            InsertDynamic(auditdynamicList_zhurenyishi, userAccount, ssu_fund.replace(".00",""), "sciDjfund");
             InsertDynamic(auditdynamicList_zhurenyishi, userAccount, ssu_ranknum, "sciDjranknum");
 
             String ssu_lb_jx = sciencesearchUserList.stream().filter(p -> p.getAuditTypetpjx()!=null  && p.getAuditTypetpjx().equals("按等级")).map(p -> p.getAuditLb() == null ? "" : String.valueOf(p.getAuditLb())).collect(Collectors.joining("#", "", ""));
@@ -1860,21 +1948,21 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
 
 
             InsertDynamic(auditdynamicList_jiaoshou, userAccount, ssu_lb_jx, "sciDjlb");
-            InsertDynamic(auditdynamicList_jiaoshou, userAccount, ssu_fund_jx, "sciDjfund");
+            InsertDynamic(auditdynamicList_jiaoshou, userAccount, ssu_fund_jx.replace(".00",""), "sciDjfund");
             InsertDynamic(auditdynamicList_jiaoshou, userAccount, ssu_ranknum_jx, "sciDjranknum");
 
             String ssu_lb2 = sciencesearchUserList.stream().filter(p -> p.getAuditTypetp() != null&&  p.getAuditTypetp().equals("按经费")).map(p -> p.getAuditLb() == null ? "" : String.valueOf(p.getAuditLb())).collect(Collectors.joining("#", "", ""));
             String ssu_fund2 = sciencesearchUserList.stream().filter(p -> p.getAuditTypetp() != null&& p.getAuditTypetp().equals("按经费")).map(p -> p.getAuditFund() == null ? "" : String.valueOf(p.getAuditFund())).collect(Collectors.joining("#", "", ""));
             String ssu_ranknum2 = sciencesearchUserList.stream().filter(p -> p.getAuditTypetp() != null&& p.getAuditTypetp().equals("按经费")).map(p -> p.getAuditRank() == null ? "" : String.valueOf(p.getAuditRank())).collect(Collectors.joining("#", "", ""));
             InsertDynamic(auditdynamicList_zhurenyishi, userAccount, ssu_lb2, "sciJflb");
-            InsertDynamic(auditdynamicList_zhurenyishi, userAccount, ssu_fund2, "sciJffund");
+            InsertDynamic(auditdynamicList_zhurenyishi, userAccount, ssu_fund2.replace(".00",""), "sciJffund");
             InsertDynamic(auditdynamicList_zhurenyishi, userAccount, ssu_ranknum2, "sciJfranknum");
 
             String ssu_lb2_jx = sciencesearchUserList.stream().filter(p -> p.getAuditTypetpjx() != null&&  p.getAuditTypetpjx().equals("按经费")).map(p -> p.getAuditLb() == null ? "" : String.valueOf(p.getAuditLb())).collect(Collectors.joining("#", "", ""));
             String ssu_fund2_jx = sciencesearchUserList.stream().filter(p -> p.getAuditTypetpjx() != null && p.getAuditTypetpjx().equals("按经费")).map(p -> p.getAuditFund() == null ? "" : String.valueOf(p.getAuditFund())).collect(Collectors.joining("#", "", ""));
             String ssu_ranknum2_jx = sciencesearchUserList.stream().filter(p -> p.getAuditTypetpjx() != null && p.getAuditTypetpjx().equals("按经费")).map(p -> p.getAuditRank() == null ? "" : String.valueOf(p.getAuditRank())).collect(Collectors.joining("#", "", ""));
             InsertDynamic(auditdynamicList_jiaoshou, userAccount, ssu_lb2_jx, "sciJflb");
-            InsertDynamic(auditdynamicList_jiaoshou, userAccount, ssu_fund2_jx, "sciJffund");
+            InsertDynamic(auditdynamicList_jiaoshou, userAccount, ssu_fund2_jx.replace(".00",""), "sciJffund");
             InsertDynamic(auditdynamicList_jiaoshou, userAccount, ssu_ranknum2_jx, "sciJfranknum");
             //endregion
 

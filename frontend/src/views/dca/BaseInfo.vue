@@ -173,6 +173,12 @@
                <dcaB-auditDynamic v-if="index==401">
                 <!--部门审核结果-->
               </dcaB-auditDynamic> 
+              <dcaB-teacheryj v-if="index==330">
+                <!--主要教学业绩-->
+              </dcaB-teacheryj> 
+              <dcaB-sciachievement v-if="index==332">
+                <!--主要科研业绩-->
+              </dcaB-sciachievement> 
             </div>
           </a-layout-content>
         </a-layout>
@@ -184,60 +190,102 @@
 <script>
 const formItemLayout = {
   labelCol: { span: 5 },
-  wrapperCol: { span: 18, offset: 1 }
-}
-import DcaBParttimeCustomer from '../dca/DcaBParttimejob/DcaBParttimeCustomer'
-import DcaBEmploy from '../dca/DcaBEmploy/DcaBEmploy'
-import DcaBEducationexperice from '../dca/DcaBEducationexperice/DcaBEducationexperice'
-import DcaBEssaypublish from '../dca/DcaBEssaypublish/DcaBEssaypublish'
-import DcaBGraduate from '../dca/DcaBGraduate/DcaBGraduate'
-import DcaBInnovatebuild from '../dca/DcaBInnovatebuild/DcaBInnovatebuild'
-import DcaBOtherwork from '../dca/DcaBOtherwork/DcaBOtherwork'
-import DcaBPaperspublish from '../dca/DcaBPaperspublish/DcaBPaperspublish'
-import DcaBPatent from '../dca/DcaBPatent/DcaBPatent'
-import DcaBPrizeorpunish from '../dca/DcaBPrizeorpunish/DcaBPrizeorpunish'
-import DcaBSciencepublish from '../dca/DcaBSciencepublish/DcaBSciencepublish'
-import DcaBScientificprize from '../dca/DcaBScientificprize/DcaBScientificprize'
-import DcaBTalent from '../dca/DcaBTalent/DcaBTalent'
-import DcaBTeacherqualify from '../dca/DcaBTeacherqualify/DcaBTeacherqualify'
-import DcaBTeachtalent from '../dca/DcaBTeachtalent/DcaBTeachtalent'
-import DcaBTurtor from '../dca/DcaBTurtor/DcaBTurtor'
-import DcaBUndergraduate from '../dca/DcaBUndergraduate/DcaBUndergraduate'
-import DcaBApplyjob from '../dca/DcaBApplyjob/DcaBApplyjob'
-import DcaBAuditfive from '../dca/DcaBAuditfive/DcaBAuditfive'
-import DcaBLastemploy from '../dca/DcaBLastemploy/DcaBLastemploy'
-import DcaBPersonalsummary from '../dca/DcaBPersonalsummary/DcaBPersonalsummary'
-import DcaBPolitalshow from '../dca/DcaBPolitalshow/DcaBPolitalshow'
-import DcaBSciencesearch from '../dca/DcaBSciencesearch/DcaBSciencesearch'
-import DcaBFivecomment from '../dca/DcaBFivecomment/DcaBFivecomment'
-import DcaBGoal from '../dca/DcaBGoal/DcaBGoal'
-import DcaBUndergraduateprize from '../dca/DcaBUndergraduateprize/DcaBUndergraduateprize'
-import DcaBUser from '../dca/DcaBUser/DcaBUser'
-import DcaBAttachfile from '../dca/DcaBAttachfile/DcaBAttachfile'
-import DcaBWorknum from '../dca/DcaBWorknum/DcaBWorknum'
-import DcaBExportcountry from '../dca/DcaBExportcountry/DcaBExportcountry'
-import DcaBPublicarticle from '../dca/DcaBPublicarticle/DcaBPublicarticle'
-import DcaBCourseclass from '../dca/DcaBCourseclass/DcaBCourseclass'
-import DcaBSchoolprize from '../dca/DcaBSchoolprize/DcaBSchoolprize'
-import DcaBTeacherprize from '../dca/DcaBTeacherprize/DcaBTeacherprize'
-import DcaBYoungprize from '../dca/DcaBYoungprize/DcaBYoungprize'
-import DcaBDoctorturtor from '../dca/DcaBDoctorturtor/DcaBDoctorturtor'
-import DcaBMedicalaccident from '../dca/DcaBMedicalaccident/DcaBMedicalaccident'
-import DcaBAcademic from '../dca/DcaBAcademic/DcaBAcademic'
-import DcaBAchievement from '../dca/DcaBAchievement/DcaBAchievement'
-import DcaBQualification from '../dca/DcaBQualification/DcaBQualification'
-import DcaBAuditDynamic from '../dca/DcaBUserapply/DcaBAuditDynamic'
+  wrapperCol: { span: 18, offset: 1 },
+};
+import DcaBParttimeCustomer from "../dca/DcaBParttimejob/DcaBParttimeCustomer";
+import DcaBEmploy from "../dca/DcaBEmploy/DcaBEmploy";
+import DcaBEducationexperice from "../dca/DcaBEducationexperice/DcaBEducationexperice";
+import DcaBEssaypublish from "../dca/DcaBEssaypublish/DcaBEssaypublish";
+import DcaBGraduate from "../dca/DcaBGraduate/DcaBGraduate";
+import DcaBInnovatebuild from "../dca/DcaBInnovatebuild/DcaBInnovatebuild";
+import DcaBOtherwork from "../dca/DcaBOtherwork/DcaBOtherwork";
+import DcaBPaperspublish from "../dca/DcaBPaperspublish/DcaBPaperspublish";
+import DcaBPatent from "../dca/DcaBPatent/DcaBPatent";
+import DcaBPrizeorpunish from "../dca/DcaBPrizeorpunish/DcaBPrizeorpunish";
+import DcaBSciencepublish from "../dca/DcaBSciencepublish/DcaBSciencepublish";
+import DcaBScientificprize from "../dca/DcaBScientificprize/DcaBScientificprize";
+import DcaBTalent from "../dca/DcaBTalent/DcaBTalent";
+import DcaBTeacherqualify from "../dca/DcaBTeacherqualify/DcaBTeacherqualify";
+import DcaBTeachtalent from "../dca/DcaBTeachtalent/DcaBTeachtalent";
+import DcaBTurtor from "../dca/DcaBTurtor/DcaBTurtor";
+import DcaBUndergraduate from "../dca/DcaBUndergraduate/DcaBUndergraduate";
+import DcaBApplyjob from "../dca/DcaBApplyjob/DcaBApplyjob";
+import DcaBAuditfive from "../dca/DcaBAuditfive/DcaBAuditfive";
+import DcaBLastemploy from "../dca/DcaBLastemploy/DcaBLastemploy";
+import DcaBPersonalsummary from "../dca/DcaBPersonalsummary/DcaBPersonalsummary";
+import DcaBPolitalshow from "../dca/DcaBPolitalshow/DcaBPolitalshow";
+import DcaBSciencesearch from "../dca/DcaBSciencesearch/DcaBSciencesearch";
+import DcaBFivecomment from "../dca/DcaBFivecomment/DcaBFivecomment";
+import DcaBGoal from "../dca/DcaBGoal/DcaBGoal";
+import DcaBUndergraduateprize from "../dca/DcaBUndergraduateprize/DcaBUndergraduateprize";
+import DcaBUser from "../dca/DcaBUser/DcaBUser";
+import DcaBAttachfile from "../dca/DcaBAttachfile/DcaBAttachfile";
+import DcaBWorknum from "../dca/DcaBWorknum/DcaBWorknum";
+import DcaBExportcountry from "../dca/DcaBExportcountry/DcaBExportcountry";
+import DcaBPublicarticle from "../dca/DcaBPublicarticle/DcaBPublicarticle";
+import DcaBCourseclass from "../dca/DcaBCourseclass/DcaBCourseclass";
+import DcaBSchoolprize from "../dca/DcaBSchoolprize/DcaBSchoolprize";
+import DcaBTeacherprize from "../dca/DcaBTeacherprize/DcaBTeacherprize";
+import DcaBYoungprize from "../dca/DcaBYoungprize/DcaBYoungprize";
+import DcaBDoctorturtor from "../dca/DcaBDoctorturtor/DcaBDoctorturtor";
+import DcaBMedicalaccident from "../dca/DcaBMedicalaccident/DcaBMedicalaccident";
+import DcaBAcademic from "../dca/DcaBAcademic/DcaBAcademic";
+import DcaBAchievement from "../dca/DcaBAchievement/DcaBAchievement";
+import DcaBQualification from "../dca/DcaBQualification/DcaBQualification";
+import DcaBAuditDynamic from "../dca/DcaBUserapply/DcaBAuditDynamic";
+import DcaBSciachievement from "../dca/DcaBSciachievement/DcaBSciachievement";
+import DcaBTeacheryj from "../dca/DcaBTeacheryj/DcaBTeacheryj";
 
 export default {
-  name: 'DcaBPatent2',
+  name: "DcaBPatent2",
   components: {
-    DcaBParttimeCustomer, DcaBEmploy, DcaBEducationexperice, DcaBEssaypublish, DcaBGraduate, DcaBPublicarticle, DcaBCourseclass, DcaBSchoolprize, DcaBTeacherprize, DcaBYoungprize, DcaBMedicalaccident, DcaBDoctorturtor, 
-    DcaBInnovatebuild, DcaBOtherwork, DcaBPaperspublish, DcaBPatent, DcaBPrizeorpunish, DcaBSciencepublish,
-    DcaBScientificprize, DcaBTalent, DcaBTeacherqualify, DcaBTurtor, DcaBUndergraduate, DcaBApplyjob,
-    DcaBAuditfive, DcaBLastemploy, DcaBPersonalsummary, DcaBPolitalshow, DcaBSciencesearch, DcaBFivecomment, DcaBGoal, DcaBTeachtalent, DcaBUndergraduateprize, DcaBUser, DcaBAttachfile, DcaBWorknum, DcaBExportcountry
-    , DcaBAcademic, DcaBAchievement, DcaBQualification, DcaBAuditDynamic
+    DcaBParttimeCustomer,
+    DcaBEmploy,
+    DcaBEducationexperice,
+    DcaBEssaypublish,
+    DcaBGraduate,
+    DcaBPublicarticle,
+    DcaBCourseclass,
+    DcaBSchoolprize,
+    DcaBTeacherprize,
+    DcaBYoungprize,
+    DcaBMedicalaccident,
+    DcaBDoctorturtor,
+    DcaBInnovatebuild,
+    DcaBOtherwork,
+    DcaBPaperspublish,
+    DcaBPatent,
+    DcaBPrizeorpunish,
+    DcaBSciencepublish,
+    DcaBScientificprize,
+    DcaBTalent,
+    DcaBTeacherqualify,
+    DcaBTurtor,
+    DcaBUndergraduate,
+    DcaBApplyjob,
+    DcaBAuditfive,
+    DcaBLastemploy,
+    DcaBPersonalsummary,
+    DcaBPolitalshow,
+    DcaBSciencesearch,
+    DcaBFivecomment,
+    DcaBGoal,
+    DcaBTeachtalent,
+    DcaBUndergraduateprize,
+    DcaBUser,
+    DcaBAttachfile,
+    DcaBWorknum,
+    DcaBExportcountry,
+    DcaBAcademic,
+    DcaBAchievement,
+    DcaBQualification,
+    DcaBAuditDynamic,
+    DcaBTeacheryj,
+    DcaBSciachievement,
+    DcaBSciachievement,
+    DcaBTeacheryj,
   },
-  data () {
+  data() {
     return {
       mouduleTreeKey: +new Date(),
       loading: false,
@@ -249,52 +297,49 @@ export default {
       collapsed: false,
       showAdd: false,
       calcHeight: {
-        height: '',
-        overflow: 'auto'
-      }
-    }
+        height: "",
+        overflow: "auto",
+      },
+    };
   },
-  mounted () {
-    this.fetch()
+  mounted() {
+    this.fetch();
   },
-  created () {
-    window.addEventListener('resize', this.getHeight);
-    this.getHeight()
+  created() {
+    window.addEventListener("resize", this.getHeight);
+    this.getHeight();
   },
   methods: {
-    getHeight () {
-      this.calcHeight.height = window.innerHeight - 59 - 39 - 100 + 'px';
+    getHeight() {
+      this.calcHeight.height = window.innerHeight - 59 - 39 - 100 + "px";
     },
-    handlePromise () {
-      this.showAdd = true
+    handlePromise() {
+      this.showAdd = true;
     },
-    fetch () {
-      let codes="272,273,121,251"
-      this.$get('dcaDMudules/doctree/'+codes).then((r) => {
-        var drows=r.data.rows.children
-        drows[0].children=drows[0].children.filter(p=>p.id!=10) 
-       // console.info(drows)
-       // var drows=r.data.rows.children.filter(p=>p.id!=11) //医疗工作量
-        this.mouduleTreeData = drows
-        this.allTreeKeys = r.data.ids
-      })
+    fetch() {
+      let codes = "272,273,121,251";
+      this.$get("dcaDMudules/doctree/" + codes).then((r) => {
+        var drows = r.data.rows.children;
+        drows[0].children = drows[0].children.filter((p) => p.id != 10);
+        // console.info(drows)
+        // var drows=r.data.rows.children.filter(p=>p.id!=11) //医疗工作量
+        this.mouduleTreeData = drows;
+        this.allTreeKeys = r.data.ids;
+      });
     },
-    handleTreeClick (keys, event) {
-     // console.info(event.node)
-       if(event.node.getNodeChildren().length>0)
-      {
+    handleTreeClick(keys, event) {
+      // console.info(event.node)
+      if (event.node.getNodeChildren().length > 0) {
         let previous = event.node.$el.firstElementChild;
-        previous.click()
-      }
-      else{
-        if(keys.length>0){
-        this.index = keys[0]
+        previous.click();
+      } else {
+        if (keys.length > 0) {
+          this.index = keys[0];
         }
       }
-    }
-  }
-
-}
+    },
+  },
+};
 </script>
 <style>
 .trigger {

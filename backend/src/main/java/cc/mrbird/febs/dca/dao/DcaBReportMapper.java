@@ -28,7 +28,7 @@ public interface DcaBReportMapper extends BaseMapper<DcaBReport> {
 
         void mutiUpdate(List<String> list);
 
-        @Select("Select *  from dca_b_report_test")
+        @Select("Select *  from dca_b_report where clshjg='正常' order by paixu3")
         List<DcaBReport> getReportTest();
 
         @Select("Select user_account,np_position_name,clshjg,ntyy,year  from dca_b_report ")

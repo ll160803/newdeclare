@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-spin :spinning="loading">
-      <a-card title="何时何地受何奖励及处分">
+      <a-card title="主要科研业绩">
         <div>
           <a-form layout="horizontal">
             <a-row>
@@ -11,7 +11,7 @@
                   :sm="24"
                 >
                   <a-form-item
-                    label="发薪号/姓名"
+                    label="发薪号"
                     v-bind="formItemLayout"
                   >
                     <a-input v-model="queryParams.userAccount" />
@@ -31,14 +31,13 @@
                 <a-col
                   :md="8"
                   :sm="24"
-                  
                 >
                   <a-form-item
                     label="申报年度"
                     v-bind="formItemLayout"
                     v-show="!dcaType==''"
                   >
-                    <a-input v-model="queryParams.auditMan"  />
+                    <a-input v-model="queryParams.auditMan" />
                   </a-form-item>
                 </a-col>
               </div>
@@ -75,87 +74,7 @@
               :scroll="scroll"
             >
               <template
-                slot="ppStartTime"
-                slot-scope="text, record"
-              >
-                <div v-if="record.state==3">
-                  {{text==""|| text==null?"":text.substr(0,10)}}
-                </div>
-                <div v-else>
-                  <a-date-picker
-                    :defaultValue="(text=='' || text==null)?'':moment(text, dateFormat)"
-                    @change="(e,f) => handleChange(e,f,record,'ppStartTime')"
-                  />
-                </div>
-              </template>
-              <template
-                slot="ppEndTime"
-                slot-scope="text, record"
-              >
-                <div v-if="record.state==3">
-                  {{text==""|| text==null?"":text.substr(0,10)}}
-                </div>
-                <div v-else>
-                  <a-date-picker
-                    :defaultValue="(text=='' || text==null)?'':moment(text, dateFormat)"
-                    @change="(e,f) => handleChange(e,f,record,'ppEndTime')"
-                  />
-                </div>
-              </template>
-               <template
-        slot="ppCategory"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 ">
-          {{text}}
-        </div>
-        <div v-else>
-          <a-select
-            :value="record.ppCategory"
-            style="width: 100%"
-            @change="(e,f) => handleSelectChange(e,f,record,'ppCategory')"
-          >
-            <a-select-option value="奖励">
-              奖励
-            </a-select-option>
-            <a-select-option value="处分">
-              处分
-            </a-select-option>
-          </a-select>
-        </div>
-      </template>
-      <template
-        slot="ppPartment"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 ">
-          {{text}}
-        </div>
-        <div v-else>
-          <a-textarea
-            @blur="e => inputChange(e.target.value,record,'ppPartment')"
-            :value="record.ppPartment"
-          >
-          </a-textarea>
-        </div>
-      </template>
-       <template
-        slot="ppLb"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 ">
-          {{text}}
-        </div>
-        <div v-else>
-          <a-textarea
-            @blur="e => inputChange(e.target.value,record,'ppLb')"
-            :value="record.ppLb"
-          >
-          </a-textarea>
-        </div>
-      </template>
-              <template
-                slot="ppContent"
+                slot="achievementName"
                 slot-scope="text, record"
               >
                 <div v-if="record.state==3">
@@ -163,8 +82,94 @@
                 </div>
                 <div v-else>
                   <a-textarea
-                    @blur="e => inputChange(e.target.value,record,'ppContent')"
-                    :value="record.ppContent"
+                    @blur="e => inputChange(e.target.value,record,'achievementName')"
+                    :value="record.achievementName"
+                  >
+                  </a-textarea>
+                </div>
+              </template>
+              <template
+                slot="rankIndex"
+                slot-scope="text, record"
+              >
+                <div v-if="record.state==3">
+                  {{text}}
+                </div>
+                <div v-else>
+                  <a-input-number
+                  style="width: 100%"
+                    @blur="e => inputChange(e.target.value,record,'rankIndex')"
+                    :value="record.rankIndex"
+                    :precision="0"
+                  >
+                  </a-input-number>
+                </div>
+              </template>
+                <template
+        slot="achievementGrade"
+        slot-scope="text, record"
+      >
+        <div v-if="record.state==3">
+          {{text}}
+        </div>
+        <div v-else>
+          <a-select
+            :value="record.achievementGrade"
+            style="width: 100%"
+            @change="(e,f) => handleSelectChange(e,f,record,'achievementGrade')"
+          >
+            <a-select-option value="一">
+              一
+            </a-select-option>
+            <a-select-option value="二">
+              二
+            </a-select-option>
+            <a-select-option value="三">
+              三
+            </a-select-option>
+          </a-select>
+        </div>
+      </template>
+              <template
+                slot="achievementDate"
+                slot-scope="text, record"
+              >
+                <div v-if="record.state==3">
+                  {{text==""|| text==null?"":text.substr(0,10)}}
+                </div>
+                <div v-else>
+                  <a-date-picker
+                    :defaultValue="(text=='' || text==null)?'':moment(text, dateFormat)"
+                    @change="(e,f) => handleChange(e,f,record,'achievementDate')"
+                  />
+                </div>
+              </template>
+              <template
+                slot="achievementDefine"
+                slot-scope="text, record"
+              >
+                <div v-if="record.state==3">
+                  {{text}}
+                </div>
+                <div v-else>
+                  <a-textarea
+                    @blur="e => inputChange(e.target.value,record,'achievementDefine')"
+                    :value="record.achievementDefine"
+                  >
+                  </a-textarea>
+                </div>
+              </template>
+              <template
+                slot="achievementContent"
+                slot-scope="text, record"
+              >
+                <div v-if="record.state==3">
+                  {{text}}
+                </div>
+                <div v-else>
+                  <a-textarea
+                    @blur="e => inputChange(e.target.value,record,'achievementContent')"
+                    :value="record.achievementContent"
                   >
                   </a-textarea>
                 </div>
@@ -194,21 +199,6 @@
                 </div>
               </template>
               <template
-                slot="isBest"
-                slot-scope="text, record"
-              >
-                <div key="jzContent">
-
-                  <a-switch
-                    checked-children="是"
-                    un-checked-children="否"
-                    @change="(e1,f) => inputCheckChange(e1,f,record,'isBest')"
-                    :checked="record.isBest=='是'"
-                  >
-                  </a-switch>
-                </div>
-              </template>
-              <template
                 slot="userAccount"
                 slot-scope="text, record"
               >
@@ -221,18 +211,8 @@
                 slot="action"
                 slot-scope="text, record"
               >
+               
                 <a-button
-                v-hasNoPermission="['dca:audit']"
-                  style="width:50%;padding-left:2px;padding-right:2px;"
-                  type="dashed"
-                  block
-                  @click="handleAuditNext(record)"
-                >
-                  下一轮
-                </a-button>
-                <a-button
-                v-hasNoPermission="['dca:audit']"
-                  style="width:40%;padding-left:2px;padding-right:2px;"
                   type="dashed"
                   block
                   @click="handleAudit(record)"
@@ -240,7 +220,6 @@
                   通过
                 </a-button>
                 <a-button
-                v-hasNoPermission="['dca:audit']"
                   type="danger"
                   block
                   @click="handleAuditNo(record)"
@@ -255,39 +234,38 @@
             tab="已审核"
             :forceRender="true"
           >
-            <dcaBPrizeorpunish-done
+            <dcaBAchievement-done
               ref="TableInfo2"
               :state="3"
             >
-            </dcaBPrizeorpunish-done>
+            </dcaBAchievement-done>
           </a-tab-pane>
           <a-tab-pane
             key="3"
             tab="审核未通过"
             :forceRender="true"
           >
-            <dcaBPrizeorpunish-done
+            <dcaBAchievement-done
               ref="TableInfo3"
               :state="2"
             >
-            </dcaBPrizeorpunish-done>
+            </dcaBAchievement-done>
           </a-tab-pane>
         </a-tabs>
+        <audit-userInfo
+          ref="userinfo"
+          @close="onCloseUserInfo"
+          :visibleUserInfo="visibleUserInfo"
+          :userAccount="userAccount"
+        ></audit-userInfo>
       </a-card>
     </a-spin>
-    <audit-userInfo
-      ref="userinfo"
-      @close="onCloseUserInfo"
-      :visibleUserInfo="visibleUserInfo"
-      :userAccount="userAccount"
-    ></audit-userInfo>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
-import DcaBPrizeorpunishDone from './DcaBPrizeorpunishDone'
-
+import DcaBSciachievementDone from './DcaBSciachievementDone'
 import AuditUserInfo from '../../common/AuditUserInfo'
 
 const formItemLayout = {
@@ -316,25 +294,26 @@ export default {
       queryParams: {
         userAccount: '',
         auditMan: this.dcaYear,
+        auditManName: this.dcaType,
         auditXuhaoE: null,
         auditXuhaoS: null,
-        auditManName: this.dcaType
       },
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1500,
+        x: 1600,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
-      userAccount: ''
+      userAccount: '',
+      activeKey: 1
     }
   },
-  components: { DcaBPrizeorpunishDone, AuditUserInfo },
+  components: { DcaBSciachievementDone, AuditUserInfo },
   mounted () {
     this.search()
   },
-    props: {
+  props: {
     dcaYear: {
       default: '' //年度
     },
@@ -344,14 +323,14 @@ export default {
   },
   methods: {
     moment,
-    callback () {
-
+    callback (activeKey) {
+      this.activeKey = activeKey
     },
     search2 () {
-     if (this.paginationInfo) {
-       this.paginationInfo.current = this.pagination.defaultCurrent
-     }
-     this.search()
+      if (this.paginationInfo) {
+        this.paginationInfo.current = this.pagination.defaultCurrent
+      }
+      this.search()
     },
     search () {
       let { sortedInfo } = this
@@ -369,18 +348,24 @@ export default {
       this.freshTabs()
     },
     freshTabs () {
-        this.$refs.TableInfo2.queryParams = this.queryParams
-      
-      this.$refs.TableInfo3.queryParams = this.queryParams
-        if (this.$refs.TableInfo2.paginationInfo) {
-       this.$refs.TableInfo2.paginationInfo.current = 1
-     }
-      if (this.$refs.TableInfo3.paginationInfo) {
-       this.$refs.TableInfo3.paginationInfo.current = 1
-     }
-     
-      this.$refs.TableInfo2.fetch2(this.queryParams)
-      this.$refs.TableInfo3.fetch2(this.queryParams)
+      this.$refs.TableInfo2.queryParams.userAccount = this.queryParams.userAccount
+      this.$refs.TableInfo2.queryParams.auditMan = this.queryParams.auditMan
+      this.$refs.TableInfo2.queryParams.auditManName = this.queryParams.auditManName
+      this.$refs.TableInfo3.queryParams.userAccount = this.queryParams.userAccount
+      this.$refs.TableInfo3.queryParams.auditMan = this.queryParams.auditMan
+      this.$refs.TableInfo3.queryParams.auditManName = this.queryParams.auditManName
+
+        if (this.queryParams.auditXuhaoS !== undefined) {
+        this.$refs.TableInfo2.queryParams.auditXuhaoS = this.queryParams.auditXuhaoS
+        this.$refs.TableInfo3.queryParams.auditXuhaoS = this.queryParams.auditXuhaoS
+      }
+      if (this.queryParams.auditXuhaoE !== undefined) {
+        this.$refs.TableInfo2.queryParams.auditXuhaoE = this.queryParams.auditXuhaoE
+        this.$refs.TableInfo3.queryParams.auditXuhaoE = this.queryParams.auditXuhaoE
+      }
+
+      this.$refs.TableInfo2.fetch2(this.$refs.TableInfo2.queryParams)
+      this.$refs.TableInfo3.fetch2(this.$refs.TableInfo3.queryParams)
     },
     reset () {
       // 取消选中
@@ -398,6 +383,41 @@ export default {
       this.queryParams = {}
       this.fetch()
     },
+    exportCustomExcel () {
+      let { sortedInfo } = this
+      let sortField, sortOrder
+      // 获取当前列的排序和列的过滤规则
+      if (sortedInfo) {
+        sortField = sortedInfo.field
+        sortOrder = sortedInfo.order
+      }
+      let json = this.columns
+      json.splice(this.columns.length - 1, 1) //移出第一个
+      console.info(json)
+      let dataJson = JSON.stringify(json)
+
+      let queryParams = this.queryParams
+
+      let state = 1
+      if (this.activeKey == 1) {
+        state = 1
+      }
+      if (this.activeKey == 2) {
+        state = 3
+        delete queryParams.auditState
+      }
+      if (this.activeKey == 3) {
+        state = 2
+        delete queryParams.auditState
+      }
+      this.$export('dcaBSciachievement/excel', {
+        sortField: 'user_account',
+        sortOrder: 'ascend',
+        state: state,
+        dataJson: dataJson,
+        ...queryParams
+      })
+    },
     handleTableChange (pagination, filters, sorter) {
       this.sortedInfo = sorter
       this.paginationInfo = pagination
@@ -412,14 +432,8 @@ export default {
       this.visibleUserInfo = true
       this.userAccount = text
     },
-
-
     onCloseUserInfo () {
       this.visibleUserInfo = false
-    },
-     handleSelectChange (value, option, record, filedName) {
-      console.info(value)
-      record[filedName] = value
     },
     onSelectChange (selectedRowKeys, selectedRows) {
       // console.log(selectedRows)
@@ -431,8 +445,16 @@ export default {
       const value = dateStr
       record[filedName] = value
     },
+    handleSelectChange (value, option, record, filedName) {
+      console.info(value)
+      record[filedName] = value
+    },
     inputCheckChange (blFlag, f, record, filedName) {
       record[filedName] = blFlag ? '是' : '否'
+    },
+    handleSelectChange (value, option, record, filedName) {
+      console.info(value)
+      record[filedName] = value
     },
     inputChange (value, record, filedName) {
       console.info(value)
@@ -450,13 +472,14 @@ export default {
         onOk () {
           let jsonStr = JSON.stringify(record)
           that.loading = true
-          that.$post('dcaBPrizeorpunish/updateNew', {
+          that.$post('dcaBSciachievement/updateNew', {
             jsonStr: jsonStr,
             state: 1
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.search()
+            that.fetch()
+            that.freshTabs()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -475,13 +498,14 @@ export default {
         onOk () {
           let jsonStr = JSON.stringify(record)
           that.loading = true
-          that.$post('dcaBPrizeorpunish/updateNew', {
+          that.$post('dcaBSciachievement/updateNew', {
             jsonStr: jsonStr,
             state: 3
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.search()
+            that.fetch()
+            that.freshTabs()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -500,13 +524,14 @@ export default {
         onOk () {
           let jsonStr = JSON.stringify(record)
           that.loading = true
-          that.$post('dcaBPrizeorpunish/updateNew', {
+          that.$post('dcaBSciachievement/updateNew', {
             jsonStr: jsonStr,
             state: 2
           }).then(() => {
             //this.reset()
             that.$message.success('操作成功')
-            that.search()
+            that.fetch()
+            that.freshTabs()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -531,7 +556,7 @@ export default {
       params.sortField = "userAccount"
       params.sortOrder = "descend"
       this.loading = true
-      this.$get('dcaBPrizeorpunish/audit', {
+      this.$get('dcaBSciachievement/audit', {
         ...params,
         state: 1
       }).then((r) => {
@@ -548,53 +573,58 @@ export default {
   computed: {
     columns () {
       return [
-          {
+         {
           title: '序号',
           dataIndex: 'auditXuhao',
           width: 60,
+          fixed: 'left'
         },
         {
           title: '发薪号',
           dataIndex: 'userAccount',
           width: 80,
-          scopedSlots: { customRender: 'userAccount' }
+          scopedSlots: { customRender: 'userAccount' },
+          fixed: 'left'
         },
         {
           title: '姓名',
           dataIndex: 'userAccountName',
-          width: 80
+          width: 80,
+          fixed: 'left'
         },
         {
-          title: '奖励/处分时间',
-          dataIndex: 'ppStartTime',
+          title: '名称',
+          dataIndex: 'achievementName',
+          width: 250,
+          scopedSlots: { customRender: 'achievementName' },
+          fixed: 'left'
+        },
+        {
+          title: '排名',
+          dataIndex: 'rankIndex',
+          width: 80,
+          scopedSlots: { customRender: 'rankIndex' },
+          fixed: 'left'
+        },
+        {
+          title: '获得时间',
+          dataIndex: 'achievementDate',
+          width: 120,
+          scopedSlots: { customRender: 'achievementDate' },
+          fixed: 'left'
+        },
+        {
+          title: '期限',
+          dataIndex: 'achievementDefine',
+          width: 80,
+          scopedSlots: { customRender: 'achievementDefine' }
+        },
+        {
+          title: '备注',
+          dataIndex: 'achievementContent',
           width: 130,
-          scopedSlots: { customRender: 'ppStartTime' }
+          scopedSlots: { customRender: 'achievementContent' }
         },
-       
-        {
-        title: '奖励/处分',
-        dataIndex: 'ppCategory',
-        width: 100,
-        scopedSlots: { customRender: 'ppCategory' }
-      },
-      {
-        title: '奖励/处分名称',
-        dataIndex: 'ppContent',
-        width: 200,
-        scopedSlots: { customRender: 'ppContent' }
-      },
-       {
-        title: '授奖/处分部门',
-        dataIndex: 'ppPartment',
-        width: 150,
-        scopedSlots: { customRender: 'ppPartment' }
-      },
-      {
-        title: '类别',
-        dataIndex: 'ppLb',
-        width: 100,
-        scopedSlots: { customRender: 'ppLb' }
-      },
         {
           title: '状态',
           dataIndex: 'state',
@@ -613,6 +643,16 @@ export default {
                 return text
             }
           }
+        }, {
+          title: '附件',
+          dataIndex: 'fileId',
+          customRender: (text, row, index) => {
+            if (text != null && text != '') {
+              return <a href={row.fileUrl} target="_blank" >查看</a>
+            }
+            return ''
+          },
+          width: 80
         },
         {
           title: '审核意见',
@@ -623,16 +663,6 @@ export default {
           title: '经审核是否构成职称晋升条件',
           dataIndex: 'isUse',
           scopedSlots: { customRender: 'isUse' },
-          width: 100
-        }, {
-          title: '附件',
-          dataIndex: 'fileId',
-          customRender: (text, row, index) => {
-            if (text != null && text != '') {
-              return <a href={row.fileUrl} target="_blank" >查看</a>
-            }
-            return ''
-          },
           width: 80
         }, {
           title: '审核',

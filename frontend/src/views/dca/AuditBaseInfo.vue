@@ -162,6 +162,14 @@
             <dcaB-auditDynamicAudit v-if="index==401">
               <!--部门审核结果-->
             </dcaB-auditDynamicAudit>
+              <dcaB-teacheryjAudit 
+              v-if="index==330">
+                <!--主要教学业绩-->
+              </dcaB-teacheryjAudit> 
+              <dcaB-sciachievementAudit
+               v-if="index==332">
+                <!--主要科研业绩-->
+              </dcaB-sciachievementAudit> 
           </div>
         </a-layout-content>
       </a-layout>
@@ -172,59 +180,98 @@
 <script>
 const formItemLayout = {
   labelCol: { span: 5 },
-  wrapperCol: { span: 18, offset: 1 }
-}
-import DcaBParttimejob from '../dca/DcaBParttimejob/DcaBParttimejob'
-import DcaBEmployAudit from '../dca/DcaBEmploy/DcaBEmployAudit'
-import DcaBEducationexpericeAudit from '../dca/DcaBEducationexperice/DcaBEducationexpericeAudit'
-import DcaBEssaypublishAudit from '../dca/DcaBEssaypublish/DcaBEssaypublishAudit'
-import DcaBGraduateAudit from '../dca/DcaBGraduate/DcaBGraduateAudit'
-import DcaBInnovatebuildAudit from '../dca/DcaBInnovatebuild/DcaBInnovatebuildAudit'
-import DcaBOtherworkAudit from '../dca/DcaBOtherwork/DcaBOtherworkAudit'
-import DcaBPaperspublishAudit from '../dca/DcaBPaperspublish/DcaBPaperspublishAudit'
-import DcaBPatentAudit from '../dca/DcaBPatent/DcaBPatentAudit'
-import DcaBPrizeorpunishAudit from '../dca/DcaBPrizeorpunish/DcaBPrizeorpunishAudit'
-import DcaBSciencepublishAudit from '../dca/DcaBSciencepublish/DcaBSciencepublishAudit'
-import DcaBScientificprizeAudit from '../dca/DcaBScientificprize/DcaBScientificprizeAudit'
-import DcaBTalentAudit from '../dca/DcaBTalent/DcaBTalentAudit'
-import DcaBTeacherqualifyAudit from '../dca/DcaBTeacherqualify/DcaBTeacherqualifyAudit'
-import DcaBTurtorAudit from '../dca/DcaBTurtor/DcaBTurtorAudit'
-import DcaBUndergraduateAudit from '../dca/DcaBUndergraduate/DcaBUndergraduateAudit'
-import DcaBApplyjobAudit from '../dca/DcaBApplyjob/DcaBApplyjobAudit'
-import DcaBAuditfiveAudit from '../dca/DcaBAuditfive/DcaBAuditfiveAudit'
-import DcaBLastemployAudit from '../dca/DcaBLastemploy/DcaBLastemployAudit'
-import DcaBPersonalsummaryAudit from '../dca/DcaBPersonalsummary/DcaBPersonalsummaryAudit'
-import DcaBPolitalshowAudit from '../dca/DcaBPolitalshow/DcaBPolitalshowAudit'
-import DcaBSciencesearchAudit from '../dca/DcaBSciencesearch/DcaBSciencesearchAudit'
-import DcaBFivecommentAudit from '../dca/DcaBFivecomment/DcaBFivecommentAudit'
-import DcaBGoalAudit from '../dca/DcaBGoal/DcaBGoalAudit'
-import DcaBAttachfileAudit from '../dca/DcaBAttachfile/DcaBAttachfileAudit'
-import DcaBWorknumAudit from '../dca/DcaBWorknum/DcaBWorknumAudit'
-import DcaBUndergraduateprizeAudit from '../dca/DcaBUndergraduateprize/DcaBUndergraduateprizeAudit'
-import DcaBExportcountryAudit from '../dca/DcaBExportcountry/DcaBExportcountryAudit'
-import DcaBPublicarticleAudit from '../dca/DcaBPublicarticle/DcaBPublicarticleAudit'
-import DcaBCourseclassAudit from '../dca/DcaBCourseclass/DcaBCourseclassAudit'
-import DcaBSchoolprizeAudit from '../dca/DcaBSchoolprize/DcaBSchoolprizeAudit'
-import DcaBTeacherprizeAudit from '../dca/DcaBTeacherprize/DcaBTeacherprizeAudit'
-import DcaBYoungprizeAudit from '../dca/DcaBYoungprize/DcaBYoungprizeAudit'
-import DcaBDoctorturtorAudit from '../dca/DcaBDoctorturtor/DcaBDoctorturtorAudit'
-import DcaBMedicalaccidentAudit from '../dca/DcaBMedicalaccident/DcaBMedicalaccidentAudit'
-import DcaBAchievementAudit from '../dca/DcaBAchievement/DcaBAchievementAudit'
-import DcaBAcademicAudit from '../dca/DcaBAcademic/DcaBAcademicAudit'
-import DcaBQualificationAudit from '../dca/DcaBQualification/DcaBQualificationAudit'
-import DcaBUserList from '../dca/DcaBUser/DcaBUserList'
-import DcaBAuditDynamicAudit from '../dca/DcaBUserapply/DcaBAuditDynamicAudit'
+  wrapperCol: { span: 18, offset: 1 },
+};
+import DcaBParttimejob from "../dca/DcaBParttimejob/DcaBParttimejob";
+import DcaBEmployAudit from "../dca/DcaBEmploy/DcaBEmployAudit";
+import DcaBEducationexpericeAudit from "../dca/DcaBEducationexperice/DcaBEducationexpericeAudit";
+import DcaBEssaypublishAudit from "../dca/DcaBEssaypublish/DcaBEssaypublishAudit";
+import DcaBGraduateAudit from "../dca/DcaBGraduate/DcaBGraduateAudit";
+import DcaBInnovatebuildAudit from "../dca/DcaBInnovatebuild/DcaBInnovatebuildAudit";
+import DcaBOtherworkAudit from "../dca/DcaBOtherwork/DcaBOtherworkAudit";
+import DcaBPaperspublishAudit from "../dca/DcaBPaperspublish/DcaBPaperspublishAudit";
+import DcaBPatentAudit from "../dca/DcaBPatent/DcaBPatentAudit";
+import DcaBPrizeorpunishAudit from "../dca/DcaBPrizeorpunish/DcaBPrizeorpunishAudit";
+import DcaBSciencepublishAudit from "../dca/DcaBSciencepublish/DcaBSciencepublishAudit";
+import DcaBScientificprizeAudit from "../dca/DcaBScientificprize/DcaBScientificprizeAudit";
+import DcaBTalentAudit from "../dca/DcaBTalent/DcaBTalentAudit";
+import DcaBTeacherqualifyAudit from "../dca/DcaBTeacherqualify/DcaBTeacherqualifyAudit";
+import DcaBTurtorAudit from "../dca/DcaBTurtor/DcaBTurtorAudit";
+import DcaBUndergraduateAudit from "../dca/DcaBUndergraduate/DcaBUndergraduateAudit";
+import DcaBApplyjobAudit from "../dca/DcaBApplyjob/DcaBApplyjobAudit";
+import DcaBAuditfiveAudit from "../dca/DcaBAuditfive/DcaBAuditfiveAudit";
+import DcaBLastemployAudit from "../dca/DcaBLastemploy/DcaBLastemployAudit";
+import DcaBPersonalsummaryAudit from "../dca/DcaBPersonalsummary/DcaBPersonalsummaryAudit";
+import DcaBPolitalshowAudit from "../dca/DcaBPolitalshow/DcaBPolitalshowAudit";
+import DcaBSciencesearchAudit from "../dca/DcaBSciencesearch/DcaBSciencesearchAudit";
+import DcaBFivecommentAudit from "../dca/DcaBFivecomment/DcaBFivecommentAudit";
+import DcaBGoalAudit from "../dca/DcaBGoal/DcaBGoalAudit";
+import DcaBAttachfileAudit from "../dca/DcaBAttachfile/DcaBAttachfileAudit";
+import DcaBWorknumAudit from "../dca/DcaBWorknum/DcaBWorknumAudit";
+import DcaBUndergraduateprizeAudit from "../dca/DcaBUndergraduateprize/DcaBUndergraduateprizeAudit";
+import DcaBExportcountryAudit from "../dca/DcaBExportcountry/DcaBExportcountryAudit";
+import DcaBPublicarticleAudit from "../dca/DcaBPublicarticle/DcaBPublicarticleAudit";
+import DcaBCourseclassAudit from "../dca/DcaBCourseclass/DcaBCourseclassAudit";
+import DcaBSchoolprizeAudit from "../dca/DcaBSchoolprize/DcaBSchoolprizeAudit";
+import DcaBTeacherprizeAudit from "../dca/DcaBTeacherprize/DcaBTeacherprizeAudit";
+import DcaBYoungprizeAudit from "../dca/DcaBYoungprize/DcaBYoungprizeAudit";
+import DcaBDoctorturtorAudit from "../dca/DcaBDoctorturtor/DcaBDoctorturtorAudit";
+import DcaBMedicalaccidentAudit from "../dca/DcaBMedicalaccident/DcaBMedicalaccidentAudit";
+import DcaBAchievementAudit from "../dca/DcaBAchievement/DcaBAchievementAudit";
+import DcaBAcademicAudit from "../dca/DcaBAcademic/DcaBAcademicAudit";
+import DcaBQualificationAudit from "../dca/DcaBQualification/DcaBQualificationAudit";
+import DcaBUserList from "../dca/DcaBUser/DcaBUserList";
+import DcaBAuditDynamicAudit from "../dca/DcaBUserapply/DcaBAuditDynamicAudit";
+import DcaBTeacheryjAudit from "../dca/DcaBTeacheryj/DcaBTeacheryjAudit";
+import DcaBSciachievementAudit from "../dca/DcaBSciachievement/DcaBSciachievementAudit";
 
 export default {
-  name: 'AuditBaseInfo',
+  name: "AuditBaseInfo",
   components: {
-    DcaBAuditDynamicAudit, DcaBParttimejob, DcaBEmployAudit, DcaBEducationexpericeAudit, DcaBEssaypublishAudit, DcaBGraduateAudit, DcaBPublicarticleAudit, DcaBCourseclassAudit, DcaBSchoolprizeAudit, DcaBTeacherprizeAudit, DcaBYoungprizeAudit,
-    DcaBInnovatebuildAudit, DcaBOtherworkAudit, DcaBPaperspublishAudit, DcaBPatentAudit, DcaBPrizeorpunishAudit, DcaBSciencepublishAudit,
-    DcaBScientificprizeAudit, DcaBTalentAudit, DcaBTeacherqualifyAudit, DcaBTurtorAudit, DcaBUndergraduateAudit, DcaBApplyjobAudit,
-    DcaBAuditfiveAudit, DcaBLastemployAudit, DcaBPersonalsummaryAudit, DcaBPolitalshowAudit, DcaBSciencesearchAudit, DcaBFivecommentAudit, DcaBGoalAudit, DcaBAttachfileAudit, DcaBWorknumAudit, DcaBUndergraduateprizeAudit, DcaBExportcountryAudit
-    , DcaBMedicalaccidentAudit, DcaBDoctorturtorAudit, DcaBAcademicAudit, DcaBAchievementAudit, DcaBQualificationAudit, DcaBUserList
+    DcaBAuditDynamicAudit,
+    DcaBParttimejob,
+    DcaBEmployAudit,
+    DcaBEducationexpericeAudit,
+    DcaBEssaypublishAudit,
+    DcaBGraduateAudit,
+    DcaBPublicarticleAudit,
+    DcaBCourseclassAudit,
+    DcaBSchoolprizeAudit,
+    DcaBTeacherprizeAudit,
+    DcaBYoungprizeAudit,
+    DcaBInnovatebuildAudit,
+    DcaBOtherworkAudit,
+    DcaBPaperspublishAudit,
+    DcaBPatentAudit,
+    DcaBPrizeorpunishAudit,
+    DcaBSciencepublishAudit,
+    DcaBScientificprizeAudit,
+    DcaBTalentAudit,
+    DcaBTeacherqualifyAudit,
+    DcaBTurtorAudit,
+    DcaBUndergraduateAudit,
+    DcaBApplyjobAudit,
+    DcaBAuditfiveAudit,
+    DcaBLastemployAudit,
+    DcaBPersonalsummaryAudit,
+    DcaBPolitalshowAudit,
+    DcaBSciencesearchAudit,
+    DcaBFivecommentAudit,
+    DcaBGoalAudit,
+    DcaBAttachfileAudit,
+    DcaBWorknumAudit,
+    DcaBUndergraduateprizeAudit,
+    DcaBExportcountryAudit,
+    DcaBMedicalaccidentAudit,
+    DcaBDoctorturtorAudit,
+    DcaBAcademicAudit,
+    DcaBAchievementAudit,
+    DcaBQualificationAudit,
+    DcaBUserList,
+    DcaBTeacheryjAudit,
+    DcaBSciachievementAudit,
   },
-  data () {
+  data() {
     return {
       mouduleTreeKey: +new Date(),
       loading: false,
@@ -235,46 +282,43 @@ export default {
       index: 0,
       collapsed: false,
       calcHeight: {
-        height: '',
-        overflow: 'auto'
-      }
-    }
+        height: "",
+        overflow: "auto",
+      },
+    };
   },
-  mounted () {
-    this.fetch()
+  mounted() {
+    this.fetch();
   },
-  created () {
-    window.addEventListener('resize', this.getHeight);
-    this.getHeight()
+  created() {
+    window.addEventListener("resize", this.getHeight);
+    this.getHeight();
   },
   methods: {
-    getHeight () {
-      this.calcHeight.height = window.innerHeight - 59 - 39 - 100 + 'px';
+    getHeight() {
+      this.calcHeight.height = window.innerHeight - 59 - 39 - 100 + "px";
     },
-    fetch () {
-      this.$get('dcaDMudules/treeByUserId').then((r) => {
+    fetch() {
+      this.$get("dcaDMudules/treeByUserId").then((r) => {
         //console.info(222)
-        this.mouduleTreeData = r.data.rows.children
-        this.allTreeKeys = r.data.ids
-        var rowsDatas = r.data.rows.children
-        this.index = rowsDatas[0].children[0].id
-      })
+        this.mouduleTreeData = r.data.rows.children;
+        this.allTreeKeys = r.data.ids;
+        var rowsDatas = r.data.rows.children;
+        this.index = rowsDatas[0].children[0].id;
+      });
     },
-    handleTreeClick (keys, event) {
+    handleTreeClick(keys, event) {
       if (event.node.getNodeChildren().length > 0) {
         let previous = event.node.$el.firstElementChild;
-        previous.click()
-      }
-      else {
+        previous.click();
+      } else {
         if (keys.length > 0) {
-          this.index = keys[0]
+          this.index = keys[0];
         }
       }
-
-    }
-  }
-
-}
+    },
+  },
+};
 </script>
 <style>
 .trigger {

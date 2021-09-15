@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.dcacopy.dao.DcaBCopySciachievementMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.dcacopy.entity.DcaBCopySciachievement">
+                    <id column="id" property="id"/>
+                    <result column="dca_year" property="dcaYear"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="achievement_name" property="achievementName"/>
+                    <result column="rank_index" property="rankIndex"/>
+                    <result column="achievement_grade" property="achievementGrade"/>
+                    <result column="achievement_date" property="achievementDate"/>
+                    <result column="achievement_define" property="achievementDefine"/>
+                    <result column="achievement_content" property="achievementContent"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="auditMan" property="auditMan"/>
+                    <result column="auditManName" property="auditManName"/>
+                    <result column="auditDate" property="auditDate"/>
+                    <result column="auditSuggestion" property="auditSuggestion"/>
+                    <result column="IsUse" property="IsUse"/>
+                    <result column="display_index" property="displayIndex"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dca_year, file_id, file_url, user_account_name, user_account, achievement_name, rank_index, achievement_grade, achievement_date, achievement_define, achievement_content, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
+    </sql>
+    <update id="updateDcaBCopySciachievement" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopySciachievement">
+        update dca_b_copy_sciachievement
+        <trim prefix="set" suffixOverrides=",">
+<if test="dcaYear != null">dca_year=#{dcaYear},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="achievementName != null">achievement_name=#{achievementName},</if>
+<if test="rankIndex != null">rank_index=#{rankIndex},</if>
+<if test="achievementGrade != null">achievement_grade=#{achievementGrade},</if>
+<if test="achievementDate != null">achievement_date=#{achievementDate},</if>
+<if test="achievementDefine != null">achievement_define=#{achievementDefine},</if>
+<if test="achievementContent != null">achievement_content=#{achievementContent},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="auditMan != null">auditMan=#{auditMan},</if>
+<if test="auditManName != null">auditManName=#{auditManName},</if>
+<if test="auditDate != null">auditDate=#{auditDate},</if>
+<if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
+<if test="IsUse != null">IsUse=#{IsUse},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findDcaBCopySciachievement" resultType="cc.mrbird.febs.dcacopy.entity.DcaBCopySciachievement" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopySciachievement">
+        select  *  from dca_b_copy_sciachievement
+        where  1=1
+            <if test="dcaBCopySciachievement.id != null and dcaBCopySciachievement.id != ''"> and dca_b_copy_sciachievement.id =#{ dcaBCopySciachievement.id} </if>
+            <if test="dcaBCopySciachievement.dcaYear != null and dcaBCopySciachievement.dcaYear != ''"> and dca_b_copy_sciachievement.dca_year like concat('%', #{ dcaBCopySciachievement.dcaYear} ,'%')</if>
+            <if test="dcaBCopySciachievement.fileId != null and dcaBCopySciachievement.fileId != ''"> and dca_b_copy_sciachievement.file_id like concat('%', #{ dcaBCopySciachievement.fileId} ,'%')</if>
+            <if test="dcaBCopySciachievement.fileUrl != null and dcaBCopySciachievement.fileUrl != ''"> and dca_b_copy_sciachievement.file_url like concat('%', #{ dcaBCopySciachievement.fileUrl} ,'%')</if>
+            <if test="dcaBCopySciachievement.userAccountName != null and dcaBCopySciachievement.userAccountName != ''"> and dca_b_copy_sciachievement.user_account_name like concat('%', #{ dcaBCopySciachievement.userAccountName} ,'%')</if>
+            <if test="dcaBCopySciachievement.userAccount != null and dcaBCopySciachievement.userAccount != ''"> and dca_b_copy_sciachievement.user_account like concat('%', #{ dcaBCopySciachievement.userAccount} ,'%')</if>
+            <if test="dcaBCopySciachievement.achievementName != null and dcaBCopySciachievement.achievementName != ''"> and dca_b_copy_sciachievement.achievement_name like concat('%', #{ dcaBCopySciachievement.achievementName} ,'%')</if>
+        <if test="dcaBCopySciachievement.rankIndex != null"> and dca_b_copy_sciachievement.rank_index =#{ dcaBCopySciachievement.rankIndex} </if>
+            <if test="dcaBCopySciachievement.achievementGrade != null and dcaBCopySciachievement.achievementGrade != ''"> and dca_b_copy_sciachievement.achievement_grade like concat('%', #{ dcaBCopySciachievement.achievementGrade} ,'%')</if>
+        <if test="dcaBCopySciachievement.achievementDateFrom!= null">
+            AND dca_b_copy_sciachievement.achievement_date <![CDATA[ >= ]]>  #{dcaBCopySciachievement.achievementDateFrom}
+        </if>
+        <if test="dcaBCopySciachievement.achievementDateTo!= null">
+            AND dca_b_copy_sciachievement.achievement_date <![CDATA[ <= ]]>  #{dcaBCopySciachievement.achievementDateTo}
+        </if>
+            <if test="dcaBCopySciachievement.achievementDefine != null and dcaBCopySciachievement.achievementDefine != ''"> and dca_b_copy_sciachievement.achievement_define like concat('%', #{ dcaBCopySciachievement.achievementDefine} ,'%')</if>
+            <if test="dcaBCopySciachievement.achievementContent != null and dcaBCopySciachievement.achievementContent != ''"> and dca_b_copy_sciachievement.achievement_content like concat('%', #{ dcaBCopySciachievement.achievementContent} ,'%')</if>
+        <if test="dcaBCopySciachievement.state != null"> and dca_b_copy_sciachievement.state =#{ dcaBCopySciachievement.state} </if>
+        <if test="dcaBCopySciachievement.isDeletemark != null"> and dca_b_copy_sciachievement.IS_DELETEMARK =#{ dcaBCopySciachievement.isDeletemark} </if>
+        <if test="dcaBCopySciachievement.createTimeFrom!= null">
+            AND dca_b_copy_sciachievement.CREATE_TIME <![CDATA[ >= ]]>  #{dcaBCopySciachievement.createTimeFrom}
+        </if>
+        <if test="dcaBCopySciachievement.createTimeTo!= null">
+            AND dca_b_copy_sciachievement.CREATE_TIME <![CDATA[ <= ]]>  #{dcaBCopySciachievement.createTimeTo}
+        </if>
+        <if test="dcaBCopySciachievement.modifyTimeFrom!= null">
+            AND dca_b_copy_sciachievement.MODIFY_TIME <![CDATA[ >= ]]>  #{dcaBCopySciachievement.modifyTimeFrom}
+        </if>
+        <if test="dcaBCopySciachievement.modifyTimeTo!= null">
+            AND dca_b_copy_sciachievement.MODIFY_TIME <![CDATA[ <= ]]>  #{dcaBCopySciachievement.modifyTimeTo}
+        </if>
+            <if test="dcaBCopySciachievement.auditMan != null and dcaBCopySciachievement.auditMan != ''"> and dca_b_copy_sciachievement.auditMan like concat('%', #{ dcaBCopySciachievement.auditMan} ,'%')</if>
+            <if test="dcaBCopySciachievement.auditManName != null and dcaBCopySciachievement.auditManName != ''"> and dca_b_copy_sciachievement.auditManName like concat('%', #{ dcaBCopySciachievement.auditManName} ,'%')</if>
+        <if test="dcaBCopySciachievement.auditDateFrom!= null">
+            AND dca_b_copy_sciachievement.auditDate <![CDATA[ >= ]]>  #{dcaBCopySciachievement.auditDateFrom}
+        </if>
+        <if test="dcaBCopySciachievement.auditDateTo!= null">
+            AND dca_b_copy_sciachievement.auditDate <![CDATA[ <= ]]>  #{dcaBCopySciachievement.auditDateTo}
+        </if>
+            <if test="dcaBCopySciachievement.auditSuggestion != null and dcaBCopySciachievement.auditSuggestion != ''"> and dca_b_copy_sciachievement.auditSuggestion like concat('%', #{ dcaBCopySciachievement.auditSuggestion} ,'%')</if>
+        <if test="dcaBCopySciachievement.displayIndex != null"> and dca_b_copy_sciachievement.display_index =#{ dcaBCopySciachievement.displayIndex} </if>
+</select>
+
+</mapper>
