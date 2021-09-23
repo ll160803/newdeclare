@@ -6,14 +6,18 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.dca.entity.DcaUserYj;
 import cc.mrbird.febs.dca.service.IDcaBUserapplyService;
 import cc.mrbird.febs.dca.entity.DcaBUserapply;
 
 import cc.mrbird.febs.common.utils.FebsUtil;
+import cc.mrbird.febs.dca.service.IDcaUserYjService;
 import cc.mrbird.febs.system.domain.User;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +46,9 @@ public class DcaBUserapplyController extends BaseController{
 private String message;
 @Autowired
 public IDcaBUserapplyService iDcaBUserapplyService;
+
+    @Autowired
+    public IDcaUserYjService iDcaUserYjService;
 
 /**
  INSERT into t_menu(parent_id,menu_name,path,component,perms,icon,type,order_num,CREATE_time)
@@ -84,7 +92,7 @@ public Map<String, Object> List(QueryRequest request, DcaBUserapply dcaBUserappl
 @Log("新增/按钮")
 @PostMapping
 @RequiresPermissions("dcaBUserapply:add")
-public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply)throws FebsException{
+public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs)throws FebsException{
         try{
         User currentUser= FebsUtil.getCurrentUser();
         dcaBUserapply.setCreateUserId(currentUser.getUserId());
@@ -95,14 +103,26 @@ public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply)throws FebsExcep
            }else {
                throw new FebsException("当前年度已经有申报记录");
            }
-
+           if(StringUtils.isNotEmpty(yjIDs)) {
+               String[] areaIds = yjIDs.split(StringPool.COMMA);
+               setUserYj(currentUser, areaIds,dcaBUserapply.getDcaYear());
+           }
         }catch(Exception e){
         //message="新增/按钮失败" ;
         log.error(message,e);
         throw new FebsException(e.getMessage());
         }
         }
-
+    private void setUserYj(User user, String[] areaIds,String year) {
+        Arrays.stream(areaIds).forEach(menuId -> {
+            DcaUserYj rm = new DcaUserYj();
+            // rm.setId(UUID.randomUUID().toString());
+            rm.setYjId(Long.parseLong(menuId));
+            rm.setUserId(user.getUserId());
+            rm.setDcaYear(year);
+            this.iDcaUserYjService.createDcaUserYj(rm);
+        });
+    }
 /**
  * 修改
  * @param dcaBUserapply
@@ -111,7 +131,7 @@ public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply)throws FebsExcep
 @Log("修改")
 @PutMapping
 @RequiresPermissions("dcaBUserapply:update")
-public void updateDcaBUserapply(@Valid DcaBUserapply dcaBUserapply)throws FebsException{
+public void updateDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs)throws FebsException{
         try{
         User currentUser= FebsUtil.getCurrentUser();
       dcaBUserapply.setModifyUserId(currentUser.getUserId());
@@ -121,6 +141,13 @@ public void updateDcaBUserapply(@Valid DcaBUserapply dcaBUserapply)throws FebsEx
          else {
                     throw new FebsException("当前年度已经有申报记录");
                 }
+         //删除已经存在的
+            this.iDcaUserYjService.deleteByuserid(currentUser.getUserId().toString(),dcaBUserapply.getDcaYear());
+
+            if(StringUtils.isNotEmpty(yjIDs)) {
+                String[] areaIds = yjIDs.split(StringPool.COMMA);
+                setUserYj(currentUser, areaIds,dcaBUserapply.getDcaYear());
+            }
         }catch(Exception e){
        // message="修改失败" ;
         log.error(message,e);

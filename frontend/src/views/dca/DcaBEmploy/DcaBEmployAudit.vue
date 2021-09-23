@@ -45,6 +45,10 @@
               <span style="float: right; margin-top: 3px;">
                 <a-button
                   type="primary"
+                  @click="exportCustomExcel"
+                >导出</a-button>
+                <a-button
+                  type="primary"
                   @click="search2"
                 >查询</a-button>
                 <a-button
@@ -342,7 +346,8 @@ export default {
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
-      userAccount: ''
+      userAccount: '',
+      activeKey: 1,
     }
   },
   components: { DcaBEmployDone, AuditUserInfo },
@@ -359,8 +364,8 @@ export default {
   },
   methods: {
     moment,
-    callback () {
-
+     callback (activeKey) {
+      this.activeKey = activeKey
     },
     search2 () {
      if (this.paginationInfo) {
@@ -397,6 +402,41 @@ export default {
      
       this.$refs.TableInfo2.fetch2(this.queryParams)
       this.$refs.TableInfo3.fetch2(this.queryParams)
+    },
+     exportCustomExcel () {
+      let { sortedInfo } = this
+      let sortField, sortOrder
+      // 获取当前列的排序和列的过滤规则
+      if (sortedInfo) {
+        sortField = sortedInfo.field
+        sortOrder = sortedInfo.order
+      }
+      let json = this.columns
+      json.splice(this.columns.length-1,1) //移出第一个
+      console.info(json)
+      let dataJson = JSON.stringify(json)
+
+      let queryParams= this.queryParams
+      
+      let state = 1
+      if(this.activeKey==1){
+         state = 1
+      }
+       if(this.activeKey==2){
+         state = 3
+         delete queryParams.auditState
+      }
+       if(this.activeKey==3){
+         state = 2
+         delete queryParams.auditState
+      }
+      this.$export('dcaBEmploy/excel', {
+        sortField: 'user_account',
+        sortOrder: 'ascend',
+        state: state,
+        dataJson: dataJson,
+        ...queryParams
+      })
     },
     reset () {
       // 取消选中

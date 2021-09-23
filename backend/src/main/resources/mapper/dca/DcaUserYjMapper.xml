@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.dca.dao.DcaUserYjMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.dca.entity.DcaUserYj">
+                    <id column="id" property="id"/>
+                    <result column="yj_id" property="yjId"/>
+                    <result column="user_id" property="userId"/>
+            <result column="dca_year" property="dcaYear"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, yj_id, user_id,dca_year
+    </sql>
+    <update id="updateDcaUserYj" parameterType="cc.mrbird.febs.dca.entity.DcaUserYj">
+        update dca_user_yj
+        <trim prefix="set" suffixOverrides=",">
+<if test="yjId != null">yj_id=#{yjId},</if>
+<if test="userId != null">user_id=#{userId},</if>
+            <if test="dcaYear != null">dca_year=#{dcaYear},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findDcaUserYj" resultType="cc.mrbird.febs.dca.entity.DcaUserYj" parameterType="cc.mrbird.febs.dca.entity.DcaUserYj">
+        select  *  from dca_user_yj
+        where  1=1
+</select>
+
+</mapper>

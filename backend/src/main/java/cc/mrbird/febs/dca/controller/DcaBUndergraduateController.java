@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.service.IDcaBUndergraduateService;
 import cc.mrbird.febs.dca.entity.DcaBUndergraduate;
 
@@ -185,18 +186,27 @@ public void deleteDcaBUndergraduates(@NotBlank(message = "{required}") @PathVari
         throw new FebsException(message);
         }
         }
-@PostMapping("excel")
-@RequiresPermissions("dcaBUndergraduate:export")
-public void export(QueryRequest request, DcaBUndergraduate dcaBUndergraduate,HttpServletResponse response)throws FebsException{
+    @PostMapping("excel")
+    public void export(QueryRequest request, DcaBUndergraduate dcaBPublicarticles,String dataJson,HttpServletResponse response)throws FebsException{
         try{
-        List<DcaBUndergraduate> dcaBUndergraduates=this.iDcaBUndergraduateService.findDcaBUndergraduates(request, dcaBUndergraduate).getRecords();
-        ExcelKit.$Export(DcaBUndergraduate.class,response).downXlsx(dcaBUndergraduates,false);
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            User currentUser = FebsUtil.getCurrentUser();
+
+            dcaBPublicarticles.setIsDeletemark(1);
+            request.setSortField("user_account asc,state asc,display_Index");
+            request.setSortOrder("ascend");
+            List<DcaBUndergraduate> dcaBSciencepublishList=  this.iDcaBUndergraduateService.findDcaBUndergraduates(request, dcaBPublicarticles).getRecords();
+
+
+            //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
         }catch(Exception e){
-        message="导出Excel失败";
-        log.error(message,e);
-        throw new FebsException(message);
+            message="导出Excel失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        }
+    }
 
 @GetMapping("/{id}")
 public DcaBUndergraduate detail(@NotBlank(message = "{required}") @PathVariable String id){

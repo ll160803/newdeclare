@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import cc.mrbird.febs.common.converter.BooleanConverter;
+import cc.mrbird.febs.common.converter.DateConverter;
+import cc.mrbird.febs.common.converter.StateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
@@ -72,7 +75,7 @@ public class DcaBUndergraduate implements Serializable {
     /**
      * 自何年月
      */
-    @ExcelField(value = "自何年月")
+    @ExcelField(value = "自何年月", writeConverter = DateConverter.class)
     private Date ugStartDate;
     private transient String ugStartDateFrom;
     private transient String ugStartDateTo;
@@ -80,7 +83,7 @@ public class DcaBUndergraduate implements Serializable {
     /**
      * 至何年月
      */
-    @ExcelField(value = "至何年月")
+    @ExcelField(value = "至何年月", writeConverter = DateConverter.class)
     private Date ugEndDate;
     private transient String ugEndDateFrom;
     private transient String ugEndDateTo;
@@ -118,7 +121,7 @@ public class DcaBUndergraduate implements Serializable {
     /**
      * 状态
      */
-    @ExcelField(value = "状态")
+    @ExcelField(value = "状态", writeConverter = StateConverter.class)
     private Integer state;
 
     /**
@@ -194,7 +197,7 @@ public class DcaBUndergraduate implements Serializable {
      * 是否用于本次评审
      */
     @TableField("IsUse")
-    @ExcelField(value = "是否用于本次评审")
+    @ExcelField(value = "经审核是否构成职称晋升条件", writeConverter = BooleanConverter.class)
     private Boolean IsUse;
 
     /**

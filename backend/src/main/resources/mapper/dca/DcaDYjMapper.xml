@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.dca.dao.DcaDYjMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.dca.entity.DcaDYj">
+                    <id column="id" property="id"/>
+                    <result column="mudule_name" property="muduleName"/>
+                    <result column="jb" property="jb"/>
+                    <result column="ml" property="ml"/>
+                    <result column="bh" property="bh"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="parent_id" property="parentId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, mudule_name, jb, ml, bh, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, parent_id
+    </sql>
+    <update id="updateDcaDYj" parameterType="cc.mrbird.febs.dca.entity.DcaDYj">
+        update dca_d_yj
+        <trim prefix="set" suffixOverrides=",">
+<if test="muduleName != null">mudule_name=#{muduleName},</if>
+<if test="jb != null">jb=#{jb},</if>
+<if test="ml != null">ml=#{ml},</if>
+<if test="bh != null">bh=#{bh},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="parentId != null">parent_id=#{parentId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findDcaDYj" resultType="cc.mrbird.febs.dca.entity.DcaDYj" parameterType="cc.mrbird.febs.dca.entity.DcaDYj">
+        select  *  from dca_d_yj
+        where  1=1
+            <if test="dcaDYj.muduleName != null and dcaDYj.muduleName != ''"> and dca_d_yj.mudule_name like concat('%', #{ dcaDYj.muduleName} ,'%')</if>
+            <if test="dcaDYj.jb != null and dcaDYj.jb != ''"> and dca_d_yj.jb like concat('%', #{ dcaDYj.jb} ,'%')</if>
+            <if test="dcaDYj.ml != null and dcaDYj.ml != ''"> and dca_d_yj.ml like concat('%', #{ dcaDYj.ml} ,'%')</if>
+            <if test="dcaDYj.bh != null and dcaDYj.bh != ''"> and dca_d_yj.bh like concat('%', #{ dcaDYj.bh} ,'%')</if>
+        <if test="dcaDYj.state != null"> and dca_d_yj.state =#{ dcaDYj.state} </if>
+        <if test="dcaDYj.isDeletemark != null"> and dca_d_yj.IS_DELETEMARK =#{ dcaDYj.isDeletemark} </if>
+        <if test="dcaDYj.createTimeFrom!= null">
+            AND dca_d_yj.CREATE_TIME <![CDATA[ >= ]]>  #{dcaDYj.createTimeFrom}
+        </if>
+        <if test="dcaDYj.createTimeTo!= null">
+            AND dca_d_yj.CREATE_TIME <![CDATA[ <= ]]>  #{dcaDYj.createTimeTo}
+        </if>
+        <if test="dcaDYj.modifyTimeFrom!= null">
+            AND dca_d_yj.MODIFY_TIME <![CDATA[ >= ]]>  #{dcaDYj.modifyTimeFrom}
+        </if>
+        <if test="dcaDYj.modifyTimeTo!= null">
+            AND dca_d_yj.MODIFY_TIME <![CDATA[ <= ]]>  #{dcaDYj.modifyTimeTo}
+        </if>
+        <if test="dcaDYj.parentId != null"> and dca_d_yj.parent_id =#{ dcaDYj.parentId} </if>
+</select>
+
+</mapper>

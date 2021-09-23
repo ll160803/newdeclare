@@ -185,7 +185,7 @@ export default {
       let checkedArr = Object.is(this.checkedKeys.checked, undefined) ? this.checkedKeys : this.checkedKeys.checked
       this.$refs.aduser.user.areaId = checkedArr.join(',')
       this.$refs.aduser.user.auditId = this.$refs.auTree.getAuditKey()
-       this.$refs.aduser.user.xlId = this.$refs.xlTree.getAuditKey()
+      this.$refs.aduser.user.xlId = this.$refs.xlTree.getAuditKey()
       this.loading = true
       this.$post('user', {
         ...this.$refs.aduser.user

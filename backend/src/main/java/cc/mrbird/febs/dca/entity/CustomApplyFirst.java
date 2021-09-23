@@ -251,6 +251,21 @@ private  List<DcaBCopyEssaypublish> dcaBEssaypublishList;
     private  List<DcaBCopyAchievement> dcaBCopyAchievementList;
 
     /**
+     * 主要科研业绩
+     */
+    private  List<DcaBCopySciachievement> dcaBCopySciachievementList;
+
+    /**
+     * 教学业绩
+     */
+    private  List<DcaBCopyTeacheryj> dcaBCopyTeacheryjsList;
+
+    /**
+     * 医疗认可
+     */
+    private  List<DcaBCopySureachievement> dcaBSCopySureachievementList;
+
+    /**
      * 医疗事故
      */
     private List<DcaBCopyMedicalaccident> dcaBCopyMedicalaccidentList;

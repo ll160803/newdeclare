@@ -15,6 +15,7 @@ import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.system.domain.User;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +29,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author viki
@@ -208,5 +211,21 @@ public class DcaBReportController extends BaseController {
     public DcaBReport detail(@NotBlank(message = "{required}") @PathVariable String id) {
         DcaBReport dcaBReport = this.iDcaBReportService.getById(id);
         return dcaBReport;
+    }
+    @PostMapping("/user")
+    public List<DcaBReport> detail2(String ids) {
+        String[] arr= ids.split(",");
+        LambdaQueryWrapper<DcaBReport> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(DcaBReport::getIsDeletemark, 1);//1是未删 0是已删
+        queryWrapper.eq(DcaBReport::getClshjg,"正常");
+        queryWrapper.in(DcaBReport::getUserAccount,arr);
+        List<DcaBReport> dcaBReports2 = this.iDcaBReportService.list(queryWrapper);
+        List<DcaBReport> dcaBReports= new ArrayList<>();
+        for (String id : arr){
+            List<DcaBReport> d=  dcaBReports2.stream().filter(p->p.getUserAccount().equals(id)).sorted(Comparator.comparing(DcaBReport::getNpPositionName).reversed()).collect(Collectors.toList());
+            dcaBReports.addAll(d);
+        }
+       // dcaBReports= dcaBReports.stream().sorted(Comparator.comparing(DcaBReport::getNpPositionName).collect(Collectors.toList());
+        return  dcaBReports;
     }
 }

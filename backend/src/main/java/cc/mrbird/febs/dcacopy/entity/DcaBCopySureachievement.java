@@ -1,11 +1,6 @@
-package cc.mrbird.febs.dca.entity;
+package cc.mrbird.febs.dcacopy.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import cc.mrbird.febs.common.converter.BooleanConverter;
-import cc.mrbird.febs.common.converter.DateConverter;
-import cc.mrbird.febs.common.converter.StateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
@@ -18,17 +13,17 @@ import com.wuwenze.poi.annotation.ExcelField;
 
 /**
  * <p>
- * 任职培养
+ * 医疗认可
  * </p>
  *
  * @author viki
- * @since 2020-10-27
+ * @since 2021-09-15
  */
 
-@Excel("dca_b_employ")
+@Excel("dca_b_copy_sureachievement")
 @Data
 @Accessors(chain = true)
-public class DcaBEmploy implements Serializable{
+public class DcaBCopySureachievement implements Serializable{
 
 private static final long serialVersionUID=1L;
 
@@ -39,16 +34,16 @@ private static final long serialVersionUID=1L;
     private String id;
 
     /**
+     * 申报年度
+     */
+            @ExcelField(value ="申报年度")
+    private String dcaYear;
+
+    /**
      * 附件
      */
             @ExcelField(value ="附件")
     private String fileId;
-
-    /**
-     * 排序
-     */
-            @ExcelField(value ="排序")
-    private Integer displayIndex;
 
     /**
      * 附件地址
@@ -69,63 +64,47 @@ private static final long serialVersionUID=1L;
     private String userAccount;
 
     /**
-     * 自何年月
+     * 名称
      */
-    @TableField("em_start_TIME")
-            @ExcelField(value ="自何年月", writeConverter = DateConverter.class)
-    private Date emStartTime;
-    private transient String emStartTimeFrom;
-    private transient String emStartTimeTo;
+            @ExcelField(value ="名称")
+    private String achievementName;
 
     /**
-     * 至何年月
+     * 排名
      */
-    @TableField("em_end_TIME")
-            @ExcelField(value ="至何年月", writeConverter = DateConverter.class)
-    private Date emEndTime;
-    private transient String emEndTimeFrom;
-    private transient String emEndTimeTo;
+            @ExcelField(value ="排名")
+    private Integer rankIndex;
 
     /**
-     * 讲授课程名称
+     * 等级
      */
-            @ExcelField(value ="讲授课程名称")
-    private String emCoursename;
+            @ExcelField(value ="等级")
+    private String achievementGrade;
 
     /**
-     * 其他教学任务
+     * 获得时间
      */
-            @ExcelField(value ="其他教学任务")
-    private String emOtherwork;
+            @ExcelField(value ="获得时间")
+    private Date achievementDate;
+    private transient String achievementDateFrom;
+    private transient String achievementDateTo;
 
     /**
-     * 学生人数
+     * 期限
      */
-            @ExcelField(value ="学生人数")
-    private Integer emStudentcount;
-
-    /**
-     * 周学时数
-     */
-            @ExcelField(value ="周学时数")
-    private BigDecimal emWeektime;
-
-    /**
-     * 总学时数
-     */
-            @ExcelField(value ="总学时数")
-    private BigDecimal emTotaltime;
+            @ExcelField(value ="期限")
+    private String achievementDefine;
 
     /**
      * 备注
      */
             @ExcelField(value ="备注")
-    private String emContent;
+    private String achievementContent;
 
     /**
      * 状态
      */
-            @ExcelField(value ="状态", writeConverter = StateConverter.class)
+            @ExcelField(value ="状态")
     private Integer state;
 
     /**
@@ -201,18 +180,22 @@ private static final long serialVersionUID=1L;
      * 是否用于本次评审
      */
     @TableField("IsUse")
-            @ExcelField(value ="是否用于本次评审", writeConverter = BooleanConverter.class)
+            @ExcelField(value ="是否用于本次评审")
     private Boolean IsUse;
 
-    private  transient Integer auditXuhao;
-    private  transient  Integer auditXuhaoS;
-    private  transient  Integer auditXuhaoE;
+    /**
+     * 排序
+     */
+            @ExcelField(value ="排序")
+    private Integer displayIndex;
+
+
 
     public static final String ID ="id" ;
 
-    public static final String FILE_ID ="file_id" ;
+    public static final String DCA_YEAR ="dca_year" ;
 
-    public static final String DISPLAY_INDEX ="display_index" ;
+    public static final String FILE_ID ="file_id" ;
 
     public static final String FILE_URL ="file_url" ;
 
@@ -220,21 +203,17 @@ private static final long serialVersionUID=1L;
 
     public static final String USER_ACCOUNT ="user_account" ;
 
-    public static final String EM_START_TIME ="em_start_TIME" ;
+    public static final String ACHIEVEMENT_NAME ="achievement_name" ;
 
-    public static final String EM_END_TIME ="em_end_TIME" ;
+    public static final String RANK_INDEX ="rank_index" ;
 
-    public static final String EM_COURSENAME ="em_coursename" ;
+    public static final String ACHIEVEMENT_GRADE ="achievement_grade" ;
 
-    public static final String EM_OTHERWORK ="em_otherwork" ;
+    public static final String ACHIEVEMENT_DATE ="achievement_date" ;
 
-    public static final String EM_STUDENTCOUNT ="em_studentcount" ;
+    public static final String ACHIEVEMENT_DEFINE ="achievement_define" ;
 
-    public static final String EM_WEEKTIME ="em_weektime" ;
-
-    public static final String EM_TOTALTIME ="em_totaltime" ;
-
-    public static final String EM_CONTENT ="em_content" ;
+    public static final String ACHIEVEMENT_CONTENT ="achievement_content" ;
 
     public static final String STATE ="state" ;
 
@@ -257,5 +236,7 @@ private static final long serialVersionUID=1L;
     public static final String AUDITSUGGESTION ="auditSuggestion" ;
 
     public static final String ISUSE ="IsUse" ;
+
+    public static final String DISPLAY_INDEX ="display_index" ;
 
         }
