@@ -43,5 +43,5 @@ public interface IDcaDYjService extends IService<DcaDYj> {
          * @param userId
          * @return
          */
-        Map<String, Object> findDeptsByUserId(Long userId,String year);
+        Map<String, Object> findDeptsByUserId(String userId,String year);
         }

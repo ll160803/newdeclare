@@ -56,7 +56,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1500,
+        x: 1800,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -89,7 +89,7 @@ export default {
       }
       params.sortField = "userAccount"
       params.sortOrder = "descend"
-      this.$get('dcaBDoctorturtor/audit', {
+      this.$get('dcaBSureachievement/audit', {
         state: this.state,
         ...params
       }).then((r) => {
@@ -128,7 +128,7 @@ export default {
       params.sortField = "userAccount"
       params.sortOrder = "descend"
       params.userAccount = userAccount
-      this.$get('dcaBDoctorturtor/audit', {
+      this.$get('dcaBSureachievement/audit', {
         state: this.state,
         ...params
       }).then((r) => {
@@ -154,31 +154,53 @@ export default {
   computed: {
     columns () {
       return [
+         {
+          title: '序号',
+          dataIndex: 'auditXuhao',
+          width: 60,
+          fixed: 'left'
+        },
         {
           title: '发薪号',
           dataIndex: 'userAccount',
           width: 80,
-          scopedSlots: { customRender: 'userAccount' }
+          scopedSlots: { customRender: 'userAccount' },
+          fixed: 'left'
         },
         {
           title: '姓名',
           dataIndex: 'userAccountName',
+          width: 80,
+          fixed: 'left'
+        },
+        {
+          title: '名称',
+          dataIndex: 'achievementName',
+          width: 450,
+          fixed: 'left'
+        },
+        {
+          title: '排名',
+          dataIndex: 'rankIndex',
+          width: 80,
+          fixed: 'left'
+        },
+         
+        {
+          title: '获得时间',
+          dataIndex: 'achievementDate',
+          width: 130,
+          fixed: 'left'
+        },
+        {
+          title: '期限',
+          dataIndex: 'achievementDefine',
           width: 80
         },
         {
-          title: '导师类型',
-          dataIndex: 'turtorType',
-          width: 130
-        },
-        {
-          title: '任职时间',
-          dataIndex: 'turtorDate',
-          width: 130
-        },
-        {
           title: '备注',
-          dataIndex: 'tutorContent',
-          width: 200
+          dataIndex: 'achievementContent',
+          width: 130
         },
         {
           title: '状态',
@@ -201,10 +223,9 @@ export default {
         },
         {
           title: '审核意见',
-          dataIndex: 'auditSuggestion',
-          width: 120
+          dataIndex: 'auditSuggestion'
         },
-       {
+        {
           title: '经审核是否构成职称晋升条件',
           dataIndex: 'isUse',
           width: 100,

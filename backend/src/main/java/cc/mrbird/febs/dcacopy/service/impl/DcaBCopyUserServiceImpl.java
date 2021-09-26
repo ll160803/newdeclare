@@ -136,6 +136,9 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
     @Autowired
     private IDcaBReportService iDcaBReportService;
 
+    @Autowired
+    private IDcaBCopyQualificationService iDcaBCopyQualificationService;
+
     @Override
     public IPage<DcaBCopyUser> findDcaBCopyUsers(QueryRequest request, DcaBCopyUser dcaBCopyUser) {
         try {
@@ -236,6 +239,7 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
             }
         }).collect(Collectors.toList());
         customApplyFirst.setDcaBPatentList(listDcaBCopyPatent);
+        List<DcaBCopyQualification> dcaBCopyQualificationList = this.iDcaBCopyQualificationService.getAll(userAccount, dcaYear);
         List<DcaBCopyApplyjob> listDcaBApplyjob = this.iDcaBCopyApplyjobService.getAll(userAccount, dcaYear);
         List<DcaBCopyAttachfile> listDcaBCopyAttachfile = this.iDcaBCopyAttachfileService.getAll(userAccount, dcaYear);
         List<DcaBCopyAuditfive> listDcaBCopyAuditfive = this.iDcaBCopyAuditfiveService.getAll(userAccount, dcaYear);
@@ -397,6 +401,8 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
         customApplyFirst.setDcaBCopyAchievementList(dcaBCopyAchievementList);
         customApplyFirst.setDcaBCopyMedicalaccidentList(dcaBCopyMedicalaccidentList);
         customApplyFirst.setDcaBCopyDoctorturtorList(dcaBCopyDoctorturtorList);
+
+        customApplyFirst.setDcaBCopyQualificationList(dcaBCopyQualificationList);
 
         customApplyFirst.setKs(user.getKs());
         customApplyFirst.setTel(user.getTelephone());

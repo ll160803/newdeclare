@@ -1,5 +1,5 @@
 <template>
-  <a-card title="主要医疗业绩(新技术新业务获批情况)">
+  <a-card title="新技术新业务获批情况">
         <div>
       <a-button
         @click="handleAdd"
@@ -310,7 +310,9 @@ export default {
             }
           });
           if (dataAdd.length === 0) {
-            that.$message.warning('请填写数据！！！')
+              setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
+              that.$EventBus.$emit('selectMoudles',500)
+            }, 300);
           }
           else {
             let jsonStr = JSON.stringify(dataAdd)
@@ -321,9 +323,12 @@ export default {
             }).then(() => {
               //this.reset()
               that.$message.success('提交成功')
-              that.fetch()
+            //  that.fetch()
               that.CustomVisiable = false //提交之后 不能再修改
               that.loading = false
+               setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
+              that.$EventBus.$emit('selectMoudles',500)
+            }, 300);
             }).catch(() => {
               that.loading = false
             })

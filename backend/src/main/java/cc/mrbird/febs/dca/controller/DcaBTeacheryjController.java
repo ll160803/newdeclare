@@ -169,7 +169,6 @@ public void addDcaBTeacheryj(@Valid DcaBTeacheryj dcaBTeacheryj)throws FebsExcep
  */
 @Log("修改")
 @PutMapping
-@RequiresPermissions("dcaBTeacheryj:update")
 public void updateDcaBTeacheryj(@Valid DcaBTeacheryj dcaBTeacheryj)throws FebsException{
         try{
         User currentUser=FebsUtil.getCurrentUser();
@@ -185,7 +184,6 @@ public void updateDcaBTeacheryj(@Valid DcaBTeacheryj dcaBTeacheryj)throws FebsEx
 
 @Log("删除")
 @DeleteMapping("/{ids}")
-@RequiresPermissions("dcaBTeacheryj:delete")
 public void deleteDcaBTeacheryjs(@NotBlank(message = "{required}") @PathVariable String ids)throws FebsException{
         try{
         String[]arr_ids=ids.split(StringPool.COMMA);

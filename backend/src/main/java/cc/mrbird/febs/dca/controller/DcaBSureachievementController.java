@@ -169,7 +169,6 @@ public void addDcaBSureachievement(@Valid DcaBSureachievement dcaBSureachievemen
  */
 @Log("修改")
 @PutMapping
-@RequiresPermissions("dcaBSureachievement:update")
 public void updateDcaBSureachievement(@Valid DcaBSureachievement dcaBSureachievement)throws FebsException{
         try{
         User currentUser=FebsUtil.getCurrentUser();

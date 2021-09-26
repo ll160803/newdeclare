@@ -89,6 +89,10 @@ export default {
               that.$message.success('保存成功')
               that.CustomVisiable = false
               that.loading = false
+
+               setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
+              that.$EventBus.$emit('selectMoudles',240)
+            }, 300);
             }).catch(() => {
               that.loading = false
             })

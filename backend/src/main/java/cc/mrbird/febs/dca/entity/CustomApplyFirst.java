@@ -228,6 +228,7 @@ private  List<DcaBCopyEssaypublish> dcaBEssaypublishList;
     private  List<DcaBCopySchoolprize> dcaBSchoolprizeList;
     private  List<DcaBCopyCourseclass> dcaBCourseclassList;
     private  List<DcaBCopyYoungprize> dcaBYoungprizeList;
+    private  List<DcaBCopyQualification> dcaBCopyQualificationList;
 
     /**
      * 任现职以来本科教学工作获奖

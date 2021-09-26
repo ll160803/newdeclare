@@ -1,5 +1,5 @@
 <template>
-  <a-card title="主要教学业绩">
+  <a-card title="医疗认可">
     <div>
       <a-button @click="handleAdd" type="primary" :loading="loading"
         >添加行</a-button
@@ -19,43 +19,77 @@
       bordered
       :scroll="scroll"
     >
-      <template slot="teachName" slot-scope="text, record">
+      <template slot="achievementName" slot-scope="text, record">
         <div v-if="record.state == 3 || record.state == 1">
           {{ text }}
         </div>
         <div v-else>
           <a-select
-            :value="record.teachName"
+            :value="record.achievementName"
             style="width: 100%"
-            @change="(e, f) => handleSelectChange(e, f, record, 'teachName')"
+            @change="
+              (e, f) => handleSelectChange(e, f, record, 'achievementName')
+            "
           >
             <a-select-option
-              value="国家教学成果一等奖的第一名"
-            >国家教学成果一等奖的第一名</a-select-option>
+              value="获得国家拥有自主知识产权的国家一类新药的研制者第一名"
+              >获得国家拥有自主知识产权的国家一类新药的研制者第一名</a-select-option
+            >
+            <a-select-option value="现任中央干部保健专家委员会成员"
+              >现任中央干部保健专家委员会成员</a-select-option
+            >
             <a-select-option
-              value="全国百篇优秀博士论文指导教师"
-            >全国百篇优秀博士论文指导教师</a-select-option>
-            <a-select-option value="国家级“教学名师奖”获得者">国家级“教学名师奖”获得者</a-select-option>
-            <a-select-option value="国家级精品课负责人">国家级精品课负责人</a-select-option>
+              value="医疗技术精湛，首次提出了针对某种疾病的预防、诊断和治疗方法或某一新的医学理论，有创新性，在临床取得良好效果，并在中华医学系列及以上杂志发表论文，经医疗管理部门推荐，医院学术委员会投票表决通过者"
+              >医疗技术精湛，首次提出了针对某种疾病的预防、诊断和治疗方法或某一新的医学理论，有创新性，在临床取得良好效果，并在中华医学系列及以上杂志发表论文，经医疗管理部门推荐，医院学术委员会投票表决通过者</a-select-option
+            >
             <a-select-option
-              value="省部级教学成果一等奖及以上的第一名"
-            >省部级教学成果一等奖及以上的第一名</a-select-option>
+              value="任正高职务12年以上，医疗技术高超，是国内医疗界本专业领域的权威，并得到公认者"
+              >任正高职务12年以上，医疗技术高超，是国内医疗界本专业领域的权威，并得到公认者</a-select-option
+            >
             <a-select-option
-              value="国家教学基地负责人（以有关文件为准）"
-            >国家教学基地负责人（以有关文件为准）</a-select-option>
+              value="获得国家拥有自主知识产权的国家一类新药的研制者的前两名或二类新药的研制者第一名"
+              >获得国家拥有自主知识产权的国家一类新药的研制者的前两名或二类新药的研制者第一名</a-select-option
+            >
             <a-select-option
-              value="国家教材二等奖及以上的第一名"
-            >国家教材二等奖及以上的第一名</a-select-option>
-            <a-select-option
-              value="国家教学成果二等奖及以上的第一名"
-            >国家教学成果二等奖及以上的第一名</a-select-option>
-            <a-select-option
-              value="国家教学成果二等奖及以上的前两名"
-            >国家教学成果二等奖及以上的前两名</a-select-option>
+              value="医疗技术精良，首次提出了针对某种疾病的预防、诊断和治疗方法或某一新的医学理论，有创新性，在临床取得良好效果，并在中华医学系列及以上杂志发表论文，经医疗管理部门推荐，医院学术委员会投票表决通过者"
+              >医疗技术精良，首次提出了针对某种疾病的预防、诊断和治疗方法或某一新的医学理论，有创新性，在临床取得良好效果，并在中华医学系列及以上杂志发表论文，经医疗管理部门推荐，医院学术委员会投票表决通过者</a-select-option
+            >
           </a-select>
         </div>
       </template>
-      <template slot="teachDate" slot-scope="text, record">
+      <template slot="rankIndex" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text }}
+        </div>
+        <div v-else>
+          <a-input-number
+            style="width: 100%"
+            @blur="(e) => inputChange(e.target.value, record, 'rankIndex')"
+            :value="record.rankIndex"
+            :precision="0"
+          >
+          </a-input-number>
+        </div>
+      </template>
+      <template slot="achievementGrade" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text }}
+        </div>
+        <div v-else>
+          <a-select
+            :value="record.achievementGrade"
+            style="width: 100%"
+            @change="
+              (e, f) => handleSelectChange(e, f, record, 'achievementGrade')
+            "
+          >
+            <a-select-option value="一"> 一 </a-select-option>
+            <a-select-option value="二"> 二 </a-select-option>
+            <a-select-option value="三"> 三 </a-select-option>
+          </a-select>
+        </div>
+      </template>
+      <template slot="achievementDate" slot-scope="text, record">
         <div v-if="record.state == 3 || record.state == 1">
           {{ text == "" || text == null ? "" : text.substr(0, 10) }}
         </div>
@@ -64,32 +98,34 @@
             :defaultValue="
               text == '' || text == null ? '' : moment(text, dateFormat)
             "
-            @change="(e, f) => handleChange(e, f, record, 'teachDate')"
+            @change="(e, f) => handleChange(e, f, record, 'achievementDate')"
           />
         </div>
       </template>
-      <template slot="rankNum" slot-scope="text, record">
-        <div v-if="record.state == 3 || record.state == 1">
-          {{ text }}
-        </div>
-        <div v-else>
-          <a-input-number
-            style="width: 100%"
-            @blur="(e) => inputChange(e.target.value, record, 'rankNum')"
-            :value="record.rankNum"
-            :precision="0"
-          >
-          </a-input-number>
-        </div>
-      </template>
-      <template slot="teachContent" slot-scope="text, record">
+      <template slot="achievementDefine" slot-scope="text, record">
         <div v-if="record.state == 3 || record.state == 1">
           {{ text }}
         </div>
         <div v-else>
           <a-textarea
-            @blur="(e) => inputChange(e.target.value, record, 'teachContent')"
-            :value="record.teachContent"
+            @blur="
+              (e) => inputChange(e.target.value, record, 'achievementDefine')
+            "
+            :value="record.achievementDefine"
+          >
+          </a-textarea>
+        </div>
+      </template>
+      <template slot="achievementContent" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text }}
+        </div>
+        <div v-else>
+          <a-textarea
+            @blur="
+              (e) => inputChange(e.target.value, record, 'achievementContent')
+            "
+            :value="record.achievementContent"
           >
           </a-textarea>
         </div>
@@ -153,7 +189,7 @@ export default {
         fileId: "",
       },
       scroll: {
-        x: 1200,
+        x: 1500,
         y: window.innerHeight - 200 - 100 - 20 - 80,
       },
     };
@@ -216,10 +252,12 @@ export default {
         this.dataSource.push({
           id: (this.idNums + i + 1).toString(),
           state: 0,
-          teachName: "",
-          teachDate: "",
-          rankNum: "",
-          teachContent: "",
+          achievementName: "",
+          rankIndex: "",
+          achievementDate: "",
+          achievementDefine: "",
+          achievementContent: "",
+          achievementGrade: "",
           isUse: false,
         });
       }
@@ -233,9 +271,11 @@ export default {
       let dataAdd = [];
       dataSource.forEach((element) => {
         if (
-          element.teachName != "" ||
-          element.teachDate != "" ||
-          element.teachContent != ""
+          element.achievementName != "" ||
+          element.rankIndex != "" ||
+          element.achievementDate != "" ||
+          element.achievementDefine != "" ||
+          element.achievementContent != ""
         ) {
           dataAdd.push(element);
         }
@@ -245,7 +285,7 @@ export default {
       } else {
         let jsonStr = JSON.stringify(dataAdd);
         this.loading = true;
-        this.$post("dcaBTeacheryj/addNew", {
+        this.$post("dcaBSureachievement/addNew", {
           jsonStr: jsonStr,
           state: 0,
         })
@@ -274,22 +314,24 @@ export default {
           let dataAdd = [];
           dataSource.forEach((element) => {
             if (
-              element.teachName != "" ||
-              element.teachDate != "" ||
-              element.teachContent != ""
+              element.achievementName != "" ||
+              element.rankIndex != "" ||
+              element.achievementDate != "" ||
+              element.achievementDefine != "" ||
+              element.achievementContent != ""
             ) {
               dataAdd.push(element);
             }
           });
           if (dataAdd.length === 0) {
-              setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
-              that.$EventBus.$emit('selectMoudles',70)
+             setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
+              that.$EventBus.$emit('selectMoudles',60)
             }, 300);
           } else {
             let jsonStr = JSON.stringify(dataAdd);
             that.loading = true;
             that
-              .$post("dcaBTeacheryj/addNew", {
+              .$post("dcaBSureachievement/addNew", {
                 jsonStr: jsonStr,
                 state: 1,
               })
@@ -300,7 +342,7 @@ export default {
                 that.CustomVisiable = false; //提交之后 不能再修改
                 that.loading = false;
                  setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
-              that.$EventBus.$emit('selectMoudles',70)
+              that.$EventBus.$emit('selectMoudles',60)
             }, 300);
               })
               .catch(() => {
@@ -329,14 +371,14 @@ export default {
           let new_dataSource = dataSource.filter(
             (p) => that.selectedRowKeys.indexOf(p.id) < 0
           );
-          that.dataSource = new_dataSource;
           that
-            .$put("dcaBTeacheryj", {
+            .$put("dcaBSureachievement", {
               id: that.selectedRowKeys[0],
               isDeletemark: 0,
             })
             .then(() => {})
             .catch(() => {});
+          that.dataSource = new_dataSource;
           that.$message.success("删除成功");
           that.selectedRowKeys = [];
         },
@@ -346,7 +388,7 @@ export default {
       });
     },
     fetch() {
-      this.$get("dcaBTeacheryj/custom", {}).then((r) => {
+      this.$get("dcaBSureachievement/custom", {}).then((r) => {
         let data = r.data;
         this.dataSource = data.rows;
 
@@ -354,10 +396,12 @@ export default {
           this.dataSource.push({
             id: (this.idNums + i + 1).toString(),
             state: 0,
-            teachName: "",
-            teachDate: "",
-            rankNum: "",
-            teachContent: "",
+            achievementName: "",
+            rankIndex: "",
+            achievementDate: "",
+            achievementDefine: "",
+            achievementContent: "",
+            achievementGrade: "",
             isUse: false,
           });
           this.idNums = this.idNums + 4;
@@ -370,27 +414,33 @@ export default {
       return [
         {
           title: "名称",
-          dataIndex: "teachName",
-          width: 400,
-          scopedSlots: { customRender: "teachName" },
+          dataIndex: "achievementName",
+          width: 450,
+          scopedSlots: { customRender: "achievementName" },
         },
         {
           title: "排名",
-          dataIndex: "rankNum",
-          width: 130,
-          scopedSlots: { customRender: "rankNum" },
+          dataIndex: "rankIndex",
+          width: 80,
+          scopedSlots: { customRender: "rankIndex" },
         },
         {
-          title: "任职（获得）时间",
-          dataIndex: "teachDate",
-          width: 130,
-          scopedSlots: { customRender: "teachDate" },
+          title: "获得时间",
+          dataIndex: "achievementDate",
+          width: 120,
+          scopedSlots: { customRender: "achievementDate" },
+        },
+        {
+          title: "期限",
+          dataIndex: "achievementDefine",
+          width: 80,
+          scopedSlots: { customRender: "achievementDefine" },
         },
         {
           title: "备注",
-          dataIndex: "teachContent",
+          dataIndex: "achievementContent",
           width: 130,
-          scopedSlots: { customRender: "teachContent" },
+          scopedSlots: { customRender: "achievementContent" },
         },
         {
           title: "状态",
@@ -419,7 +469,7 @@ export default {
           title: "经审核是否构成职称晋升条件",
           dataIndex: "isUse",
           scopedSlots: { customRender: "isUse" },
-          width: 100,
+          width: 80,
         },
         {
           title: "附件",

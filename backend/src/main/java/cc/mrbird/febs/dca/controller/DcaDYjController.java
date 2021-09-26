@@ -165,7 +165,6 @@ public void addDcaDYj(@Valid DcaDYj dcaDYj)throws FebsException{
  */
 @Log("修改")
 @PutMapping
-@RequiresPermissions("dcaDYj:update")
 public void updateDcaDYj(@Valid DcaDYj dcaDYj)throws FebsException{
         try{
         User currentUser=FebsUtil.getCurrentUser();
@@ -181,7 +180,6 @@ public void updateDcaDYj(@Valid DcaDYj dcaDYj)throws FebsException{
 
 @Log("删除")
 @DeleteMapping("/{ids}")
-@RequiresPermissions("dcaDYj:delete")
 public void deleteDcaDYjs(@NotBlank(message = "{required}") @PathVariable String ids)throws FebsException{
         try{
         String[]arr_ids=ids.split(StringPool.COMMA);
@@ -226,6 +224,6 @@ public DcaDYj detail(@NotBlank(message = "{required}") @PathVariable String id){
     @GetMapping("treeByUserId/{year}")
     public Map<String, Object> treeList2(@PathVariable String year) {
         User currentUser= FebsUtil.getCurrentUser();
-        return this.iDcaDYjService.findDeptsByUserId(currentUser.getUserId(),year);
+        return this.iDcaDYjService.findDeptsByUserId(currentUser.getUsername(),year);
     }
         }

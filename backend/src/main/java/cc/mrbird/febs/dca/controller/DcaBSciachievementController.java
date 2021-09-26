@@ -169,7 +169,6 @@ public void addDcaBSciachievement(@Valid DcaBSciachievement dcaBSciachievement)t
  */
 @Log("修改")
 @PutMapping
-@RequiresPermissions("dcaBSciachievement:update")
 public void updateDcaBSciachievement(@Valid DcaBSciachievement dcaBSciachievement)throws FebsException{
         try{
         User currentUser=FebsUtil.getCurrentUser();
@@ -185,7 +184,6 @@ public void updateDcaBSciachievement(@Valid DcaBSciachievement dcaBSciachievemen
 
 @Log("删除")
 @DeleteMapping("/{ids}")
-@RequiresPermissions("dcaBSciachievement:delete")
 public void deleteDcaBSciachievements(@NotBlank(message = "{required}") @PathVariable String ids)throws FebsException{
         try{
         String[]arr_ids=ids.split(StringPool.COMMA);

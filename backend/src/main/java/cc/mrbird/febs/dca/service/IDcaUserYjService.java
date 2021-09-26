@@ -34,5 +34,5 @@ IDcaUserYjService extends IService<DcaUserYj> {
         void deleteByuserid(String userId,String year);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
-        List<DcaUserYj> getMudulesByUserId(Integer userId,String year,String dj);
+        List<DcaUserYj> getMudulesByUserId(String userId,String year,String dj);
         }

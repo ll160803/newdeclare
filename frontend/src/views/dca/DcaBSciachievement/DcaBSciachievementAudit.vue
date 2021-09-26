@@ -73,21 +73,74 @@
               :bordered="true"
               :scroll="scroll"
             >
-              <template
-                slot="achievementName"
-                slot-scope="text, record"
-              >
-                <div v-if="record.state==3">
-                  {{text}}
-                </div>
-                <div v-else>
-                  <a-textarea
-                    @blur="e => inputChange(e.target.value,record,'achievementName')"
-                    :value="record.achievementName"
-                  >
-                  </a-textarea>
-                </div>
-              </template>
+          <template slot="achievementName" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text }}
+        </div>
+        <div v-else>
+          <a-select
+            :value="record.achievementName"
+            style="width: 100%"
+            @change="
+              (e, f) => handleSelectChange(e, f, record, 'achievementName')
+            "
+          >
+            <a-select-option value="“973”首席科学家">“973”首席科学家</a-select-option>
+            <a-select-option
+              value="国家级科技三大奖一等奖的前两名或二等奖的第一名"
+            >国家级科技三大奖一等奖的前两名或二等奖的第一名</a-select-option>
+            <a-select-option
+              value="国家杰出青年科学基金获得者"
+            >国家杰出青年科学基金获得者</a-select-option>
+            <a-select-option
+              value="近五年在《science》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者"
+            >近五年在《science》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者</a-select-option>
+            <a-select-option
+              value="近五年在《nature》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者"
+            >近五年在《nature》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者</a-select-option>
+            <a-select-option
+              value="近五年在《cell》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者"
+            >近五年在《cell》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者</a-select-option>
+            <a-select-option
+              value="国家自然（社会）科学基金重大项目负责人"
+            >国家自然（社会）科学基金重大项目负责人</a-select-option>
+            <a-select-option
+              value="国家自然（社会）科学基金重点项目负责人"
+            >国家自然（社会）科学基金重点项目负责人</a-select-option>
+            <a-select-option value="863目标导向类项目负责人">863目标导向类项目负责人</a-select-option>
+            <a-select-option value="863重点项目负责人">863重点项目负责人</a-select-option>
+            <a-select-option value="863重大项目负责人">863重大项目负责人</a-select-option>
+            <a-select-option value="863科技部支撑项目负责人">863科技部支撑项目负责人</a-select-option>
+            <a-select-option
+              value="近五年“973”课题组长（原一级子项目负责人，以科技部合同为准)"
+            >近五年“973”课题组长（原一级子项目负责人，以科技部合同为准)</a-select-option>
+            <a-select-option
+              value="近五年在《science》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）"
+            >近五年在《science》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）</a-select-option>
+            <a-select-option
+              value="近五年在《nature》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）"
+            >近五年在《nature》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）</a-select-option>
+            <a-select-option
+              value="近五年在《cell》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）"
+            >近五年在《cell》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）</a-select-option>
+            <a-select-option
+              value="全国百篇优秀博士论文获得者"
+            >全国百篇优秀博士论文获得者</a-select-option>
+            <a-select-option
+              value="省部级科技三大奖一等奖及以上（含社会科学成果奖）的第一名"
+            >省部级科技三大奖一等奖及以上（含社会科学成果奖）的第一名</a-select-option>
+            <a-select-option
+              value="近五年主持863项目、国家自然（社会）科学基金2项以上或主持单项500万元以上的科研项目者"
+            >近五年主持863项目、国家自然（社会）科学基金2项以上或主持单项500万元以上的科研项目者</a-select-option>
+            <a-select-option
+              value="近五年在影响因子20以上的杂志以华中科技大学为第一完成单位发表第一作者或通讯作者学术论文1篇，或10以上杂志发表2篇；在A类期刊以第一作者或通讯作者署名发表本学科学术论文5篇"
+            >近五年在影响因子20以上的杂志以华中科技大学为第一完成单位发表第一作者或通讯作者学术论文1篇，或10以上杂志发表2篇；在A类期刊以第一作者或通讯作者署名发表本学科学术论文5篇</a-select-option>
+            <a-select-option
+              value="国家科技三大奖（含社会科学成果奖）的前3名和省部级科技三大奖（含社会科学成果奖）二等以上奖的第一名"
+            >国家科技三大奖（含社会科学成果奖）的前3名和省部级科技三大奖（含社会科学成果奖）二等以上奖的第一名</a-select-option>
+          </a-select>
+        </div>
+      </template>
               <template
                 slot="rankIndex"
                 slot-scope="text, record"
@@ -234,22 +287,22 @@
             tab="已审核"
             :forceRender="true"
           >
-            <dcaBAchievement-done
+            <dcaBSciachievement-done
               ref="TableInfo2"
               :state="3"
             >
-            </dcaBAchievement-done>
+            </dcaBSciachievement-done>
           </a-tab-pane>
           <a-tab-pane
             key="3"
             tab="审核未通过"
             :forceRender="true"
           >
-            <dcaBAchievement-done
+            <dcaBSciachievement-done
               ref="TableInfo3"
               :state="2"
             >
-            </dcaBAchievement-done>
+            </dcaBSciachievement-done>
           </a-tab-pane>
         </a-tabs>
         <audit-userInfo
@@ -301,7 +354,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1600,
+        x: 1800,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -478,8 +531,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.fetch()
-            that.freshTabs()
+          that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -504,8 +556,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.fetch()
-            that.freshTabs()
+           that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -530,8 +581,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('操作成功')
-            that.fetch()
-            that.freshTabs()
+           that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -595,7 +645,7 @@ export default {
         {
           title: '名称',
           dataIndex: 'achievementName',
-          width: 250,
+          width: 450,
           scopedSlots: { customRender: 'achievementName' },
           fixed: 'left'
         },

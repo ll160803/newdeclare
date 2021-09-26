@@ -284,17 +284,17 @@ export default {
         let data = r.data
         this.dataSource = data.rows
 
-       /**  for (let i = 0; i < 4; i++) {
-          this.dataSource.push({
-            id: (this.idNums + i + 1).toString(),
-            state: 0,
-            turtorType: '',
-            turtorDate: '',
-            tutorContent: '',
-            isUse: false
-          })
-          this.idNums = this.idNums + 4
-        }*/
+        //  for (let i = 0; i < 4; i++) {
+        //   this.dataSource.push({
+        //     id: (this.idNums + i + 1).toString(),
+        //     state: 0,
+        //     turtorType: '',
+        //     turtorDate: '',
+        //     tutorContent: '',
+        //     isUse: false
+        //   })
+        //   this.idNums = this.idNums + 4
+        // }
       })
     }
   },
@@ -315,7 +315,7 @@ export default {
       {
         title: '备注',
         dataIndex: 'tutorContent',
-        width: 130,
+        width: 200,
         scopedSlots: { customRender: 'tutorContent' }
       },
       {

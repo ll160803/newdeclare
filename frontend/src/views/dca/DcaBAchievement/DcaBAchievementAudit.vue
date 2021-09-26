@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-spin :spinning="loading">
-      <a-card title="主要医疗业绩(新技术新业务获批情况)">
+      <a-card title="新技术新业务获批情况">
         <div>
           <a-form layout="horizontal">
             <a-row>
@@ -478,8 +478,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.fetch()
-            that.freshTabs()
+           that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -504,8 +503,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.fetch()
-            that.freshTabs()
+           that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -530,8 +528,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('操作成功')
-            that.fetch()
-            that.freshTabs()
+          that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false

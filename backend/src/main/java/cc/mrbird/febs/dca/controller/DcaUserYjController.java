@@ -195,8 +195,8 @@ public DcaUserYj detail(@NotBlank(message = "{required}") @PathVariable String i
     @GetMapping("mudules/{year}")
     public List<String> getRoleMenus(@NotBlank(message = "{required}") @PathVariable String year,String dj) {
         User currentUser=FebsUtil.getCurrentUser();
-        String userId =currentUser.getUserId().toString();
-        List<DcaUserYj> list = this.iDcaUserYjService.getMudulesByUserId(Integer.parseInt(userId),year,dj);
+        String userId =currentUser.getUsername();
+        List<DcaUserYj> list = this.iDcaUserYjService.getMudulesByUserId(userId,year,dj);
         return list.stream().map(area -> String.valueOf(area.getYjId())).collect(Collectors.toList());
     }
         }

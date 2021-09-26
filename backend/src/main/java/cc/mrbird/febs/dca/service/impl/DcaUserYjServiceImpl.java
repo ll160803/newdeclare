@@ -99,7 +99,7 @@ public  int getMaxDisplayIndexByuseraccount(String userAccount){
 
         @Override
         @Transactional
-        public List<DcaUserYj> getMudulesByUserId(Integer userId,String year,String dj){
+        public List<DcaUserYj> getMudulesByUserId(String userId,String year,String dj){
                 LambdaQueryWrapper<DcaUserYj> queryWrapper=new LambdaQueryWrapper<>();
                 queryWrapper.eq(DcaUserYj::getUserId,userId);
                 queryWrapper.eq(DcaUserYj::getDcaYear,year);

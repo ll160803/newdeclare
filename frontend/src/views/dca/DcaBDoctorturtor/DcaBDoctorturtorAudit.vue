@@ -526,7 +526,7 @@ export default {
         {
           title: '备注',
           dataIndex: 'tutorContent',
-          width: 130,
+          width: 200,
           scopedSlots: { customRender: 'tutorContent' }
         },
         {

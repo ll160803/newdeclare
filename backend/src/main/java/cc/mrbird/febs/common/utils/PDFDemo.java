@@ -9306,6 +9306,8 @@ public class PDFDemo {
         genericAttachInfo(customApplyFirst.getDcaBCopyAcademicList(), "重要岗位任职及学术影响", "academicName", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBCopyAchievementList(), "主要医疗业绩(新技术新业务获批情况)", "achievementName", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBCopyDoctorturtorList(), "担任博导硕导", "turtorType", fileAttachInfoList, readers);
+        genericAttachInfo(customApplyFirst.getDcaBCopyQualificationList(), "资格证书", "qualificationName", fileAttachInfoList, readers);
+
 
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         FileOutputStream out = new FileOutputStream(fileFName);

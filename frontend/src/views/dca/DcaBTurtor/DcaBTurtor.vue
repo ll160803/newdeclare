@@ -243,9 +243,12 @@ export default {
             }).then(() => {
               //this.reset()
               that.$message.success('提交成功')
-               that.fetch()
+             //  that.fetch()
               that.CustomVisiable = false //提交之后 不能再修改
               that.loading = false
+               setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
+              that.$EventBus.$emit('selectMoudles',170)
+            }, 300);
             }).catch(() => {
               that.loading = false
             })

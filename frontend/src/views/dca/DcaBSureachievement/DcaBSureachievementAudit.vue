@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-spin :spinning="loading">
-      <a-card title="主要教学业绩">
+      <a-card title="医疗认可">
         <div>
           <a-form layout="horizontal">
             <a-row>
@@ -58,50 +58,81 @@
               :bordered="true"
               :scroll="scroll"
             >
-              <template slot="teachName" slot-scope="text, record">
-                <div v-if="record.state == 3 || record.state == 1">
+              <template slot="achievementName" slot-scope="text, record">
+                <div v-if="record.state == 3">
                   {{ text }}
                 </div>
                 <div v-else>
                   <a-select
-                    :value="record.teachName"
+                    :value="record.achievementName"
                     style="width: 100%"
                     @change="
-                      (e, f) => handleSelectChange(e, f, record, 'teachName')
+                      (e, f) =>
+                        handleSelectChange(e, f, record, 'achievementName')
                     "
                   >
-                    <a-select-option value="国家教学成果一等奖的第一名"
-                      >国家教学成果一等奖的第一名</a-select-option
+                    <a-select-option
+                      value="获得国家拥有自主知识产权的国家一类新药的研制者第一名"
+                      >获得国家拥有自主知识产权的国家一类新药的研制者第一名</a-select-option
                     >
-                    <a-select-option value="全国百篇优秀博士论文指导教师"
-                      >全国百篇优秀博士论文指导教师</a-select-option
-                    >
-                    <a-select-option value="国家级“教学名师奖”获得者"
-                      >国家级“教学名师奖”获得者</a-select-option
-                    >
-                    <a-select-option value="国家级精品课负责人"
-                      >国家级精品课负责人</a-select-option
-                    >
-                    <a-select-option value="省部级教学成果一等奖及以上的第一名"
-                      >省部级教学成果一等奖及以上的第一名</a-select-option
+                    <a-select-option value="现任中央干部保健专家委员会成员"
+                      >现任中央干部保健专家委员会成员</a-select-option
                     >
                     <a-select-option
-                      value="国家教学基地负责人（以有关文件为准）"
-                      >国家教学基地负责人（以有关文件为准）</a-select-option
+                      value="医疗技术精湛，首次提出了针对某种疾病的预防、诊断和治疗方法或某一新的医学理论，有创新性，在临床取得良好效果，并在中华医学系列及以上杂志发表论文，经医疗管理部门推荐，医院学术委员会投票表决通过者"
+                      >医疗技术精湛，首次提出了针对某种疾病的预防、诊断和治疗方法或某一新的医学理论，有创新性，在临床取得良好效果，并在中华医学系列及以上杂志发表论文，经医疗管理部门推荐，医院学术委员会投票表决通过者</a-select-option
                     >
-                    <a-select-option value="国家教材二等奖及以上的第一名"
-                      >国家教材二等奖及以上的第一名</a-select-option
+                    <a-select-option
+                      value="任正高职务12年以上，医疗技术高超，是国内医疗界本专业领域的权威，并得到公认者"
+                      >任正高职务12年以上，医疗技术高超，是国内医疗界本专业领域的权威，并得到公认者</a-select-option
                     >
-                    <a-select-option value="国家教学成果二等奖及以上的第一名"
-                      >国家教学成果二等奖及以上的第一名</a-select-option
+                    <a-select-option
+                      value="获得国家拥有自主知识产权的国家一类新药的研制者的前两名或二类新药的研制者第一名"
+                      >获得国家拥有自主知识产权的国家一类新药的研制者的前两名或二类新药的研制者第一名</a-select-option
                     >
-                    <a-select-option value="国家教学成果二等奖及以上的前两名"
-                      >国家教学成果二等奖及以上的前两名</a-select-option
+                    <a-select-option
+                      value="医疗技术精良，首次提出了针对某种疾病的预防、诊断和治疗方法或某一新的医学理论，有创新性，在临床取得良好效果，并在中华医学系列及以上杂志发表论文，经医疗管理部门推荐，医院学术委员会投票表决通过者"
+                      >医疗技术精良，首次提出了针对某种疾病的预防、诊断和治疗方法或某一新的医学理论，有创新性，在临床取得良好效果，并在中华医学系列及以上杂志发表论文，经医疗管理部门推荐，医院学术委员会投票表决通过者</a-select-option
                     >
                   </a-select>
                 </div>
               </template>
-              <template slot="teachDate" slot-scope="text, record">
+              <template slot="rankIndex" slot-scope="text, record">
+                <div v-if="record.state == 3">
+                  {{ text }}
+                </div>
+                <div v-else>
+                  <a-input-number
+                    style="width: 100%"
+                    @blur="
+                      (e) => inputChange(e.target.value, record, 'rankIndex')
+                    "
+                    :value="record.rankIndex"
+                    :precision="0"
+                  >
+                  </a-input-number>
+                </div>
+              </template>
+              <template slot="achievementGrade" slot-scope="text, record">
+                <div v-if="record.state == 3">
+                  {{ text }}
+                </div>
+                <div v-else>
+                  <a-select
+                    :value="record.achievementGrade"
+                    style="width: 100%"
+                    @change="
+                      (e, f) =>
+                        handleSelectChange(e, f, record, 'achievementGrade')
+                    "
+                  >
+                    <a-select-option value="一"> 一 </a-select-option>
+                    <a-select-option value="二"> 二 </a-select-option>
+                    <a-select-option value="三"> 三 </a-select-option>
+                  </a-select>
+                </div>
+              </template>
+              <template slot="achievementDate" slot-scope="text, record">
                 <div v-if="record.state == 3">
                   {{ text == "" || text == null ? "" : text.substr(0, 10) }}
                 </div>
@@ -110,20 +141,42 @@
                     :defaultValue="
                       text == '' || text == null ? '' : moment(text, dateFormat)
                     "
-                    @change="(e, f) => handleChange(e, f, record, 'teachDate')"
+                    @change="
+                      (e, f) => handleChange(e, f, record, 'achievementDate')
+                    "
                   />
                 </div>
               </template>
-              <template slot="teachContent" slot-scope="text, record">
+              <template slot="achievementDefine" slot-scope="text, record">
                 <div v-if="record.state == 3">
                   {{ text }}
                 </div>
                 <div v-else>
                   <a-textarea
                     @blur="
-                      (e) => inputChange(e.target.value, record, 'teachContent')
+                      (e) =>
+                        inputChange(e.target.value, record, 'achievementDefine')
                     "
-                    :value="record.teachContent"
+                    :value="record.achievementDefine"
+                  >
+                  </a-textarea>
+                </div>
+              </template>
+              <template slot="achievementContent" slot-scope="text, record">
+                <div v-if="record.state == 3">
+                  {{ text }}
+                </div>
+                <div v-else>
+                  <a-textarea
+                    @blur="
+                      (e) =>
+                        inputChange(
+                          e.target.value,
+                          record,
+                          'achievementContent'
+                        )
+                    "
+                    :value="record.achievementContent"
                   >
                   </a-textarea>
                 </div>
@@ -149,22 +202,6 @@
                   </a-textarea>
                 </div>
               </template>
-              <template slot="rankNum" slot-scope="text, record">
-                <div v-if="record.state == 3 || record.state == 1">
-                  {{ text }}
-                </div>
-                <div v-else>
-                  <a-input-number
-                    style="width: 100%"
-                    @blur="
-                      (e) => inputChange(e.target.value, record, 'rankNum')
-                    "
-                    :value="record.rankNum"
-                    :precision="0"
-                  >
-                  </a-input-number>
-                </div>
-              </template>
               <template slot="userAccount" slot-scope="text, record">
                 <a href="#" @click="showUserInfo(text)">{{ text }}</a>
               </template>
@@ -179,10 +216,12 @@
             </a-table>
           </a-tab-pane>
           <a-tab-pane key="2" tab="已审核" :forceRender="true">
-            <dcaBTeacheryj-done ref="TableInfo2" :state="3"> </dcaBTeacheryj-done>
+            <dcaBSureachievement-done ref="TableInfo2" :state="3">
+            </dcaBSureachievement-done>
           </a-tab-pane>
           <a-tab-pane key="3" tab="审核未通过" :forceRender="true">
-            <dcaBTeacheryj-done ref="TableInfo3" :state="2"> </dcaBTeacheryj-done>
+            <dcaBSureachievement-done ref="TableInfo3" :state="2">
+            </dcaBSureachievement-done>
           </a-tab-pane>
         </a-tabs>
         <audit-userInfo
@@ -198,7 +237,7 @@
 
 <script>
 import moment from "moment";
-import DcaBTeacheryjDone from "./DcaBTeacheryjDone";
+import DcaBSureachievementDone from "./DcaBSureachievementDone";
 import AuditUserInfo from "../../common/AuditUserInfo";
 
 const formItemLayout = {
@@ -227,15 +266,15 @@ export default {
       },
       queryParams: {
         userAccount: "",
-        auditXuhaoE: null,
-        auditXuhaoS: null,
         auditMan: this.dcaYear,
         auditManName: this.dcaType,
+        auditXuhaoE: null,
+        auditXuhaoS: null,
       },
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1700,
+        x: 1800,
         y: window.innerHeight - 200 - 100 - 20 - 80,
       },
       visibleUserInfo: false,
@@ -243,7 +282,7 @@ export default {
       activeKey: 1,
     };
   },
-  components: { DcaBTeacheryjDone, AuditUserInfo },
+  components: { DcaBSureachievementDone, AuditUserInfo },
   mounted() {
     this.search();
   },
@@ -292,6 +331,7 @@ export default {
       this.$refs.TableInfo3.queryParams.auditMan = this.queryParams.auditMan;
       this.$refs.TableInfo3.queryParams.auditManName =
         this.queryParams.auditManName;
+
       if (this.queryParams.auditXuhaoS !== undefined) {
         this.$refs.TableInfo2.queryParams.auditXuhaoS =
           this.queryParams.auditXuhaoS;
@@ -304,6 +344,7 @@ export default {
         this.$refs.TableInfo3.queryParams.auditXuhaoE =
           this.queryParams.auditXuhaoE;
       }
+
       this.$refs.TableInfo2.fetch2(this.$refs.TableInfo2.queryParams);
       this.$refs.TableInfo3.fetch2(this.$refs.TableInfo3.queryParams);
     },
@@ -350,7 +391,7 @@ export default {
         state = 2;
         delete queryParams.auditState;
       }
-      this.$export("dcaBTeacheryj/excel", {
+      this.$export("dcaBSureachievement/excel", {
         sortField: "user_account",
         sortOrder: "ascend",
         state: state,
@@ -413,14 +454,14 @@ export default {
           let jsonStr = JSON.stringify(record);
           that.loading = true;
           that
-            .$post("dcaBTeacheryj/updateNew", {
+            .$post("dcaBSureachievement/updateNew", {
               jsonStr: jsonStr,
               state: 1,
             })
             .then(() => {
               //this.reset()
               that.$message.success("审核成功");
-             that.search()
+            that.search()
               that.loading = false;
             })
             .catch(() => {
@@ -440,14 +481,14 @@ export default {
           let jsonStr = JSON.stringify(record);
           that.loading = true;
           that
-            .$post("dcaBTeacheryj/updateNew", {
+            .$post("dcaBSureachievement/updateNew", {
               jsonStr: jsonStr,
               state: 3,
             })
             .then(() => {
               //this.reset()
               that.$message.success("审核成功");
-            that.search()
+             that.search()
               that.loading = false;
             })
             .catch(() => {
@@ -467,14 +508,14 @@ export default {
           let jsonStr = JSON.stringify(record);
           that.loading = true;
           that
-            .$post("dcaBTeacheryj/updateNew", {
+            .$post("dcaBSureachievement/updateNew", {
               jsonStr: jsonStr,
               state: 2,
             })
             .then(() => {
               //this.reset()
               that.$message.success("操作成功");
-              that.search()
+             that.search()
               that.loading = false;
             })
             .catch(() => {
@@ -499,7 +540,7 @@ export default {
       params.sortField = "userAccount";
       params.sortOrder = "descend";
       this.loading = true;
-      this.$get("dcaBTeacheryj/audit", {
+      this.$get("dcaBSureachievement/audit", {
         ...params,
         state: 1,
       }).then((r) => {
@@ -516,44 +557,54 @@ export default {
     columns() {
       return [
         {
+          title: "序号",
+          dataIndex: "auditXuhao",
+          width: 60,
+        },
+        {
           title: "发薪号",
           dataIndex: "userAccount",
           width: 80,
           scopedSlots: { customRender: "userAccount" },
         },
         {
-          title: "序号",
-          dataIndex: "auditXuhao",
-          width: 60,
-        },
-        {
           title: "姓名",
           dataIndex: "userAccountName",
           width: 80,
+          fixed: "left",
         },
         {
           title: "名称",
-          dataIndex: "teachName",
-          width: 400,
-          scopedSlots: { customRender: "teachName" },
+          dataIndex: "achievementName",
+          width: 450,
+          scopedSlots: { customRender: "achievementName" },
+          fixed: "left",
         },
         {
           title: "排名",
-          dataIndex: "rankNum",
-          width: 130,
-          scopedSlots: { customRender: "rankNum" },
+          dataIndex: "rankIndex",
+          width: 80,
+          scopedSlots: { customRender: "rankIndex" },
+          fixed: "left",
         },
         {
-          title: "任职（获得）时间",
-          dataIndex: "teachDate",
-          width: 130,
-          scopedSlots: { customRender: "teachDate" },
+          title: "获得时间",
+          dataIndex: "achievementDate",
+          width: 120,
+          scopedSlots: { customRender: "achievementDate" },
+          fixed: "left",
+        },
+        {
+          title: "期限",
+          dataIndex: "achievementDefine",
+          width: 80,
+          scopedSlots: { customRender: "achievementDefine" },
         },
         {
           title: "备注",
-          dataIndex: "teachContent",
+          dataIndex: "achievementContent",
           width: 130,
-          scopedSlots: { customRender: "teachContent" },
+          scopedSlots: { customRender: "achievementContent" },
         },
         {
           title: "状态",

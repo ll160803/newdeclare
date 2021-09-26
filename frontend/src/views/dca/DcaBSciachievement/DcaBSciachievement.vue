@@ -1,168 +1,196 @@
 <template>
   <a-card title="主要科研业绩">
-        <div>
-      <a-button
-        @click="handleAdd"
-        type="primary"
-        :loading="loading"
-      >添加行</a-button>
-      <a-button
-        @click="handleDelete"
-        type="primary"
-        :loading="loading"
-      >删除行</a-button>
+    <div>
+      <a-button @click="handleAdd" type="primary" :loading="loading"
+        >添加行</a-button
+      >
+      <a-button @click="handleDelete" type="primary" :loading="loading"
+        >删除行</a-button
+      >
     </div>
     <a-table
       :columns="columns"
       :data-source="dataSource"
-      :rowKey="record => record.id"
-      :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+      :rowKey="(record) => record.id"
+      :rowSelection="{
+        selectedRowKeys: selectedRowKeys,
+        onChange: onSelectChange,
+      }"
       bordered
       :scroll="scroll"
     >
-      <template
-        slot="achievementName"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
+      <template slot="achievementName" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text }}
         </div>
         <div v-else>
-          <a-textarea
-            @blur="e => inputChange(e.target.value,record,'achievementName')"
+          <a-select
             :value="record.achievementName"
+            style="width: 100%"
+            @change="
+              (e, f) => handleSelectChange(e, f, record, 'achievementName')
+            "
           >
-          </a-textarea>
+            <a-select-option value="“973”首席科学家">“973”首席科学家</a-select-option>
+            <a-select-option
+              value="国家级科技三大奖一等奖的前两名或二等奖的第一名"
+            >国家级科技三大奖一等奖的前两名或二等奖的第一名</a-select-option>
+            <a-select-option
+              value="国家杰出青年科学基金获得者"
+            >国家杰出青年科学基金获得者</a-select-option>
+            <a-select-option
+              value="近五年在《science》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者"
+            >近五年在《science》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者</a-select-option>
+            <a-select-option
+              value="近五年在《nature》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者"
+            >近五年在《nature》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者</a-select-option>
+            <a-select-option
+              value="近五年在《cell》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者"
+            >近五年在《cell》国际顶级期刊以华中科技大学为第一署名单位发表学术论文的通讯作者或第一作者</a-select-option>
+            <a-select-option
+              value="国家自然（社会）科学基金重大项目负责人"
+            >国家自然（社会）科学基金重大项目负责人</a-select-option>
+            <a-select-option
+              value="国家自然（社会）科学基金重点项目负责人"
+            >国家自然（社会）科学基金重点项目负责人</a-select-option>
+            <a-select-option value="863目标导向类项目负责人">863目标导向类项目负责人</a-select-option>
+            <a-select-option value="863重点项目负责人">863重点项目负责人</a-select-option>
+            <a-select-option value="863重大项目负责人">863重大项目负责人</a-select-option>
+            <a-select-option value="863科技部支撑项目负责人">863科技部支撑项目负责人</a-select-option>
+            <a-select-option
+              value="近五年“973”课题组长（原一级子项目负责人，以科技部合同为准)"
+            >近五年“973”课题组长（原一级子项目负责人，以科技部合同为准)</a-select-option>
+            <a-select-option
+              value="近五年在《science》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）"
+            >近五年在《science》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）</a-select-option>
+            <a-select-option
+              value="近五年在《nature》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）"
+            >近五年在《nature》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）</a-select-option>
+            <a-select-option
+              value="近五年在《cell》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）"
+            >近五年在《cell》国际顶级期刊以通讯作者或第一作者发表学术论文者（文科在《中国社会科学》发表）</a-select-option>
+            <a-select-option
+              value="全国百篇优秀博士论文获得者"
+            >全国百篇优秀博士论文获得者</a-select-option>
+            <a-select-option
+              value="省部级科技三大奖一等奖及以上（含社会科学成果奖）的第一名"
+            >省部级科技三大奖一等奖及以上（含社会科学成果奖）的第一名</a-select-option>
+            <a-select-option
+              value="近五年主持863项目、国家自然（社会）科学基金2项以上或主持单项500万元以上的科研项目者"
+            >近五年主持863项目、国家自然（社会）科学基金2项以上或主持单项500万元以上的科研项目者</a-select-option>
+            <a-select-option
+              value="近五年在影响因子20以上的杂志以华中科技大学为第一完成单位发表第一作者或通讯作者学术论文1篇，或10以上杂志发表2篇；在A类期刊以第一作者或通讯作者署名发表本学科学术论文5篇"
+            >近五年在影响因子20以上的杂志以华中科技大学为第一完成单位发表第一作者或通讯作者学术论文1篇，或10以上杂志发表2篇；在A类期刊以第一作者或通讯作者署名发表本学科学术论文5篇</a-select-option>
+            <a-select-option
+              value="国家科技三大奖（含社会科学成果奖）的前3名和省部级科技三大奖（含社会科学成果奖）二等以上奖的第一名"
+            >国家科技三大奖（含社会科学成果奖）的前3名和省部级科技三大奖（含社会科学成果奖）二等以上奖的第一名</a-select-option>
+          </a-select>
         </div>
       </template>
-      <template
-        slot="rankIndex"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
+      <template slot="rankIndex" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text }}
         </div>
         <div v-else>
           <a-input-number
             style="width: 100%"
-            @blur="e => inputChange(e.target.value,record,'rankIndex')"
+            @blur="(e) => inputChange(e.target.value, record, 'rankIndex')"
             :value="record.rankIndex"
             :precision="0"
           >
           </a-input-number>
         </div>
       </template>
-        <template
-        slot="achievementGrade"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
+      <template slot="achievementGrade" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text }}
         </div>
         <div v-else>
           <a-select
             :value="record.achievementGrade"
             style="width: 100%"
-            @change="(e,f) => handleSelectChange(e,f,record,'achievementGrade')"
+            @change="
+              (e, f) => handleSelectChange(e, f, record, 'achievementGrade')
+            "
           >
-            <a-select-option value="一">
-              一
-            </a-select-option>
-            <a-select-option value="二">
-              二
-            </a-select-option>
-            <a-select-option value="三">
-              三
-            </a-select-option>
+            <a-select-option value="一"> 一 </a-select-option>
+            <a-select-option value="二"> 二 </a-select-option>
+            <a-select-option value="三"> 三 </a-select-option>
           </a-select>
         </div>
       </template>
-      <template
-        slot="achievementDate"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text==""|| text==null?"":text.substr(0,10)}}
+      <template slot="achievementDate" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text == "" || text == null ? "" : text.substr(0, 10) }}
         </div>
         <div v-else>
           <a-date-picker
-            :defaultValue="(text=='' || text==null)?'':moment(text, dateFormat)"
-            @change="(e,f) => handleChange(e,f,record,'achievementDate')"
+            :defaultValue="
+              text == '' || text == null ? '' : moment(text, dateFormat)
+            "
+            @change="(e, f) => handleChange(e, f, record, 'achievementDate')"
           />
         </div>
       </template>
-      <template
-        slot="achievementDefine"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
+      <template slot="achievementDefine" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text }}
         </div>
         <div v-else>
           <a-textarea
-            @blur="e => inputChange(e.target.value,record,'achievementDefine')"
+            @blur="
+              (e) => inputChange(e.target.value, record, 'achievementDefine')
+            "
             :value="record.achievementDefine"
           >
           </a-textarea>
         </div>
       </template>
-      <template
-        slot="achievementContent"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
+      <template slot="achievementContent" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
+          {{ text }}
         </div>
         <div v-else>
           <a-textarea
-            @blur="e => inputChange(e.target.value,record,'achievementContent')"
+            @blur="
+              (e) => inputChange(e.target.value, record, 'achievementContent')
+            "
             :value="record.achievementContent"
           >
           </a-textarea>
         </div>
       </template>
-      <template
-        slot="fileId"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
+      <template slot="fileId" slot-scope="text, record">
+        <div v-if="record.state == 3 || record.state == 1">
           <a
             :href="record.fileUrl"
-            v-if="text!=null && text !=''"
+            v-if="text != null && text != ''"
             target="_blank"
-          >查看</a>
+            >查看</a
+          >
         </div>
         <div v-else>
-          <a-button
-            type="dashed"
-            block
-            @click="OpenFile(record)"
-          >
-            {{record.fileId!=null &&record.fileId !=''?'已上传':'上传' }}
+          <a-button type="dashed" block @click="OpenFile(record)">
+            {{
+              record.fileId != null && record.fileId != "" ? "已上传" : "上传"
+            }}
           </a-button>
         </div>
       </template>
-      <template
-        slot="isUse"
-        slot-scope="text, record"
-      >
+      <template slot="isUse" slot-scope="text, record">
         <a-checkbox
-          @change="e => onIsUseChange(e,record,'isUse')"
+          @change="(e) => onIsUseChange(e, record, 'isUse')"
           :checked="text"
         ></a-checkbox>
       </template>
     </a-table>
     <div>
-      <a-button
-        @click="handleSave"
-        type="primary"
-        :loading="loading"
-      >保存草稿</a-button>
-      <a-button
-        @click="handleSubmit"
-        type="primary"
-        :loading="loading"
-      >提交</a-button>
+      <a-button @click="handleSave" type="primary" :loading="loading"
+        >保存草稿</a-button
+      >
+      <a-button @click="handleSubmit" type="primary" :loading="loading"
+        >提交</a-button
+      >
     </div>
     <tableUpload-file
       ref="upFile"
@@ -175,12 +203,12 @@
 </template>
 
 <script>
-import moment from 'moment';
-import TableUploadFile from '../../common/TableUploadFile'
+import moment from "moment";
+import TableUploadFile from "../../common/TableUploadFile";
 export default {
-  data () {
+  data() {
     return {
-      dateFormat: 'YYYY-MM-DD',
+      dateFormat: "YYYY-MM-DD",
       dataSource: [],
       selectedRowKeys: [],
       loading: false,
@@ -188,278 +216,301 @@ export default {
       idNums: 10000,
       fileVisiable: false,
       editRecord: {
-        fileId: ''
+        fileId: "",
       },
       scroll: {
-        x: 1300,
-        y: window.innerHeight - 200 - 100 - 20 - 80
+        x: 1500,
+        y: window.innerHeight - 200 - 100 - 20 - 80,
       },
-    }
+    };
   },
   components: { TableUploadFile },
-  mounted () {
-    this.fetch()
+  mounted() {
+    this.fetch();
   },
   methods: {
     moment,
-    showFile (record) {
-      window.location.href = record.fileUrl
+    showFile(record) {
+      window.location.href = record.fileUrl;
     },
-    OpenFile (record) {
-      this.editRecord = record
-      this.fileVisiable = true
-      if (record.fileId != undefined && record.fileId != '') {
-        this.$refs.upFile.fetch(record.fileId)
+    OpenFile(record) {
+      this.editRecord = record;
+      this.fileVisiable = true;
+      if (record.fileId != undefined && record.fileId != "") {
+        this.$refs.upFile.fetch(record.fileId);
       }
     },
-    setFileId (fileId, fileUrl) {
-      this.fileVisiable = false
-      console.log(fileUrl)
+    setFileId(fileId, fileUrl) {
+      this.fileVisiable = false;
+      console.log(fileUrl);
       /**
        const dataSource = [...this.dataSource]
        console.log(this.editRecord.id)
        let record=dataSource.filter(p=>p.id===this.editRecord.id)
        console.log(record)*/
-      this.editRecord["fileId"] = fileId
-      this.editRecord["fileUrl"] = fileUrl
+      this.editRecord["fileId"] = fileId;
+      this.editRecord["fileUrl"] = fileUrl;
       //this.dataSource =[...dataSource]
     },
-    onSelectChange (selectedRowKeys, selectedRows) {
+    onSelectChange(selectedRowKeys, selectedRows) {
       // console.log(selectedRows)
       if (selectedRows.length > 0) {
         if (selectedRows[0].state != 3 && selectedRows[0].state != 1) {
-          this.selectedRowKeys = selectedRowKeys
+          this.selectedRowKeys = selectedRowKeys;
         }
+      } else {
+        this.selectedRowKeys = selectedRowKeys;
       }
-      else {
-        this.selectedRowKeys = selectedRowKeys
-      }
     },
-    handleChange (date, dateStr, record, filedName) {
-      const value = dateStr
-      record[filedName] = value
+    handleChange(date, dateStr, record, filedName) {
+      const value = dateStr;
+      record[filedName] = value;
     },
-    inputChange (value, record, filedName) {
-      console.info(value)
-      record[filedName] = value
+    inputChange(value, record, filedName) {
+      console.info(value);
+      record[filedName] = value;
     },
-    handleSelectChange (value, option, record, filedName) {
-      console.info(value)
-      record[filedName] = value
+    handleSelectChange(value, option, record, filedName) {
+      console.info(value);
+      record[filedName] = value;
     },
-    onIsUseChange (e, record, filedName) {
+    onIsUseChange(e, record, filedName) {
       record[filedName] = e.target.checked;
     },
-    handleAdd () {
+    handleAdd() {
       for (let i = 0; i < 4; i++) {
         this.dataSource.push({
           id: (this.idNums + i + 1).toString(),
           state: 0,
-          achievementName: '',
-          rankIndex: '',
-          achievementDate: '',
-          achievementDefine: '',
-          achievementContent: '',
-          achievementGrade: '',
-          isUse: false
-        })
+          achievementName: "",
+          rankIndex: "",
+          achievementDate: "",
+          achievementDefine: "",
+          achievementContent: "",
+          achievementGrade: "",
+          isUse: false,
+        });
       }
-      this.idNums = this.idNums + 4
+      this.idNums = this.idNums + 4;
     },
-    handleSave () {
-      const dataSourceAll = [...this.dataSource]
-      const dataSource = dataSourceAll.filter(p => p.state == 0 || p.state == 2)
-      let dataAdd = []
-      dataSource.forEach(element => {
-        if (element.achievementName != '' || element.rankIndex != '' || element.achievementDate != '' || element.achievementDefine != '' || element.achievementContent != '') {
-          dataAdd.push(element)
+    handleSave() {
+      const dataSourceAll = [...this.dataSource];
+      const dataSource = dataSourceAll.filter(
+        (p) => p.state == 0 || p.state == 2
+      );
+      let dataAdd = [];
+      dataSource.forEach((element) => {
+        if (
+          element.achievementName != "" ||
+          element.rankIndex != "" ||
+          element.achievementDate != "" ||
+          element.achievementDefine != "" ||
+          element.achievementContent != ""
+        ) {
+          dataAdd.push(element);
         }
       });
       if (dataAdd.length === 0) {
-        this.$message.warning('请填写数据！！！')
-      }
-      else {
-        let jsonStr = JSON.stringify(dataAdd)
-        this.loading = true
-        this.$post('dcaBSciachievement/addNew', {
+        this.$message.warning("请填写数据！！！");
+      } else {
+        let jsonStr = JSON.stringify(dataAdd);
+        this.loading = true;
+        this.$post("dcaBSciachievement/addNew", {
           jsonStr: jsonStr,
-          state: 0
-        }).then(() => {
-          // this.reset()
-          this.$message.success('保存成功')
-          this.fetch()
-          this.loading = false
-        }).catch(() => {
-          this.loading = false
+          state: 0,
         })
+          .then(() => {
+            // this.reset()
+            this.$message.success("保存成功");
+            this.fetch();
+            this.loading = false;
+          })
+          .catch(() => {
+            this.loading = false;
+          });
       }
     },
-    handleSubmit () {
-      let that = this
+    handleSubmit() {
+      let that = this;
       this.$confirm({
-        title: '确定提交全部记录?',
-        content: '当您点击确定按钮后，信息将不能修改',
+        title: "确定提交全部记录?",
+        content: "当您点击确定按钮后，信息将不能修改",
         centered: true,
-        onOk () {
-          const dataSourceAll = [...that.dataSource]
-          const dataSource = dataSourceAll.filter(p => p.state == 0 || p.state == 2)
-          let dataAdd = []
-          dataSource.forEach(element => {
-            if (element.achievementName != '' || element.rankIndex != '' || element.achievementDate != '' || element.achievementDefine != '' || element.achievementContent != '') {
-              dataAdd.push(element)
+        onOk() {
+          const dataSourceAll = [...that.dataSource];
+          const dataSource = dataSourceAll.filter(
+            (p) => p.state == 0 || p.state == 2
+          );
+          let dataAdd = [];
+          dataSource.forEach((element) => {
+            if (
+              element.achievementName != "" ||
+              element.rankIndex != "" ||
+              element.achievementDate != "" ||
+              element.achievementDefine != "" ||
+              element.achievementContent != ""
+            ) {
+              dataAdd.push(element);
             }
           });
           if (dataAdd.length === 0) {
-            that.$message.warning('请填写数据！！！')
-          }
-          else {
-            let jsonStr = JSON.stringify(dataAdd)
-            that.loading = true
-            that.$post('dcaBSciachievement/addNew', {
-              jsonStr: jsonStr,
-              state: 1
-            }).then(() => {
-              //this.reset()
-              that.$message.success('提交成功')
-              that.fetch()
-              that.CustomVisiable = false //提交之后 不能再修改
-              that.loading = false
-            }).catch(() => {
-              that.loading = false
-            })
+              setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
+              that.$EventBus.$emit('selectMoudles',50)
+            }, 300);
+          } else {
+            let jsonStr = JSON.stringify(dataAdd);
+            that.loading = true;
+            that
+              .$post("dcaBSciachievement/addNew", {
+                jsonStr: jsonStr,
+                state: 1,
+              })
+              .then(() => {
+                //this.reset()
+                that.$message.success("提交成功");
+               // that.fetch();
+                that.CustomVisiable = false; //提交之后 不能再修改
+                that.loading = false;
+                 setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
+              that.$EventBus.$emit('selectMoudles',50)
+            }, 300);
+              })
+              .catch(() => {
+                that.loading = false;
+              });
           }
         },
-        onCancel () {
-          that.selectedRowKeys = []
-        }
-      })
-
-
+        onCancel() {
+          that.selectedRowKeys = [];
+        },
+      });
     },
-    handleDelete () {
-      if (!this.selectedRowKeys.length || this.selectedRowKeys.length>1) {
-        this.$message.warning('请选择一条需要删除的记录')
-        return
+    handleDelete() {
+      if (!this.selectedRowKeys.length || this.selectedRowKeys.length > 1) {
+        this.$message.warning("请选择一条需要删除的记录");
+        return;
       }
-      let that = this
+      let that = this;
       this.$confirm({
-        title: '确定删除所选中的记录?',
-        content: '当您点击确定按钮后，这些记录将会被彻底删除',
+        title: "确定删除所选中的记录?",
+        content: "当您点击确定按钮后，这些记录将会被彻底删除",
         centered: true,
-        onOk () {
-          let dcaBPatentIds = that.selectedRowKeys.join(',')
+        onOk() {
+          let dcaBPatentIds = that.selectedRowKeys.join(",");
           const dataSource = [...that.dataSource];
-          let new_dataSource = dataSource.filter(p => that.selectedRowKeys.indexOf(p.id) < 0)
-          that.$put('dcaBSciachievement', {
-                        id: that.selectedRowKeys[0],
-                        isDeletemark: 0
-                    }).then(() => {
-                        
-                    }).catch(() => {
-                        
-                    })
-          that.dataSource = new_dataSource
-          that.$message.success('删除成功')
-          that.selectedRowKeys = []
+          let new_dataSource = dataSource.filter(
+            (p) => that.selectedRowKeys.indexOf(p.id) < 0
+          );
+          that
+            .$put("dcaBSciachievement", {
+              id: that.selectedRowKeys[0],
+              isDeletemark: 0,
+            })
+            .then(() => {})
+            .catch(() => {});
+          that.dataSource = new_dataSource;
+          that.$message.success("删除成功");
+          that.selectedRowKeys = [];
         },
-        onCancel () {
-          that.selectedRowKeys = []
-        }
-      })
+        onCancel() {
+          that.selectedRowKeys = [];
+        },
+      });
     },
-    fetch () {
-      this.$get('dcaBSciachievement/custom', {
-      }).then((r) => {
-        let data = r.data
-        this.dataSource = data.rows
+    fetch() {
+      this.$get("dcaBSciachievement/custom", {}).then((r) => {
+        let data = r.data;
+        this.dataSource = data.rows;
 
         for (let i = 0; i < 4; i++) {
           this.dataSource.push({
             id: (this.idNums + i + 1).toString(),
             state: 0,
-            achievementName: '',
-            rankIndex: '',
-            achievementDate: '',
-            achievementDefine: '',
-            achievementContent: '',
-            achievementGrade: '',
-            isUse: false
-          })
-          this.idNums = this.idNums + 4
+            achievementName: "",
+            rankIndex: "",
+            achievementDate: "",
+            achievementDefine: "",
+            achievementContent: "",
+            achievementGrade: "",
+            isUse: false,
+          });
+          this.idNums = this.idNums + 4;
         }
-      })
-    }
+      });
+    },
   },
   computed: {
-    columns () {
-      return [{
-        title: '名称',
-        dataIndex: 'achievementName',
-        width: 250,
-        scopedSlots: { customRender: 'achievementName' }
-      },
-      {
-        title: '排名',
-        dataIndex: 'rankIndex',
-        width: 80,
-        scopedSlots: { customRender: 'rankIndex' }
-      },
-      {
-        title: '获得时间',
-        dataIndex: 'achievementDate',
-        width: 120,
-        scopedSlots: { customRender: 'achievementDate' }
-      },
-      {
-        title: '期限',
-        dataIndex: 'achievementDefine',
-        width: 80,
-        scopedSlots: { customRender: 'achievementDefine' }
-      },
-      {
-        title: '备注',
-        dataIndex: 'achievementContent',
-        width: 130,
-        scopedSlots: { customRender: 'achievementContent' }
-      },
-      {
-        title: '状态',
-        dataIndex: 'state',
-        width: 100,
-        customRender: (text, row, index) => {
-          switch (text) {
-            case 0:
-              return <a-tag color="purple">未提交</a-tag>
-            case 1:
-              return <a-tag color="green">已提交</a-tag>
-            case 2:
-              return <a-tag color="red">审核未通过</a-tag>
-            case 3:
-              return <a-tag color="#f50">已审核</a-tag>
-            default:
-              return text
-          }
-        }
-      },
-      {
-        title: '审核意见',
-        dataIndex: 'auditSuggestion'
-      },
-      {
-        title: '经审核是否构成职称晋升条件',
-        dataIndex: 'isUse',
-        scopedSlots: { customRender: 'isUse' },
-        width: 80
-      },
-      {
-        title: '附件',
-        dataIndex: 'fileId',
-        scopedSlots: { customRender: 'fileId' },
-        width: 80
-      }]
-    }
+    columns() {
+      return [
+        {
+          title: "名称",
+          dataIndex: "achievementName",
+          width: 450,
+          scopedSlots: { customRender: "achievementName" },
+        },
+        {
+          title: "排名",
+          dataIndex: "rankIndex",
+          width: 80,
+          scopedSlots: { customRender: "rankIndex" },
+        },
+        {
+          title: "获得时间",
+          dataIndex: "achievementDate",
+          width: 120,
+          scopedSlots: { customRender: "achievementDate" },
+        },
+        {
+          title: "期限",
+          dataIndex: "achievementDefine",
+          width: 80,
+          scopedSlots: { customRender: "achievementDefine" },
+        },
+        {
+          title: "备注",
+          dataIndex: "achievementContent",
+          width: 130,
+          scopedSlots: { customRender: "achievementContent" },
+        },
+        {
+          title: "状态",
+          dataIndex: "state",
+          width: 100,
+          customRender: (text, row, index) => {
+            switch (text) {
+              case 0:
+                return <a-tag color="purple">未提交</a-tag>;
+              case 1:
+                return <a-tag color="green">已提交</a-tag>;
+              case 2:
+                return <a-tag color="red">审核未通过</a-tag>;
+              case 3:
+                return <a-tag color="#f50">已审核</a-tag>;
+              default:
+                return text;
+            }
+          },
+        },
+        {
+          title: "审核意见",
+          dataIndex: "auditSuggestion",
+        },
+        {
+          title: "经审核是否构成职称晋升条件",
+          dataIndex: "isUse",
+          scopedSlots: { customRender: "isUse" },
+          width: 80,
+        },
+        {
+          title: "附件",
+          dataIndex: "fileId",
+          scopedSlots: { customRender: "fileId" },
+          width: 80,
+        },
+      ];
+    },
   },
-}
+};
 </script>
 
 <style lang="less" scoped>

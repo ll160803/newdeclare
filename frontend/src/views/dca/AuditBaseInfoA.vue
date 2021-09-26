@@ -300,6 +300,12 @@
                v-if="index==332">
                 <!--主要科研业绩-->
               </dcaB-sciachievementAudit> 
+               <dcaB-sureachievementAudit
+               :dcaYear="dcaYear"
+               :dcaType="dcaType"
+                v-if="index==500">
+                <!--主要医疗认可-->
+              </dcaB-sureachievementAudit> 
           </div>
         </a-layout-content>
       </a-layout>
@@ -354,6 +360,7 @@ import DcaBUserList from "../dca/DcaBUser/DcaBUserList";
 import DcaBAuditDynamicAudit from "../dca/DcaBUserapply/DcaBAuditDynamicAudit";
 import DcaBTeacheryjAudit from "../dca/DcaBTeacheryj/DcaBTeacheryjAudit";
 import DcaBSciachievementAudit from "../dca/DcaBSciachievement/DcaBSciachievementAudit";
+import DcaBSureachievementAudit from "../dca/DcaBSureachievement/DcaBSureachievementAudit";
 
 export default {
   name: "AuditBaseInfo",
@@ -401,6 +408,7 @@ export default {
 
     DcaBTeacheryjAudit,
     DcaBSciachievementAudit,
+    DcaBSureachievementAudit
   },
   data() {
     return {

@@ -179,6 +179,9 @@
               <dcaB-sciachievement v-if="index==332">
                 <!--主要科研业绩-->
               </dcaB-sciachievement> 
+              <dcaB-sureachievement v-if="index==500">
+                <!--主要医疗认可-->
+              </dcaB-sureachievement> 
             </div>
           </a-layout-content>
         </a-layout>
@@ -235,6 +238,7 @@ import DcaBQualification from "../dca/DcaBQualification/DcaBQualification";
 import DcaBAuditDynamic from "../dca/DcaBUserapply/DcaBAuditDynamic";
 import DcaBSciachievement from "../dca/DcaBSciachievement/DcaBSciachievement";
 import DcaBTeacheryj from "../dca/DcaBTeacheryj/DcaBTeacheryj";
+import DcaBSureachievement from "../dca/DcaBSureachievement/DcaBSureachievement";
 
 export default {
   name: "DcaBPatent2",
@@ -284,6 +288,7 @@ export default {
     DcaBSciachievement,
     DcaBSciachievement,
     DcaBTeacheryj,
+    DcaBSureachievement
   },
   data() {
     return {
@@ -303,9 +308,14 @@ export default {
     };
   },
   mounted() {
+   
     this.fetch();
   },
   created() {
+        this.$EventBus.$on('selectMoudles',(index)=> {
+        console.info("yqwieqweqweqe")
+          this.index = index
+    })
     window.addEventListener("resize", this.getHeight);
     this.getHeight();
   },

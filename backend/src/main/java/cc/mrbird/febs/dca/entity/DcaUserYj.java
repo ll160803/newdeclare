@@ -40,7 +40,7 @@ private static final long serialVersionUID=1L;
      * 用户id
      */
             @ExcelField(value ="用户id")
-    private Long userId;
+    private String userId;
 
     /**
      * 申报年度

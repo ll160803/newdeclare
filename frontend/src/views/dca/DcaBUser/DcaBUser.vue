@@ -206,7 +206,7 @@
       @click="handleSubmit"
       type="primary"
       :loading="loading"
-    >保存</a-button>
+    >提交</a-button>
   </a-card>
 </template>
 
@@ -486,7 +486,10 @@ export default {
             ...dcaBUser
           }).then(() => {
             this.$message.success('保存成功')
-            this.fetch()
+            //this.fetch()
+            setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
+              this.$EventBus.$emit('selectMoudles',14)
+            }, 300);
           }).catch(() => {
             this.loading = false
           })

@@ -118,7 +118,7 @@ public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs)thr
             DcaUserYj rm = new DcaUserYj();
             // rm.setId(UUID.randomUUID().toString());
             rm.setYjId(Long.parseLong(menuId));
-            rm.setUserId(user.getUserId());
+            rm.setUserId(user.getUsername());
             rm.setDcaYear(year);
             this.iDcaUserYjService.createDcaUserYj(rm);
         });
@@ -142,7 +142,7 @@ public void updateDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs)
                     throw new FebsException("当前年度已经有申报记录");
                 }
          //删除已经存在的
-            this.iDcaUserYjService.deleteByuserid(currentUser.getUserId().toString(),dcaBUserapply.getDcaYear());
+            this.iDcaUserYjService.deleteByuserid(currentUser.getUsername(),dcaBUserapply.getDcaYear());
 
             if(StringUtils.isNotEmpty(yjIDs)) {
                 String[] areaIds = yjIDs.split(StringPool.COMMA);

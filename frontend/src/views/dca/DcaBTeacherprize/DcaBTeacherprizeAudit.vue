@@ -457,8 +457,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.fetch()
-            that.freshTabs()
+           that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -483,8 +482,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.fetch()
-            that.freshTabs()
+           that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -509,8 +507,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('操作成功')
-            that.fetch()
-            that.freshTabs()
+            that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false

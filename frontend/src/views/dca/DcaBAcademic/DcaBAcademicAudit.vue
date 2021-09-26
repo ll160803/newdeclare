@@ -73,67 +73,41 @@
               :bordered="true"
               :scroll="scroll"
             >
-               <template
-        slot="academicName"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
+<template slot="academicName" slot-scope="text, record">
+        <div v-if="record.state == 3">
+          {{ text }}
         </div>
         <div v-else>
           <a-select
             :value="record.academicName"
             style="width: 100%"
-            @change="(e,f) => handleSelectChange(e,f,record,'academicName')"
+            @change="(e, f) => handleSelectChange(e, f, record, 'academicName')"
           >
-            <a-select-option value="现任国家实验室负责人">
-              现任国家实验室负责人
-            </a-select-option>
-            <a-select-option value="国家大科学工程项目负责人">
-              国家大科学工程项目负责人
-            </a-select-option>
-            <a-select-option value="国家级重点实验室负责人">
-              国家级重点实验室负责人
-            </a-select-option>
-            <a-select-option value="国家工程中心负责人">
-              国家工程中心负责人
-            </a-select-option>
-            <a-select-option value="国务院学科评议组成员">
-              国务院学科评议组成员
-            </a-select-option>
-            <a-select-option value="国际重要学术机构负责人">
-              国际重要学术机构负责人
-            </a-select-option>
-               <a-select-option value="教育部创新团队负责人">
-              教育部创新团队负责人
-            </a-select-option>
-               <a-select-option value="担任全国医学相关一级学会专科分会现任主任委员">
-              担任全国医学相关一级学会专科分会现任主任委员
-            </a-select-option>
-               <a-select-option value="国家新世纪“百千万工程”人才入选者">
-              国家新世纪“百千万工程”人才入选者
-            </a-select-option>
-               <a-select-option value="教育部高校青年教师奖">
-              教育部高校青年教师奖
-            </a-select-option>
-               <a-select-option value="跨世纪优秀人才">
-              跨世纪优秀人才
-            </a-select-option>
-               <a-select-option value="新世纪优秀人才支持计划入选者">
-              新世纪优秀人才支持计划入选者
-            </a-select-option>
-             <a-select-option value="教育部青年长江学者">
-              教育部青年长江学者
-            </a-select-option>
-             <a-select-option value="中组部青年拔尖学者">
-              中组部青年拔尖学者
-            </a-select-option>
-             <a-select-option value="中组部青年千人入选者">
-              中组部青年千人入选者
-            </a-select-option>
-             <a-select-option value="国家基金委优秀青年基金获得者年">
-              国家基金委优秀青年基金获得者年
-            </a-select-option>
+             <a-select-option value="长江学者特聘教授">长江学者特聘教授</a-select-option>
+            <a-select-option value="“863”领域专家">“863”领域专家</a-select-option>
+            <a-select-option
+              value="国内外学术界或医疗界公认的学术大师或杰出人才或在国内外产生重大影响，为学校赢得极大声誉者"
+            >国内外学术界或医疗界公认的学术大师或杰出人才或在国内外产生重大影响，为学校赢得极大声誉者</a-select-option>
+            <a-select-option value="国家基金委创新群体负责人">国家基金委创新群体负责人</a-select-option>
+            <a-select-option value="全国“五一劳动奖章”获得者">全国“五一劳动奖章”获得者</a-select-option>
+            <a-select-option
+              value="国家实验室、国家大科学工程、国家重点实验室、国家工程中心负责人（以有关文件为准）"
+            >国家实验室、国家大科学工程、国家重点实验室、国家工程中心负责人（以有关文件为准）</a-select-option>
+            <a-select-option value="国务院学科评议组成员">国务院学科评议组成员</a-select-option>
+            <a-select-option value="国际重要学术机构负责人">国际重要学术机构负责人</a-select-option>
+            <a-select-option value="教育部创新团队负责人">教育部创新团队负责人</a-select-option>
+            <a-select-option
+              value="担任全国医学相关一级学会专科分会的现任主任委员（限附属医院使用）"
+            >担任全国医学相关一级学会专科分会的现任主任委员（限附属医院使用）</a-select-option>
+            <a-select-option value="教育部高校青年教师奖">教育部高校青年教师奖</a-select-option>
+            <a-select-option value="教育部跨世纪优秀人才">教育部跨世纪优秀人才</a-select-option>
+            <a-select-option value="教育部新世纪优秀人才">教育部新世纪优秀人才</a-select-option>
+            <a-select-option
+              value="教育部新世纪“百千万人才工程”入选者"
+            >教育部新世纪“百千万人才工程”入选者</a-select-option>
+            <a-select-option
+              value="担任全国医学相关一级学会专科分会的现任副主任委员以上职务（限附属医院使用）"
+            >担任全国医学相关一级学会专科分会的现任副主任委员以上职务（限附属医院使用）</a-select-option>
           </a-select>
         </div>
       </template>
@@ -467,8 +441,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.fetch()
-            that.freshTabs()
+           that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -493,8 +466,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.fetch()
-            that.freshTabs()
+          that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -519,8 +491,7 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('操作成功')
-            that.fetch()
-            that.freshTabs()
+           that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false

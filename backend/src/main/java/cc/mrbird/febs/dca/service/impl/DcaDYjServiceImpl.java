@@ -107,7 +107,7 @@ public  int getMaxDisplayIndexByuseraccount(String userAccount){
         }
 
         @Override
-        public Map<String, Object> findDeptsByUserId(Long userId,String year){
+        public Map<String, Object> findDeptsByUserId(String userId,String year){
                 Map<String, Object> result = new HashMap<>();
                 try {
                         LambdaQueryWrapper<DcaDYj> queryWrapper=new LambdaQueryWrapper<>();
