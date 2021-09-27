@@ -85,6 +85,18 @@
     >
       {{dcaBUser.staffDate==null?"":moment(dcaBUser.staffDate).format('YYYY-MM-DD')}}
     </a-form-item>
+    <a-form-item
+      v-bind="formItemLayout"
+      label="现任岗位级别"
+    >
+      {{dcaBUser.xrgwjb}}
+    </a-form-item>
+    <a-form-item
+      v-bind="formItemLayout"
+      label="现任岗位聘任时间"
+    >
+      {{dcaBUser.xrgwjbprsj==null?"":moment(dcaBUser.xrgwjbprsj).format('YYYY-MM-DD')}}
+    </a-form-item>
    <a-form-item
       v-bind="formItemLayout"
       label="个人照片"

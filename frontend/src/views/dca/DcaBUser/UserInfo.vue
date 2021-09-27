@@ -123,7 +123,7 @@
 
           </a-row>
           <a-row>
- <a-col :span="6">
+            <a-col :span="6">
               <a-form-item
                 v-bind="formItemLayout"
                 label="职员聘任时间"

@@ -387,7 +387,7 @@ export default {
     handleSubmit() {
       var yjIds = this.$refs.yjTree.getAuditKey();
       if (yjIds == "") {
-        this.$message.warning("请选择学术业绩");
+        this.$message.warning("请必须选择下述条件中的一项进行提交");
         return;
       } else {
         this.form.validateFields((err, values) => {

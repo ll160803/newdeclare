@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    title="职称申报(暂无开启)"
+    title="职称申报"
     :maskClosable="false"
     width="800"
     placement="right"
@@ -349,7 +349,7 @@ export default {
     handleSubmit() {
       var yjIds = this.$refs.yjTree.getAuditKey();
       if (yjIds == "") {
-        this.$message.warning("请选择学术业绩");
+        this.$message.warning("请必须选择下述条件中的一项进行提交");
         return;
       } else {
         this.form.validateFields((err, values) => {

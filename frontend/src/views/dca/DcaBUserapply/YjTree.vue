@@ -1,6 +1,6 @@
 <template>
   <div>
-       <a-form-item label='学术业绩选择'
+       <a-form-item label='可多选必选一项'
                    style="margin-bottom: 2rem"
                    :validateStatus="menuSelectStatus"
                    :help="menuSelectHelp"
@@ -22,7 +22,7 @@
 
 <script>
 const formItemLayout = {
-  labelCol: { span: 3 },
+  labelCol: { span: 5 },
   wrapperCol: { span: 18 }
 }
 export default {

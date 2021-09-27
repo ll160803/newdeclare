@@ -13,11 +13,12 @@
                     <result column="CREATE_USER_ID" property="createUserId"/>
                     <result column="MODIFY_USER_ID" property="modifyUserId"/>
                     <result column="parent_id" property="parentId"/>
+            <result column="file_url" property="fileUrl"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, mudule_name, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, parent_id
+        id, mudule_name, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, parent_id, file_url
     </sql>
     <update id="updateDcaDMudules" parameterType="cc.mrbird.febs.dca.entity.DcaDMudules">
         update dca_d_mudules

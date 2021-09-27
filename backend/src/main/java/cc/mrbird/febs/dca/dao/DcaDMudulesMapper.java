@@ -23,4 +23,7 @@ public interface DcaDMudulesMapper extends BaseMapper<DcaDMudules> {
 
         @Select("select *  from dca_d_mudules where id in (SELECT mudule_id from dca_user_moudules where userid=#{userid})")
         List<DcaDMudules> findMoudesByUserId(@Param("userid") String userid);
+
+        @Select("select count(1) from ${tal} where user_account=#{useraccount} and state=0 and IS_DELETEMARK = 1")
+        int getUndoSubmitData(@Param("tal") String tal,@Param("useraccount") String useraccount);
         }

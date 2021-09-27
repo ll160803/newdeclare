@@ -97,19 +97,19 @@ public class DcaDMudulesServiceImpl extends ServiceImpl<DcaDMudulesMapper, DcaDM
         List<String> list = Arrays.asList(Ids);
         this.baseMapper.deleteBatchIds(list);
     }
+
     @Override
-    public
-    Map<String, Object> findDeptsByUserId(Long userId){
+    public Map<String, Object> findDeptsByUserId(Long userId) {
         Map<String, Object> result = new HashMap<>();
         try {
-            LambdaQueryWrapper<DcaDMudules> queryWrapper=new LambdaQueryWrapper<>();
-            queryWrapper.apply("dca_d_mudules.id in (select mudule_id from dca_user_moudules where userId ="+userId+")");
-            queryWrapper.eq(DcaDMudules::getIsDeletemark,1);
+            LambdaQueryWrapper<DcaDMudules> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.apply("dca_d_mudules.id in (select mudule_id from dca_user_moudules where userId =" + userId + ")");
+            queryWrapper.eq(DcaDMudules::getIsDeletemark, 1);
             List<DcaDMudules> depts = this.baseMapper.selectList(queryWrapper);
-            ;
+
             List<Tree<DcaDMudules>> trees = new ArrayList<>();
-            List<String> ids =new ArrayList<>();
-            buildTrees(trees, depts,ids);
+            List<String> ids = new ArrayList<>();
+            buildTrees(trees, depts, ids,"");
             Tree<DcaDMudules> deptTree = TreeUtil.build(trees);
             result.put("ids", ids);
             result.put("rows", deptTree);
@@ -123,20 +123,20 @@ public class DcaDMudulesServiceImpl extends ServiceImpl<DcaDMudulesMapper, DcaDM
     }
 
     @Override
-    public Map<String, Object> findDepts(String codes) {
+    public Map<String, Object> findDepts(String codes,String userAccount) {
         Map<String, Object> result = new HashMap<>();
         try {
-            LambdaQueryWrapper<DcaDMudules> queryWrapper=new LambdaQueryWrapper<>();
-queryWrapper.eq(DcaDMudules::getIsDeletemark,1);
-if(StringUtils.isNotBlank(codes)) {
-    String[] arrIds = codes.split(",");
-    queryWrapper.notIn(DcaDMudules::getId,arrIds);
-}
+            LambdaQueryWrapper<DcaDMudules> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(DcaDMudules::getIsDeletemark, 1);
+            if (StringUtils.isNotBlank(codes)) {
+                String[] arrIds = codes.split(",");
+                queryWrapper.notIn(DcaDMudules::getId, arrIds);
+            }
             List<DcaDMudules> depts = this.baseMapper.selectList(queryWrapper);
 
             List<Tree<DcaDMudules>> trees = new ArrayList<>();
-            List<String> ids =new ArrayList<>();
-            buildTrees(trees, depts,ids);
+            List<String> ids = new ArrayList<>();
+            buildTrees(trees, depts, ids,userAccount);
             Tree<DcaDMudules> deptTree = TreeUtil.build(trees);
             result.put("ids", ids);
             result.put("rows", deptTree);
@@ -149,10 +149,18 @@ if(StringUtils.isNotBlank(codes)) {
         return result;
     }
 
-    private void buildTrees(List<Tree<DcaDMudules>> trees, List<DcaDMudules> depts,List<String> ids) {
+    private void buildTrees(List<Tree<DcaDMudules>> trees, List<DcaDMudules> depts, List<String> ids, String userAccount) {
         depts.forEach(dept -> {
+
             ids.add(dept.getId().toString());
             Tree<DcaDMudules> tree = new Tree<>();
+
+            if(StringUtils.isNotEmpty(userAccount) && StringUtils.isNotEmpty(dept.getFileUrl())) {
+                int kcount= this.baseMapper.getUndoSubmitData(dept.getFileUrl(), userAccount);
+                if(kcount>0){
+                    tree.setPath("2");
+                }
+            }
             tree.setId(dept.getId().toString());
             tree.setKey(tree.getId());
             tree.setParentId(dept.getParentId().toString());

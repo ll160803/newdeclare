@@ -41,6 +41,9 @@
                 :treeData="mouduleTreeData"
                 @select="handleTreeClick"
               >
+              <template slot="custom" slot-scope="item">
+                <span :style="item.path=='2'?'color:red':''">{{item.title}}</span>
+              </template>
               </a-tree>
             </div>
           </a-card>
@@ -313,7 +316,7 @@ export default {
   },
   created() {
         this.$EventBus.$on('selectMoudles',(index)=> {
-        console.info("yqwieqweqweqe")
+          this.fetch();
           this.index = index
     })
     window.addEventListener("resize", this.getHeight);
@@ -331,6 +334,9 @@ export default {
       this.$get("dcaDMudules/doctree/" + codes).then((r) => {
         var drows = r.data.rows.children;
         drows[0].children = drows[0].children.filter((p) => p.id != 10);
+        drows[0].children.forEach(element => {
+           element['scopedSlots'] = {title: 'custom'}
+        });
         // console.info(drows)
         // var drows=r.data.rows.children.filter(p=>p.id!=11) //医疗工作量
         this.mouduleTreeData = drows;

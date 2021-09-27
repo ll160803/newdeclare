@@ -86,6 +86,12 @@ private static final long serialVersionUID=1L;
     private Integer parentId;
 
 
+    /**
+     * 模块对应表
+     */
+    private String fileUrl;
+
+
 
     public static final String ID ="id" ;
 

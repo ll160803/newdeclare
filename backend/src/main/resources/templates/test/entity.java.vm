@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 #end
 import java.util.Date;
+import cc.mrbird.febs.common.converter.*;
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
 
@@ -81,7 +82,7 @@ private static final long serialVersionUID=1L;
     @TableLogic
     #end
     #if("$!field.comment" != "")
-    @ExcelField(value ="${field.comment}")
+    @ExcelField(value ="${field.comment}", writeConverter = DateConverter.class)
     #end
     #if($field.propertyType.indexOf("Date")==-1)
     private ${field.propertyType} ${field.propertyName};

@@ -173,6 +173,18 @@
       >
         <a-date-picker :disabled="true"  v-decorator="[ 'staffDate', {}]" />
       </a-form-item>
+       <a-form-item
+        v-bind="formItemLayout"
+        label="现任岗位等级"
+      >
+        <a-date-picker :disabled="true" v-decorator="[ 'xrgwjb', {}]" />
+      </a-form-item>
+      <a-form-item
+        v-bind="formItemLayout"
+        label="现任岗位聘任时间"
+      >
+        <a-date-picker :disabled="true"  v-decorator="[ 'xrgwjbprsj', {}]" />
+      </a-form-item>
       <a-form-item
         v-bind="formItemLayout"
         label="个人照片"
@@ -247,14 +259,14 @@ export default {
   methods: {
     moment,
     setFields () {
-      let values = this.form.getFieldsValue(['userAccountName', 'userAccount', 'deptName',  'sexName', 'birthday', 'schoolDate', 'zyjsgw', 'xcszyjzc', 'appointedDate', 'patentRanknum', 'appointedDateLc', 'zyjsgwLc','ks','telephone','staffGrade' ,'staffDate'])
+      let values = this.form.getFieldsValue(['userAccountName', 'userAccount', 'deptName',  'sexName', 'birthday', 'schoolDate', 'zyjsgw', 'xcszyjzc', 'appointedDate', 'patentRanknum', 'appointedDateLc', 'zyjsgwLc','ks','telephone','staffGrade' ,'staffDate', 'xrgwjb','xrgwjbprsj'])
       if (typeof values !== 'undefined') {
         Object.keys(values).forEach(_key => { this.dcaBUser[_key] = values[_key] })
       }
     },
     setFormValues ({ ...dcaBUser }) {
-      let fields = ['userAccountName', 'userAccount', 'deptName',  'sexName', 'birthday', 'schoolDate', 'zyjsgw', 'xcszyjzc', 'appointedDate', 'appointedDateLc', 'zyjsgwLc','ks','telephone','staffGrade' ,'staffDate']
-      let fieldDates = ['birthday', 'schoolDate', 'appointedDate', 'auditDate', 'appointedDateLc', 'staffDate']
+      let fields = ['userAccountName', 'userAccount', 'deptName',  'sexName', 'birthday', 'schoolDate', 'zyjsgw', 'xcszyjzc', 'appointedDate', 'appointedDateLc', 'zyjsgwLc','ks','telephone','staffGrade' ,'staffDate', 'xrgwjb','xrgwjbprsj']
+      let fieldDates = ['birthday', 'schoolDate', 'appointedDate', 'auditDate', 'appointedDateLc', 'staffDate', 'xrgwjbprsj']
       Object.keys(dcaBUser).forEach((key) => {
         if (fields.indexOf(key) !== -1) {
           this.form.getFieldDecorator(key)
@@ -482,6 +494,9 @@ export default {
            dcaBUser.staffDate= null
          }
 
+       if(dcaBUser.xrgwjbprsj ==''){
+           dcaBUser.xrgwjbprsj= null
+         }
           this.$put('dcaBUser', {
             ...dcaBUser
           }).then(() => {

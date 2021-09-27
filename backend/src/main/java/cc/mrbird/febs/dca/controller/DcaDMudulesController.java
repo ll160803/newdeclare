@@ -60,11 +60,12 @@ public Map<String, Object> List(QueryRequest request, DcaDMudules dcaDMudules){
 
     @GetMapping("tree")
     public Map<String, Object> treeList() {
-        return this.iDcaDMudulesService.findDepts("");
+        return this.iDcaDMudulesService.findDepts("","");
     }
     @GetMapping("doctree/{codes}")
     public Map<String, Object> treeList4(@PathVariable String codes) {
-        return this.iDcaDMudulesService.findDepts(codes);
+        User currentUser= FebsUtil.getCurrentUser();
+        return this.iDcaDMudulesService.findDepts(codes,currentUser.getUsername());
     }
 
     @GetMapping("treeByUserId")

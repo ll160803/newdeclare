@@ -33,7 +33,7 @@ public interface IDcaDMudulesService extends IService<DcaDMudules> {
          * 模块树
          * @return
          */
-        Map<String, Object> findDepts(String codes);
+        Map<String, Object> findDepts(String codes,String userAccount);
 
         /**
          * 根据用户ID获取模块
