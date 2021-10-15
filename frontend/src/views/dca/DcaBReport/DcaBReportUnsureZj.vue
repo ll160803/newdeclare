@@ -168,7 +168,7 @@ export default {
         sortOrder = sortedInfo.order
       }
       this.fetch2({
-        sortField: "user_account",
+        sortField: "paixu1,paixu2,paixu3,paixu4,convert(ks using gbk) collate gbk_chinese_ci,convert(user_account_name using gbk) collate gbk_chinese_ci",
         sortOrder: "ascend",
         ...this.queryParams
       })
@@ -189,7 +189,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.pagination.defaultCurrent
       }
-      params.sortField = "user_account"
+      params.sortField =  "paixu1,paixu2,paixu3,paixu4,convert(ks using gbk) collate gbk_chinese_ci,convert(user_account_name using gbk) collate gbk_chinese_ci"
       params.sortOrder = "ascend"
       this.$get('dcaBReport', {
         state: this.state,
@@ -279,7 +279,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.paginationInfo.defaultCurrent
       }
-      params.sortField = "user_account"
+      params.sortField = "paixu1,paixu2,paixu3,paixu4,convert(ks using gbk) collate gbk_chinese_ci,convert(user_account_name using gbk) collate gbk_chinese_ci"
       params.sortOrder = "ascend"
       params.userAccount = userAccount
       this.$get('dcaBReport', {
@@ -299,7 +299,7 @@ export default {
       this.sortedInfo = sorter
       this.paginationInfo = pagination
       this.fetch2({
-        sortField: "user_account",
+        sortField: "paixu1,paixu2,paixu3,paixu4,convert(ks using gbk) collate gbk_chinese_ci,convert(user_account_name using gbk) collate gbk_chinese_ci",
         sortOrder: "ascend",
         ...this.queryParams
       })
@@ -516,11 +516,11 @@ export default {
           dataIndex: "fdzz",
         },
         {
-          title: "业技术职务资格名称11",
+          title: "专业技术职务资格名称11",
           dataIndex: "zyjszwzg",
         },
         {
-          title: "业技术职务资格名称时间12",
+          title: "专业技术职务资格名称时间12",
           dataIndex: "zyjszwzgsj",
         },
         {
@@ -816,7 +816,7 @@ export default {
       let dataJson = JSON.stringify(json)
 
       this.$export('dcaUserAudit/excelBigTable', {
-        sortField: 'user_account',
+        sortField: "paixu1,paixu2,paixu3,paixu4,convert(ks using gbk) collate gbk_chinese_ci,convert(user_account_name using gbk) collate gbk_chinese_ci",
         sortOrder: 'ascend',
         state: this.state,
         excelIndex: 1, 
@@ -1064,7 +1064,7 @@ export default {
 
 
         {
-          title: '医疗评分',
+          title: '医疗评价',
           children: [
              {
               title: "医务等级",
@@ -1096,7 +1096,7 @@ export default {
           ]
         },
         {
-          title: '教学评分',
+          title: '教学评价',
           children: [
             {
               title: '等级',
@@ -1121,7 +1121,7 @@ export default {
           title: "取得湖北省相应专业技术职务资格及时间",
           children: [
             {
-              title: "业技术职务资格名称",
+              title: "专业技术职务资格名称",
               dataIndex: "zyjszwzg",
               width: 100,
             },

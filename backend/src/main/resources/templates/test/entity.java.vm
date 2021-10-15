@@ -82,7 +82,7 @@ private static final long serialVersionUID=1L;
     @TableLogic
     #end
     #if("$!field.comment" != "")
-    @ExcelField(value ="${field.comment}", writeConverter = DateConverter.class)
+    @ExcelField(value ="${field.comment}" #if($field.propertyType.indexOf("Date")>0) , writeConverter = DateConverter.class #end)
     #end
     #if($field.propertyType.indexOf("Date")==-1)
     private ${field.propertyType} ${field.propertyName};

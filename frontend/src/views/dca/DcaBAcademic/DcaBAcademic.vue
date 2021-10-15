@@ -26,7 +26,7 @@
         <div v-else>
           <a-select
             :value="record.academicName"
-            style="width: 100%"
+            style="width: 380px"
             @change="(e, f) => handleSelectChange(e, f, record, 'academicName')"
           >
              <a-select-option value="长江学者特聘教授"

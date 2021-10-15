@@ -50,4 +50,7 @@ public class Tree<T> {
         this.children = new ArrayList<>();
     }
 
+    private SubTree scopedSlots;
+
 }
+

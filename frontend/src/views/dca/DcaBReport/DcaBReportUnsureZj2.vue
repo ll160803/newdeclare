@@ -16,7 +16,7 @@
         :scroll="scroll"
       >
         <template slot="splitHang" slot-scope="text, record">
-          <p style="width: 100%" v-for="item in splitStr(text)">{{ item }}</p>
+          <div style="width: 100%" v-for="item in splitStr(text)">{{ item }}</div>
         </template>
         <template slot="userAccount" slot-scope="text, record">
           <a @click="showUserInfo(text)">{{ text }}</a>
@@ -45,7 +45,7 @@
               block
               @click="ExportDocReport(record)"
             >
-              合同制确认表
+              确认表
             </a-button>
           </div>
           <div v-else-if="record.state == 1">
@@ -108,8 +108,7 @@ export default {
       },
       queryParams: {
         userAccount: "",
-        ks: "中级,初级",
-        yuangongzu: "合同制",
+        ks: "二三级"
       },
       sortedInfo: null,
       paginationInfo: null,
@@ -207,7 +206,7 @@ export default {
           npPositionName: record.npPositionName,
           gwdj: record.gwdj, //岗位等级
         },
-        record.year + "_" + record.userAccount + "_合同制确认表" + ".docx"
+        record.year + "_" + record.userAccount + "_二三级确认表" + ".docx"
       );
     },
     ExportAttachReport(record) {
@@ -306,234 +305,285 @@ export default {
         sortField = sortedInfo.field;
         sortOrder = sortedInfo.order;
       }
-      let json = [
+         let json = [
         {
-          title: "序号",
-          dataIndex: "indexHao",
-        },
-        {
-          title: "顺序号",
+          title: "顺序号1",
           dataIndex: "confirmIndex",
+          width: 100,
         },
-
         {
-          title: "报名档案顺序号",
+          title: "报名档案顺序号2",
           dataIndex: "baomingIndex",
+          width: 100,
         },
         {
-          title: "职员代码",
-          dataIndex: "userAccount",
-        },
-        {
-          title: "人员类别",
-          dataIndex: "yuangongzu",
-        },
-        {
-          title: "系列",
-          dataIndex: "xl",
-        },
-        {
-          title: "评审分组",
+          title: "科室分类3",
           dataIndex: "pingshenfenzu",
+          width: 180,
         },
         {
-          title: "申报等级",
+          title: "申报等级4",
           dataIndex: "gwdj",
+          width: 60,
+          //    fixed: 'left',
         },
         {
-          title: "科室",
+          title: "科室5",
           dataIndex: "ks",
+          width: 80,
+          //    fixed: 'left',
         },
         {
-          title: "姓名",
+          title: "职员代码6",
+          dataIndex: "userAccount",
+          width: 80,
+        },
+        {
+          title: "性别7",
+          dataIndex: "sexName",
+          width: 80,
+          //    fixed: 'left',
+        },
+        {
+          title: "姓名8",
           dataIndex: "userAccountName",
+          width: 80,
+          //    fixed: 'left',
         },
         {
-          title: "出生年月",
+          title: "出生年月9",
           dataIndex: "birthdaystr",
-        },
-
-        {
-          title: "现职务名称",
-          dataIndex: "positionName",
           width: 100,
         },
         {
-          title: "聘任时间",
-          dataIndex: "zygwDate",
-          width: 100,
+          title: "年龄10",
+          dataIndex: "age",
+          width: 60,
         },
         {
-          title: "申报职称",
-          dataIndex: "npPositionName",
-          width: 100,
-        },
-        {
-          title: "入职前最高学历",
-          dataIndex: "rzqedu",
-          width: 100,
-        },
-        {
-          title: "最高学历",
+          title: "学历(位)11",
           dataIndex: "edu",
           width: 100,
         },
         {
-          title: "最高学历毕业时间",
+          title: "毕业时间12",
           dataIndex: "eduDate",
           width: 100,
         },
 
         {
-          title: "来院时间",
-          dataIndex: "schoolDate",
+          title: "任职13",
+          dataIndex: "positionName",
           width: 100,
         },
         {
-          title: "中专毕业时间",
-          dataIndex: "zzbysj",
-          width: 100,
-        },
-        {
-          title: "大专毕业时间",
-          dataIndex: "dzbysj",
-          width: 100,
-        },
-        {
-          title: "本科毕业时间",
-          dataIndex: "bkbysj",
-          width: 100,
-        },
-        {
-          title: "硕士毕业时间",
-          dataIndex: "ssbysj",
-          width: 100,
-        },
-        {
-          title: "博士毕业时间",
-          dataIndex: "bsbysj",
+          title: "聘任时间14",
+          dataIndex: "zygwDate",
           width: 100,
         },
 
         {
-          title: "SCI",
-          dataIndex: "publishA",
+          title: "岗位等级15",
+          dataIndex: "xrgwjb",
           width: 100,
         },
         {
-          title: "权威",
-          dataIndex: "publishD",
+          title: "任职时间16",
+          dataIndex: "xrgwjbprsj",
           width: 100,
         },
         {
-          title: "核心",
-          dataIndex: "publishE",
+          title: "申报三级时是否使用医疗条件17",
+          dataIndex: "ifsyyltj",
+          width: 100
+        },
+        {
+          title: "任博导时间18",
+          dataIndex: "rbdsj",
           width: 100,
         },
         {
-          title: "正式",
-          dataIndex: "publishF",
-        },
-
-        {
-          title: "著作或教材",
-          dataIndex: "publicarticle1",
-        },
-        {
-          title: "承担字数(万)",
-          dataIndex: "publicarticle2",
-        },
-
-        {
-          title: "名称",
-          dataIndex: "sciName",
-        },
-        {
-          title: "等级",
-          dataIndex: "sciDengji",
-        },
-        {
-          title: "排名",
-          dataIndex: "sciRanknum",
-        },
-
-        {
-          title: "级别",
-          dataIndex: "sciDjlb",
-        },
-        {
-          title: "金额万元",
-          dataIndex: "sciDjfund",
-        },
-        {
-          title: "排名",
-          dataIndex: "sciDjranknum",
-        },
-
-        {
-          title: "等级",
-          dataIndex: "ylpfdj",
+          title: "申报岗位19",
+          dataIndex: "npPositionName",
           width: 100,
         },
         {
-          title: "分数",
-          dataIndex: "ylpfbfz",
+          title: "申报年度20",
+          dataIndex: "year",
+          width: 100,
         },
         {
-          title: "法定资质",
-          dataIndex: "fdzz",
+          title: "是否符合必备条件21",
+          dataIndex: "iffuhebibei",
+          width: 80
+        },
+        {
+          title: "是否必须使用医疗条件22",
+          dataIndex: "ifbxyltj",
+          width: 80
+        },
+        {
+          title: "满足学术条件情况23",
+          dataIndex: "mzsstjqk",
+          width: 80
         },
 
         {
-          title: "等级",
+          title: "等级24",
           dataIndex: "jxpfdj",
+          width: 100,
         },
         {
-          title: "分数",
+          title: "分数25",
           dataIndex: "jxpf",
-        },
-
-        {
-          title: "业技术职务资格名称",
-          dataIndex: "zyjszwzg",
+          width: 80,
         },
         {
-          title: "业技术职务资格名称时间",
-          dataIndex: "zyjszwzgsj",
+          title: "近三年核心人力资源评分26",
+          dataIndex: "j3nhxrlzypf",
+          width: 80
         },
-
         {
-          title: "岗前培训情况",
-          dataIndex: "gqpxqk",
+          title: "近三年医疗综合评分27",
+          dataIndex: "j3ylzhpf",
           width: 100,
         },
         {
-          title: "规范化医师培训情况",
-          dataIndex: "gfhyspxqk",
-          width: 100,
-        },
-        {
-          title: "中级水平能力测试情况",
-          dataIndex: "zjspnlceqk",
+          title: "近三年手术总台次28",
+          dataIndex: "j3nssztc",
           width: 100,
         },
 
         {
-          title: "部门审核结果",
-          dataIndex: "auditMan",
+          title: "近三年收治住院病人总数29",
+          dataIndex: "j3nzyszbrsl",
+          width: 100,
         },
         {
-          title: "联系方式",
-          dataIndex: "telephone",
+          title: "近三年门诊收治病人总数30",
+          dataIndex: "j3nmzszbrsl",
+          width: 100,
+        },
+
+        {
+          title: "负责开展的新技术新业务31",
+          dataIndex: "xjsxyw",
+          width: 100,
         },
         {
-          title: "是否符合基本条件",
+          title: "负责的新技术新业务获奖情况32",
+          dataIndex: "xjsxywprize",
+          width: 100,
+        },
+        {
+          title: "单篇SCI高分文章≥1033",
+          dataIndex: "dpsci10",
+          width: 60,
+        },
+        {
+          title: "A 类34",
+          dataIndex: "publishA",
+          width: 60,
+        },
+        {
+          title: "B 类35",
+          dataIndex: "publishB",
+          width: 60,
+        },
+        {
+          title: "C 类36",
+          dataIndex: "publishC",
+          width: 60,
+        },
+        {
+          title: "D 类37",
+          dataIndex: "publishD",
+          width: 60,
+        },
+        {
+          title: "E 类38",
+          dataIndex: "publishE",
+          width: 60,
+        },
+        {
+          title: "F 类39",
+          dataIndex: "publishF",
+          width: 60,
+        },
+        {
+          title: "著作40",
+          dataIndex: "publicarticle1",
+          width: 100,
+        },
+        {
+          title: "数量41",
+          dataIndex: "publicarticle2",
+          width: 100,
+        },
+
+        {
+          title: "主持国家级课题42",
+          dataIndex: "sciDjlb",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "资助金额万元43",
+          dataIndex: "sciDjfund",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "国家自然基金资助批准时间44",
+          dataIndex: "sciDjranknum",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "名称45",
+          dataIndex: "sciName",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "等级46",
+          dataIndex: "sciDengji",
+          width: 60,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "排名47",
+          dataIndex: "sciRanknum",
+          width: 60,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "学会任职48",
+          dataIndex: "xhrzqk",
+          width: 100,
+        },
+        {
+          title: "是否符合基本条件50",
           dataIndex: "clshjg",
+          width: 100,
+          scopedSlots: { customRender: "clshjg" },
         },
-
         {
-          title: "申报类型",
-          dataIndex: "sblx",
+          title: "退审原因51",
+          dataIndex: "ntyy",
+          width: 100,
+          scopedSlots: { customRender: "ntyy" },
+        },
+        {
+          title: "备注52",
+          dataIndex: "note",
+          width: 100,
+          scopedSlots: { customRender: "note" },
+        },
+        {
+          title: "联系方式53",
+          dataIndex: "telephone",
+          width: 100,
         },
       ];
       let dataJson = JSON.stringify(json);
@@ -552,43 +602,19 @@ export default {
     columns() {
       let clm = [
         {
-          title: "申报年度",
-          dataIndex: "year",
-          width: 100,
-        },
-        {
           title: "顺序号",
           dataIndex: "confirmIndex",
           width: 100,
           scopedSlots: { customRender: "confirmIndex" },
           // fixed: 'left',
         },
-
         {
           title: "报名档案顺序号",
           dataIndex: "baomingIndex",
           width: 100,
         },
         {
-          title: "职员代码",
-          dataIndex: "userAccount",
-          width: 80,
-          scopedSlots: { customRender: "userAccount" },
-          //     fixed: 'left',
-        },
-        {
-          title: "人员类别",
-          dataIndex: "yuangongzu",
-          width: 100,
-        },
-        {
-          title: "系列",
-          dataIndex: "xl",
-          width: 80,
-          //     fixed: 'left'
-        },
-        {
-          title: "评审分组",
+          title: "科室分类",
           dataIndex: "pingshenfenzu",
           width: 180,
           scopedSlots: { customRender: "pingshenfenzu" },
@@ -607,6 +633,19 @@ export default {
           //    fixed: 'left',
         },
         {
+          title: "职员代码",
+          dataIndex: "userAccount",
+          width: 80,
+          scopedSlots: { customRender: "userAccount" },
+          //     fixed: 'left',
+        },
+        {
+          title: "性别",
+          dataIndex: "sexName",
+          width: 80,
+          //    fixed: 'left',
+        },
+        {
           title: "姓名",
           dataIndex: "userAccountName",
           width: 80,
@@ -618,10 +657,25 @@ export default {
           width: 100,
         },
         {
-          title: "现职务",
+          title: "年龄",
+          dataIndex: "age",
+          width: 60,
+        },
+        {
+          title: "学历(位)",
+          dataIndex: "edu",
+          width: 100,
+        },
+        {
+          title: "毕业时间",
+          dataIndex: "eduDate",
+          width: 100,
+        },
+        {
+          title: "专业技术职务",
           children: [
             {
-              title: "现职务名称",
+              title: "任职",
               dataIndex: "positionName",
               width: 100,
             },
@@ -633,180 +687,58 @@ export default {
           ],
         },
         {
-          title: "入职前最高学历",
-          dataIndex: "rzqedu",
+          title: "现任岗位级别及时间",
+          children: [
+            {
+              title: "岗位等级",
+              dataIndex: "xrgwjb",
+              width: 100,
+            },
+            {
+              title: "任职时间",
+              dataIndex: "xrgwjbprsj",
+              width: 100,
+            },
+          ],
+        },
+        {
+          title: "申报三级时是否使用医疗条件",
+          dataIndex: "ifsyyltj",
+          width: 100,
+          scopedSlots: { customRender: "ifsyyltj" },
+        },
+        {
+          title: "任博导时间",
+          dataIndex: "rbdsj",
           width: 100,
         },
         {
-          title: "最高学历",
-          dataIndex: "edu",
-          width: 100,
-        },
-        {
-          title: "最高学历毕业时间",
-          dataIndex: "eduDate",
-          width: 100,
-        },
-        {
-          title: "申报职称",
+          title: "申报岗位",
           dataIndex: "npPositionName",
           width: 100,
         },
         {
-          title: "来院时间",
-          dataIndex: "schoolDate",
+          title: "申报年度",
+          dataIndex: "year",
           width: 100,
         },
         {
-          title: "中专毕业时间",
-          dataIndex: "zzbysj",
-          width: 100,
+          title: "是否符合必备条件",
+          dataIndex: "iffuhebibei",
+          width: 80,
+          scopedSlots: { customRender: "iffuhebibei" },
         },
         {
-          title: "大专毕业时间",
-          dataIndex: "dzbysj",
-          width: 100,
+          title: "是否必须使用医疗条件",
+          dataIndex: "ifbxyltj",
+          width: 80,
+          scopedSlots: { customRender: "ifbxyltj" },
         },
         {
-          title: "本科毕业时间",
-          dataIndex: "bkbysj",
-          width: 100,
-        },
-        {
-          title: "硕士毕业时间",
-          dataIndex: "ssbysj",
-          width: 100,
-        },
-        {
-          title: "博士毕业时间",
-          dataIndex: "bsbysj",
-          width: 100,
-        },
-
-        {
-          title: "论文",
-          children: [
-            {
-              title: "SCI",
-              dataIndex: "publishA",
-              width: 100,
-            },
-            {
-              title: "权威",
-              dataIndex: "publishD",
-              width: 100,
-            },
-            {
-              title: "核心",
-              dataIndex: "publishE",
-              width: 100,
-            },
-            {
-              title: "正式",
-              dataIndex: "publishF",
-              width: 100,
-            },
-          ],
-        },
-
-        {
-          title: "著作或教材",
-          children: [
-            {
-              title: "著作或教材",
-              dataIndex: "publicarticle1",
-              width: 100,
-            },
-            {
-              title: "承担字数(万)",
-              dataIndex: "publicarticle2",
-              width: 100,
-            },
-          ],
-        },
-        {
-          title: "科研获奖",
-          children: [
-            {
-              title: "名称",
-              dataIndex: "sciName",
-              width: 100,
-              scopedSlots: { customRender: "splitHang" },
-            },
-            {
-              title: "等级",
-              dataIndex: "sciDengji",
-              width: 60,
-              scopedSlots: { customRender: "splitHang" },
-            },
-            {
-              title: "排名",
-              dataIndex: "sciRanknum",
-              width: 60,
-              scopedSlots: { customRender: "splitHang" },
-            },
-          ],
-        },
-
-        {
-          title: "科研课题",
-          children: [
-            {
-              title: "级别",
-              dataIndex: "sciDjlb",
-              width: 100,
-              scopedSlots: { customRender: "splitHang" },
-            },
-            {
-              title: "金额万元",
-              dataIndex: "sciDjfund",
-              width: 100,
-              scopedSlots: { customRender: "splitHang" },
-            },
-            {
-              title: "排名",
-              dataIndex: "sciDjranknum",
-              width: 100,
-              scopedSlots: { customRender: "splitHang" },
-            },
-          ],
-        },
-
-        {
-          title: "医疗评分",
-          children: [
-            {
-              title: "医务等级",
-              dataIndex: "ylpfdj",
-              width: 100,
-            },
-            {
-              title: "医务分数",
-              dataIndex: "ylpfbfz2",
-              width: 80,
-              customRender: (text, row, index) => {
-                return row.ylpfbfz;
-              },
-            },
-            {
-              title: "门办等级",
-              dataIndex: "mzylpfdj",
-              width: 100,
-            },
-            {
-              title: "门办分数",
-              dataIndex: "mzylpf2",
-              width: 80,
-              customRender: (text, row, index) => {
-                return row.mzylpf;
-              },
-            },
-          ],
-        },
-        {
-          title: "法定资质",
-          dataIndex: "fdzz",
-          width: 100,
+          title: "满足学术条件情况",
+          dataIndex: "mzsstjqk",
+          width: 300,
+          scopedSlots: { customRender: "splitHang" },
         },
         {
           title: "教学评分",
@@ -827,45 +759,163 @@ export default {
           ],
         },
         {
-          title: "取得湖北省相应专业技术职务资格及时间",
+          title: "近三年核心人力资源评分",
+          dataIndex: "j3nhxrlzypf",
+          width: 80,
+          scopedSlots: { customRender: "j3nhxrlzypf" },
+        },
+        {
+          title: "近三年医疗综合评分",
+          dataIndex: "j3ylzhpf",
+          width: 100,
+        },
+        {
+          title: "近三年手术总台次",
+          dataIndex: "j3nssztc",
+          width: 100,
+        },
+
+        {
+          title: "近三年收治住院病人总数",
+          dataIndex: "j3nzyszbrsl",
+          width: 100,
+        },
+        {
+          title: "近三年门诊收治病人总数",
+          dataIndex: "j3nmzszbrsl",
+          width: 100,
+        },
+        {
+          title: "任现职以来新技术新业务",
           children: [
             {
-              title: "业技术职务资格名称",
-              dataIndex: "zyjszwzg",
+              title: "负责开展的新技术新业务",
+              dataIndex: "xjsxyw",
               width: 100,
             },
             {
-              title: "时间",
-              dataIndex: "zyjszwzgsj",
-              width: 80,
+              title: "负责的新技术新业务获奖情况",
+              dataIndex: "xjsxywprize",
+              width: 100,
             },
           ],
         },
-
         {
-          title: "岗前培训情况",
-          dataIndex: "gqpxqk",
-          width: 100,
+          title: "任现岗位以来",
+          children: [
+            {
+              title: "单篇SCI高分文章≥10",
+              dataIndex: "dpsci10",
+              width: 60,
+            },
+            {
+              title: "发表主要文章",
+              children: [
+                {
+                  title: "A 类",
+                  dataIndex: "publishA",
+                  width: 60,
+                },
+                {
+                  title: "B 类",
+                  dataIndex: "publishB",
+                  width: 60,
+                },
+                {
+                  title: "C 类",
+                  dataIndex: "publishC",
+                  width: 60,
+                },
+                {
+                  title: "D 类",
+                  dataIndex: "publishD",
+                  width: 60,
+                },
+                {
+                  title: "E 类",
+                  dataIndex: "publishE",
+                  width: 60,
+                },
+                {
+                  title: "F 类",
+                  dataIndex: "publishF",
+                  width: 60,
+                },
+              ],
+            },
+            {
+              title: "著作",
+              children: [
+                {
+                  title: "著作",
+                  dataIndex: "publicarticle1",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "数量",
+                  dataIndex: "publicarticle2",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+              ],
+            },
+            {
+              title: "主持国家级课题",
+              children: [
+                {
+                  title: "主持国家级课题",
+                  dataIndex: "sciDjlb",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "资助金额万元",
+                  dataIndex: "sciDjfund",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "国家自然基金资助批准时间",
+                  dataIndex: "sciDjranknum",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+              ],
+            },
+            {
+              title: "科研获奖",
+              children: [
+                {
+                  title: "名称",
+                  dataIndex: "sciName",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "等级",
+                  dataIndex: "sciDengji",
+                  width: 60,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "排名",
+                  dataIndex: "sciRanknum",
+                  width: 60,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+              ],
+            },
+          ],
         },
         {
-          title: "规范化医师培训情况",
-          dataIndex: "gfhyspxqk",
+          title: "学会任职",
+          dataIndex: "xhrzqk",
           width: 100,
+          scopedSlots: { customRender: "splitHang" },
         },
         {
-          title: "中级水平能力测试情况",
-          dataIndex: "zjspnlceqk",
-          width: 100,
-        },
-
-        {
-          title: "部门审核结果",
-          dataIndex: "auditMan",
-          width: 100,
-          scopedSlots: { customRender: "auditMan" },
-        },
-        {
-          title: "是否符合基本条件",
+          title: "材料审核结果",
           dataIndex: "clshjg",
           width: 100,
           scopedSlots: { customRender: "clshjg" },
@@ -877,15 +927,15 @@ export default {
           scopedSlots: { customRender: "ntyy" },
         },
         {
+          title: "备注",
+          dataIndex: "note",
+          width: 100,
+          scopedSlots: { customRender: "note" },
+        },
+        {
           title: "联系方式",
           dataIndex: "telephone",
           width: 100,
-        },
-        {
-          title: "申报类型",
-          dataIndex: "sblx",
-          width: 100,
-          scopedSlots: { customRender: "sblx" },
         },
         {
           title: "操作",

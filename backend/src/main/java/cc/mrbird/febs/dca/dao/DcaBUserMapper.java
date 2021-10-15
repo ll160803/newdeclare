@@ -246,7 +246,7 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
      *  任现职以来承担的主要科研项目
      */
     @Select("SELECT\n" +
-            "\taudit_typetp,audit_typetpjx,audit_lb,audit_fund,audit_rank,user_account\n" +
+            "\taudit_typetp,audit_typetpjx,audit_lb,audit_fund,audit_rank,audit_Date,user_account\n" +
             "FROM\n" +
             "\tdca_b_sciencesearch\n" +
             "WHERE\n" +
@@ -295,6 +295,7 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
             "\tlczcsl,\n" +
             "\tuser_account,\n" +
             "\tis_jxzcsb,\n" +
+            "\tpaper_cause,\n" +
             "\tis_lczcsb\n" +
             "FROM\n" +
             "\tdca_b_sciencepublish\n" +
@@ -310,6 +311,7 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
      */
     @Select("SELECT\n" +
             "\tuser_account,\n" +
+            "\tzzsf,\n" +
             "\t IFNULL(cdzs,0) cdzs\n" +
             "FROM\n" +
             "\tdca_b_publicarticle\n" +
@@ -386,6 +388,65 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
             "AND state = 3\n" +
             "AND IsUse = 1")
     List<DcaBYoungprize> getYoungprize();
+
+    /**
+     * 新技术新业务
+     * @return
+     */
+    @Select("SELECT\n" +
+            "\tuser_account,\n" +
+            "\trank_index,\n" +
+            "\tachievement_grade \n" +
+            "FROM\n" +
+            "\tdca_b_achievement\n" +
+            "WHERE\n" +
+            "\tIS_DELETEMARK = 1\n" +
+            "AND state = 3\n" +
+            "AND IsUse = 1")
+    List<DcaBAchievement> getAchievement();
+
+    /**
+     * 社会兼职
+     * @return
+     */
+    @Select("SELECT\n" +
+            "\tuser_account,\n" +
+            "\tjz_zw, \n" +
+            "\tjz_content \n" +
+            "FROM\n" +
+            "\tdca_b_parttimejob\n" +
+            "WHERE\n" +
+            "\tIS_DELETEMARK = 1\n" +
+            "AND state = 3\n" +
+            "AND IsUse = 1")
+    List<DcaBParttimejob> getPartTimejob();
+
+    /**
+     * 博导硕导
+     */
+    @Select("SELECT\n" +
+            "\tturtor_date,\n" +
+            "\tuser_account\n" +
+            "FROM\n" +
+            "\tdca_b_doctorturtor\n" +
+            "WHERE\n" +
+            "\tIS_DELETEMARK = 1\n" +
+            "AND state = 3\n" +
+            "AND IsUse = 1\n" +
+            "AND turtor_type = '博导'")
+    List<DcaBDoctorturtor> getDoctorTutor();
+    /**
+     * 二三级申报的学术条件情况
+     */
+    @Select("SELECT\n" +
+            "\tdca_d_yj.mudule_name,\n" +
+            "\tdca_user_yj.user_id jb\n" +
+            "FROM\n" +
+            "\tdca_d_yj\n" +
+            "INNER JOIN dca_user_yj ON dca_d_yj.id = dca_user_yj.yj_id\n" +
+            "WHERE\n" +
+            "\tdca_user_yj.dca_year = #{year}")
+    List<DcaDYj> getMoudulesYj(@Param("year") String year);
 
     /**
      * 是否担任一年辅导员或班主任

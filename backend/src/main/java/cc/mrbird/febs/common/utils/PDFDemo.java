@@ -9304,11 +9304,16 @@ public class PDFDemo {
         genericAttachInfo(customApplyFirst.getDcaBCourseclassList(), "精品课程", "course", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBYoungprizeList(), "青年教师教学竞赛获奖", "prizeName", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBCopyAcademicList(), "重要岗位任职及学术影响", "academicName", fileAttachInfoList, readers);
-        genericAttachInfo(customApplyFirst.getDcaBCopyAchievementList(), "主要医疗业绩(新技术新业务获批情况)", "achievementName", fileAttachInfoList, readers);
+        genericAttachInfo(customApplyFirst.getDcaBCopyAchievementList(), "新技术新业务获批情况", "achievementName", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBCopyDoctorturtorList(), "担任博导硕导", "turtorType", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBCopyQualificationList(), "资格证书", "qualificationName", fileAttachInfoList, readers);
 
-
+        /**
+         * 二三级新增
+         */
+        genericAttachInfo(customApplyFirst.getDcaBCopySciachievementList(), "主要科研业绩", "achievementName", fileAttachInfoList, readers);
+        genericAttachInfo(customApplyFirst.getDcaBCopyTeacheryjsList(), "主要教学业绩", "teachName", fileAttachInfoList, readers);
+        genericAttachInfo(customApplyFirst.getDcaBSCopySureachievementList(), "主要医疗业绩", "achievementName", fileAttachInfoList, readers);
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         FileOutputStream out = new FileOutputStream(fileFName);
         PdfWriter writer = PdfWriter.getInstance(document, out);
@@ -9742,7 +9747,7 @@ public class PDFDemo {
         //(职   务)
 
         listCells.add(generatePdfValue(pdfStyle1, titleCover_6_1, tilteColus, 30));
-        listCells.add(generatePdfValue(pdfStyle2, customApplyFirst.getGwlb(), valueColus, 30));
+        listCells.add(generatePdfValue(pdfStyle2, customApplyFirst.getNpgw(), valueColus, 30));
         listCells.add(generatePdfValue(pdfStyle3, " ", valueColus2, 30));
 
 
@@ -9877,12 +9882,12 @@ public class PDFDemo {
 
         //列二
         //现专业技术职务
-        listCells.add(generatePdfValue(pdfStyleex, title1_2_1, 5, contentHeight40));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXzyjsgw(), 4, contentHeight40));
+        listCells.add(generatePdfValue(pdfStyleex, title1_2_1, 5, contentHeight40 * 1.5f));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXzyjsgw(), 4, contentHeight40 * 1.5f));
 
         //现专业技术职务聘任时间（年月
-        listCells.add(generatePdfValue(pdfStyleex, title1_2_2, 5, contentHeight40));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getPrsj(), 4, contentHeight40));
+        listCells.add(generatePdfValue(pdfStyleex, title1_2_2, 5, contentHeight40 * 1.5f));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getPrsj(), 4, contentHeight40 * 1.5f));
 
 
         //列三
@@ -9893,13 +9898,13 @@ public class PDFDemo {
         if(doctorturtors.size()>0){
             doctorDate=DateUtil.format(doctorturtors.get(0).getAuditDate(),"yyyyMM");
         }
-        listCells.add(generatePdfValue(pdfStyleex, title1_3_1, 3, contentHeight40));
-        listCells.add(generatePdfValue(pdfStyleex, doctorDate, 4, contentHeight40));
+        listCells.add(generatePdfValue(pdfStyleex, title1_3_1, 3, contentHeight40 * 1.5f));
+        listCells.add(generatePdfValue(pdfStyleex, doctorDate, 4, contentHeight40 * 1.5f));
 
-        listCells.add(generatePdfValue(pdfStyleex, "现任岗位级别", 5, contentHeight40));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXrgwjb(), 6, contentHeight40));
-        listCells.add(generatePdfValue(pdfStyleex, "现任岗位级别\n聘任时间（年月）", 7, contentHeight40));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXrgwjb(), 7, contentHeight40));
+        listCells.add(generatePdfValue(pdfStyleex, "现任岗位级别", 5, contentHeight40 * 1.5f));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXrgwjb(), 6, contentHeight40 * 1.5f));
+        listCells.add(generatePdfValue(pdfStyleex, "现任岗位级别\n聘任时间（年月）", 7, contentHeight40 * 1.5f));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXrgwjb(), 7, contentHeight40 * 1.5f));
         listCells.add(generatePdfValue(pdfStyleex, "近三年医疗考核\n结果", 5));
         List<DcaBCopyMedicalaccident> dcaBCopyMedicalaccidentList=customApplyFirst.getDcaBCopyMedicalaccidentList();
         List<DcaBCopyMedicalaccident> copyMedicalaccidentList=dcaBCopyMedicalaccidentList.stream().sorted(
@@ -10064,7 +10069,7 @@ public class PDFDemo {
         if(dcaBSCopySureachievementList.size()>4){
             rowSp=dcaBSCopySureachievementList.size()+1;
         }
-        listCells.add(generatePdfValue(pdfStyle_t, "医疗认可", 2, 0,rowSp));
+        listCells.add(generatePdfValue(pdfStyle_t, "主要医疗业绩", 2, 0,rowSp));
         //至何年月
         listCells.add(generatePdfValue(pdfStyle_t, "名称", 10, 0));
         listCells.add(generatePdfValue(pdfStyle_t, "排名", 2, 0));

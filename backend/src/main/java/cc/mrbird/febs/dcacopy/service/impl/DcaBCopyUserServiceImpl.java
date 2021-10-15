@@ -139,6 +139,17 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
     @Autowired
     private IDcaBCopyQualificationService iDcaBCopyQualificationService;
 
+    @Autowired
+    private IDcaBCopyTeacheryjService iDcaBCopyTeacheryjService;
+
+    @Autowired
+    private IDcaBCopySureachievementService iDcaBCopySureachievementService;
+
+    @Autowired
+    private IDcaBCopySciachievementService iDcaBCopySciachievementService;
+
+
+
     @Override
     public IPage<DcaBCopyUser> findDcaBCopyUsers(QueryRequest request, DcaBCopyUser dcaBCopyUser) {
         try {
@@ -358,6 +369,13 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
             }
         }).collect(Collectors.toList());
 
+        /**
+         * 二三级新增
+         */
+        List<DcaBCopyTeacheryj> dcaBCopyTeacheryjs = this.iDcaBCopyTeacheryjService.getAll(userAccount, dcaYear);
+        List<DcaBCopySciachievement> dcaBCopySciachievements= this.iDcaBCopySciachievementService.getAll(userAccount, dcaYear);
+        List<DcaBCopySureachievement> dcaBCopySureachievements= this.iDcaBCopySureachievementService.getAll(userAccount, dcaYear);
+
         List<DcaBCopyUser> listDcaBCopyUser = this.iDcaBCopyUserService.getAll(userAccount, dcaYear);
         List<DcaBCopyTeacherqualify> listDcaBCopyTeacherqualify = this.iDcaBCopyTeacherqualifyService.getAll(userAccount, dcaYear);
 
@@ -403,6 +421,13 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
         customApplyFirst.setDcaBCopyDoctorturtorList(dcaBCopyDoctorturtorList);
 
         customApplyFirst.setDcaBCopyQualificationList(dcaBCopyQualificationList);
+
+        /**
+         * 新增二三级
+         */
+        customApplyFirst.setDcaBCopySciachievementList(dcaBCopySciachievements);
+        customApplyFirst.setDcaBSCopySureachievementList(dcaBCopySureachievements);
+        customApplyFirst.setDcaBCopyTeacheryjsList(dcaBCopyTeacheryjs);
 
         customApplyFirst.setKs(user.getKs());
         customApplyFirst.setTel(user.getTelephone());

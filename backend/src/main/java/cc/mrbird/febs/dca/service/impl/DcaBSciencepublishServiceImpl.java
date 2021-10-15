@@ -98,18 +98,20 @@ public class DcaBSciencepublishServiceImpl extends ServiceImpl<DcaBSciencepublis
                 if (list2.size() > 0) {
                     item.setAuditXuhao(list2.get(0).getPatentRanknum());
                 }
-                List<DcaDJb> jb = jbList.stream().filter(p -> p.getJournalCode().equals(item.getJournalCode())).collect(Collectors.toList());
-                if (jb.size() > 0) {
-                    item.setCodejb(jb.get(0).getJb());
-                    if (item.getSciValue() != null && item.getSciValue().equals("是") && StringUtils.isNotBlank(item.getAuditQkjb())) {
-                        item.setAuditQkjb(jb.get(0).getJb());
+                if( item.getState()!=null && item.getState().equals(1)) {
+                    List<DcaDJb> jb = jbList.stream().filter(p -> p.getJournalCode().equals(item.getJournalCode())).collect(Collectors.toList());
+                    if (jb.size() > 0) {
+                        item.setCodejb(jb.get(0).getJb());
+                        if (item.getSciValue() != null && item.getSciValue().equals("是") && !StringUtils.isNotBlank(item.getAuditQkjb())) {
+                            item.setAuditQkjb(jb.get(0).getJb());
+                        }
                     }
-                }
-                List<DcaDJb> jb2 = jbList.stream().filter(p -> p.getJournalName().equals(item.getJournalName())).collect(Collectors.toList());
-                if (jb2.size() > 0) {
-                    item.setNamejb(jb2.get(0).getJb());
-                    if (item.getSciValue() != null && item.getSciValue().equals("否") && StringUtils.isNotBlank(item.getAuditQkjb())) {
-                        item.setAuditQkjb(jb2.get(0).getJb());
+                    List<DcaDJb> jb2 = jbList.stream().filter(p -> p.getJournalName().equals(item.getJournalName())).collect(Collectors.toList());
+                    if (jb2.size() > 0) {
+                        item.setNamejb(jb2.get(0).getJb());
+                        if (item.getSciValue() != null && item.getSciValue().equals("否") && !StringUtils.isNotBlank(item.getAuditQkjb())) {
+                            item.setAuditQkjb(jb2.get(0).getJb());
+                        }
                     }
                 }
             });

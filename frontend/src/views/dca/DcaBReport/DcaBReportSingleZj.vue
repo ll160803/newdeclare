@@ -558,7 +558,7 @@ export default {
 
 
         {
-          title: '医疗评分',
+          title: '医疗评价',
           children: [
             {
               title: '等级',
@@ -589,7 +589,7 @@ export default {
           ]
         },
         {
-          title: '教学评分',
+          title: '教学评价',
           children: [
             {
               title: '等级',

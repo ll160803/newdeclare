@@ -2,6 +2,7 @@ package cc.mrbird.febs.dca.service.impl;
 
 import cc.mrbird.febs.common.domain.FebsConstant;
 import cc.mrbird.febs.common.domain.QueryRequest;
+import cc.mrbird.febs.common.domain.SubTree;
 import cc.mrbird.febs.common.domain.Tree;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.common.utils.TreeUtil;
@@ -150,15 +151,16 @@ public class DcaDMudulesServiceImpl extends ServiceImpl<DcaDMudulesMapper, DcaDM
     }
 
     private void buildTrees(List<Tree<DcaDMudules>> trees, List<DcaDMudules> depts, List<String> ids, String userAccount) {
+        SubTree subTree =new SubTree();
+        subTree.setTitle("custom");//自定义的插槽名称
         depts.forEach(dept -> {
-
             ids.add(dept.getId().toString());
             Tree<DcaDMudules> tree = new Tree<>();
 
             if(StringUtils.isNotEmpty(userAccount) && StringUtils.isNotEmpty(dept.getFileUrl())) {
                 int kcount= this.baseMapper.getUndoSubmitData(dept.getFileUrl(), userAccount);
                 if(kcount>0){
-                    tree.setPath("2");
+                    tree.setScopedSlots(subTree);
                 }
             }
             tree.setId(dept.getId().toString());

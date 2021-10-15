@@ -15,18 +15,18 @@
                   <a-input v-model="queryParams.dcaYear" />
                 </a-form-item>
               </a-col>
-              <a-col :md="8" :sm="24">
+              <!-- <a-col :md="8" :sm="24">
                 <a-form-item label="岗位等级" v-bind="formItemLayout">
                   <a-select
                     mode="multiple"
                     style="width: 100%"
                     @change="handleChangeSearch"
                   >
-                    <a-select-option value="中级"> 中级 </a-select-option>
-                    <a-select-option value="初级"> 初级 </a-select-option>
+                    <a-select-option value="二级"> 二级 </a-select-option>
+                    <a-select-option value="三级"> 三级 </a-select-option>
                   </a-select>
                 </a-form-item>
-              </a-col>
+              </a-col> -->
             </div>
             <span style="float: right; margin-top: 3px">
               <a-button
@@ -67,9 +67,9 @@
             :scroll="scroll"
           >
             <template slot="splitHang" slot-scope="text, record">
-              <p style="width: 100%" v-for="item in splitStr(text)">
+              <div style="width: 100%" v-for="item in splitStr(text)">
                 {{ item }}
-              </p>
+              </div>
             </template>
             <template slot="confirmIndex" slot-scope="text, record">
               <div v-if="record.state == 3">
@@ -166,7 +166,42 @@
                 </a-textarea>
               </div>
             </template>
-
+            <template slot="ifsyyltj" slot-scope="text, record">
+              <div v-if="record.state == 3 || record.state == 1">
+                {{ text }}
+              </div>
+              <div v-else>
+                <a-textarea
+                  @blur="(e) => inputChange(e.target.value, record, 'ifsyyltj')"
+                  :value="record.ifsyyltj"
+                >
+                </a-textarea>
+              </div>
+            </template>
+            <template slot="ifbxyltj" slot-scope="text, record">
+              <div v-if="record.state == 3 || record.state == 1">
+                {{ text }}
+              </div>
+              <div v-else>
+                <a-textarea
+                  @blur="(e) => inputChange(e.target.value, record, 'ifbxyltj')"
+                  :value="record.ifbxyltj"
+                >
+                </a-textarea>
+              </div>
+            </template>
+            <template slot="mzsstjqk" slot-scope="text, record">
+              <div v-if="record.state == 3 || record.state == 1">
+                {{ text }}
+              </div>
+              <div v-else>
+                <a-textarea
+                  @blur="(e) => inputChange(e.target.value, record, 'mzsstjqk')"
+                  :value="record.mzsstjqk"
+                >
+                </a-textarea>
+              </div>
+            </template>
             <template slot="kslb" slot-scope="text, record">
               <div v-if="record.state == 3 || record.state == 1">
                 {{ text }}
@@ -501,8 +536,7 @@ export default {
       queryParams: {
         userAccount: "",
         dcaYear: "",
-        ks: "中级,初级",
-        yuangongzu: "合同制",
+        ks: "二三级",
       },
       sortedInfo: null,
       paginationInfo: null,
@@ -539,15 +573,7 @@ export default {
         {
           fieldName: "sciRanknum",
         },
-        {
-          fieldName: "teachName",
-        },
-        {
-          fieldName: "teachDengji",
-        },
-        {
-          fieldName: "teachRanknum",
-        },
+
         {
           fieldName: "publishA",
         },
@@ -594,36 +620,6 @@ export default {
           fieldName: "patentFund",
         },
         {
-          fieldName: "schoolprizeDengji",
-        },
-        {
-          fieldName: "schoolprizeRanknum",
-        },
-        {
-          fieldName: "schoolprizeDate",
-        },
-        {
-          fieldName: "courseDengji",
-        },
-        {
-          fieldName: "courseRanknum",
-        },
-        {
-          fieldName: "courseDate",
-        },
-        {
-          fieldName: "youngName",
-        },
-        {
-          fieldName: "youngDengji",
-        },
-        {
-          fieldName: "youngDate",
-        },
-        {
-          fieldName: "youngRanknum",
-        },
-        {
           fieldName: "sciDjlb",
         },
         {
@@ -647,91 +643,40 @@ export default {
         {
           fieldName: "tutor",
         },
-        {
-          fieldName: "teacherQualify",
+       
+         {
+          fieldName: 'xhrzqk'
+        },
+         {
+          fieldName: 'mzsstjqk'
+        },
+         {
+          fieldName: 'xjsxyw'
+        },
+         {
+          fieldName: 'xjsxywprize'
         },
         {
-          fieldName: "borad",
+          fieldName: "rbdsj",
         },
         {
-          fieldName: "help",
+          fieldName: "j3nhxrlzypf",
         },
         {
-          fieldName: "auditMan",
-        },
-        ,
-        // {
-        //   fieldName: 'zzbysj', //中专
-        // },
-        // {
-        //   fieldName: 'dzbysj',
-        // },
-        // {
-        //   fieldName: 'bkbysj',
-        // },
-        // {
-        //   fieldName: 'ssbysj',
-        // },
-        // {
-        //   fieldName: 'bsbysj', //博士
-        // }
-        //   , {
-        //   fieldName: 'rzqedu', //入职前最高学历 可填
-        // }
-        {
-          fieldName: "fdzz",
+          fieldName: "j3ylzhpf",
         },
         {
-          fieldName: "zyjszwzg",
+          fieldName: "j3nssztc",
         },
         {
-          fieldName: "zyjszwzgsj",
+          fieldName: "j3nzyszbrsl",
         },
-        { fieldName: "ydyf" },
-        { fieldName: "ydyffj" },
-        { fieldName: "zzsc" },
-        { fieldName: "zzscypfj" },
-        { fieldName: "jlsc" },
-        { fieldName: "xsddsc" },
-        { fieldName: "xsddscypfj" },
-        { fieldName: "yyxtsc" },
-        { fieldName: "sfssds" },
-        { fieldName: "sfbsds" },
-        { fieldName: "sftgsdsf" },
-        { fieldName: "sdsfypfj" },
-        { fieldName: "sdsfypfj2" },
-        { fieldName: "ynjbzr" },
-        { fieldName: "j5njxgz" },
-        { fieldName: "mzylpf" },
-        { fieldName: "mzylpfdj" },
-        { fieldName: "mzylsgypfj" },
-        { fieldName: "sfypfjyl" },
-        { fieldName: "hlylpf" },
-        { fieldName: "hlylpfdj" },
-        { fieldName: "hljxpfbfz" },
-        { fieldName: "hljxpfdl" },
-        { fieldName: "hlhlzrypfj" },
-        { fieldName: "sshbdts" },
-        { fieldName: "sshkyxts" },
-        { fieldName: "blxwjf" },
         {
-          fieldName: "wfzgszcf",
+          fieldName: "j3nmzszbrsl",
         },
-        { fieldName: "zypfdjyjxl" },
-
-        { fieldName: "zypfyjxl" },
-        { fieldName: "zypfbfz58" },
-        { fieldName: "zypfdj59" },
-        { fieldName: "sfyszgzs" },
-        { fieldName: "sfjyhlzgzs" },
-        { fieldName: "xingfscsftg" },
-        { fieldName: "sfczxfypfj61" },
-        { fieldName: "zypf52" },
-        { fieldName: "zypfdj52" },
-        //beizhu
-        { fieldName: "beizhumenban" },
-        { fieldName: "beizhuyiwuchu" },
-        { fieldName: "beizhuhuli" },
+        {
+          fieldName: "dpsci10",
+        },
       ], // 当前用户包含的审核数据
       userAccount: "",
       visibleUserInfo: false,
@@ -858,7 +803,7 @@ export default {
       if (value != "") {
         this.queryParams.ks = value;
       } else {
-        this.queryParams.ks = "中级,初级";
+        this.queryParams.ks = "二三级";
       }
     },
     search() {
@@ -1093,482 +1038,283 @@ export default {
       }
       let json = [
         {
-          title: "序号",
-          dataIndex: "indexHao",
-        },
-        {
-          title: "顺序号",
+          title: "顺序号1",
           dataIndex: "confirmIndex",
+          width: 100,
         },
-
         {
-          title: "报名档案顺序号",
+          title: "报名档案顺序号2",
           dataIndex: "baomingIndex",
+          width: 100,
         },
         {
-          title: "职员代码",
-          dataIndex: "userAccount",
-        },
-        {
-          title: "人员类别",
-          dataIndex: "yuangongzu",
-        },
-        {
-          title: "系列",
-          dataIndex: "xl",
-        },
-        {
-          title: "评审分组",
+          title: "科室分类3",
           dataIndex: "pingshenfenzu",
+          width: 180,
         },
         {
-          title: "申报等级",
+          title: "申报等级4",
           dataIndex: "gwdj",
+          width: 60,
+          //    fixed: 'left',
         },
         {
-          title: "科室",
+          title: "科室5",
           dataIndex: "ks",
+          width: 80,
+          //    fixed: 'left',
         },
-
         {
-          title: "姓名",
+          title: "职员代码6",
+          dataIndex: "userAccount",
+          width: 80,
+        },
+        {
+          title: "性别7",
+          dataIndex: "sexName",
+          width: 80,
+          //    fixed: 'left',
+        },
+        {
+          title: "姓名8",
           dataIndex: "userAccountName",
+          width: 80,
+          //    fixed: 'left',
         },
         {
-          title: "出生年月",
+          title: "出生年月9",
           dataIndex: "birthdaystr",
-        },
-
-        {
-          title: "现职务名称",
-          dataIndex: "positionName",
           width: 100,
         },
         {
-          title: "聘任时间",
-          dataIndex: "zygwDate",
-          width: 100,
+          title: "年龄10",
+          dataIndex: "age",
+          width: 60,
         },
         {
-          title: "申报职称",
-          dataIndex: "npPositionName",
-          width: 100,
-        },
-        {
-          title: "入职前最高学历",
-          dataIndex: "rzqedu",
-          width: 100,
-        },
-        {
-          title: "最高学历",
+          title: "学历(位)11",
           dataIndex: "edu",
           width: 100,
         },
         {
-          title: "最高学历毕业时间",
+          title: "毕业时间12",
           dataIndex: "eduDate",
           width: 100,
         },
 
         {
-          title: "来院时间",
-          dataIndex: "schoolDate",
+          title: "任职13",
+          dataIndex: "positionName",
           width: 100,
         },
         {
-          title: "中专毕业时间",
-          dataIndex: "zzbysj",
-          width: 100,
-        },
-        {
-          title: "大专毕业时间",
-          dataIndex: "dzbysj",
-          width: 100,
-        },
-        {
-          title: "本科毕业时间",
-          dataIndex: "bkbysj",
-          width: 100,
-        },
-        {
-          title: "硕士毕业时间",
-          dataIndex: "ssbysj",
-          width: 100,
-        },
-        {
-          title: "博士毕业时间",
-          dataIndex: "bsbysj",
+          title: "聘任时间14",
+          dataIndex: "zygwDate",
           width: 100,
         },
 
         {
-          title: "SCI",
-          dataIndex: "publishA",
+          title: "岗位等级15",
+          dataIndex: "xrgwjb",
           width: 100,
         },
         {
-          title: "权威",
-          dataIndex: "publishD",
+          title: "任职时间16",
+          dataIndex: "xrgwjbprsj",
           width: 100,
         },
         {
-          title: "核心",
-          dataIndex: "publishE",
+          title: "申报三级时是否使用医疗条件17",
+          dataIndex: "ifsyyltj",
           width: 100,
         },
         {
-          title: "正式",
-          dataIndex: "publishF",
-        },
-
-        {
-          title: "著作或教材",
-          dataIndex: "publicarticle1",
-        },
-        {
-          title: "承担字数(万)",
-          dataIndex: "publicarticle2",
-        },
-
-        {
-          title: "名称1",
-          dataIndex: "sciName",
-        },
-
-        {
-          title: "排名2",
-          dataIndex: "sciRanknum",
-        },
-        {
-          title: "等级3",
-          dataIndex: "sciDengji",
-        },
-
-        {
-          title: "级别4",
-          dataIndex: "sciDjlb",
-        },
-        {
-          title: "金额万元5",
-          dataIndex: "sciDjfund",
-        },
-        {
-          title: "排名6",
-          dataIndex: "sciDjranknum",
-        },
-
-        {
-          title: "等级7",
-          dataIndex: "ylpfdj",
+          title: "任博导时间18",
+          dataIndex: "rbdsj",
           width: 100,
         },
         {
-          title: "分数8",
-          dataIndex: "ylpfbfz",
-        },
-        {
-          title: "门办等级90",
-          dataIndex: "mzylpfdj",
+          title: "申报岗位19",
+          dataIndex: "npPositionName",
           width: 100,
         },
         {
-          title: "门办分数92",
-          dataIndex: "mzylpf",
-        },
-        {
-          title: "法定资质",
-          dataIndex: "fdzz",
-        },
-
-        {
-          title: "等级9",
-          dataIndex: "jxpfdj",
-        },
-        {
-          title: "分数10",
-          dataIndex: "jxpf",
-        },
-
-        {
-          title: "业技术职务资格名称",
-          dataIndex: "zyjszwzg",
-        },
-        {
-          title: "业技术职务资格名称时间",
-          dataIndex: "zyjszwzgsj",
-        },
-
-        {
-          title: "岗前培训情况",
-          dataIndex: "gqpxqk",
+          title: "申报年度20",
+          dataIndex: "year",
           width: 100,
         },
         {
-          title: "规范化医师培训情况",
-          dataIndex: "gfhyspxqk",
-          width: 100,
-        },
-        {
-          title: "中级水平能力测试情况",
-          dataIndex: "zjspnlceqk",
-          width: 100,
-        },
-
-        {
-          title: "部门审核结果",
-          dataIndex: "auditMan",
-        },
-        {
-          title: "是否通过医德医风审核58",
-          dataIndex: "ydyf",
-          width: 100,
-        },
-        {
-          title: "是否存在医德医风一票否决的情况59",
-          dataIndex: "ydyffj",
-          width: 120,
-        },
-        {
-          title: "是否通过政治审查60",
-          dataIndex: "zzsc",
-          width: 100,
-        },
-        {
-          title: "是否存在政治审查一票否决的情况61",
-          dataIndex: "zzscypfj",
-          width: 120,
-        },
-
-        {
-          title: "是否通过纪律审查62",
-          dataIndex: "jlsc",
-          width: 100,
-        },
-        {
-          title: "是否存在纪律审查一票否决的情况63",
-          dataIndex: "jlscypfj",
-          width: 120,
-        },
-        {
-          title: "是否通过学术道德审查64",
-          dataIndex: "xsddsc",
-          width: 100,
-        },
-        {
-          title: "是否存在学术道德一票否决的情况65",
-          dataIndex: "xsddscypfj",
-          width: 120,
-        },
-        {
-          title: "专业评分（仅研究系列需要填写）(百分制)66",
-          dataIndex: "zypfyjxl",
-          width: 150,
-        },
-        {
-          title: "专业评分等级（仅研究系列需要填写）67",
-          dataIndex: "zypfdjyjxl",
-          width: 150,
-        },
-        {
-          title: "是否通过意识形态审查68",
-          dataIndex: "yyxtsc",
-          width: 100,
-        },
-        {
-          title: "是否存在意识形态一票否决的情况69",
-          dataIndex: "yyxtypfj",
-          width: 120,
-        },
-        {
-          title: "专业评分（仅宣传部职工需要填写）(百分制）70",
-          dataIndex: "zypfbfz58",
-          width: 150,
-        },
-        {
-          title: "专业评分等级（仅宣传部职工需要填写）71",
-          dataIndex: "zypfdj59",
-          width: 150,
-        },
-        {
-          title: "是否硕士导师72",
-          dataIndex: "sfssds",
-          width: 100,
-        },
-        {
-          title: "是否博士导师73",
-          dataIndex: "sfbsds",
-          width: 120,
-        },
-        {
-          title: "是否通过师德师风审查74",
-          dataIndex: "sftgsdsf",
-          width: 120,
-        },
-        {
-          title: "是否存在师德师风一票否决的情况75",
-          dataIndex: "sdsfypfj",
-          width: 120,
-        },
-        {
-          title: "教学评分(百分制)76",
-          dataIndex: "jxpf",
-          width: 100,
-        },
-        {
-          title: "教学评分等级77",
-          dataIndex: "jxpfdj",
-          width: 120,
-        },
-        {
-          title: "是否存在师德师风一票否决的情况78",
-          dataIndex: "sdsfypfj2",
-          width: 120,
-        },
-        {
-          title: "是否担任一年辅导员或班主任并考核合格79",
-          dataIndex: "ynjbzr",
-          width: 120,
-        },
-        {
-          title: "近五年教学工作在本单位总体评价情况80",
-          dataIndex: "j5njxgz",
-          width: 150,
-        },
-
-        {
-          title: "门诊医疗评分81",
-          dataIndex: "mzylpf",
-          width: 100,
-        },
-        {
-          title: "门诊医疗评分等级82",
-          dataIndex: "mzylpfdj",
-          width: 120,
-        },
-        {
-          title: "是否门诊医疗事故一票否决的情况83",
-          dataIndex: "mzylsgypfj",
-          width: 150,
-        },
-        {
-          title: "beizhu100",
-          dataIndex: "beizhumenban",
-          width: 150,
-        },
-
-        {
-          title: "医疗评分84",
-          dataIndex: "ylpfbfz",
-          width: 100,
-        },
-        {
-          title: "医疗评分等级85",
-          dataIndex: "ylpfdj",
-          width: 120,
-        },
-        {
-          title: "是否有一票否决的情况86",
-          dataIndex: "sfypfjyl",
-          width: 120,
-        },
-        {
-          title: "是否具有医师资格证书87",
-          dataIndex: "sfyszgzs",
-          width: 120,
-        },
-        {
-          title: "备注200",
-          dataIndex: "beizhuyiwuchu",
-          width: 120,
-        },
-        {
-          title: "医疗评分88",
-          dataIndex: "hlylpf",
-          width: 100,
-        },
-        {
-          title: "医疗评分等级89",
-          dataIndex: "hlylpfdj",
-          width: 120,
-        },
-        {
-          title: "教学评分90",
-          dataIndex: "hljxpfbfz",
-          width: 120,
-        },
-        {
-          title: "教学评分等级91",
-          dataIndex: "hljxpfdl",
-          width: 120,
-        },
-        {
-          title: "是否有护理责任事故一票否决的情况92",
-          dataIndex: "hlhlzrypfj",
-          width: 120,
-        },
-        {
-          title: "是否具有护理资格证书93",
-          dataIndex: "sfjyhlzgzs",
-          width: 120,
-        },
-        {
-          title: "hulinote",
-          dataIndex: "beizhuhuli",
-          width: 120,
-        },
-        {
-          title: "是否存在收受红包的有效投诉94",
-          dataIndex: "sshbdts",
-          width: 100,
-        },
-        {
-          title: "是否存在收受回扣的有效投诉95",
-          dataIndex: "sshkyxts",
-          width: 120,
-        },
-        {
-          title: "是否违反湖北96",
-          dataIndex: "blxwjf",
-          width: 200,
-        },
-        {
-          title: "是否违反97",
-          dataIndex: "wfzgszcf",
-          width: 150,
-        },
-        {
-          title: "行风审查是否通过98",
-          dataIndex: "xingfscsftg",
-          width: 120,
-        },
-        {
-          title: "是否存在行风建设一99",
-          dataIndex: "sfczxfypfj61",
-          width: 150,
-        },
-
-        {
-          title: "专业评分100",
-          dataIndex: "zypf52",
+          title: "是否符合必备条件21",
+          dataIndex: "iffuhebibei",
           width: 80,
         },
         {
-          title: "专业评分等级101",
-          dataIndex: "zypfdj52",
-          width: 100,
+          title: "是否必须使用医疗条件22",
+          dataIndex: "ifbxyltj",
+          width: 80,
         },
         {
-          title: "联系方式",
-          dataIndex: "telephone",
-        },
-        {
-          title: "是否符合基本条件",
-          dataIndex: "clshjg",
+          title: "满足学术条件情况23",
+          dataIndex: "mzsstjqk",
+          width: 80,
         },
 
         {
-          title: "申报类型",
-          dataIndex: "sblx",
+          title: "等级24",
+          dataIndex: "jxpfdj",
+          width: 100,
+        },
+        {
+          title: "分数25",
+          dataIndex: "jxpf",
+          width: 80,
+        },
+        {
+          title: "近三年核心人力资源评分26",
+          dataIndex: "j3nhxrlzypf",
+          width: 80,
+        },
+        {
+          title: "近三年医疗综合评分27",
+          dataIndex: "j3ylzhpf",
+          width: 100,
+        },
+        {
+          title: "近三年手术总台次28",
+          dataIndex: "j3nssztc",
+          width: 100,
+        },
+
+        {
+          title: "近三年收治住院病人总数29",
+          dataIndex: "j3nzyszbrsl",
+          width: 100,
+        },
+        {
+          title: "近三年门诊收治病人总数30",
+          dataIndex: "j3nmzszbrsl",
+          width: 100,
+        },
+
+        {
+          title: "负责开展的新技术新业务31",
+          dataIndex: "xjsxyw",
+          width: 100,
+        },
+        {
+          title: "负责的新技术新业务获奖情况32",
+          dataIndex: "xjsxywprize",
+          width: 100,
+        },
+        {
+          title: "单篇SCI高分文章≥1033",
+          dataIndex: "dpsci10",
+          width: 60,
+        },
+        {
+          title: "A 类34",
+          dataIndex: "publishA",
+          width: 60,
+        },
+        {
+          title: "B 类35",
+          dataIndex: "publishB",
+          width: 60,
+        },
+        {
+          title: "C 类36",
+          dataIndex: "publishC",
+          width: 60,
+        },
+        {
+          title: "D 类37",
+          dataIndex: "publishD",
+          width: 60,
+        },
+        {
+          title: "E 类38",
+          dataIndex: "publishE",
+          width: 60,
+        },
+        {
+          title: "F 类39",
+          dataIndex: "publishF",
+          width: 60,
+        },
+        {
+          title: "著作40",
+          dataIndex: "publicarticle1",
+          width: 100,
+        },
+        {
+          title: "数量41",
+          dataIndex: "publicarticle2",
+          width: 100,
+        },
+
+        {
+          title: "主持国家级课题42",
+          dataIndex: "sciDjlb",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "资助金额万元43",
+          dataIndex: "sciDjfund",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "国家自然基金资助批准时间44",
+          dataIndex: "sciDjranknum",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "名称45",
+          dataIndex: "sciName",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "等级46",
+          dataIndex: "sciDengji",
+          width: 60,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "排名47",
+          dataIndex: "sciRanknum",
+          width: 60,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "学会任职48",
+          dataIndex: "xhrzqk",
+          width: 100,
+        },
+        {
+          title: "是否符合基本条件50",
+          dataIndex: "clshjg",
+          width: 100,
+          scopedSlots: { customRender: "clshjg" },
+        },
+        {
+          title: "退审原因51",
+          dataIndex: "ntyy",
+          width: 100,
+          scopedSlots: { customRender: "ntyy" },
+        },
+        {
+          title: "备注52",
+          dataIndex: "note",
+          width: 100,
+          scopedSlots: { customRender: "note" },
+        },
+        {
+          title: "联系方式53",
+          dataIndex: "telephone",
+          width: 100,
         },
       ];
       let listj = [
@@ -1597,18 +1343,7 @@ export default {
         "publicarticle1",
         "publicarticle2",
         "schoolprizeName",
-        "patentNum",
-        "patentFund",
-        "schoolprizeDengji",
-        "schoolprizeRanknum",
-        "schoolprizeDate",
-        "courseDengji",
-        "courseRanknum",
-        "courseDate",
-        "youngName",
-        "youngDengji",
-        "youngDate",
-        "youngRanknum",
+
         "sciDjlb",
         "sciDjfund",
         "sciDjranknum",
@@ -1618,65 +1353,24 @@ export default {
         "pfHeji",
         "tutor",
         "teacherQualify",
-        "borad",
-        "help",
-        "auditMan",
-        "zzbysj",
-        "dzbysj",
-        "bkbysj",
-        "ssbysj",
-        "bsbysj",
-        "rzqedu",
-        "fdzz",
-        "zyjszwzg",
-        "zyjszwzgsj",
-        "ydyf",
-        "ydyffj",
-        "zzsc",
-        "zzscypfj",
-        "jlsc",
-        "jlscypfj",
-        "xsddsc",
-        "xsddscypfj",
-        "zypfyjxl",
-        "zypfdjyjxl",
-        "yyxtsc",
-        "yyxtypfj",
-        "zypfbfz58",
-        "zypfdj59",
-        "sfssds",
-        "sfbsds",
-        "sftgsdsf",
-        "sdsfypfj",
-        "jxpf",
-        "jxpfdj",
-        "sdsfypfj2",
-        "ynjbzr",
-        "j5njxgz",
-        "mzylpf",
-        "mzylpfdj",
-        "mzylsgypfj",
-        "ylpfbfz",
-        "ylpfdj",
-        "sfypfjyl",
-        "sfyszgzs",
-        "hlylpf",
-        "hlylpfdj",
-        "hljxpfbfz",
-        "hljxpfdl",
-        "hlhlzrypfj",
-        "sfjyhlzgzs",
-        "sshbdts",
-        "sshkyxts",
-        "blxwjf",
-        "wfzgszcf",
-        "xingfscsftg",
-        "sfczxfypfj61",
-        "zypf52",
-        "zypfdj52",
-        "beizhuyiwuchu",
-        "beizhumenban",
-        "beizhuhuli",
+
+           'xhrzqk',
+        
+         'mzsstjqk',
+       
+          'xjsxyw',
+      
+         'xjsxywprize',
+      
+          "rbdsj",
+        
+        "rbdsj",
+        "j3nhxrlzypf",
+        "j3ylzhpf",
+        "j3nssztc",
+        "j3nzyszbrsl",
+        "j3nmzszbrsl",
+        "dpsci10",
       ];
 
       json.forEach((element) => {
@@ -1775,32 +1469,13 @@ export default {
           scopedSlots: { customRender: "confirmIndex" },
           // fixed: 'left',
         },
-
         {
           title: "报名档案顺序号",
           dataIndex: "baomingIndex",
           width: 100,
         },
         {
-          title: "职员代码",
-          dataIndex: "userAccount",
-          width: 80,
-          scopedSlots: { customRender: "userAccount" },
-          //     fixed: 'left',
-        },
-        {
-          title: "人员类别",
-          dataIndex: "yuangongzu",
-          width: 100,
-        },
-        {
-          title: "系列",
-          dataIndex: "xl",
-          width: 80,
-          //     fixed: 'left'
-        },
-        {
-          title: "评审分组",
+          title: "科室分类",
           dataIndex: "pingshenfenzu",
           width: 180,
           scopedSlots: { customRender: "pingshenfenzu" },
@@ -1818,7 +1493,19 @@ export default {
           width: 80,
           //    fixed: 'left',
         },
-
+        {
+          title: "职员代码",
+          dataIndex: "userAccount",
+          width: 80,
+          scopedSlots: { customRender: "userAccount" },
+          //     fixed: 'left',
+        },
+        {
+          title: "性别",
+          dataIndex: "sexName",
+          width: 80,
+          //    fixed: 'left',
+        },
         {
           title: "姓名",
           dataIndex: "userAccountName",
@@ -1831,10 +1518,25 @@ export default {
           width: 100,
         },
         {
-          title: "现职务",
+          title: "年龄",
+          dataIndex: "age",
+          width: 60,
+        },
+        {
+          title: "学历(位)",
+          dataIndex: "edu",
+          width: 100,
+        },
+        {
+          title: "毕业时间",
+          dataIndex: "eduDate",
+          width: 100,
+        },
+        {
+          title: "专业技术职务",
           children: [
             {
-              title: "现职务名称",
+              title: "任职",
               dataIndex: "positionName",
               width: 100,
             },
@@ -1846,180 +1548,58 @@ export default {
           ],
         },
         {
-          title: "入职前最高学历",
-          dataIndex: "rzqedu",
+          title: "现任岗位级别及时间",
+          children: [
+            {
+              title: "岗位等级",
+              dataIndex: "xrgwjb",
+              width: 100,
+            },
+            {
+              title: "任职时间",
+              dataIndex: "xrgwjbprsj",
+              width: 100,
+            },
+          ],
+        },
+        {
+          title: "申报三级时是否使用医疗条件",
+          dataIndex: "ifsyyltj",
+          width: 100,
+          scopedSlots: { customRender: "ifsyyltj" },
+        },
+        {
+          title: "任博导时间",
+          dataIndex: "rbdsj",
           width: 100,
         },
         {
-          title: "最高学历",
-          dataIndex: "edu",
-          width: 100,
-        },
-        {
-          title: "最高学历毕业时间",
-          dataIndex: "eduDate",
-          width: 100,
-        },
-        {
-          title: "申报职称",
+          title: "申报岗位",
           dataIndex: "npPositionName",
           width: 100,
         },
         {
-          title: "来院时间",
-          dataIndex: "schoolDate",
+          title: "申报年度",
+          dataIndex: "year",
           width: 100,
         },
         {
-          title: "中专毕业时间",
-          dataIndex: "zzbysj",
-          width: 100,
+          title: "是否符合必备条件",
+          dataIndex: "iffuhebibei",
+          width: 80,
+          scopedSlots: { customRender: "iffuhebibei" },
         },
         {
-          title: "大专毕业时间",
-          dataIndex: "dzbysj",
-          width: 100,
+          title: "是否必须使用医疗条件",
+          dataIndex: "ifbxyltj",
+          width: 80,
+          scopedSlots: { customRender: "ifbxyltj" },
         },
         {
-          title: "本科毕业时间",
-          dataIndex: "bkbysj",
-          width: 100,
-        },
-        {
-          title: "硕士毕业时间",
-          dataIndex: "ssbysj",
-          width: 100,
-        },
-        {
-          title: "博士毕业时间",
-          dataIndex: "bsbysj",
-          width: 100,
-        },
-
-        {
-          title: "论文",
-          children: [
-            {
-              title: "SCI",
-              dataIndex: "publishA",
-              width: 100,
-            },
-            {
-              title: "权威",
-              dataIndex: "publishD",
-              width: 100,
-            },
-            {
-              title: "核心",
-              dataIndex: "publishE",
-              width: 100,
-            },
-            {
-              title: "正式",
-              dataIndex: "publishF",
-              width: 100,
-            },
-          ],
-        },
-
-        {
-          title: "著作或教材",
-          children: [
-            {
-              title: "著作或教材",
-              dataIndex: "publicarticle1",
-              width: 100,
-            },
-            {
-              title: "承担字数(万)",
-              dataIndex: "publicarticle2",
-              width: 100,
-            },
-          ],
-        },
-        {
-          title: "科研获奖",
-          children: [
-            {
-              title: "名称",
-              dataIndex: "sciName",
-              width: 100,
-              scopedSlots: { customRender: "splitHang" },
-            },
-            {
-              title: "等级",
-              dataIndex: "sciDengji",
-              width: 60,
-              scopedSlots: { customRender: "splitHang" },
-            },
-            {
-              title: "排名",
-              dataIndex: "sciRanknum",
-              width: 60,
-              scopedSlots: { customRender: "splitHang" },
-            },
-          ],
-        },
-
-        {
-          title: "科研课题",
-          children: [
-            {
-              title: "级别",
-              dataIndex: "sciDjlb",
-              width: 100,
-              scopedSlots: { customRender: "splitHang" },
-            },
-            {
-              title: "金额万元",
-              dataIndex: "sciDjfund",
-              width: 100,
-              scopedSlots: { customRender: "splitHang" },
-            },
-            {
-              title: "排名",
-              dataIndex: "sciDjranknum",
-              width: 100,
-              scopedSlots: { customRender: "splitHang" },
-            },
-          ],
-        },
-
-        {
-          title: "医疗评分",
-          children: [
-            {
-              title: "医务等级",
-              dataIndex: "ylpfdj",
-              width: 100,
-            },
-            {
-              title: "医务分数",
-              dataIndex: "ylpfbfz2",
-              width: 80,
-              customRender: (text, row, index) => {
-                return row.ylpfbfz;
-              },
-            },
-            {
-              title: "门办等级",
-              dataIndex: "mzylpfdj",
-              width: 100,
-            },
-            {
-              title: "门办分数",
-              dataIndex: "mzylpf2",
-              width: 80,
-              customRender: (text, row, index) => {
-                return row.mzylpf;
-              },
-            },
-          ],
-        },
-        {
-          title: "法定资质",
-          dataIndex: "fdzz",
-          width: 100,
+          title: "满足学术条件情况",
+          dataIndex: "mzsstjqk",
+          width: 300,
+          scopedSlots: { customRender: "splitHang" },
         },
         {
           title: "教学评分",
@@ -2040,411 +1620,163 @@ export default {
           ],
         },
         {
-          title: "取得湖北省相应专业技术职务资格及时间",
-          children: [
-            {
-              title: "业技术职务资格名称",
-              dataIndex: "zyjszwzg",
-              width: 100,
-            },
-            {
-              title: "时间",
-              dataIndex: "zyjszwzgsj",
-              width: 80,
-            },
-          ],
+          title: "近三年核心人力资源评分",
+          dataIndex: "j3nhxrlzypf",
+          width: 80,
+          scopedSlots: { customRender: "j3nhxrlzypf" },
         },
-
         {
-          title: "岗前培训情况",
-          dataIndex: "gqpxqk",
+          title: "近三年医疗综合评分",
+          dataIndex: "j3ylzhpf",
           width: 100,
         },
         {
-          title: "规范化医师培训情况",
-          dataIndex: "gfhyspxqk",
-          width: 100,
-        },
-        {
-          title: "中级水平能力测试情况",
-          dataIndex: "zjspnlceqk",
+          title: "近三年手术总台次",
+          dataIndex: "j3nssztc",
           width: 100,
         },
 
         {
-          title: "部门审核结果",
-          dataIndex: "auditMan",
+          title: "近三年收治住院病人总数",
+          dataIndex: "j3nzyszbrsl",
           width: 100,
-          scopedSlots: { customRender: "auditMan" },
         },
         {
-          title: "党办",
-          children: [
-            {
-              title: "是否通过医德医风审核",
-              dataIndex: "ydyf",
-              width: 100,
-              customRender: (text, row, index) => {
-                switch (text) {
-                  case "是":
-                    return "通过";
-                  case "否":
-                    return "不通过";
-                  default:
-                    return "";
-                }
-              },
-            },
-            {
-              title: "是否存在医德医风一票否决的情况",
-              dataIndex: "ydyffj",
-              width: 120,
-            },
-          ],
+          title: "近三年门诊收治病人总数",
+          dataIndex: "j3nmzszbrsl",
+          width: 100,
         },
         {
-          title: "党委组织部",
+          title: "任现职以来新技术新业务",
           children: [
             {
-              title: "是否通过政治综合评价",
-              dataIndex: "zzsc",
-              width: 100,
-              customRender: (text, row, index) => {
-                switch (text) {
-                  case "是":
-                    return "通过";
-                  case "否":
-                    return "不通过";
-                  default:
-                    return "";
-                }
-              },
-            },
-            {
-              title: "是否存在政治综合评价一票否决的情况",
-              dataIndex: "zzscypfj",
-              width: 120,
-            },
-          ],
-        },
-        {
-          title: "纪委办公室",
-          children: [
-            {
-              title: "是否通过纪律审查",
-              dataIndex: "jlsc",
-              width: 100,
-              customRender: (text, row, index) => {
-                switch (text) {
-                  case "是":
-                    return "通过";
-                  case "否":
-                    return "不通过";
-                  default:
-                    return "";
-                }
-              },
-            },
-            {
-              title: "是否存在纪律审查一票否决的情况",
-              dataIndex: "jlscypfj",
-              width: 120,
-            },
-          ],
-        },
-        {
-          title: "科研处",
-          children: [
-            {
-              title: "是否通过学术道德审查",
-              dataIndex: "xsddsc",
-              width: 100,
-              customRender: (text, row, index) => {
-                switch (text) {
-                  case "是":
-                    return "通过";
-                  case "否":
-                    return "不通过";
-                  default:
-                    return "";
-                }
-              },
-            },
-            {
-              title: "是否存在学术道德一票否决的情况",
-              dataIndex: "xsddscypfj",
-              width: 120,
-            },
-            {
-              title: "专业评分（仅研究系列需要填写）(百分制)",
-              dataIndex: "zypfyjxl",
-              width: 150,
-            },
-            {
-              title: "专业评分等级（仅研究系列需要填写）",
-              dataIndex: "zypfdjyjxl",
-              width: 150,
-            },
-          ],
-        },
-        {
-          title: "宣传部",
-          children: [
-            {
-              title: "是否通过意识形态审查",
-              dataIndex: "yyxtsc",
-              width: 100,
-              customRender: (text, row, index) => {
-                switch (text) {
-                  case "是":
-                    return "通过";
-                  case "否":
-                    return "不通过";
-                  default:
-                    return "";
-                }
-              },
-            },
-            {
-              title: "是否存在意识形态一票否决的情况",
-              dataIndex: "yyxtypfj",
-              width: 120,
-            },
-            {
-              title: "专业评分（仅宣传部职工需要填写）(百分制）",
-              dataIndex: "zypfbfz58",
-              width: 150,
-            },
-            {
-              title: "专业评分等级（仅宣传部职工需要填写）",
-              dataIndex: "zypfdj59",
-              width: 150,
-            },
-          ],
-        },
-        {
-          title: "研究生管理办",
-          children: [
-            {
-              title: "是否硕士导师",
-              dataIndex: "sfssds",
+              title: "负责开展的新技术新业务",
+              dataIndex: "xjsxyw",
               width: 100,
             },
             {
-              title: "是否博士导师",
-              dataIndex: "sfbsds",
-              width: 120,
-            },
-            {
-              title: "是否通过师德师风审查",
-              dataIndex: "sftgsdsf",
-              width: 120,
-              customRender: (text, row, index) => {
-                switch (text) {
-                  case "是":
-                    return "通过";
-                  case "否":
-                    return "不通过";
-                  default:
-                    return "";
-                }
-              },
-            },
-            {
-              title: "是否存在师德师风一票否决的情况",
-              dataIndex: "sdsfypfj",
-              width: 120,
-            },
-          ],
-        },
-        {
-          title: "教学办公室",
-          children: [
-            {
-              title: "教学评分(百分制)",
-              dataIndex: "jxpf",
-              width: 100,
-            },
-            {
-              title: "教学评分等级",
-              dataIndex: "jxpfdj",
-              width: 120,
-            },
-            {
-              title: "是否存在师德师风一票否决的情况",
-              dataIndex: "sdsfypfj2",
-              width: 120,
-            },
-            {
-              title: "是否担任一年辅导员或班主任并考核合格",
-              dataIndex: "ynjbzr",
-              width: 120,
-            },
-            {
-              title: "近五年教学工作在本单位总体评价情况（前%）",
-              dataIndex: "j5njxgz",
-              width: 150,
-            },
-          ],
-        },
-        {
-          title: "门诊办公室",
-          children: [
-            {
-              title: "门诊医疗评分(百分制)",
-              dataIndex: "mzylpf",
-              width: 100,
-            },
-            {
-              title: "门诊医疗评分等级",
-              dataIndex: "mzylpfdj",
-              width: 120,
-            },
-            {
-              title: "是否门诊医疗事故一票否决的情况",
-              dataIndex: "mzylsgypfj",
-              width: 150,
-            },
-            {
-              title: "备注",
-              dataIndex: "beizhumenban",
-              width: 150,
-            },
-          ],
-        },
-        {
-          title: "医务处",
-          children: [
-            {
-              title: "医疗评分(百分制)",
-              dataIndex: "ylpfbfz",
-              width: 100,
-            },
-            {
-              title: "医疗评分等级",
-              dataIndex: "ylpfdj",
-              width: 120,
-            },
-            {
-              title: "是否有一票否决的情况",
-              dataIndex: "sfypfjyl",
-              width: 120,
-            },
-            {
-              title: "是否具有医师资格证书",
-              dataIndex: "sfyszgzs",
-              width: 120,
-            },
-            {
-              title: "备注",
-              dataIndex: "beizhuyiwuchu",
-              width: 150,
-            },
-          ],
-        },
-        {
-          title: "护理部",
-          children: [
-            {
-              title: "医疗评分(百分制)",
-              dataIndex: "hlylpf",
-              width: 100,
-            },
-            {
-              title: "医疗评分等级",
-              dataIndex: "hlylpfdj",
-              width: 120,
-            },
-            {
-              title: "教学评分(百分制)",
-              dataIndex: "hljxpfbfz",
-              width: 120,
-            },
-            {
-              title: "教学评分等级",
-              dataIndex: "hljxpfdl",
-              width: 120,
-            },
-            {
-              title: "是否有护理责任事故一票否决的情况",
-              dataIndex: "hlhlzrypfj",
-              width: 120,
-            },
-            {
-              title: "是否具有护理资格证书",
-              dataIndex: "sfjyhlzgzs",
-              width: 120,
-            },
-            {
-              title: "备注",
-              dataIndex: "beizhuhuli",
-              width: 150,
-            },
-          ],
-        },
-        {
-          title: "行风建设办公室",
-          children: [
-            {
-              title: "是否存在收受红包的有效投诉",
-              dataIndex: "sshbdts",
-              width: 100,
-            },
-            {
-              title: "是否存在收受回扣的有效投诉",
-              dataIndex: "sshkyxts",
-              width: 120,
-            },
-            {
-              title:
-                "是否违反湖北省医务人员不良执业行为记分管理办法，并被卫生健康部门一次记12分、6分",
-              dataIndex: "blxwjf",
-              width: 200,
-            },
-            {
-              title: "是否违反《职工守则》有关行风建设规定并被处罚",
-              dataIndex: "wfzgszcf",
-              width: 150,
-            },
-            {
-              title: "行风审查是否通过",
-              dataIndex: "xingfscsftg",
-              width: 120,
-              customRender: (text, row, index) => {
-                switch (text) {
-                  case "是":
-                    return "通过";
-                  case "否":
-                    return "不通过";
-                  default:
-                    return "";
-                }
-              },
-            },
-            {
-              title: "是否存在行风建设一票否决的情况",
-              dataIndex: "sfczxfypfj61",
-              width: 150,
-            },
-          ],
-        },
-        {
-          title: "科室负责人",
-          children: [
-            {
-              title: "专业评分",
-              dataIndex: "zypf52",
-              width: 80,
-            },
-            {
-              title: "专业评分等级",
-              dataIndex: "zypfdj52",
+              title: "负责的新技术新业务获奖情况",
+              dataIndex: "xjsxywprize",
               width: 100,
             },
           ],
         },
         {
-          title: "是否符合基本条件",
+          title: "任现岗位以来",
+          children: [
+            {
+              title: "单篇SCI高分文章≥10",
+              dataIndex: "dpsci10",
+              width: 60,
+            },
+            {
+              title: "发表主要文章",
+              children: [
+                {
+                  title: "A 类",
+                  dataIndex: "publishA",
+                  width: 60,
+                },
+                {
+                  title: "B 类",
+                  dataIndex: "publishB",
+                  width: 60,
+                },
+                {
+                  title: "C 类",
+                  dataIndex: "publishC",
+                  width: 60,
+                },
+                {
+                  title: "D 类",
+                  dataIndex: "publishD",
+                  width: 60,
+                },
+                {
+                  title: "E 类",
+                  dataIndex: "publishE",
+                  width: 60,
+                },
+                {
+                  title: "F 类",
+                  dataIndex: "publishF",
+                  width: 60,
+                },
+              ],
+            },
+            {
+              title: "著作",
+              children: [
+                {
+                  title: "著作",
+                  dataIndex: "publicarticle1",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "数量",
+                  dataIndex: "publicarticle2",
+                  width: 100,
+                   scopedSlots: { customRender: "splitHang" },
+                },
+              ],
+            },
+            {
+              title: "主持国家级课题",
+              children: [
+                {
+                  title: "主持国家级课题",
+                  dataIndex: "sciDjlb",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "资助金额万元",
+                  dataIndex: "sciDjfund",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "国家自然基金资助批准时间",
+                  dataIndex: "sciDjranknum",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+              ],
+            },
+            {
+              title: "科研获奖",
+              children: [
+                {
+                  title: "名称",
+                  dataIndex: "sciName",
+                  width: 100,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "等级",
+                  dataIndex: "sciDengji",
+                  width: 60,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+                {
+                  title: "排名",
+                  dataIndex: "sciRanknum",
+                  width: 60,
+                  scopedSlots: { customRender: "splitHang" },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          title: "学会任职",
+          dataIndex: "xhrzqk",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "材料审核结果",
           dataIndex: "clshjg",
           width: 100,
           scopedSlots: { customRender: "clshjg" },
@@ -2456,15 +1788,15 @@ export default {
           scopedSlots: { customRender: "ntyy" },
         },
         {
+          title: "备注",
+          dataIndex: "note",
+          width: 100,
+          scopedSlots: { customRender: "note" },
+        },
+        {
           title: "联系方式",
           dataIndex: "telephone",
           width: 100,
-        },
-        {
-          title: "申报类型",
-          dataIndex: "sblx",
-          width: 100,
-          scopedSlots: { customRender: "sblx" },
         },
         {
           title: "操作",

@@ -26,7 +26,7 @@
         <div v-else>
           <a-select
             :value="record.achievementName"
-            style="width: 100%"
+            style="width: 430px;"
             @change="
               (e, f) => handleSelectChange(e, f, record, 'achievementName')
             "
@@ -439,7 +439,7 @@ export default {
         {
           title: "备注",
           dataIndex: "achievementContent",
-          width: 130,
+          width: 200,
           scopedSlots: { customRender: "achievementContent" },
         },
         {

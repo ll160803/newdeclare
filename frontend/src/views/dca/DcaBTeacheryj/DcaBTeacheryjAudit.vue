@@ -65,7 +65,7 @@
                 <div v-else>
                   <a-select
                     :value="record.teachName"
-                    style="width: 100%"
+                    style="width: 380px"
                     @change="
                       (e, f) => handleSelectChange(e, f, record, 'teachName')
                     "

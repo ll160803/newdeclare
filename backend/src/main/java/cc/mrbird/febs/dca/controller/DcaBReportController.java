@@ -215,9 +215,11 @@ public class DcaBReportController extends BaseController {
     @PostMapping("/user")
     public List<DcaBReport> detail2(String ids) {
         String[] arr= ids.split(",");
+        String[] asblx= "评聘,确定".split(",");
         LambdaQueryWrapper<DcaBReport> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(DcaBReport::getIsDeletemark, 1);//1是未删 0是已删
-        queryWrapper.eq(DcaBReport::getClshjg,"正常");
+        //queryWrapper.eq(DcaBReport::getClshjg,"正常"); //正高
+        queryWrapper.in(DcaBReport::getSblx,asblx);
         queryWrapper.in(DcaBReport::getUserAccount,arr);
         List<DcaBReport> dcaBReports2 = this.iDcaBReportService.list(queryWrapper);
         List<DcaBReport> dcaBReports= new ArrayList<>();

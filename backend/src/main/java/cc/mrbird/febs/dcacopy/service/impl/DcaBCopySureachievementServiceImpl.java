@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +29,7 @@ import java.time.LocalDate;
  * </p>
  *
  * @author viki
- * @since 2021-09-15
+ * @since 2021-09-30
  */
 @Slf4j
 @Service("IDcaBCopySureachievementService")
@@ -43,17 +43,6 @@ public IPage<DcaBCopySureachievement> findDcaBCopySureachievements(QueryRequest 
         LambdaQueryWrapper<DcaBCopySureachievement> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(DcaBCopySureachievement::getIsDeletemark, 1);//1是未删 0是已删
 
-        if (StringUtils.isNotBlank(dcaBCopySureachievement.getUserAccount())) {
-        queryWrapper.and(wrap->  wrap.eq(DcaBCopySureachievement::getUserAccount, dcaBCopySureachievement.getUserAccount()).or()
-        .like(DcaBCopySureachievement::getUserAccountName, dcaBCopySureachievement.getUserAccount()));
-
-        }
-        if (dcaBCopySureachievement.getState()!=null) {
-        queryWrapper.eq(DcaBCopySureachievement::getState, dcaBCopySureachievement.getState());
-        }
-       /** if (dcaBCopySureachievement.getAuditState()!=null && (dcaBCopySureachievement.getAuditState()>=0)) {
-        queryWrapper.eq(DcaBCopySureachievement::getAuditState, dcaBCopySureachievement.getAuditState());
-        }*/
                                 if (StringUtils.isNotBlank(dcaBCopySureachievement.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBCopySureachievement.getCreateTimeTo())) {
                                 queryWrapper
                                 .ge(DcaBCopySureachievement::getCreateTime, dcaBCopySureachievement.getCreateTimeFrom())
@@ -103,12 +92,15 @@ public void deleteDcaBCopySureachievements(String[]Ids){
         }
 @Override
 @Transactional
-public  void deleteByuseraccount(String userAccount){
-        this.baseMapper.deleteByAccount(userAccount);
+public List<DcaBCopySureachievement> getAll(String userAccount,String dcaYear){
+        LambdaQueryWrapper<DcaBCopySureachievement> queryWrapper=new LambdaQueryWrapper<>();
+        if (StringUtils.isNotBlank(userAccount)) {
+        queryWrapper.eq(DcaBCopySureachievement::getUserAccount, userAccount);
         }
-@Override
-@Transactional
-public  int getMaxDisplayIndexByuseraccount(String userAccount){
-        return this.baseMapper.getMaxDisplayIndexByuseraccount(userAccount);
+        if (StringUtils.isNotBlank(dcaYear)) {
+        queryWrapper.eq(DcaBCopySureachievement::getDcaYear, dcaYear);
         }
+      return  this.baseMapper.selectList(queryWrapper);
+        }
+
         }

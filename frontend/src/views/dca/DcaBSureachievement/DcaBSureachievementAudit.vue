@@ -65,7 +65,7 @@
                 <div v-else>
                   <a-select
                     :value="record.achievementName"
-                    style="width: 100%"
+                    style="width: 430px"
                     @change="
                       (e, f) =>
                         handleSelectChange(e, f, record, 'achievementName')
@@ -274,7 +274,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1800,
+        x: 2000,
         y: window.innerHeight - 200 - 100 - 20 - 80,
       },
       visibleUserInfo: false,
@@ -560,12 +560,14 @@ export default {
           title: "序号",
           dataIndex: "auditXuhao",
           width: 60,
+          fixed: "left",
         },
         {
           title: "发薪号",
           dataIndex: "userAccount",
           width: 80,
           scopedSlots: { customRender: "userAccount" },
+          fixed: "left",
         },
         {
           title: "姓名",
@@ -603,7 +605,7 @@ export default {
         {
           title: "备注",
           dataIndex: "achievementContent",
-          width: 130,
+          width: 200,
           scopedSlots: { customRender: "achievementContent" },
         },
         {

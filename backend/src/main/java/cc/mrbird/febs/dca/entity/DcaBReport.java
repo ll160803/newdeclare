@@ -10,9 +10,9 @@ import lombok.experimental.Accessors;
 import java.util.Date;
 import java.util.List;
 
+import cc.mrbird.febs.common.converter.*;
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
-import cc.mrbird.febs.common.converter.*;
 
 /**
  * <p>
@@ -20,7 +20,7 @@ import cc.mrbird.febs.common.converter.*;
  * </p>
  *
  * @author viki
- * @since 2021-03-18
+ * @since 2021-09-27
  */
 
 @Excel("dca_b_report")
@@ -33,690 +33,592 @@ private static final long serialVersionUID=1L;
     /**
      * 主键
      */
-                            
-        @ExcelField(value ="主键")
+                                @ExcelField(value ="主键" )
     private String id;
 
     /**
      * 起止年度
      */
-        
-        @ExcelField(value ="起止年度")
+            @ExcelField(value ="起止年度" )
     private String year;
 
     /**
      * 排序
      */
-        
-        @ExcelField(value ="排序")
+            @ExcelField(value ="排序" )
     private Integer displayIndex;
 
     /**
      * 姓名
      */
-        
-        @ExcelField(value ="姓名")
+            @ExcelField(value ="姓名" )
     private String userAccountName;
 
     /**
      * 人事编号
      */
-        
-        @ExcelField(value ="人事编号")
+            @ExcelField(value ="人事编号" )
     private String userAccount;
 
     /**
      * 确认顺序号
      */
-        
-        @ExcelField(value ="确认顺序号")
+            @ExcelField(value ="确认顺序号" )
     private Integer confirmIndex;
 
     /**
      * 档案袋顺序号
      */
-        
-        @ExcelField(value ="档案袋顺序号")
+            @ExcelField(value ="档案袋顺序号" )
     private Integer danganIndex;
 
     /**
      * 报名顺序号
      */
-        
-        @ExcelField(value ="报名顺序号")
+            @ExcelField(value ="报名顺序号" )
     private Integer baomingIndex;
 
     /**
      * 系列
      */
-        
-        @ExcelField(value ="系列")
+            @ExcelField(value ="系列" )
     private String xl;
 
     /**
      * 评审分组
      */
-        
-        @ExcelField(value ="评审分组")
+            @ExcelField(value ="评审分组" )
     private String pingshenfenzu;
 
     /**
      * 双报标志
      */
-        
-        @ExcelField(value ="双报标志")
+            @ExcelField(value ="双报标志" )
     private String ifshuangbao;
 
     /**
      * 申报等级
      */
-        
-        @ExcelField(value ="申报等级")
+            @ExcelField(value ="申报等级" )
     private String gwdj;
 
     /**
      * 科室
      */
-        
-        @ExcelField(value ="科室")
+            @ExcelField(value ="科室" )
     private String ks;
 
     /**
      * 科室分类
      */
-        
-        @ExcelField(value ="科室分类")
+            @ExcelField(value ="科室分类" )
     private String kslb;
 
     /**
      * 出生年月
      */
-        
-        @ExcelField(value ="出生年月")
+            @ExcelField(value ="出生年月" )
     private String birthdaystr;
 
     /**
      * 年龄
 至20201031
      */
-        
-        @ExcelField(value ="年龄至20201031")
+            @ExcelField(value ="年龄至20201031" )
     private String age;
 
     /**
      * 性别
      */
-        
-        @ExcelField(value ="性别")
+            @ExcelField(value ="性别" )
     private String sexName;
 
     /**
      * 学历(位)
      */
-        
-        @ExcelField(value ="学历(位)")
+            @ExcelField(value ="学历(位)" )
     private String edu;
 
     /**
      * 毕业时间
      */
-        
-        @ExcelField(value ="毕业时间")
+            @ExcelField(value ="毕业时间" )
     private String eduDate;
 
     /**
      * 现职务名称
      */
-        
-        @ExcelField(value ="现职务名称")
+            @ExcelField(value ="现职务名称" )
     private String positionName;
 
     /**
      * 聘任时间
      */
-        
-        @ExcelField(value ="聘任时间")
+            @ExcelField(value ="聘任时间" )
     private String zygwDate;
 
     /**
      * 申报职称
      */
-        
-        @ExcelField(value ="申报职称")
+            @ExcelField(value ="申报职称" )
     private String npPositionName;
 
     /**
      * 来院时间
      */
-        
-        @ExcelField(value ="来院时间")
+            @ExcelField(value ="来院时间" )
     private String schoolDate;
 
     /**
      * 是否起带头或骨干作用
      */
-        
-        @ExcelField(value ="是否起带头或骨干作用")
+            @ExcelField(value ="是否起带头或骨干作用" )
     private String ifdaitou;
 
     /**
      * 医疗评分
      */
-        
-        @ExcelField(value ="医疗评分")
+            @ExcelField(value ="医疗评分" )
     private String ylpfbfz;
 
     /**
      * 教学评分
      */
-        
-        @ExcelField(value ="教学评分")
+            @ExcelField(value ="教学评分" )
     private String jxpf;
 
     /**
      * 教学科研项目或获奖情况是否符合
      */
-        
-        @ExcelField(value ="教学科研项目或获奖情况是否符合")
+            @ExcelField(value ="教学科研项目或获奖情况是否符合" )
     private String iffuhekeyan;
 
     /**
      * 第一作者论文情况是否符合
      */
-        
-        @ExcelField(value ="第一作者论文情况是否符合")
+            @ExcelField(value ="第一作者论文情况是否符合" )
     private String iffuhediyi;
 
     /**
      * 是否符合必备条件
      */
-        
-        @ExcelField(value ="是否符合必备条件")
+            @ExcelField(value ="是否符合必备条件" )
     private String iffuhebibei;
 
     /**
      * 国家、省部级科研奖名称
      */
-        
-        @ExcelField(value ="国家、省部级科研奖名称")
+            @ExcelField(value ="国家、省部级科研奖名称" )
     private String sciName;
 
     /**
      * 国家、省部级科研奖等级
      */
-        
-        @ExcelField(value ="国家、省部级科研奖等级")
+            @ExcelField(value ="国家、省部级科研奖等级" )
     private String sciDengji;
 
     /**
      * 国家、省部级科研奖排名
      */
-        
-        @ExcelField(value ="国家、省部级科研奖排名")
+            @ExcelField(value ="国家、省部级科研奖排名" )
     private String sciRanknum;
 
     /**
      * 教学名称
      */
-        
-        @ExcelField(value ="教学名称")
+            @ExcelField(value ="教学名称" )
     private String teachName;
 
     /**
      * 教学等级
      */
-        
-        @ExcelField(value ="教学等级")
+            @ExcelField(value ="教学等级" )
     private String teachDengji;
 
     /**
      * 教学排名
      */
-        
-        @ExcelField(value ="教学排名")
+            @ExcelField(value ="教学排名" )
     private String teachRanknum;
 
     /**
      * 发明专利项数
      */
-        
-        @ExcelField(value ="发明专利项数")
+            @ExcelField(value ="发明专利项数" )
     private String patentNum;
 
     /**
      * 实施转让费
      */
-        
-        @ExcelField(value ="实施转让费")
+            @ExcelField(value ="实施转让费" )
     private String patentFund;
 
     /**
      * A 类
      */
-        
-        @ExcelField(value ="A 类")
+            @ExcelField(value ="A 类" )
     private String publishA;
 
     /**
      * B 类
      */
-        
-        @ExcelField(value ="B 类")
+            @ExcelField(value ="B 类" )
     private String publishB;
 
     /**
      * C 类
      */
-        
-        @ExcelField(value ="C 类")
+            @ExcelField(value ="C 类" )
     private String publishC;
 
     /**
      * D 类
      */
-        
-        @ExcelField(value ="D 类")
+            @ExcelField(value ="D 类" )
     private String publishD;
 
     /**
      * E 类
      */
-        
-        @ExcelField(value ="E 类")
+            @ExcelField(value ="E 类" )
     private String publishE;
 
     /**
      * F 类
      */
-        
-        @ExcelField(value ="F 类")
+            @ExcelField(value ="F 类" )
     private String publishF;
 
     /**
      * D类以上
      */
-        
-        @ExcelField(value ="D类以上")
+            @ExcelField(value ="D类以上" )
     private String publishDup;
 
     /**
      * E类以上
      */
-        
-        @ExcelField(value ="E类以上")
+            @ExcelField(value ="E类以上" )
     private String publishEup;
 
     /**
      * F类以上
      */
-        
-        @ExcelField(value ="F类以上")
+            @ExcelField(value ="F类以上" )
     private String publishFup;
 
     /**
      * 出版书类别
      */
-        
-        @ExcelField(value ="出版书类别")
+            @ExcelField(value ="出版书类别" )
     private String publicarticle1;
 
     /**
      * 承担字数(万)
      */
-        
-        @ExcelField(value ="承担字数(万)")
+            @ExcelField(value ="承担字数(万)" )
     private String publicarticle2;
 
     /**
      * 教学质量奖与成果奖名称
      */
-        
-        @ExcelField(value ="教学质量奖与成果奖名称")
+            @ExcelField(value ="教学质量奖与成果奖名称" )
     private String schoolprizeName;
 
     /**
      * 等级
      */
-        
-        @ExcelField(value ="等级")
+            @ExcelField(value ="等级" )
     private String schoolprizeDengji;
 
     /**
      * 排名
      */
-        
-        @ExcelField(value ="排名")
+            @ExcelField(value ="排名" )
     private String schoolprizeRanknum;
 
     /**
      * 时间
      */
-        
-        @ExcelField(value ="时间")
+            @ExcelField(value ="时间" )
     private String schoolprizeDate;
 
     /**
      * 精品课程名称
      */
-        
-        @ExcelField(value ="精品课程名称")
+            @ExcelField(value ="精品课程名称" )
     private String courseName;
 
     /**
      * 排名
      */
-        
-        @ExcelField(value ="排名")
+            @ExcelField(value ="排名" )
     private String courseRanknum;
 
     /**
      * 时间
      */
-        
-        @ExcelField(value ="时间")
+            @ExcelField(value ="时间" )
     private String courseDate;
 
     /**
      * 教学竞赛获奖奖项级别
      */
-        
-        @ExcelField(value ="教学竞赛获奖奖项级别")
+            @ExcelField(value ="教学竞赛获奖奖项级别" )
     private String youngName;
 
     /**
      * 等级
      */
-        
-        @ExcelField(value ="等级")
+            @ExcelField(value ="等级" )
     private String youngDengji;
 
     /**
      * 排名
      */
-        
-        @ExcelField(value ="排名")
+            @ExcelField(value ="排名" )
     private String youngRanknum;
 
     /**
      * 时间
      */
-        
-        @ExcelField(value ="时间")
+            @ExcelField(value ="时间" )
     private String youngDate;
 
     /**
      * 科研项目教改项目类别
      */
-        
-        @ExcelField(value ="科研项目教改项目类别")
+            @ExcelField(value ="科研项目教改项目类别" )
     private String sciDjlb;
 
     /**
      * 经费
      */
-        
-        @ExcelField(value ="经费")
+            @ExcelField(value ="经费" )
     private String sciDjfund;
 
     /**
      * 排名
      */
-        
-        @ExcelField(value ="排名")
+            @ExcelField(value ="排名" )
     private String sciDjranknum;
 
     /**
      * 实到校单项科研经费类别
      */
-        
-        @ExcelField(value ="实到校单项科研经费类别")
+            @ExcelField(value ="实到校单项科研经费类别" )
     private String sciJflb;
 
     /**
      * 实到校单项科研经费类别
      */
-        
-        @ExcelField(value ="实到校单项科研经费类别")
+            @ExcelField(value ="实到校单项科研经费类别" )
     private String sciJffund;
 
     /**
      * 排名
      */
-        
-        @ExcelField(value ="排名")
+            @ExcelField(value ="排名" )
     private String sciJfranknum;
 
     /**
      * 医疗评分等级
      */
-        
-        @ExcelField(value ="医疗评分等级")
+            @ExcelField(value ="医疗评分等级" )
     private String ylpfdj;
 
     /**
      * 教学评分等级
      */
-        
-        @ExcelField(value ="教学评分等级")
+            @ExcelField(value ="教学评分等级" )
     private String jxpfdj;
 
     /**
      * 评分合计
      */
-        
-        @ExcelField(value ="评分合计")
+            @ExcelField(value ="评分合计" )
     private String pfHeji;
 
     /**
      * 是否担任一年辅导员或班主任
      */
-        
-        @ExcelField(value ="是否担任一年辅导员或班主任")
+            @ExcelField(value ="是否担任一年辅导员或班主任" )
     private String tutor;
 
     /**
      * 申报类型
      */
-        
-        @ExcelField(value ="申报类型")
+            @ExcelField(value ="申报类型" )
     private String sblx;
 
     /**
      * 达到选择条件一之第几条
      */
-        
-        @ExcelField(value ="达到选择条件一之第几条")
+            @ExcelField(value ="达到选择条件一之第几条" )
     private String choosepos;
 
     /**
      * 材料审核结果
      */
-        
-        @ExcelField(value ="材料审核结果")
+            @ExcelField(value ="材料审核结果" )
     private String clshjg;
 
     /**
      * 拟退原因
      */
-        
-        @ExcelField(value ="拟退原因")
+            @ExcelField(value ="拟退原因" )
     private String ntyy;
 
     /**
      * 科室排名
      */
-        
-        @ExcelField(value ="科室排名")
+            @ExcelField(value ="科室排名" )
     private String ksrank;
 
     /**
      * 教师资格证
      */
-        
-        @ExcelField(value ="教师资格证")
+            @ExcelField(value ="教师资格证" )
     private String teacherQualify;
 
     /**
      * 内聘情况
      */
-        
-        @ExcelField(value ="内聘情况")
+            @ExcelField(value ="内聘情况" )
     private String npqk;
 
     /**
      * 出国情况
      */
-        
-        @ExcelField(value ="出国情况")
+            @ExcelField(value ="出国情况" )
     private String borad;
 
     /**
      * 备注
      */
-        
-        @ExcelField(value ="备注")
+            @ExcelField(value ="备注" )
     private String note;
 
     /**
      * 援助情况
      */
-        
-        @ExcelField(value ="援助情况")
+            @ExcelField(value ="援助情况" )
     private String help;
 
     /**
      * 联系方式
      */
-        
-        @ExcelField(value ="联系方式")
+            @ExcelField(value ="联系方式" )
     private String telephone;
 
     /**
      * 等级
      */
-        
-        @ExcelField(value ="等级")
+            @ExcelField(value ="等级" )
     private String courseDengji;
 
     /**
      * 状态
      */
-        
-        @ExcelField(value ="状态")
+            @ExcelField(value ="状态" )
     private Integer state;
 
     /**
      * 员工组
      */
-        
-        @ExcelField(value ="员工组")
+            @ExcelField(value ="员工组" )
     private String yuangongzu;
 
     /**
      * 中专毕业时间
      */
-        
-        @ExcelField(value ="中专毕业时间")
+            @ExcelField(value ="中专毕业时间" )
     private String zzbysj;
 
     /**
      * 大专毕业时间
      */
-        
-        @ExcelField(value ="大专毕业时间")
+            @ExcelField(value ="大专毕业时间" )
     private String dzbysj;
 
     /**
      * 本科毕业时间
      */
-        
-        @ExcelField(value ="本科毕业时间")
+            @ExcelField(value ="本科毕业时间" )
     private String bkbysj;
 
     /**
      * 硕士毕业时间
      */
-        
-        @ExcelField(value ="硕士毕业时间")
+            @ExcelField(value ="硕士毕业时间" )
     private String ssbysj;
 
     /**
      * 博士毕业时间
      */
-        
-        @ExcelField(value ="博士毕业时间")
+            @ExcelField(value ="博士毕业时间" )
     private String bsbysj;
 
     /**
      * 岗前培训情况
      */
-        
-        @ExcelField(value ="岗前培训情况")
+            @ExcelField(value ="岗前培训情况" )
     private String gqpxqk;
 
     /**
      * 规范化医师培训情况
      */
-        
-        @ExcelField(value ="规范化医师培训情况")
+            @ExcelField(value ="规范化医师培训情况" )
     private String gfhyspxqk;
 
     /**
      * 中级水平能力测试情况
      */
-        
-        @ExcelField(value ="中级水平能力测试情况")
+            @ExcelField(value ="中级水平能力测试情况" )
     private String zjspnlceqk;
 
     /**
      * 申报类型
      */
-        
-        @ExcelField(value ="申报类型")
+            @ExcelField(value ="申报类型" )
     private String sbleix;
 
     /**
      * 入职前最高学历
      */
-        
-        @ExcelField(value ="入职前最高学历")
+            @ExcelField(value ="入职前最高学历" )
     private String rzqedu;
 
     /**
      * 法定资质
      */
-        
-        @ExcelField(value ="法定资质")
+            @ExcelField(value ="法定资质" )
     private String fdzz;
 
     /**
      * 专业技术职务资格名称
      */
-        
-        @ExcelField(value ="专业技术职务资格名称")
+            @ExcelField(value ="专业技术职务资格名称" )
     private String zyjszwzg;
 
     /**
      * 专业技术职务资格时间
      */
-        
-        @ExcelField(value ="专业技术职务资格时间")
+            @ExcelField(value ="专业技术职务资格时间" )
     private String zyjszwzgsj;
 
     /**
      * 是否删除
      */
     @TableField("IS_DELETEMARK")
-        
-        @ExcelField(value ="是否删除")
+            @ExcelField(value ="是否删除" )
     private Integer isDeletemark;
 
     /**
      * 创建时间
      */
     @TableField("CREATE_TIME")
-        
-        @ExcelField(value ="创建时间", writeConverter = DateConverter.class)
+            @ExcelField(value ="创建时间"  , writeConverter = DateConverter.class )
     private Date createTime;
     private transient String createTimeFrom;
     private transient String createTimeTo;
@@ -725,8 +627,7 @@ private static final long serialVersionUID=1L;
      * 修改时间
      */
     @TableField("MODIFY_TIME")
-        
-        @ExcelField(value ="修改时间", writeConverter = DateConverter.class)
+            @ExcelField(value ="修改时间"  , writeConverter = DateConverter.class )
     private Date modifyTime;
     private transient String modifyTimeFrom;
     private transient String modifyTimeTo;
@@ -735,116 +636,35 @@ private static final long serialVersionUID=1L;
      * 创建人
      */
     @TableField("CREATE_USER_ID")
-        
-        @ExcelField(value ="创建人")
+            @ExcelField(value ="创建人" )
     private Long createUserId;
 
     /**
      * 修改人
      */
     @TableField("MODIFY_USER_ID")
-        
-        @ExcelField(value ="修改人")
+            @ExcelField(value ="修改人" )
     private Long modifyUserId;
 
     /**
-     * 审核结果
+     * 审核人
      */
     @TableField("auditMan")
-        
-        @ExcelField(value ="审核结果")
+            @ExcelField(value ="审核人" )
     private String auditMan;
-
-    /**
-     * 门诊评分
-     */
-    @TableField("mzylpf")
-
-    @ExcelField(value ="门诊评分")
-    private String mzylpf;
-
-    /**
-     * 门诊等级
-     */
-    @TableField("mzylpfdj")
-
-    @ExcelField(value ="门诊等级")
-    private String mzylpfdj;
-
-    /**
-     * 近五年教学工作在本单位总体评价情况
-     */
-    @TableField("j5njxgz")
-
-    @ExcelField(value ="近五年教学工作在本单位总体评价情况")
-    private String j5njxgz;
-
-
-    /**
-     * 是否有校级奖励
-     */
-    @TableField("ifxjjl")
-
-    @ExcelField(value ="是否有校级奖励")
-    private String ifxjjl;
-
-    /**
-     * 是否有一年以上出国经历
-     */
-    @TableField("yearmore")
-
-    @ExcelField(value ="是否有一年以上出国经历")
-    private String yearmore;
-
-    @TableField("yxryqk")
-
-    @ExcelField(value ="抗疫一线人员情况")
-    private String yxryqk;
-
-    @TableField("qtzlxzy")
-
-    @ExcelField(value ="其他指令性支援情况")
-    private String qtzlxzy;
-
-    @TableField("helpmonth")
-
-    @ExcelField(value ="支援时长")
-    private String helpmonth;
-
-    @TableField("ifgoucheng")
-
-    @ExcelField(value ="是否构成选择条件")
-    private String ifgoucheng;
-
-    @TableField("dbxcgbs")
-
-    @ExcelField(value ="代表性成功表述")
-    private String dbxcgbs;
-
-
-    @TableField("wchshuangbao")
-
-    @ExcelField(value ="完成后是否双报")
-    private String wchshuangbao;
-
 
     /**
      * 审核人姓名
      */
     @TableField("auditManName")
-        
-        @ExcelField(value ="审核人姓名")
+            @ExcelField(value ="审核人姓名" )
     private String auditManName;
-
-    private String chuguonianyue;
-    private String zhiyuanchuguo;
 
     /**
      * 审核时间
      */
     @TableField("auditDate")
-        
-        @ExcelField(value ="审核时间", writeConverter = DateConverter.class)
+            @ExcelField(value ="审核时间"  , writeConverter = DateConverter.class )
     private Date auditDate;
     private transient String auditDateFrom;
     private transient String auditDateTo;
@@ -853,17 +673,201 @@ private static final long serialVersionUID=1L;
      * 审核意见
      */
     @TableField("auditSuggestion")
-        
-        @ExcelField(value ="审核意见")
+            @ExcelField(value ="审核意见" )
     private String auditSuggestion;
 
     /**
      * 是否用于本次评审
      */
     @TableField("IsUse")
-        
-        @ExcelField(value ="是否用于本次评审")
+            @ExcelField(value ="是否用于本次评审" )
     private Boolean IsUse;
+
+    /**
+     * 门诊医疗评分
+     */
+            @ExcelField(value ="门诊医疗评分" )
+    private String mzylpf;
+
+    /**
+     * 门诊医疗等级
+     */
+            @ExcelField(value ="门诊医疗等级" )
+    private String mzylpfdj;
+
+    /**
+     * 近五年教学工作在本单位总体评价情况
+     */
+            @ExcelField(value ="近五年教学工作在本单位总体评价情况" )
+    private String j5njxgz;
+
+    /**
+     * 是否有校级奖励
+     */
+            @ExcelField(value ="是否有校级奖励" )
+    private String ifxjjl;
+
+    /**
+     * 是否有一年以上出国经历
+     */
+            @ExcelField(value ="是否有一年以上出国经历" )
+    private String yearmore;
+
+    /**
+     * 抗疫一线人员情况
+     */
+            @ExcelField(value ="抗疫一线人员情况" )
+    private String yxryqk;
+
+    /**
+     * 其他指令性支援情况
+     */
+            @ExcelField(value ="其他指令性支援情况" )
+    private String qtzlxzy;
+
+    /**
+     * 援助时长
+     */
+            @ExcelField(value ="援助时长" )
+    private String helpmonth;
+
+    /**
+     * 是否构成选择条件
+     */
+            @ExcelField(value ="是否构成选择条件" )
+    private String ifgoucheng;
+
+    /**
+     * 完成后是否双报
+     */
+            @ExcelField(value ="完成后是否双报" )
+    private String wchshuangbao;
+
+    /**
+     * 代表性成功表述
+     */
+            @ExcelField(value ="代表性成功表述" )
+    private String dbxcgbs;
+
+    /**
+     * shunsheng
+     */
+            @ExcelField(value ="shunsheng" )
+    private String paixu1;
+
+    /**
+     * zhenggaofugao
+     */
+            @ExcelField(value ="zhenggaofugao" )
+    private String paixu2;
+
+    /**
+     * jiaoshoufujiaoshou
+     */
+            @ExcelField(value ="jiaoshoufujiaoshou" )
+    private String paixu3;
+
+            private String chuguonianyue;
+
+            private String zhiyuanchuguo;
+
+            private String kspaixu;
+
+    /**
+     * 排序4
+     */
+            @ExcelField(value ="排序4" )
+    private String paixu4;
+
+    /**
+     * 现任岗位级别
+     */
+            @ExcelField(value ="现任岗位级别" )
+    private String xrgwjb;
+
+    /**
+     * 现任岗位级别时间
+     */
+            @ExcelField(value ="现任岗位级别时间" )
+    private String xrgwjbprsj;
+
+    /**
+     * 申报三级时是否使用医疗条件
+     */
+            @ExcelField(value ="申报三级时是否使用医疗条件" )
+    private String ifsyyltj;
+
+    /**
+     * 任博导时间
+     */
+            @ExcelField(value ="任博导时间" )
+    private String rbdsj;
+
+    /**
+     * 是否必须使用医疗条件
+     */
+            @ExcelField(value ="是否必须使用医疗条件" )
+    private String ifbxyltj;
+
+    /**
+     * 满足学术条件情况
+     */
+            @ExcelField(value ="满足学术条件情况" )
+    private String mzsstjqk;
+
+    /**
+     * 近三年核心人力资源评分
+     */
+            @ExcelField(value ="近三年核心人力资源评分" )
+    private String j3nhxrlzypf;
+
+    /**
+     * 近三年医疗综合评分
+     */
+            @ExcelField(value ="近三年医疗综合评分" )
+    private String j3ylzhpf;
+
+    /**
+     * 近三年手术总台次
+     */
+            @ExcelField(value ="近三年手术总台次" )
+    private String j3nssztc;
+
+    /**
+     * 近三年收治住院病人总数
+     */
+            @ExcelField(value ="近三年收治住院病人总数" )
+    private String j3nzyszbrsl;
+
+    /**
+     * 近三年门诊收治病人总数
+     */
+            @ExcelField(value ="近三年门诊收治病人总数" )
+    private String j3nmzszbrsl;
+
+    /**
+     * 负责开展的新技术新业务
+     */
+            @ExcelField(value ="负责开展的新技术新业务" )
+    private String xjsxyw;
+
+    /**
+     * 负责的新技术新业务获奖情况
+     */
+            @ExcelField(value ="负责的新技术新业务获奖情况" )
+    private String xjsxywprize;
+
+    /**
+     * 单篇SCI高分文章≥10
+     */
+            @ExcelField(value ="单篇SCI高分文章≥10" )
+    private String dpsci10;
+
+    /**
+     * 学会任职
+     */
+            @ExcelField(value ="学会任职" )
+    private String xhrzqk;
 
 
     /**
@@ -1086,5 +1090,71 @@ private static final long serialVersionUID=1L;
     public static final String AUDITSUGGESTION ="auditSuggestion" ;
 
     public static final String ISUSE ="IsUse" ;
+
+    public static final String MZYLPF ="mzylpf" ;
+
+    public static final String MZYLPFDJ ="mzylpfdj" ;
+
+    public static final String J5NJXGZ ="j5njxgz" ;
+
+    public static final String IFXJJL ="ifxjjl" ;
+
+    public static final String YEARMORE ="yearmore" ;
+
+    public static final String YXRYQK ="yxryqk" ;
+
+    public static final String QTZLXZY ="qtzlxzy" ;
+
+    public static final String HELPMONTH ="helpmonth" ;
+
+    public static final String IFGOUCHENG ="ifgoucheng" ;
+
+    public static final String WCHSHUANGBAO ="wchshuangbao" ;
+
+    public static final String DBXCGBS ="dbxcgbs" ;
+
+    public static final String PAIXU1 ="paixu1" ;
+
+    public static final String PAIXU2 ="paixu2" ;
+
+    public static final String PAIXU3 ="paixu3" ;
+
+    public static final String CHUGUONIANYUE ="chuguonianyue" ;
+
+    public static final String ZHIYUANCHUGUO ="zhiyuanchuguo" ;
+
+    public static final String KSPAIXU ="kspaixu" ;
+
+    public static final String PAIXU4 ="paixu4" ;
+
+    public static final String XRGWJB ="xrgwjb" ;
+
+    public static final String XRGWJBPRSJ ="xrgwjbprsj" ;
+
+    public static final String IFSYYLTJ ="ifsyyltj" ;
+
+    public static final String RBDSJ ="rbdsj" ;
+
+    public static final String IFBXYLTJ ="ifbxyltj" ;
+
+    public static final String MZSSTJQK ="mzsstjqk" ;
+
+    public static final String J3NHXRLZYPF ="j3nhxrlzypf" ;
+
+    public static final String J3YLZHPF ="j3ylzhpf" ;
+
+    public static final String J3NSSZTC ="j3nssztc" ;
+
+    public static final String J3NZYSZBRSL ="j3nzyszbrsl" ;
+
+    public static final String J3NMZSZBRSL ="j3nmzszbrsl" ;
+
+    public static final String XJSXYW ="xjsxyw" ;
+
+    public static final String XJSXYWPRIZE ="xjsxywprize" ;
+
+    public static final String DPSCI10 ="dpsci10" ;
+
+    public static final String XHRZQK ="xhrzqk" ;
 
         }

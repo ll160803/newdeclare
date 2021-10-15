@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +29,7 @@ import java.time.LocalDate;
  * </p>
  *
  * @author viki
- * @since 2021-09-14
+ * @since 2021-09-30
  */
 @Slf4j
 @Service("IDcaBCopyTeacheryjService")
@@ -43,17 +43,6 @@ public IPage<DcaBCopyTeacheryj> findDcaBCopyTeacheryjs(QueryRequest request, Dca
         LambdaQueryWrapper<DcaBCopyTeacheryj> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(DcaBCopyTeacheryj::getIsDeletemark, 1);//1是未删 0是已删
 
-        if (StringUtils.isNotBlank(dcaBCopyTeacheryj.getUserAccount())) {
-        queryWrapper.and(wrap->  wrap.eq(DcaBCopyTeacheryj::getUserAccount, dcaBCopyTeacheryj.getUserAccount()).or()
-        .like(DcaBCopyTeacheryj::getUserAccountName, dcaBCopyTeacheryj.getUserAccount()));
-
-        }
-        if (dcaBCopyTeacheryj.getState()!=null) {
-        queryWrapper.eq(DcaBCopyTeacheryj::getState, dcaBCopyTeacheryj.getState());
-        }
-       /** if (dcaBCopyTeacheryj.getAuditState()!=null && (dcaBCopyTeacheryj.getAuditState()>=0)) {
-        queryWrapper.eq(DcaBCopyTeacheryj::getAuditState, dcaBCopyTeacheryj.getAuditState());
-        }*/
                                 if (StringUtils.isNotBlank(dcaBCopyTeacheryj.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBCopyTeacheryj.getCreateTimeTo())) {
                                 queryWrapper
                                 .ge(DcaBCopyTeacheryj::getCreateTime, dcaBCopyTeacheryj.getCreateTimeFrom())
@@ -103,12 +92,15 @@ public void deleteDcaBCopyTeacheryjs(String[]Ids){
         }
 @Override
 @Transactional
-public  void deleteByuseraccount(String userAccount){
-        this.baseMapper.deleteByAccount(userAccount);
+public List<DcaBCopyTeacheryj> getAll(String userAccount,String dcaYear){
+        LambdaQueryWrapper<DcaBCopyTeacheryj> queryWrapper=new LambdaQueryWrapper<>();
+        if (StringUtils.isNotBlank(userAccount)) {
+        queryWrapper.eq(DcaBCopyTeacheryj::getUserAccount, userAccount);
         }
-@Override
-@Transactional
-public  int getMaxDisplayIndexByuseraccount(String userAccount){
-        return this.baseMapper.getMaxDisplayIndexByuseraccount(userAccount);
+        if (StringUtils.isNotBlank(dcaYear)) {
+        queryWrapper.eq(DcaBCopyTeacheryj::getDcaYear, dcaYear);
         }
+      return  this.baseMapper.selectList(queryWrapper);
+        }
+
         }

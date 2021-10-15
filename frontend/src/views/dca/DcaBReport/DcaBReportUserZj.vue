@@ -2020,7 +2020,7 @@ export default {
         },
 
         {
-          title: "医疗评分",
+          title: "医疗评价",
           children: [
             {
               title: "医务等级",
@@ -2051,7 +2051,7 @@ export default {
           ],
         },
         {
-          title: "教学评分",
+          title: "教学评价",
           children: [
             {
               title: "等级",
@@ -2077,7 +2077,7 @@ export default {
           title: "取得湖北省相应专业技术职务资格及时间",
           children: [
             {
-              title: "业技术职务资格名称",
+              title: "专业技术职务资格名称",
               dataIndex: "zyjszwzg",
               width: 100,
             },

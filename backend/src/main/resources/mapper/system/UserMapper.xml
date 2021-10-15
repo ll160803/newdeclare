@@ -68,7 +68,7 @@
             u.password,
             u.email,
             u.mobile,
-            u. STATUS,
+            u.STATUS,
             u.create_time,
             u.ssex,
             d.dept_id,

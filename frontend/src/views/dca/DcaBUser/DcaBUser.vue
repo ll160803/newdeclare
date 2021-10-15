@@ -177,7 +177,11 @@
         v-bind="formItemLayout"
         label="现任岗位等级"
       >
-        <a-date-picker :disabled="true" v-decorator="[ 'xrgwjb', {}]" />
+      <a-input
+          :disabled="true"
+          placeholder="请输入现任岗位等级"
+          v-decorator="['xrgwjb', {rules: [] }]"
+        />
       </a-form-item>
       <a-form-item
         v-bind="formItemLayout"

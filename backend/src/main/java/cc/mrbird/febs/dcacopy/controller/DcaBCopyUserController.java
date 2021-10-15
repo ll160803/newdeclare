@@ -315,6 +315,9 @@ public class DcaBCopyUserController extends BaseController {
             else if(dj.contains(dcaBReport.getGwdj())){
                 destfile ="D:\\中级职称.docx";
             }
+            else{
+                destfile ="D:\\二三级.docx";
+            }
 
 
            InputStream inputStream2 =new FileInputStream(new File(destfile));

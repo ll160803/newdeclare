@@ -42,7 +42,7 @@
                 @select="handleTreeClick"
               >
               <template slot="custom" slot-scope="item">
-                <span :style="item.path=='2'?'color:red':''">{{item.title}}</span>
+                <span style="color:red">{{item.title}}</span>
               </template>
               </a-tree>
             </div>
@@ -308,6 +308,7 @@ export default {
         height: "",
         overflow: "auto",
       },
+      componentKey: 0,
     };
   },
   mounted() {
@@ -316,6 +317,7 @@ export default {
   },
   created() {
         this.$EventBus.$on('selectMoudles',(index)=> {
+         // this.componentKey += 1; 
           this.fetch();
           this.index = index
     })
@@ -333,10 +335,10 @@ export default {
       let codes = "272,273,121,251";
       this.$get("dcaDMudules/doctree/" + codes).then((r) => {
         var drows = r.data.rows.children;
-        drows[0].children = drows[0].children.filter((p) => p.id != 10);
-        drows[0].children.forEach(element => {
-           element['scopedSlots'] = {title: 'custom'}
-        });
+        drows[0].children = drows[0].children.filter((p) => p.id != 10);//这里是第一组数据 [1]树的第二组
+        // drows[0].children.forEach(element => {
+        //    element['scopedSlots'] = {title: 'custom'}
+        // });
         // console.info(drows)
         // var drows=r.data.rows.children.filter(p=>p.id!=11) //医疗工作量
         this.mouduleTreeData = drows;

@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
  * </p>
  *
  * @author viki
- * @since 2021-09-15
+ * @since 2021-09-30
  */
 public interface IDcaBCopySureachievementService extends IService<DcaBCopySureachievement> {
 
@@ -28,7 +28,5 @@ public interface IDcaBCopySureachievementService extends IService<DcaBCopySureac
 
         void deleteDcaBCopySureachievements(String[]Ids);
 
-        void deleteByuseraccount(String userAccount);
-
-        int getMaxDisplayIndexByuseraccount(String userAccount);
+        List<DcaBCopySureachievement> getAll(String userAccount,String dcaYear);
         }

@@ -110,24 +110,44 @@
                     <result column="auditDate" property="auditDate"/>
                     <result column="auditSuggestion" property="auditSuggestion"/>
                     <result column="IsUse" property="IsUse"/>
-            <result column="mzylpf" property="mzylpf"/>
-            <result column="mzylpfdj" property="mzylpfdj"/>
-            <result column="j5njxgz" property="j5njxgz"/>
-            <result column="ifxjjl" property="ifxjjl"/>
-            <result column="yearmore" property="yearmore"/>
-            <result column="yxryqk" property="yxryqk"/>
-            <result column="qtzlxzy" property="qtzlxzy"/>
-            <result column="helpmonth" property="helpmonth"/>
-            <result column="ifgoucheng" property="ifgoucheng"/>
-            <result column="wchshuangbao" property="wchshuangbao"/>
-            <result column="dbxcgbs" property="dbxcgbs"/>
-            <result column="chuguonianyue" property="chuguonianyue"/>
-            <result column="zhiyuanchuguo" property="zhiyuanchuguo"/>
+                    <result column="mzylpf" property="mzylpf"/>
+                    <result column="mzylpfdj" property="mzylpfdj"/>
+                    <result column="j5njxgz" property="j5njxgz"/>
+                    <result column="ifxjjl" property="ifxjjl"/>
+                    <result column="yearmore" property="yearmore"/>
+                    <result column="yxryqk" property="yxryqk"/>
+                    <result column="qtzlxzy" property="qtzlxzy"/>
+                    <result column="helpmonth" property="helpmonth"/>
+                    <result column="ifgoucheng" property="ifgoucheng"/>
+                    <result column="wchshuangbao" property="wchshuangbao"/>
+                    <result column="dbxcgbs" property="dbxcgbs"/>
+                    <result column="paixu1" property="paixu1"/>
+                    <result column="paixu2" property="paixu2"/>
+                    <result column="paixu3" property="paixu3"/>
+                    <result column="chuguonianyue" property="chuguonianyue"/>
+                    <result column="zhiyuanchuguo" property="zhiyuanchuguo"/>
+                    <result column="kspaixu" property="kspaixu"/>
+                    <result column="paixu4" property="paixu4"/>
+                    <result column="xrgwjb" property="xrgwjb"/>
+                    <result column="xrgwjbprsj" property="xrgwjbprsj"/>
+                    <result column="ifsyyltj" property="ifsyyltj"/>
+                    <result column="rbdsj" property="rbdsj"/>
+                    <result column="ifbxyltj" property="ifbxyltj"/>
+                    <result column="mzsstjqk" property="mzsstjqk"/>
+                    <result column="j3nhxrlzypf" property="j3nhxrlzypf"/>
+                    <result column="j3ylzhpf" property="j3ylzhpf"/>
+                    <result column="j3nssztc" property="j3nssztc"/>
+                    <result column="j3nzyszbrsl" property="j3nzyszbrsl"/>
+                    <result column="j3nmzszbrsl" property="j3nmzszbrsl"/>
+                    <result column="xjsxyw" property="xjsxyw"/>
+                    <result column="xjsxywprize" property="xjsxywprize"/>
+                    <result column="dpsci10" property="dpsci10"/>
+                    <result column="xhrzqk" property="xhrzqk"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, year, display_index, user_account_name, user_account, confirm_index, dangan_index, baoming_index, xl, pingshenfenzu, ifshuangbao, gwdj, ks, kslb, birthdaystr, age, sex_name, edu, edu_date, position_name, zygw_date, np_position_name, school_date, ifdaitou, ylpfbfz, jxpf, iffuhekeyan, iffuhediyi, iffuhebibei, sci_name, sci_dengji, sci_ranknum, teach_name, teach_dengji, teach_ranknum, patent_num, patent_fund, publish_a, publish_b, publish_c, publish_d, publish_e, publish_f, publish_dup, publish_eup, publish_fup, publicarticle1, publicarticle2, schoolprize_name, schoolprize_dengji, schoolprize_ranknum, schoolprize_date, course_name, course_ranknum, course_date, young_name, young_dengji, young_ranknum, young_date, sci_djlb, sci_djfund, sci_djranknum, sci_jflb, sci_jffund, sci_jfranknum, ylpfdj, jxpfdj, pf_heji, tutor, sblx, choosepos, clshjg, ntyy, ksrank, teacher_qualify, npqk, borad, note, help, telephone, course_dengji, state, yuangongzu, zzbysj, dzbysj, bkbysj, ssbysj, bsbysj, gqpxqk, gfhyspxqk, zjspnlceqk, sbleix, rzqedu, fdzz, zyjszwzg, zyjszwzgsj, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, mzylpfdj, mzylpf, j5njxgz, ifxjjl,yearmore,qtzlxzy,yxryqk，helpmonth,ifgoucheng,dbxcgbs,wchshuangbao,chuguonianyue,zhiyuanchuguo
+        id, year, display_index, user_account_name, user_account, confirm_index, dangan_index, baoming_index, xl, pingshenfenzu, ifshuangbao, gwdj, ks, kslb, birthdaystr, age, sex_name, edu, edu_date, position_name, zygw_date, np_position_name, school_date, ifdaitou, ylpfbfz, jxpf, iffuhekeyan, iffuhediyi, iffuhebibei, sci_name, sci_dengji, sci_ranknum, teach_name, teach_dengji, teach_ranknum, patent_num, patent_fund, publish_a, publish_b, publish_c, publish_d, publish_e, publish_f, publish_dup, publish_eup, publish_fup, publicarticle1, publicarticle2, schoolprize_name, schoolprize_dengji, schoolprize_ranknum, schoolprize_date, course_name, course_ranknum, course_date, young_name, young_dengji, young_ranknum, young_date, sci_djlb, sci_djfund, sci_djranknum, sci_jflb, sci_jffund, sci_jfranknum, ylpfdj, jxpfdj, pf_heji, tutor, sblx, choosepos, clshjg, ntyy, ksrank, teacher_qualify, npqk, borad, note, help, telephone, course_dengji, state, yuangongzu, zzbysj, dzbysj, bkbysj, ssbysj, bsbysj, gqpxqk, gfhyspxqk, zjspnlceqk, sbleix, rzqedu, fdzz, zyjszwzg, zyjszwzgsj, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, mzylpf, mzylpfdj, j5njxgz, ifxjjl, yearmore, yxryqk, qtzlxzy, helpmonth, ifgoucheng, wchshuangbao, dbxcgbs, paixu1, paixu2, paixu3, chuguonianyue, zhiyuanchuguo, kspaixu, paixu4, xrgwjb, xrgwjbprsj, ifsyyltj, rbdsj, ifbxyltj, mzsstjqk, j3nhxrlzypf, j3ylzhpf, j3nssztc, j3nzyszbrsl, j3nmzszbrsl, xjsxyw, xjsxywprize, dpsci10, xhrzqk
     </sql>
     <update id="updateDcaBReport" parameterType="cc.mrbird.febs.dca.entity.DcaBReport">
         update dca_b_report
@@ -237,17 +257,39 @@
 <if test="auditDate != null">auditDate=#{auditDate},</if>
 <if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
 <if test="IsUse != null">IsUse=#{IsUse},</if>
-            <if test="mzylpfdj != null">mzylpfdj=#{mzylpfdj},</if>
-            <if test="mzylpf != null">mzylpf=#{mzylpf},</if>
-            <if test="j5njxgz != null">j5njxgz=#{j5njxgz},</if>
-            <if test="ifxjjl != null">ifxjjl=#{ifxjjl},</if>
-            <if test="yearmore != null">yearmore=#{yearmore},</if>
-            <if test="yxryqk != null">yxryqk=#{yxryqk},</if>
-            <if test="qtzlxzy != null">qtzlxzy=#{qtzlxzy},</if>
-            <if test="helpmonth != null">helpmonth=#{helpmonth},</if>
-            <if test="ifgoucheng != null">ifgoucheng=#{ifgoucheng},</if>
-            <if test="wchshuangbao != null">wchshuangbao=#{wchshuangbao},</if>
-            <if test="dbxcgbs != null">dbxcgbs=#{dbxcgbs},</if>
+<if test="mzylpf != null">mzylpf=#{mzylpf},</if>
+<if test="mzylpfdj != null">mzylpfdj=#{mzylpfdj},</if>
+<if test="j5njxgz != null">j5njxgz=#{j5njxgz},</if>
+<if test="ifxjjl != null">ifxjjl=#{ifxjjl},</if>
+<if test="yearmore != null">yearmore=#{yearmore},</if>
+<if test="yxryqk != null">yxryqk=#{yxryqk},</if>
+<if test="qtzlxzy != null">qtzlxzy=#{qtzlxzy},</if>
+<if test="helpmonth != null">helpmonth=#{helpmonth},</if>
+<if test="ifgoucheng != null">ifgoucheng=#{ifgoucheng},</if>
+<if test="wchshuangbao != null">wchshuangbao=#{wchshuangbao},</if>
+<if test="dbxcgbs != null">dbxcgbs=#{dbxcgbs},</if>
+<if test="paixu1 != null">paixu1=#{paixu1},</if>
+<if test="paixu2 != null">paixu2=#{paixu2},</if>
+<if test="paixu3 != null">paixu3=#{paixu3},</if>
+<if test="chuguonianyue != null">chuguonianyue=#{chuguonianyue},</if>
+<if test="zhiyuanchuguo != null">zhiyuanchuguo=#{zhiyuanchuguo},</if>
+<if test="kspaixu != null">kspaixu=#{kspaixu},</if>
+<if test="paixu4 != null">paixu4=#{paixu4},</if>
+<if test="xrgwjb != null">xrgwjb=#{xrgwjb},</if>
+<if test="xrgwjbprsj != null">xrgwjbprsj=#{xrgwjbprsj},</if>
+<if test="ifsyyltj != null">ifsyyltj=#{ifsyyltj},</if>
+<if test="rbdsj != null">rbdsj=#{rbdsj},</if>
+<if test="ifbxyltj != null">ifbxyltj=#{ifbxyltj},</if>
+<if test="mzsstjqk != null">mzsstjqk=#{mzsstjqk},</if>
+<if test="j3nhxrlzypf != null">j3nhxrlzypf=#{j3nhxrlzypf},</if>
+<if test="j3ylzhpf != null">j3ylzhpf=#{j3ylzhpf},</if>
+<if test="j3nssztc != null">j3nssztc=#{j3nssztc},</if>
+<if test="j3nzyszbrsl != null">j3nzyszbrsl=#{j3nzyszbrsl},</if>
+<if test="j3nmzszbrsl != null">j3nmzszbrsl=#{j3nmzszbrsl},</if>
+<if test="xjsxyw != null">xjsxyw=#{xjsxyw},</if>
+<if test="xjsxywprize != null">xjsxywprize=#{xjsxywprize},</if>
+<if test="dpsci10 != null">dpsci10=#{dpsci10},</if>
+<if test="xhrzqk != null">xhrzqk=#{xhrzqk},</if>
         </trim>
                 where id=#{id}
 
@@ -373,6 +415,39 @@
             AND dca_b_report.auditDate <![CDATA[ <= ]]>  #{dcaBReport.auditDateTo}
         </if>
             <if test="dcaBReport.auditSuggestion != null and dcaBReport.auditSuggestion != ''"> and dca_b_report.auditSuggestion like concat('%', #{ dcaBReport.auditSuggestion} ,'%')</if>
+            <if test="dcaBReport.mzylpf != null and dcaBReport.mzylpf != ''"> and dca_b_report.mzylpf like concat('%', #{ dcaBReport.mzylpf} ,'%')</if>
+            <if test="dcaBReport.mzylpfdj != null and dcaBReport.mzylpfdj != ''"> and dca_b_report.mzylpfdj like concat('%', #{ dcaBReport.mzylpfdj} ,'%')</if>
+            <if test="dcaBReport.j5njxgz != null and dcaBReport.j5njxgz != ''"> and dca_b_report.j5njxgz like concat('%', #{ dcaBReport.j5njxgz} ,'%')</if>
+            <if test="dcaBReport.ifxjjl != null and dcaBReport.ifxjjl != ''"> and dca_b_report.ifxjjl like concat('%', #{ dcaBReport.ifxjjl} ,'%')</if>
+            <if test="dcaBReport.yearmore != null and dcaBReport.yearmore != ''"> and dca_b_report.yearmore like concat('%', #{ dcaBReport.yearmore} ,'%')</if>
+            <if test="dcaBReport.yxryqk != null and dcaBReport.yxryqk != ''"> and dca_b_report.yxryqk like concat('%', #{ dcaBReport.yxryqk} ,'%')</if>
+            <if test="dcaBReport.qtzlxzy != null and dcaBReport.qtzlxzy != ''"> and dca_b_report.qtzlxzy like concat('%', #{ dcaBReport.qtzlxzy} ,'%')</if>
+            <if test="dcaBReport.helpmonth != null and dcaBReport.helpmonth != ''"> and dca_b_report.helpmonth like concat('%', #{ dcaBReport.helpmonth} ,'%')</if>
+            <if test="dcaBReport.ifgoucheng != null and dcaBReport.ifgoucheng != ''"> and dca_b_report.ifgoucheng like concat('%', #{ dcaBReport.ifgoucheng} ,'%')</if>
+            <if test="dcaBReport.wchshuangbao != null and dcaBReport.wchshuangbao != ''"> and dca_b_report.wchshuangbao like concat('%', #{ dcaBReport.wchshuangbao} ,'%')</if>
+            <if test="dcaBReport.dbxcgbs != null and dcaBReport.dbxcgbs != ''"> and dca_b_report.dbxcgbs like concat('%', #{ dcaBReport.dbxcgbs} ,'%')</if>
+            <if test="dcaBReport.paixu1 != null and dcaBReport.paixu1 != ''"> and dca_b_report.paixu1 like concat('%', #{ dcaBReport.paixu1} ,'%')</if>
+            <if test="dcaBReport.paixu2 != null and dcaBReport.paixu2 != ''"> and dca_b_report.paixu2 like concat('%', #{ dcaBReport.paixu2} ,'%')</if>
+            <if test="dcaBReport.paixu3 != null and dcaBReport.paixu3 != ''"> and dca_b_report.paixu3 like concat('%', #{ dcaBReport.paixu3} ,'%')</if>
+            <if test="dcaBReport.chuguonianyue != null and dcaBReport.chuguonianyue != ''"> and dca_b_report.chuguonianyue like concat('%', #{ dcaBReport.chuguonianyue} ,'%')</if>
+            <if test="dcaBReport.zhiyuanchuguo != null and dcaBReport.zhiyuanchuguo != ''"> and dca_b_report.zhiyuanchuguo like concat('%', #{ dcaBReport.zhiyuanchuguo} ,'%')</if>
+            <if test="dcaBReport.kspaixu != null and dcaBReport.kspaixu != ''"> and dca_b_report.kspaixu like concat('%', #{ dcaBReport.kspaixu} ,'%')</if>
+            <if test="dcaBReport.paixu4 != null and dcaBReport.paixu4 != ''"> and dca_b_report.paixu4 like concat('%', #{ dcaBReport.paixu4} ,'%')</if>
+            <if test="dcaBReport.xrgwjb != null and dcaBReport.xrgwjb != ''"> and dca_b_report.xrgwjb like concat('%', #{ dcaBReport.xrgwjb} ,'%')</if>
+            <if test="dcaBReport.xrgwjbprsj != null and dcaBReport.xrgwjbprsj != ''"> and dca_b_report.xrgwjbprsj like concat('%', #{ dcaBReport.xrgwjbprsj} ,'%')</if>
+            <if test="dcaBReport.ifsyyltj != null and dcaBReport.ifsyyltj != ''"> and dca_b_report.ifsyyltj like concat('%', #{ dcaBReport.ifsyyltj} ,'%')</if>
+            <if test="dcaBReport.rbdsj != null and dcaBReport.rbdsj != ''"> and dca_b_report.rbdsj like concat('%', #{ dcaBReport.rbdsj} ,'%')</if>
+            <if test="dcaBReport.ifbxyltj != null and dcaBReport.ifbxyltj != ''"> and dca_b_report.ifbxyltj like concat('%', #{ dcaBReport.ifbxyltj} ,'%')</if>
+            <if test="dcaBReport.mzsstjqk != null and dcaBReport.mzsstjqk != ''"> and dca_b_report.mzsstjqk like concat('%', #{ dcaBReport.mzsstjqk} ,'%')</if>
+            <if test="dcaBReport.j3nhxrlzypf != null and dcaBReport.j3nhxrlzypf != ''"> and dca_b_report.j3nhxrlzypf like concat('%', #{ dcaBReport.j3nhxrlzypf} ,'%')</if>
+            <if test="dcaBReport.j3ylzhpf != null and dcaBReport.j3ylzhpf != ''"> and dca_b_report.j3ylzhpf like concat('%', #{ dcaBReport.j3ylzhpf} ,'%')</if>
+            <if test="dcaBReport.j3nssztc != null and dcaBReport.j3nssztc != ''"> and dca_b_report.j3nssztc like concat('%', #{ dcaBReport.j3nssztc} ,'%')</if>
+            <if test="dcaBReport.j3nzyszbrsl != null and dcaBReport.j3nzyszbrsl != ''"> and dca_b_report.j3nzyszbrsl like concat('%', #{ dcaBReport.j3nzyszbrsl} ,'%')</if>
+            <if test="dcaBReport.j3nmzszbrsl != null and dcaBReport.j3nmzszbrsl != ''"> and dca_b_report.j3nmzszbrsl like concat('%', #{ dcaBReport.j3nmzszbrsl} ,'%')</if>
+            <if test="dcaBReport.xjsxyw != null and dcaBReport.xjsxyw != ''"> and dca_b_report.xjsxyw like concat('%', #{ dcaBReport.xjsxyw} ,'%')</if>
+            <if test="dcaBReport.xjsxywprize != null and dcaBReport.xjsxywprize != ''"> and dca_b_report.xjsxywprize like concat('%', #{ dcaBReport.xjsxywprize} ,'%')</if>
+            <if test="dcaBReport.dpsci10 != null and dcaBReport.dpsci10 != ''"> and dca_b_report.dpsci10 like concat('%', #{ dcaBReport.dpsci10} ,'%')</if>
+            <if test="dcaBReport.xhrzqk != null and dcaBReport.xhrzqk != ''"> and dca_b_report.xhrzqk like concat('%', #{ dcaBReport.xhrzqk} ,'%')</if>
 </select>
     <select id="insertCopy" parameterType="java.util.Map" statementType="CALLABLE" >
         <![CDATA[{
