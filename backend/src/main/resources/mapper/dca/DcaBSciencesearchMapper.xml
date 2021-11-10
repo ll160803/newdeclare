@@ -15,7 +15,7 @@
                     <result column="project_source" property="projectSource"/>
                     <result column="contract_fund" property="contractFund"/>
                     <result column="real_fund" property="realFund"/>
-                    <result column="audit_date" property="auditDate"/>
+                    <result column="audit_date" property="auditDate2"/>
                     <result column="start_date" property="startDate"/>
                     <result column="end_date" property="endDate"/>
                     <result column="rank_num" property="rankNum"/>
@@ -56,7 +56,7 @@
 <if test="projectSource != null">project_source=#{projectSource},</if>
 <if test="contractFund != null">contract_fund=#{contractFund},</if>
 <if test="realFund != null">real_fund=#{realFund},</if>
-<if test="auditDate != null">audit_date=#{auditDate},</if>
+<if test="auditDate2 != null">audit_date=#{auditDate2},</if>
 <if test="startDate != null">start_date=#{startDate},</if>
 <if test="endDate != null">end_date=#{endDate},</if>
 <if test="rankNum != null">rank_num=#{rankNum},</if>

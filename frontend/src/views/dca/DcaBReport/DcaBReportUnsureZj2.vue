@@ -150,8 +150,8 @@ export default {
         sortOrder = sortedInfo.order;
       }
       this.fetch2({
-        sortField: "user_account",
-        sortOrder: "ascend",
+        sortField: "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
+          sortOrder: "ascend",
         ...this.queryParams,
       });
     },
@@ -171,8 +171,8 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.pagination.defaultCurrent;
       }
-      params.sortField = "user_account";
-      params.sortOrder = "ascend";
+      params.sortField= "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back";
+          params.sortOrder = "ascend";
       this.$get("dcaBReport", {
         state: this.state,
         ...params,
@@ -273,8 +273,8 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.paginationInfo.defaultCurrent;
       }
-      params.sortField = "user_account";
-      params.sortOrder = "ascend";
+      params.sortField = "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back";
+          params.sortOrder = "ascend";
       params.userAccount = userAccount;
       this.$get("dcaBReport", {
         state: this.state,
@@ -292,8 +292,8 @@ export default {
       this.sortedInfo = sorter;
       this.paginationInfo = pagination;
       this.fetch2({
-        sortField: "user_account",
-        sortOrder: "ascend",
+         sortField: "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
+          sortOrder: "ascend",
         ...this.queryParams,
       });
     },
@@ -318,7 +318,7 @@ export default {
         },
         {
           title: "科室分类3",
-          dataIndex: "pingshenfenzu",
+          dataIndex: "kslb",
           width: 180,
         },
         {
@@ -427,15 +427,15 @@ export default {
           dataIndex: "mzsstjqk",
           width: 80
         },
-
-        {
-          title: "等级24",
-          dataIndex: "jxpfdj",
-          width: 100,
+ {
+          title: "满足学术条件情况24",
+          dataIndex: "mzsstjqkAudit",
+          width: 80
         },
+      
         {
           title: "分数25",
-          dataIndex: "jxpf",
+          dataIndex: "jxpfdj",
           width: 80,
         },
         {
@@ -449,18 +449,18 @@ export default {
           width: 100,
         },
         {
-          title: "近三年手术总台次28",
+          title: "近三年手术台次28",
           dataIndex: "j3nssztc",
           width: 100,
         },
 
         {
-          title: "近三年收治住院病人总数29",
+          title: "近三年收治住院病人数29",
           dataIndex: "j3nzyszbrsl",
           width: 100,
         },
         {
-          title: "近三年门诊收治病人总数30",
+          title: "近三年门诊收治病人数30",
           dataIndex: "j3nmzszbrsl",
           width: 100,
         },
@@ -474,6 +474,11 @@ export default {
           title: "负责的新技术新业务获奖情况32",
           dataIndex: "xjsxywprize",
           width: 100,
+        },
+         {
+          title: "单篇SCI高章≥3033",
+          dataIndex: "dpsci20",
+          width: 60,
         },
         {
           title: "单篇SCI高分文章≥1033",
@@ -563,6 +568,11 @@ export default {
           width: 100,
         },
         {
+          title: "重要抗疫奖励",
+          dataIndex: "prize",
+          width: 100,
+        },
+        {
           title: "是否符合基本条件50",
           dataIndex: "clshjg",
           width: 100,
@@ -580,6 +590,11 @@ export default {
           width: 100,
           scopedSlots: { customRender: "note" },
         },
+         {
+          title: "备注2",
+          dataIndex: "paixu4",
+          width: 100,
+        },
         {
           title: "联系方式53",
           dataIndex: "telephone",
@@ -589,8 +604,8 @@ export default {
       let dataJson = JSON.stringify(json);
 
       this.$export("dcaUserAudit/excelBigTable", {
-        sortField: "user_account",
-        sortOrder: "ascend",
+         sortField: "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
+          sortOrder: "ascend",
         state: this.state,
         dataJson: dataJson,
         excelIndex: 2,
@@ -615,9 +630,8 @@ export default {
         },
         {
           title: "科室分类",
-          dataIndex: "pingshenfenzu",
+          dataIndex: "kslb",
           width: 180,
-          scopedSlots: { customRender: "pingshenfenzu" },
           //    fixed: 'left',
         },
         {
@@ -735,31 +749,27 @@ export default {
           scopedSlots: { customRender: "ifbxyltj" },
         },
         {
-          title: "满足学术条件情况",
+          title: "满足学术条件情况(申报人填报)",
           dataIndex: "mzsstjqk",
+          width: 300,
+          scopedSlots: { customRender: "splitHang" },
+        },
+         {
+          title: "满足学术条件情况(人事处审核)",
+          dataIndex: "mzsstjqkAudit",
           width: 300,
           scopedSlots: { customRender: "splitHang" },
         },
         {
           title: "教学评分",
-          children: [
-            {
-              title: "等级",
-              dataIndex: "jxpfdj",
-              width: 100,
-            },
-            {
-              title: "分数",
-              dataIndex: "jxpf2",
+          dataIndex: "jxpf2",
               width: 80,
               customRender: (text, row, index) => {
-                return row.jxpf;
+                return row.jxpfdj;
               },
-            },
-          ],
         },
         {
-          title: "近三年核心人力资源评分",
+          title: "近三年核心人力资源评分均值",
           dataIndex: "j3nhxrlzypf",
           width: 80,
           scopedSlots: { customRender: "j3nhxrlzypf" },
@@ -770,23 +780,23 @@ export default {
           width: 100,
         },
         {
-          title: "近三年手术总台次",
+          title: "近三年手术台次",
           dataIndex: "j3nssztc",
           width: 100,
         },
 
         {
-          title: "近三年收治住院病人总数",
+          title: "近三年收治住院病人数",
           dataIndex: "j3nzyszbrsl",
           width: 100,
         },
         {
-          title: "近三年门诊收治病人总数",
+          title: "近三年门诊收治病人数",
           dataIndex: "j3nmzszbrsl",
           width: 100,
         },
         {
-          title: "任现职以来新技术新业务",
+          title: "近三年新技术新业务",
           children: [
             {
               title: "负责开展的新技术新业务",
@@ -803,6 +813,11 @@ export default {
         {
           title: "任现岗位以来",
           children: [
+            {
+              title: "单篇SCI高分文章≥20",
+              dataIndex: "dpsci20",
+              width: 60,
+            },
             {
               title: "单篇SCI高分文章≥10",
               dataIndex: "dpsci10",
@@ -911,7 +926,13 @@ export default {
         {
           title: "学会任职",
           dataIndex: "xhrzqk",
-          width: 100,
+          width: 120,
+          scopedSlots: { customRender: "splitHang" },
+        },
+          {
+          title: "重要抗疫奖励",
+          dataIndex: "prize",
+          width: 120,
           scopedSlots: { customRender: "splitHang" },
         },
         {
@@ -931,6 +952,11 @@ export default {
           dataIndex: "note",
           width: 100,
           scopedSlots: { customRender: "note" },
+        },
+         {
+          title: "备注2",
+          dataIndex: "paixu4",
+          width: 100,
         },
         {
           title: "联系方式",

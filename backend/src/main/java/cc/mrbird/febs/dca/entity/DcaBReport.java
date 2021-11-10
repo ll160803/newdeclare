@@ -13,6 +13,7 @@ import java.util.List;
 import cc.mrbird.febs.common.converter.*;
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * <p>
@@ -120,6 +121,10 @@ private static final long serialVersionUID=1L;
             @ExcelField(value ="出生年月" )
     private String birthdaystr;
 
+    private  String birthdaystrBack;
+
+
+
     /**
      * 年龄
 至20201031
@@ -144,6 +149,10 @@ private static final long serialVersionUID=1L;
      */
             @ExcelField(value ="毕业时间" )
     private String eduDate;
+
+            private    String eduDateBack;
+
+
 
     /**
      * 现职务名称
@@ -608,6 +617,12 @@ private static final long serialVersionUID=1L;
     private String zyjszwzgsj;
 
     /**
+     * 奖惩
+     */
+    @ExcelField(value ="其他业绩" )
+    private String prize;
+
+    /**
      * 是否删除
      */
     @TableField("IS_DELETEMARK")
@@ -791,6 +806,10 @@ private static final long serialVersionUID=1L;
             @ExcelField(value ="现任岗位级别时间" )
     private String xrgwjbprsj;
 
+            private   String xrgwjbprsjBack;
+
+
+
     /**
      * 申报三级时是否使用医疗条件
      */
@@ -814,6 +833,9 @@ private static final long serialVersionUID=1L;
      */
             @ExcelField(value ="满足学术条件情况" )
     private String mzsstjqk;
+
+    @ExcelField(value ="满足学术条件情况(审核)" )
+    private String mzsstjqkAudit;
 
     /**
      * 近三年核心人力资源评分
@@ -862,6 +884,12 @@ private static final long serialVersionUID=1L;
      */
             @ExcelField(value ="单篇SCI高分文章≥10" )
     private String dpsci10;
+
+    /**
+     * 单篇SCI高分文章≥20
+     */
+    @ExcelField(value ="单篇SCI高分文章≥20" )
+    private String dpsci20;
 
     /**
      * 学会任职

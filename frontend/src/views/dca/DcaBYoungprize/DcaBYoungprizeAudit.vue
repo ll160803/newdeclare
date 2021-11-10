@@ -255,9 +255,18 @@
                 >
                   下一轮
                 </a-button> -->
+                   <a-button
+                  v-hasNoPermission="['dca:audit']"
+                  style="width:40%;padding-left:2px;padding-right:2px;"
+                  type="dashed"
+                  block
+                  @click="handleSave(record)"
+                >
+                  保存
+                </a-button>
                 <a-button
                   v-hasNoPermission="['dca:audit']"
-                  style="width:100%;padding-left:2px;padding-right:2px;"
+                  style="width:50%;padding-left:2px;padding-right:2px;"
                   type="dashed"
                   block
                   @click="handleAudit(record)"
@@ -484,6 +493,31 @@ export default {
             that.$message.success('审核成功')
             that.fetch()
             that.freshTabs()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
+      handleSave (record) {
+      let that = this
+      this.$confirm({
+        title: '确定保存此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
+        centered: true,
+        onOk () {
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBYoungprize/updateNew', {
+            jsonStr: jsonStr,
+            state: 1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+           // that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false

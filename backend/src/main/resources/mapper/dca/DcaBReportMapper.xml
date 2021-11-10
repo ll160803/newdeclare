@@ -19,10 +19,12 @@
                     <result column="ks" property="ks"/>
                     <result column="kslb" property="kslb"/>
                     <result column="birthdaystr" property="birthdaystr"/>
+            <result column="birthdaystr_back" property="birthdaystrBack"/>
                     <result column="age" property="age"/>
                     <result column="sex_name" property="sexName"/>
                     <result column="edu" property="edu"/>
                     <result column="edu_date" property="eduDate"/>
+            <result column="edu_date_back" property="eduDateBack"/>
                     <result column="position_name" property="positionName"/>
                     <result column="zygw_date" property="zygwDate"/>
                     <result column="np_position_name" property="npPositionName"/>
@@ -130,10 +132,12 @@
                     <result column="paixu4" property="paixu4"/>
                     <result column="xrgwjb" property="xrgwjb"/>
                     <result column="xrgwjbprsj" property="xrgwjbprsj"/>
+            <result column="xrgwjbprsj_back" property="xrgwjbprsjBack"/>
                     <result column="ifsyyltj" property="ifsyyltj"/>
                     <result column="rbdsj" property="rbdsj"/>
                     <result column="ifbxyltj" property="ifbxyltj"/>
                     <result column="mzsstjqk" property="mzsstjqk"/>
+            <result column="mzsstjqk_Audit" property="mzsstjqkAudit"/>
                     <result column="j3nhxrlzypf" property="j3nhxrlzypf"/>
                     <result column="j3ylzhpf" property="j3ylzhpf"/>
                     <result column="j3nssztc" property="j3nssztc"/>
@@ -142,12 +146,14 @@
                     <result column="xjsxyw" property="xjsxyw"/>
                     <result column="xjsxywprize" property="xjsxywprize"/>
                     <result column="dpsci10" property="dpsci10"/>
+            <result column="dpsci20" property="dpsci20"/>
                     <result column="xhrzqk" property="xhrzqk"/>
+            <result column="prize" property="prize"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, year, display_index, user_account_name, user_account, confirm_index, dangan_index, baoming_index, xl, pingshenfenzu, ifshuangbao, gwdj, ks, kslb, birthdaystr, age, sex_name, edu, edu_date, position_name, zygw_date, np_position_name, school_date, ifdaitou, ylpfbfz, jxpf, iffuhekeyan, iffuhediyi, iffuhebibei, sci_name, sci_dengji, sci_ranknum, teach_name, teach_dengji, teach_ranknum, patent_num, patent_fund, publish_a, publish_b, publish_c, publish_d, publish_e, publish_f, publish_dup, publish_eup, publish_fup, publicarticle1, publicarticle2, schoolprize_name, schoolprize_dengji, schoolprize_ranknum, schoolprize_date, course_name, course_ranknum, course_date, young_name, young_dengji, young_ranknum, young_date, sci_djlb, sci_djfund, sci_djranknum, sci_jflb, sci_jffund, sci_jfranknum, ylpfdj, jxpfdj, pf_heji, tutor, sblx, choosepos, clshjg, ntyy, ksrank, teacher_qualify, npqk, borad, note, help, telephone, course_dengji, state, yuangongzu, zzbysj, dzbysj, bkbysj, ssbysj, bsbysj, gqpxqk, gfhyspxqk, zjspnlceqk, sbleix, rzqedu, fdzz, zyjszwzg, zyjszwzgsj, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, mzylpf, mzylpfdj, j5njxgz, ifxjjl, yearmore, yxryqk, qtzlxzy, helpmonth, ifgoucheng, wchshuangbao, dbxcgbs, paixu1, paixu2, paixu3, chuguonianyue, zhiyuanchuguo, kspaixu, paixu4, xrgwjb, xrgwjbprsj, ifsyyltj, rbdsj, ifbxyltj, mzsstjqk, j3nhxrlzypf, j3ylzhpf, j3nssztc, j3nzyszbrsl, j3nmzszbrsl, xjsxyw, xjsxywprize, dpsci10, xhrzqk
+        id, year, display_index, user_account_name, user_account, confirm_index, dangan_index, baoming_index, xl, pingshenfenzu, ifshuangbao, gwdj, ks, kslb, birthdaystr, age, sex_name, edu, edu_date, position_name, zygw_date, np_position_name, school_date, ifdaitou, ylpfbfz, jxpf, iffuhekeyan, iffuhediyi, iffuhebibei, sci_name, sci_dengji, sci_ranknum, teach_name, teach_dengji, teach_ranknum, patent_num, patent_fund, publish_a, publish_b, publish_c, publish_d, publish_e, publish_f, publish_dup, publish_eup, publish_fup, publicarticle1, publicarticle2, schoolprize_name, schoolprize_dengji, schoolprize_ranknum, schoolprize_date, course_name, course_ranknum, course_date, young_name, young_dengji, young_ranknum, young_date, sci_djlb, sci_djfund, sci_djranknum, sci_jflb, sci_jffund, sci_jfranknum, ylpfdj, jxpfdj, pf_heji, tutor, sblx, choosepos, clshjg, ntyy, ksrank, teacher_qualify, npqk, borad, note, help, telephone, course_dengji, state, yuangongzu, zzbysj, dzbysj, bkbysj, ssbysj, bsbysj, gqpxqk, gfhyspxqk, zjspnlceqk, sbleix, rzqedu, fdzz, zyjszwzg, zyjszwzgsj, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, mzylpf, mzylpfdj, j5njxgz, ifxjjl, yearmore, yxryqk, qtzlxzy, helpmonth, ifgoucheng, wchshuangbao, dbxcgbs, paixu1, paixu2, paixu3, chuguonianyue, zhiyuanchuguo, kspaixu, paixu4, xrgwjb, xrgwjbprsj, ifsyyltj, rbdsj, ifbxyltj, mzsstjqk, j3nhxrlzypf, j3ylzhpf, j3nssztc, j3nzyszbrsl, j3nmzszbrsl, xjsxyw, xjsxywprize, dpsci10, xhrzqk, prize, mzsstjqk_Audit, xrgwjbprsj_back, birthdaystr_back,edu_date_back, dpsci20
     </sql>
     <update id="updateDcaBReport" parameterType="cc.mrbird.febs.dca.entity.DcaBReport">
         update dca_b_report
@@ -166,10 +172,12 @@
 <if test="ks != null">ks=#{ks},</if>
 <if test="kslb != null">kslb=#{kslb},</if>
 <if test="birthdaystr != null">birthdaystr=#{birthdaystr},</if>
+            <if test="birthdaystrBack != null">birthdaystr_back=#{birthdaystrBack},</if>
 <if test="age != null">age=#{age},</if>
 <if test="sexName != null">sex_name=#{sexName},</if>
 <if test="edu != null">edu=#{edu},</if>
 <if test="eduDate != null">edu_date=#{eduDate},</if>
+            <if test="eduDateBack != null">edu_date_back=#{eduDateBack},</if>
 <if test="positionName != null">position_name=#{positionName},</if>
 <if test="zygwDate != null">zygw_date=#{zygwDate},</if>
 <if test="npPositionName != null">np_position_name=#{npPositionName},</if>
@@ -277,10 +285,13 @@
 <if test="paixu4 != null">paixu4=#{paixu4},</if>
 <if test="xrgwjb != null">xrgwjb=#{xrgwjb},</if>
 <if test="xrgwjbprsj != null">xrgwjbprsj=#{xrgwjbprsj},</if>
+            <if test="xrgwjbprsjBack != null">xrgwjbprsj_back=#{xrgwjbprsjBack},</if>
 <if test="ifsyyltj != null">ifsyyltj=#{ifsyyltj},</if>
 <if test="rbdsj != null">rbdsj=#{rbdsj},</if>
 <if test="ifbxyltj != null">ifbxyltj=#{ifbxyltj},</if>
 <if test="mzsstjqk != null">mzsstjqk=#{mzsstjqk},</if>
+            <if test="mzsstjqkAudit != null">mzsstjqk_Audit=#{mzsstjqkAudit},</if>
+
 <if test="j3nhxrlzypf != null">j3nhxrlzypf=#{j3nhxrlzypf},</if>
 <if test="j3ylzhpf != null">j3ylzhpf=#{j3ylzhpf},</if>
 <if test="j3nssztc != null">j3nssztc=#{j3nssztc},</if>
@@ -289,7 +300,9 @@
 <if test="xjsxyw != null">xjsxyw=#{xjsxyw},</if>
 <if test="xjsxywprize != null">xjsxywprize=#{xjsxywprize},</if>
 <if test="dpsci10 != null">dpsci10=#{dpsci10},</if>
+            <if test="dpsci20 != null">dpsci20=#{dpsci20},</if>
 <if test="xhrzqk != null">xhrzqk=#{xhrzqk},</if>
+            <if test="prize != null">prize=#{prize},</if>
         </trim>
                 where id=#{id}
 

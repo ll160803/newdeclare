@@ -9299,7 +9299,7 @@ public class PDFDemo {
           genericAttachInfo(customApplyFirst.getDcaBAttachfileList(), "其他附件", "fileName", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBExportcountryList(), "出国情况", "lxgj", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBPublicarticleList(), "出版著作", "zzmc", fileAttachInfoList, readers);
-        genericAttachInfo(customApplyFirst.getDcaBTeacherprizeList(), "省部级教学获奖", "zzmc", fileAttachInfoList, readers);
+        genericAttachInfo(customApplyFirst.getDcaBTeacherprizeList(), "省部级教学获奖", "prizeName", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBSchoolprizeList(), "校教学质量奖、校教学成果奖", "prizeName", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBCourseclassList(), "精品课程", "course", fileAttachInfoList, readers);
         genericAttachInfo(customApplyFirst.getDcaBYoungprizeList(), "青年教师教学竞赛获奖", "prizeName", fileAttachInfoList, readers);
@@ -9379,6 +9379,9 @@ public class PDFDemo {
         //gaojic
 
         String pdfName=(customApplyFirst.getGwdj().equals("正高") || customApplyFirst.getGwdj().equals("副高"))?"高级职称申报附件材料":"中初级职称申报附件材料";
+        if(customApplyFirst.getGwdj().equals("二三级")){
+            pdfName ="二三级职称申报附件材料";
+        }
         listCells.add(generatePdfValue(pdfStyle, pdfName, numColumns, 200, fontCover2));
 
         //姓        名
@@ -9597,6 +9600,10 @@ public class PDFDemo {
         }
         return retValue;
     }
+    private  String handleEmptyString(String value){
+        if(value==null) return  "";
+        return  value;
+    }
     /**
      * 二三级
      * @param customApplyFirst
@@ -9639,6 +9646,7 @@ public class PDFDemo {
 
         //region 封面
         String titleCover_1 = "人事编号：" + customApplyFirst.getRsbh();
+        String titleCover_11 = "顺序号：" + customApplyFirst.getConfirmIndex();
         String titleCover_2 = "华中科技大学专业技术岗位\n申    报    表";
         String titleCover_3 = "姓        名";
         String titleCover_4 = "所 在 院";
@@ -9678,11 +9686,13 @@ public class PDFDemo {
         pdfStyle.setBorder(Rectangle.NO_BORDER);
         pdfStyle.setHorizontalAlignment(Element.ALIGN_RIGHT);
         pdfStyle.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        pdfStyle.setFixedHeight(70);
+        pdfStyle.setFixedHeight(30);
         pdfStyle.setPaddingRight(60);
         pdfStyle.setFont(fontCover1);
 
         listCells.add(generatePdfValue(pdfStyle, titleCover_1, numColumns));
+        pdfStyle.setFixedHeight(40);
+        listCells.add(generatePdfValue(pdfStyle, titleCover_11, numColumns));
 
 
         //华中科技大学专业技术岗位
@@ -9893,10 +9903,10 @@ public class PDFDemo {
         //列三
         //任博导时间\n（年月）
         List<DcaBCopyDoctorturtor> dcaBCopyDoctorturtorList=customApplyFirst.getDcaBCopyDoctorturtorList();
-        List<DcaBCopyDoctorturtor> doctorturtors=dcaBCopyDoctorturtorList.stream().filter(p->p.getTurtorType().equals("博士导师")).collect(Collectors.toList());
+        List<DcaBCopyDoctorturtor> doctorturtors=dcaBCopyDoctorturtorList.stream().filter(p->p.getTurtorType().equals("博士导师")||p.getTurtorType().equals("博导")).collect(Collectors.toList());
         String doctorDate="";
         if(doctorturtors.size()>0){
-            doctorDate=DateUtil.format(doctorturtors.get(0).getAuditDate(),"yyyyMM");
+            doctorDate=DateUtil.format(doctorturtors.get(0).getTurtorDate(),"yyyyMM");
         }
         listCells.add(generatePdfValue(pdfStyleex, title1_3_1, 3, contentHeight40 * 1.5f));
         listCells.add(generatePdfValue(pdfStyleex, doctorDate, 4, contentHeight40 * 1.5f));
@@ -9904,10 +9914,19 @@ public class PDFDemo {
         listCells.add(generatePdfValue(pdfStyleex, "现任岗位级别", 5, contentHeight40 * 1.5f));
         listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXrgwjb(), 6, contentHeight40 * 1.5f));
         listCells.add(generatePdfValue(pdfStyleex, "现任岗位级别\n聘任时间（年月）", 7, contentHeight40 * 1.5f));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXrgwjb(), 7, contentHeight40 * 1.5f));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXrgwjbprsj(), 7, contentHeight40 * 1.5f));
         listCells.add(generatePdfValue(pdfStyleex, "近三年医疗考核\n结果", 5));
+
+
+        int currentYear = Integer.parseInt(watermarkName); //这里是年
+        List<String> yearList = new ArrayList<String>() {{
+            this.add(String.valueOf(currentYear - 1));
+//            this.add(String.valueOf(currentYear - 2));
+//            this.add(String.valueOf(currentYear - 3));
+        }};
+
         List<DcaBCopyMedicalaccident> dcaBCopyMedicalaccidentList=customApplyFirst.getDcaBCopyMedicalaccidentList();
-        List<DcaBCopyMedicalaccident> copyMedicalaccidentList=dcaBCopyMedicalaccidentList.stream().sorted(
+        List<DcaBCopyMedicalaccident> copyMedicalaccidentList=dcaBCopyMedicalaccidentList.stream().filter(p->yearList.contains(p.getMedicalYear())).sorted(
                 new Comparator<DcaBCopyMedicalaccident>() {
                     @Override
                     public int compare(DcaBCopyMedicalaccident o1, DcaBCopyMedicalaccident o2) {
@@ -9915,7 +9934,7 @@ public class PDFDemo {
                     }
                 }
         ).collect(Collectors.toList());
-        String medicalResult = copyMedicalaccidentList.stream().map(p -> p.getMedicalYear()+ " " + p.getMedicalResult()).collect(Collectors.joining("\n", "", ""));
+        String medicalResult = copyMedicalaccidentList.stream().map(p -> p.getMedicalResult()).collect(Collectors.joining("\n", "", ""));
         listCells.add(generatePdfValue(pdfStyleex, medicalResult, 6));
 
 
@@ -9924,12 +9943,12 @@ public class PDFDemo {
         listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getJ3nkhqk(), 7));
 
         //现从事专业及专长title1_3_1
-        listCells.add(generatePdfValue(pdfStyleex, title1_3_2, 5, contentHeight40));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXcszyjzc(), 6, contentHeight40));
+        listCells.add(generatePdfValue(pdfStyleex, title1_3_2, 5, contentHeight40*1.5f));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getXcszyjzc(), 6, contentHeight40*1.5f));
 
         //担（兼）任党政职务
-        listCells.add(generatePdfValue(pdfStyleex, "担（兼）任党政职务", 7, contentHeight40));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getDjrdzzw(), 7, contentHeight40));
+        listCells.add(generatePdfValue(pdfStyleex, "担（兼）任党政职务", 7, contentHeight40*1.5f));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getDjrdzzw(), 7, contentHeight40*1.5f));
 
 
         float top = 10;
@@ -9952,12 +9971,20 @@ public class PDFDemo {
         listCells.add(generatePdfValue(pdfStyle_t, "主要业绩", numColumns, 0));
 
 
-        //region 重要岗位任职及学术影响
+        //region 重要岗位任职及学术影响 这里需要加上社会兼职
+        List<DcaBCopyParttimejob> dcaBCopyParttimejobList =customApplyFirst.getDcaBParttimejobList();
+       // dcaBCopyParttimejobList=dcaBCopyParttimejobList.stream().filter(p->p.getIsUse()==true).collect(Collectors.toList());
 
         List<DcaBCopyAcademic> dcaBCopyAcademicList=customApplyFirst.getDcaBCopyAcademicList();
+        dcaBCopyAcademicList = dcaBCopyAcademicList.stream().filter(p->(p.getIsPartTimeJob()==null ||p.getIsPartTimeJob()==false)&&p.getIsUse()).sorted(new Comparator<DcaBCopyAcademic>() {
+            @Override
+            public int compare(DcaBCopyAcademic o1, DcaBCopyAcademic o2) {
+                return (o1.getDisplayIndex() > o2.getDisplayIndex()) ? 1 : ((o1.getDisplayIndex().equals(o2.getDisplayIndex())) ? 0 : -1);
+            }
+        }).collect(Collectors.toList());
         int rowSp=5;
-        if(dcaBCopyAcademicList.size()>4){
-            rowSp=dcaBCopyAcademicList.size()+1;
+        if((dcaBCopyAcademicList.size()+dcaBCopyParttimejobList.size())>4){
+            rowSp=(dcaBCopyAcademicList.size()+dcaBCopyParttimejobList.size())+1;
         }
         listCells.add(generatePdfValue(pdfStyle_t, "重要岗位任职及学术影响", 2, 0,rowSp));
         //至何年月
@@ -9965,22 +9992,22 @@ public class PDFDemo {
         listCells.add(generatePdfValue(pdfStyle_t, "任职（获得）时间", 7, 0));
         listCells.add(generatePdfValue(pdfStyle_t, "备注", 4, 0));
 
-        dcaBCopyAcademicList = dcaBCopyAcademicList.stream().sorted(new Comparator<DcaBCopyAcademic>() {
-            @Override
-            public int compare(DcaBCopyAcademic o1, DcaBCopyAcademic o2) {
-                return (o1.getDisplayIndex() > o2.getDisplayIndex()) ? 1 : ((o1.getDisplayIndex().equals(o2.getDisplayIndex())) ? 0 : -1);
-            }
-        }).collect(Collectors.toList());
+        for (DcaBCopyParttimejob job : dcaBCopyParttimejobList
+        ) {
+            listCells.add(generatePdfValue(pdfStyle_t, job.getJzContent()+job.getJzZw(), 12, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateUtil.format(job.getJzStartTime(),"yyyyMM"), 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+        }
         for (DcaBCopyAcademic academic : dcaBCopyAcademicList
         ) {
-            listCells.add(generatePdfValue(pdfStyle_t, academic.getAcademicName(), 12, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, academic.getAcademicContent(), 12, 0));
             listCells.add(generatePdfValue(pdfStyle_t, DateUtil.format(academic.getAcademicDate(),"yyyyMM"), 7, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, academic.getAcademicContent(), 4, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
         }
         int sum=0;
-        int f=dcaBCopyAcademicList.size();
-         sum = rowSp-f-1;
-      //   log.info(String.valueOf(sum));
+        int f=dcaBCopyAcademicList.size()+dcaBCopyParttimejobList.size();
+        sum = rowSp-f-1;
+        //   log.info(String.valueOf(sum));
         for(int i = 0; i < sum; i++){
             listCells.add(generatePdfValue(pdfStyle_t, " ", 12, 0));
             listCells.add(generatePdfValue(pdfStyle_t, " ", 7, 0));
@@ -9988,19 +10015,61 @@ public class PDFDemo {
         }
 //endregion
 
+
         //region 主要教学业绩
 
+        List<DcaBCopyUndergraduateprize> dcaBCopyUndergraduateprizeList =customApplyFirst.getDcaBUndergraduateprizeList();
+        List<DcaBCopyTeacherprize> dcaBCopyTeacherprizeList =customApplyFirst.getDcaBTeacherprizeList();
+        List<DcaBCopySchoolprize> dcaBCopySchoolprizeList =customApplyFirst.getDcaBSchoolprizeList();
+        List<DcaBCopyYoungprize> dcaBCopyYoungprizeList =customApplyFirst.getDcaBYoungprizeList();
         List<DcaBCopyTeacheryj> dcaBCopyTeacheryjsList=customApplyFirst.getDcaBCopyTeacheryjsList();
+
         rowSp=5;
-        if(dcaBCopyTeacheryjsList.size()>4){
-            rowSp=dcaBCopyTeacheryjsList.size()+1;
+        if(dcaBCopyUndergraduateprizeList.size()+dcaBCopyTeacherprizeList.size()+dcaBCopySchoolprizeList.size()
+                +dcaBCopyYoungprizeList.size()+dcaBCopyTeacheryjsList.size()>4){
+            rowSp=dcaBCopyUndergraduateprizeList.size()+dcaBCopyTeacherprizeList.size()+dcaBCopySchoolprizeList.size()
+                    +dcaBCopyYoungprizeList.size()+dcaBCopyTeacheryjsList.size()+1;
         }
+
+
         listCells.add(generatePdfValue(pdfStyle_t, "主要教学业绩", 2, 0,rowSp));
         //至何年月
         listCells.add(generatePdfValue(pdfStyle_t, "名称", 10, 0));
         listCells.add(generatePdfValue(pdfStyle_t, "排名", 2, 0));
         listCells.add(generatePdfValue(pdfStyle_t, "任职（获得）时间", 7, 0));
         listCells.add(generatePdfValue(pdfStyle_t, "备注", 4, 0));
+
+        for (DcaBCopyUndergraduateprize prize : dcaBCopyUndergraduateprizeList
+        ) {
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(prize.getSpProjectName()), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(prize.getSrPrizeRanknum() == null ? "" : prize.getSrPrizeRanknum()), 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(prize.getSrPrizeDate(),"yyyyMM"), 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+        }
+
+        for (DcaBCopyTeacherprize teacherprize : dcaBCopyTeacherprizeList
+        ) {
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(teacherprize.getPrizeName()), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(teacherprize.getRanknum() == null ? "" : teacherprize.getRanknum()), 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(teacherprize.getPrizeDate(),"yyyyMM"), 7, 0));
+             listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+        }
+
+        for (DcaBCopySchoolprize dcaBCopySchoolprize : dcaBCopySchoolprizeList
+        ) {
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopySchoolprize.getPrizeName()), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(dcaBCopySchoolprize.getRanknum() == null ? "" : dcaBCopySchoolprize.getRanknum()), 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopySchoolprize.getPrizeDate(),"yyyyMM"), 7, 0));
+             listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+        }
+        for (DcaBCopyYoungprize dcaBCopyYoungprize : dcaBCopyYoungprizeList
+        ) {
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopyYoungprize.getPrizeName()), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(dcaBCopyYoungprize.getRanknum() == null ? "" : dcaBCopyYoungprize.getRanknum()), 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopyYoungprize.getPrizeDate(),"yyyyMM"), 7, 0));
+             listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+        }
+
 
         dcaBCopyTeacheryjsList = dcaBCopyTeacheryjsList.stream().sorted(new Comparator<DcaBCopyTeacheryj>() {
             @Override
@@ -10010,12 +10079,13 @@ public class PDFDemo {
         }).collect(Collectors.toList());
         for (DcaBCopyTeacheryj teacheryj : dcaBCopyTeacheryjsList
         ) {
-            listCells.add(generatePdfValue(pdfStyle_t, teacheryj.getTeachName(), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(teacheryj.getTeachName()), 10, 0));
             listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(teacheryj.getRankNum() == null ? "" : teacheryj.getRankNum()), 2, 0));
             listCells.add(generatePdfValue(pdfStyle_t, DateUtil.format(teacheryj.getTeachDate(),"yyyyMM"), 7, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, teacheryj.getTeachContent(), 4, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
         }
-        sum = rowSp-dcaBCopyTeacheryjsList.size()-1;
+        sum = rowSp-(dcaBCopyUndergraduateprizeList.size()+dcaBCopyTeacherprizeList.size()+dcaBCopySchoolprizeList.size()
+                +dcaBCopyYoungprizeList.size()+dcaBCopyTeacheryjsList.size())-1;
         for(int n = 0; n < sum; n++){
             listCells.add(generatePdfValue(pdfStyle_t, " ", 10, 0));
             listCells.add(generatePdfValue(pdfStyle_t, " ", 2, 0));
@@ -10023,16 +10093,21 @@ public class PDFDemo {
             listCells.add(generatePdfValue(pdfStyle_t, " ", 4, 0));
         }
 //endregion
-
-
-
         //region 主要科研业绩
+        List<DcaBCopySciencepublish> dcaBCopySciencepublishList =customApplyFirst.getDcaBSciencepublishList();
+        List<DcaBCopySciencesearch> dcaBCopySciencesearchList =customApplyFirst.getDcaBSciencesearchList();
+        List<DcaBCopyScientificprize> dcaBScientificprizeList =customApplyFirst.getDcaBScientificprizeList();
+        List<DcaBCopyPatent> dcaBCopyPatentList =customApplyFirst.getDcaBPatentList();
+        List<DcaBCopyPublicarticle> dcaBCopyPublicarticleList =customApplyFirst.getDcaBPublicarticleList();
+       // List<DcaBCopySciachievement> dcaBCopySciachievementList=customApplyFirst.getDcaBCopySciachievementList();
 
-        List<DcaBCopySciachievement> dcaBCopySciachievementList=customApplyFirst.getDcaBCopySciachievementList();
-         rowSp=5;
-        if(dcaBCopySciachievementList.size()>4){
-            rowSp=dcaBCopySciachievementList.size()+1;
+        rowSp=5;
+        if(dcaBCopySciencepublishList.size()+dcaBCopySciencesearchList.size()+dcaBScientificprizeList.size()
+                +dcaBCopyPatentList.size()+dcaBCopyPublicarticleList.size()>4){
+            rowSp=dcaBCopySciencepublishList.size()+dcaBCopySciencesearchList.size()+dcaBScientificprizeList.size()
+                    +dcaBCopyPatentList.size()+dcaBCopyPublicarticleList.size()+1;
         }
+
         listCells.add(generatePdfValue(pdfStyle_t, "主要科研业绩", 2, 0,rowSp));
         //至何年月
         listCells.add(generatePdfValue(pdfStyle_t, "名称", 10, 0));
@@ -10040,31 +10115,82 @@ public class PDFDemo {
         listCells.add(generatePdfValue(pdfStyle_t, "获得时间及期限", 7, 0));
         listCells.add(generatePdfValue(pdfStyle_t, "备注", 4, 0));
 
-        dcaBCopySciachievementList = dcaBCopySciachievementList.stream().sorted(new Comparator<DcaBCopySciachievement>() {
-            @Override
-            public int compare(DcaBCopySciachievement o1, DcaBCopySciachievement o2) {
-                return (o1.getDisplayIndex() > o2.getDisplayIndex()) ? 1 : ((o1.getDisplayIndex().equals(o2.getDisplayIndex())) ? 0 : -1);
-            }
-        }).collect(Collectors.toList());
-        for (DcaBCopySciachievement sciachievement : dcaBCopySciachievementList
+
+
+
+
+        for (DcaBCopySciencepublish dcaBCopySciencepublish : dcaBCopySciencepublishList
         ) {
-            listCells.add(generatePdfValue(pdfStyle_t, sciachievement.getAchievementName(), 10, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(sciachievement.getRankIndex() == null ? "" : sciachievement.getRankIndex()), 2, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, DateUtil.format(sciachievement.getAchievementDate(),"yyyyMM")+" "+sciachievement.getAchievementDefine(), 7, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, sciachievement.getAchievementContent(), 4, 0));
+            double dr= Convert.toDouble(dcaBCopySciencepublish.getJxzcsl()==null?"0":dcaBCopySciencepublish.getJxzcsl());
+            String name7="";
+            if(dr==1d){
+                name7 ="第一作者或通讯作者";
+            }
+            else{
+                String fild=String.valueOf(dcaBCopySciencepublish.getAuditTotalnum() == null ? "" : dcaBCopySciencepublish.getAuditTotalnum());
+                name7 ="共同第一作者或共同通讯作者(1/"+fild+")";
+            }
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopySciencepublish.getPaperName()), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, name7, 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopySciencepublish.getPaperPublishdate(),"yyyyMM"), 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "",4, 0));
         }
-         sum = rowSp-dcaBCopySciachievementList.size()-1;
+        for (DcaBCopySciencesearch dcaBCopySciencesearch : dcaBCopySciencesearchList
+        ) {
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopySciencesearch.getProjectName()), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(dcaBCopySciencesearch.getAuditRank() == null ? "" : dcaBCopySciencesearch.getAuditRank()), 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopySciencesearch.getAuditDate2(),"yyyyMM"), 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+        }
+        for (DcaBCopyScientificprize dcaBCopyScientificprize : dcaBScientificprizeList
+        ) {
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopyScientificprize.getSpProjectName()), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(dcaBCopyScientificprize.getAuditRank() == null ? "" : dcaBCopyScientificprize.getAuditRank()), 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopyScientificprize.getSrPrizeDate(),"yyyyMM"), 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+        }
+        for (DcaBCopyPatent dcaBCopyPatent : dcaBCopyPatentList
+        ) {
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopyPatent.getPatentName()), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(dcaBCopyPatent.getPatentRanknum() == null ? "" : dcaBCopyPatent.getPatentRanknum()), 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopyPatent.getPatentDate(),"yyyyMM"), 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+        }
+        for (DcaBCopyPublicarticle dcaBCopyPublicarticle : dcaBCopyPublicarticleList
+        ) {
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopyPublicarticle.getZzmc()), 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t,handleEmptyString(dcaBCopyPublicarticle.getAuditSuggestion()), 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopyPublicarticle.getCbDate(),"yyyyMM"), 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+        }
+
+//        dcaBCopySciachievementList = dcaBCopySciachievementList.stream().sorted(new Comparator<DcaBCopySciachievement>() {
+//            @Override
+//            public int compare(DcaBCopySciachievement o1, DcaBCopySciachievement o2) {
+//                return (o1.getDisplayIndex() > o2.getDisplayIndex()) ? 1 : ((o1.getDisplayIndex().equals(o2.getDisplayIndex())) ? 0 : -1);
+//            }
+//        }).collect(Collectors.toList());
+//        for (DcaBCopySciachievement sciachievement : dcaBCopySciachievementList
+//        ) {
+//            listCells.add(generatePdfValue(pdfStyle_t, sciachievement.getAchievementName(), 10, 0));
+//            listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(sciachievement.getRankIndex() == null ? "" : sciachievement.getRankIndex()), 2, 0));
+//            listCells.add(generatePdfValue(pdfStyle_t, DateUtil.format(sciachievement.getAchievementDate(),"yyyyMM")+" "+sciachievement.getAchievementDefine(), 7, 0));
+//            listCells.add(generatePdfValue(pdfStyle_t, "" ,4, 0));
+//        }
+        sum = rowSp-(dcaBCopySciencepublishList.size()+dcaBCopySciencesearchList.size()+dcaBScientificprizeList.size()
+                +dcaBCopyPatentList.size()+dcaBCopyPublicarticleList.size())-1;
         for(int n = 0; n < sum; n++){
             listCells.add(generatePdfValue(pdfStyle_t, " ", 10, 0));
             listCells.add(generatePdfValue(pdfStyle_t, " ", 2, 0));
             listCells.add(generatePdfValue(pdfStyle_t, " ", 7, 0));
             listCells.add(generatePdfValue(pdfStyle_t, " ", 4, 0));
         }
+
 //endregion
 
         //region 医疗认可
 
-        List<DcaBCopySureachievement> dcaBSCopySureachievementList=customApplyFirst.getDcaBSCopySureachievementList();
+        List<DcaBCopyAchievement> dcaBSCopySureachievementList=customApplyFirst.getDcaBCopyAchievementList();
         rowSp=5;
         if(dcaBSCopySureachievementList.size()>4){
             rowSp=dcaBSCopySureachievementList.size()+1;
@@ -10076,18 +10202,18 @@ public class PDFDemo {
         listCells.add(generatePdfValue(pdfStyle_t, "获得时间及期限", 7, 0));
         listCells.add(generatePdfValue(pdfStyle_t, "备注", 4, 0));
 
-        dcaBSCopySureachievementList = dcaBSCopySureachievementList.stream().sorted(new Comparator<DcaBCopySureachievement>() {
+        dcaBSCopySureachievementList = dcaBSCopySureachievementList.stream().sorted(new Comparator<DcaBCopyAchievement>() {
             @Override
-            public int compare(DcaBCopySureachievement o1, DcaBCopySureachievement o2) {
+            public int compare(DcaBCopyAchievement o1, DcaBCopyAchievement o2) {
                 return (o1.getDisplayIndex() > o2.getDisplayIndex()) ? 1 : ((o1.getDisplayIndex().equals(o2.getDisplayIndex())) ? 0 : -1);
             }
         }).collect(Collectors.toList());
-        for (DcaBCopySureachievement sureachievement : dcaBSCopySureachievementList
+        for (DcaBCopyAchievement sureachievement : dcaBSCopySureachievementList
         ) {
             listCells.add(generatePdfValue(pdfStyle_t, sureachievement.getAchievementName(), 10, 0));
             listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(sureachievement.getRankIndex() == null ? "" : sureachievement.getRankIndex()), 2, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, DateUtil.format(sureachievement.getAchievementDate(),"yyyyMM")+" "+sureachievement.getAchievementDefine(), 7, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, sureachievement.getAchievementContent(), 4, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, DateStr(sureachievement.getAchievementDate(),"yyyyMM"), 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t,StringUtils.isEmpty(sureachievement.getAchievementGrade())?"":("等级"+sureachievement.getAchievementGrade()), 4, 0));
         }
         sum = rowSp-dcaBSCopySureachievementList.size()-1;
         for(int n = 0; n < sum; n++){

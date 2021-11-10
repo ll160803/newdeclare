@@ -455,12 +455,22 @@
                   style="width:40%;padding-left:2px;padding-right:2px;"
                   type="dashed"
                   block
+                  @click="handleSave(record)"
+                >
+                  保存
+                </a-button>
+                <a-button
+                  v-hasNoPermission="['dca:audit']"
+                  style="width:40%;padding-left:2px;padding-right:2px;"
+                  type="dashed"
+                  block
                   @click="handleAudit(record)"
                 >
                   通过
                 </a-button>
                 <a-button
                   v-hasNoPermission="['dca:audit']"
+                  style="width:50%;padding-left:2px;padding-right:2px;"
                   type="danger"
                   block
                   @click="handleAuditNo(record)"
@@ -726,6 +736,32 @@ export default {
             //this.reset()
             that.$message.success('审核成功')
             that.search()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
+     handleSave (record) {
+      let that = this
+      this.$confirm({
+        title: '确定保存此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
+        centered: true,
+        onOk () {
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBSciencesearch/updateNew', {
+            jsonStr: jsonStr,
+            state: record.state,
+            auditState: -1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+            //that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false

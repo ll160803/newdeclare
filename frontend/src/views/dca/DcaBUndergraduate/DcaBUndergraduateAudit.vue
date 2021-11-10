@@ -253,7 +253,17 @@
                 slot-scope="text, record"
               >
                 <a-button
+                  v-hasNoPermission="['dca:audit']"
+                  style="width:40%;padding-left:2px;padding-right:2px;"
+                  type="dashed"
+                  block
+                  @click="handleSave(record)"
+                >
+                  保存
+                </a-button>
+                <a-button
                 v-hasNoPermission="['dca:audit']"
+                style="width:50%;padding-left:2px;padding-right:2px;"
                   type="dashed"
                   block
                   @click="handleAudit(record)"
@@ -413,9 +423,13 @@ export default {
         sortField = sortedInfo.field
         sortOrder = sortedInfo.order
       }
-      let json = this.columns
+      let json = [{
+         title: 'id',
+        dataIndex: 'id'
+      }]
+      json.push(...this.columns)
       json.splice(this.columns.length-1,1) //移出第一个
-      console.info(json)
+      
       let dataJson = JSON.stringify(json)
 
       let queryParams= this.queryParams
@@ -493,6 +507,31 @@ export default {
 
     onCloseUserInfo () {
       this.visibleUserInfo = false
+    },
+     handleSave (record) {
+      let that = this
+      this.$confirm({
+        title: '确定保存此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
+        centered: true,
+        onOk () {
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBUndergraduate/updateNew', {
+            jsonStr: jsonStr,
+            state: 1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+           // that.search()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
     },
     handleAudit (record) {
       let that = this

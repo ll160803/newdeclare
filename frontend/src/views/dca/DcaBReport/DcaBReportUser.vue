@@ -573,6 +573,9 @@ export default {
           fieldName: "eduDate",
         },
         {
+          fieldName: "eduDateBack",
+        },
+        {
           fieldName: "ylpfbfz",
         },
         {
@@ -1901,6 +1904,7 @@ export default {
       let listj = [
         "edu",
         "eduDate",
+        "eduDateBack",
         "ylpfbfz",
         "ylpfdj",
         "jxpf",

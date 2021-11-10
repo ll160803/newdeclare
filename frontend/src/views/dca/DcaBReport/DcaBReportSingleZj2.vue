@@ -173,6 +173,7 @@ export default {
   methods: {
     moment,
     splitStr (text) {
+      if(text==null) return ''
       return text.split('#')
     },
      ExportDocReport (record) {
@@ -461,32 +462,28 @@ export default {
           width: 80,
           scopedSlots: { customRender: "ifbxyltj" },
         },
-        {
-          title: "满足学术条件情况",
+         {
+          title: "满足学术条件情况(申报人填报)",
           dataIndex: "mzsstjqk",
+          width: 300,
+          scopedSlots: { customRender: "splitHang" },
+        },
+         {
+          title: "满足学术条件情况(人事处审核)",
+          dataIndex: "mzsstjqkAudit",
           width: 300,
           scopedSlots: { customRender: "splitHang" },
         },
         {
           title: "教学评分",
-          children: [
-            {
-              title: "等级",
-              dataIndex: "jxpfdj",
-              width: 100,
-            },
-            {
-              title: "分数",
-              dataIndex: "jxpf2",
+          dataIndex: "jxpf2",
               width: 80,
               customRender: (text, row, index) => {
-                return row.jxpf;
+                return row.jxpfdj;
               },
-            },
-          ],
         },
         {
-          title: "近三年核心人力资源评分",
+          title: "近三年核心人力资源评分均值",
           dataIndex: "j3nhxrlzypf",
           width: 80,
           scopedSlots: { customRender: "j3nhxrlzypf" },
@@ -497,23 +494,23 @@ export default {
           width: 100,
         },
         {
-          title: "近三年手术总台次",
+          title: "近三年手术台次",
           dataIndex: "j3nssztc",
           width: 100,
         },
 
         {
-          title: "近三年收治住院病人总数",
+          title: "近三年收治住院病人数",
           dataIndex: "j3nzyszbrsl",
           width: 100,
         },
         {
-          title: "近三年门诊收治病人总数",
+          title: "近三年门诊收治病人数",
           dataIndex: "j3nmzszbrsl",
           width: 100,
         },
         {
-          title: "任现职以来新技术新业务",
+          title: "近三年新技术新业务",
           children: [
             {
               title: "负责开展的新技术新业务",
@@ -530,6 +527,11 @@ export default {
         {
           title: "任现岗位以来",
           children: [
+             {
+              title: "单篇SCI高分文章≥20",
+              dataIndex: "dpsci20",
+              width: 60,
+            },
             {
               title: "单篇SCI高分文章≥10",
               dataIndex: "dpsci10",
@@ -638,6 +640,12 @@ export default {
         {
           title: "学会任职",
           dataIndex: "xhrzqk",
+          width: 100,
+          scopedSlots: { customRender: "splitHang" },
+        },
+         {
+          title: "重要抗疫奖励",
+          dataIndex: "prize",
           width: 100,
           scopedSlots: { customRender: "splitHang" },
         },

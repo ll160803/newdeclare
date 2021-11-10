@@ -412,6 +412,7 @@ public class DcaUserAuditController extends BaseController {
                     List<DcaBAuditdynamic> dcaBAuditds=auditdynamicAuditList2.stream().filter(p->p.getUserAccount().equals(dca.getUserAccount())).collect(Collectors.toList());
 
                     dca.setDcaBAuditdynamicList(dcaBAuditds);
+
                 }
 
             }

@@ -24,12 +24,13 @@
                     <result column="auditDate" property="auditDate"/>
                     <result column="auditSuggestion" property="auditSuggestion"/>
                     <result column="IsUse" property="IsUse"/>
+            <result column="is_part_time_job" property="isPartTimeJob"/>
                     <result column="display_index" property="displayIndex"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, dca_year, file_id, file_url, user_account_name, user_account, academic_name, academic_date, academic_content, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
+        id, dca_year, file_id, file_url, user_account_name, user_account, academic_name, academic_date, academic_content, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index, is_part_time_job
     </sql>
     <update id="updateDcaBCopyAcademic" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopyAcademic">
         update dca_b_copy_academic
@@ -53,6 +54,7 @@
 <if test="auditDate != null">auditDate=#{auditDate},</if>
 <if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
 <if test="IsUse != null">IsUse=#{IsUse},</if>
+            <if test="isPartTimeJob != null">is_part_time_job=#{isPartTimeJob},</if>
 <if test="displayIndex != null">display_index=#{displayIndex},</if>
         </trim>
                 where id=#{id}

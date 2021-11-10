@@ -43,6 +43,10 @@
                 </a-col>
               </div>
               <span style="float: right; margin-top: 3px;">
+                 <a-button
+                  type="primary"
+                  @click="exportCustomExcel"
+                >导出</a-button>
                 <a-button
                   type="primary"
                   @click="search2"
@@ -221,7 +225,16 @@
                 slot="action"
                 slot-scope="text, record"
               >
-                <a-button
+               <a-button
+                v-hasNoPermission="['dca:audit']"
+                  style="width:40%;padding-left:2px;padding-right:2px;"
+                  type="dashed"
+                  block
+                  @click="handleSave(record)"
+                >
+                  保存
+                </a-button>
+                <!-- <a-button
                 v-hasNoPermission="['dca:audit']"
                   style="width:50%;padding-left:2px;padding-right:2px;"
                   type="dashed"
@@ -229,10 +242,10 @@
                   @click="handleAuditNext(record)"
                 >
                   下一轮
-                </a-button>
+                </a-button> -->
                 <a-button
                 v-hasNoPermission="['dca:audit']"
-                  style="width:40%;padding-left:2px;padding-right:2px;"
+                  style="width:50%;padding-left:2px;padding-right:2px;"
                   type="dashed"
                   block
                   @click="handleAudit(record)"
@@ -327,7 +340,8 @@ export default {
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
-      userAccount: ''
+      userAccount: '',
+      activeKey: 1
     }
   },
   components: { DcaBPrizeorpunishDone, AuditUserInfo },
@@ -344,8 +358,8 @@ export default {
   },
   methods: {
     moment,
-    callback () {
-
+    callback (activeKey) {
+      this.activeKey = activeKey
     },
     search2 () {
      if (this.paginationInfo) {
@@ -466,6 +480,31 @@ export default {
         }
       })
     },
+    handleSave (record) {
+      let that = this
+      this.$confirm({
+        title: '确定保存此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
+        centered: true,
+        onOk () {
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBPrizeorpunish/updateNew', {
+            jsonStr: jsonStr,
+            state: record.state
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+           // that.search()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
     handleAudit (record) {
       let that = this
       this.$confirm({
@@ -514,6 +553,41 @@ export default {
         },
         onCancel () {
         }
+      })
+    },
+     exportCustomExcel () {
+      let { sortedInfo } = this
+      let sortField, sortOrder
+      // 获取当前列的排序和列的过滤规则
+      if (sortedInfo) {
+        sortField = sortedInfo.field
+        sortOrder = sortedInfo.order
+      }
+      let json = this.columns
+      json.splice(this.columns.length-1,1) //移出第一个
+      console.info(json)
+      let dataJson = JSON.stringify(json)
+
+      let queryParams= this.queryParams
+      
+      let state = 1
+      if(this.activeKey==1){
+         state = 1
+      }
+       if(this.activeKey==2){
+         state = 3
+         delete queryParams.auditState
+      }
+       if(this.activeKey==3){
+         state = 2
+         delete queryParams.auditState
+      }
+      this.$export('dcaBPrizeorpunish/excel', {
+        sortField: 'user_account',
+        sortOrder: 'ascend',
+        state: state,
+        dataJson: dataJson,
+        ...queryParams
       })
     },
     fetch (params = {}) {

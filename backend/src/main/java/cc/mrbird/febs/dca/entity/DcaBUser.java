@@ -78,7 +78,7 @@ public class DcaBUser implements Serializable {
     private String positionName;
 
     public String getPositionName() {
-        return (zyjsgw == null ? "" : zyjsgw) +(zyjsgw == null||zyjsgw.equals("")?"":"/")+ (zyjsgwLc == null ? "" : zyjsgwLc);
+        return (zyjsgw == null ? "" : zyjsgw) +(zyjsgw == null||zyjsgw.equals("")||zyjsgwLc==null||zyjsgwLc.equals("")?"":"/")+ (zyjsgwLc == null ? "" : zyjsgwLc);
     }
 
     /**
@@ -149,7 +149,7 @@ public class DcaBUser implements Serializable {
         String na = "";
         try {
             if (birthday != null) {
-                na = DateUtil.format(birthday, "yyyyMM");
+                na = DateUtil.format(birthday, "yyyyMMdd");
             }
         } catch (Exception ex) {
 

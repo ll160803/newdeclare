@@ -42,6 +42,10 @@
                 </a-col>
               </div>
               <span style="float: right; margin-top: 3px;">
+                 <a-button
+                  type="primary"
+                  @click="exportCustomExcel"
+                >导出</a-button>
                 <a-button
                   type="primary"
                   @click="search2"
@@ -189,6 +193,15 @@
                 ></a-checkbox>
               </template>
               <template
+                slot="isPartTimeJob"
+                slot-scope="text, record"
+              >
+                <a-checkbox
+                  @change="e => onIsUseChange(e,record,'isPartTimeJob')"
+                  :checked="text"
+                ></a-checkbox>
+              </template>
+              <template
                 slot="auditSuggestion"
                 slot-scope="text, record"
               >
@@ -216,7 +229,16 @@
                 slot="action"
                 slot-scope="text, record"
               >
+               <a-button
+               style="width:40%;padding-left:2px;padding-right:2px;"
+                  type="dashed"
+                  block
+                  @click="handleSave(record)"
+                >
+                  保存
+                </a-button>
                 <a-button
+                style="width:50%;padding-left:2px;padding-right:2px;"
                   type="dashed"
                   block
                   @click="handleAudit(record)"
@@ -395,7 +417,7 @@ export default {
       }
       let json = this.columns
       json.splice(this.columns.length - 1, 1) //移出第一个
-      console.info(json)
+     
       let dataJson = JSON.stringify(json)
 
       let queryParams = this.queryParams
@@ -490,7 +512,7 @@ export default {
         }
       })
     },
-    handleAudit (record) {
+     handleAudit (record) {
       let that = this
       this.$confirm({
         title: '确定审核通过此记录?',
@@ -506,6 +528,31 @@ export default {
             //this.reset()
             that.$message.success('审核成功')
           that.search()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
+    handleSave (record) {
+      let that = this
+      this.$confirm({
+        title: '确定保存此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
+        centered: true,
+        onOk () {
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBAcademic/updateNew', {
+            jsonStr: jsonStr,
+            state: 1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+         // that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -644,6 +691,14 @@ export default {
           title: '经审核是否构成职称晋升条件',
           dataIndex: 'isUse',
           scopedSlots: { customRender: 'isUse' },
+          width: 80
+        },  {
+          title: '经审核是否与社会兼职重复',
+          dataIndex: 'isPartTimeJob',
+          customHeaderCell: function () {
+            return { style: { color: 'red' } }
+          },
+          scopedSlots: { customRender: 'isPartTimeJob' },
           width: 80
         }, {
           title: '审核',

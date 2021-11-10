@@ -2,6 +2,9 @@ package cc.mrbird.febs.dca.entity;
 
 import java.time.LocalDateTime;
 
+import cc.mrbird.febs.common.converter.BooleanConverter;
+import cc.mrbird.febs.common.converter.DateConverter;
+import cc.mrbird.febs.common.converter.StateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
@@ -70,7 +73,7 @@ public class DcaBPrizeorpunish implements Serializable {
     /**
      * 开始时间
      */
-    @ExcelField(value = "开始时间")
+    @ExcelField(value = "开始时间", writeConverter = DateConverter.class)
     private Date ppStartTime;
     private transient String ppStartTimeFrom;
     private transient String ppStartTimeTo;
@@ -78,7 +81,7 @@ public class DcaBPrizeorpunish implements Serializable {
     /**
      * 结束时间
      */
-    @ExcelField(value = "结束时间")
+    @ExcelField(value = "结束时间", writeConverter = DateConverter.class)
     private Date ppEndTime;
     private transient String ppEndTimeFrom;
     private transient String ppEndTimeTo;
@@ -110,7 +113,7 @@ public class DcaBPrizeorpunish implements Serializable {
     /**
      * 状态
      */
-    @ExcelField(value = "状态")
+    @ExcelField(value = "状态", writeConverter = StateConverter.class)
     private Integer state;
 
     /**
@@ -124,7 +127,7 @@ public class DcaBPrizeorpunish implements Serializable {
      * 创建时间
      */
     @TableField("CREATE_TIME")
-    @ExcelField(value = "创建时间")
+    @ExcelField(value = "创建时间", writeConverter = DateConverter.class)
     private Date createTime;
     private transient String createTimeFrom;
     private transient String createTimeTo;
@@ -133,7 +136,7 @@ public class DcaBPrizeorpunish implements Serializable {
      * 修改时间
      */
     @TableField("MODIFY_TIME")
-    @ExcelField(value = "修改时间")
+    @ExcelField(value = "修改时间", writeConverter = DateConverter.class)
     private Date modifyTime;
     private transient String modifyTimeFrom;
     private transient String modifyTimeTo;
@@ -170,7 +173,7 @@ public class DcaBPrizeorpunish implements Serializable {
      * 审核时间
      */
     @TableField("auditDate")
-    @ExcelField(value = "审核时间")
+    @ExcelField(value = "审核时间", writeConverter = DateConverter.class)
     private Date auditDate;
     private transient String auditDateFrom;
     private transient String auditDateTo;
@@ -186,7 +189,7 @@ public class DcaBPrizeorpunish implements Serializable {
      * 是否用于本次评审
      */
     @TableField("IsUse")
-    @ExcelField(value = "是否用于本次评审")
+    @ExcelField(value = "经审核是否构成职称晋升条件",writeConverter = BooleanConverter.class)
     private Boolean IsUse;
 
     private  transient Integer auditXuhao;

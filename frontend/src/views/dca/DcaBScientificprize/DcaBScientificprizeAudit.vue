@@ -271,6 +271,9 @@
                     <a-select-option value="市科进">
                       市科进
                     </a-select-option>
+                    <a-select-option value="中华奖">
+                      中华奖
+                    </a-select-option>
                   </a-select>
                 </div>
               </template>

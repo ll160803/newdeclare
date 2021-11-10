@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.service.IDcaBPrizeorpunishService;
 import cc.mrbird.febs.dca.entity.DcaBPrizeorpunish;
 
@@ -193,18 +194,26 @@ public class DcaBPrizeorpunishController extends BaseController {
     }
 
     @PostMapping("excel")
-    @RequiresPermissions("dcaBPrizeorpunish:export")
-    public void export(QueryRequest request, DcaBPrizeorpunish dcaBPrizeorpunish, HttpServletResponse response) throws FebsException {
-        try {
-            List<DcaBPrizeorpunish> dcaBPrizeorpunishs = this.iDcaBPrizeorpunishService.findDcaBPrizeorpunishs(request, dcaBPrizeorpunish).getRecords();
-            ExcelKit.$Export(DcaBPrizeorpunish.class, response).downXlsx(dcaBPrizeorpunishs, false);
-        } catch (Exception e) {
-            message = "导出Excel失败";
-            log.error(message, e);
+    public void export(QueryRequest request, DcaBPrizeorpunish dcaBSciencesearch,String dataJson,HttpServletResponse response)throws FebsException{
+        try{
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            User currentUser = FebsUtil.getCurrentUser();
+
+            dcaBSciencesearch.setIsDeletemark(1);
+            request.setSortField("user_account asc,state asc,display_Index");
+            request.setSortOrder("ascend");
+            List<DcaBPrizeorpunish> dcaBSciencepublishList=  this.iDcaBPrizeorpunishService.findDcaBPrizeorpunishs(request, dcaBSciencesearch).getRecords();
+
+
+            //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
+        }catch(Exception e){
+            message="导出Excel失败";
+            log.error(message,e);
             throw new FebsException(message);
         }
     }
-
     @GetMapping("/{id}")
     public DcaBPrizeorpunish detail(@NotBlank(message = "{required}") @PathVariable String id) {
         DcaBPrizeorpunish dcaBPrizeorpunish = this.iDcaBPrizeorpunishService.getById(id);

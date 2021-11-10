@@ -574,7 +574,17 @@
                 >
                   下一轮
                 </a-button>
-                <a-button
+               
+                  <a-button
+                  v-hasNoPermission="['dca:audit']"
+                  style="width:40%;padding-left:2px;padding-right:2px;"
+                  type="dashed"
+                  block
+                  @click="handleSave(record)"
+                >
+                  保存
+                </a-button>
+                 <a-button
                   v-hasNoPermission="['dca:audit']"
                   style="width:40%;padding-left:2px;padding-right:2px;"
                   type="dashed"
@@ -585,12 +595,14 @@
                 </a-button>
                 <a-button
                   v-hasNoPermission="['dca:audit']"
+                  style="width:50%;padding-left:2px;padding-right:2px;"
                   type="danger"
                   block
                   @click="handleAuditNo(record)"
                 >
                   审核不通过
                 </a-button>
+               
               </template>
             </a-table>
           </a-tab-pane>
@@ -780,8 +792,11 @@ export default {
         json = this.columnsDone
         delete queryParams.auditState
       }
-       json.splice(this.columns.length - 1, 1) //移出第一个
-      console.info(json)
+      json.splice(this.columns.length - 1, 1) //移出第一个
+      json.push({
+         title: 'ID',
+         dataIndex: 'id'
+      })
       let dataJson = JSON.stringify(json)
 
       this.$export('dcaBSciencepublish/excel', {
@@ -937,6 +952,32 @@ export default {
             //this.reset()
             that.$message.success('审核成功')
             that.search()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
+    handleSave (record) {
+      let that = this
+      this.$confirm({
+        title: '确定保存通过此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
+        centered: true,
+        onOk () {
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBSciencepublish/updateNew', {
+            jsonStr: jsonStr,
+            state: record.state,
+            auditState: -1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+           // that.search()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -1270,7 +1311,7 @@ export default {
           title: '审核',
           key: 'action',
           scopedSlots: { customRender: 'action' },
-          width: 100
+          width: 150
         }]
     },
      columnsDone () {

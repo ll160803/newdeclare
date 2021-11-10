@@ -257,6 +257,7 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
         List<DcaBCopyCourseclass> listDcaBCopyCourseclass = this.iDcaBCopyCourseclassService.getAll(userAccount, dcaYear);
         List<DcaBCopyYoungprize> dcaBCopyYoungprizeList = this.iDcaBCopyYoungprizeService.getAll(userAccount, dcaYear);
         List<DcaBCopyGoal> listDcaBCopyGoal = this.iDcaBCopyGoalService.getAll(userAccount, dcaYear);
+        List<DcaBCopyTeacherprize> dcaBCopyTeacherprizeList =this.iDcaBCopyTeacherprizeService.getAll(userAccount, dcaYear);
         List<DcaBCopyEducationexperice> listDcaBCopyEducationexperice = this.iDcaBCopyEducationexpericeService.getAll(userAccount, dcaYear);
         listDcaBCopyEducationexperice=listDcaBCopyEducationexperice.stream().sorted(new Comparator<DcaBCopyEducationexperice>() {
             @Override
@@ -419,6 +420,7 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
         customApplyFirst.setDcaBCopyAchievementList(dcaBCopyAchievementList);
         customApplyFirst.setDcaBCopyMedicalaccidentList(dcaBCopyMedicalaccidentList);
         customApplyFirst.setDcaBCopyDoctorturtorList(dcaBCopyDoctorturtorList);
+        customApplyFirst.setDcaBTeacherprizeList(dcaBCopyTeacherprizeList);
 
         customApplyFirst.setDcaBCopyQualificationList(dcaBCopyQualificationList);
 

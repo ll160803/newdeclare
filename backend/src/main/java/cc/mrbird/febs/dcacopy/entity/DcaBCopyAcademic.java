@@ -1,6 +1,8 @@
 package cc.mrbird.febs.dcacopy.entity;
 
 import java.time.LocalDateTime;
+
+import cc.mrbird.febs.common.converter.BooleanConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
@@ -165,6 +167,12 @@ private static final long serialVersionUID=1L;
             @ExcelField(value ="是否用于本次评审")
     private Boolean IsUse;
 
+    /**
+     * 经审核是否与社会兼职重复
+     */
+    @TableField("is_part_time_job")
+    @ExcelField(value = "经审核是否与社会兼职重复",writeConverter = BooleanConverter.class)
+    private Boolean isPartTimeJob;
     /**
      * 排序
      */

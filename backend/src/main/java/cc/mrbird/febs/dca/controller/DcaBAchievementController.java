@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.service.IDcaBAchievementService;
 import cc.mrbird.febs.dca.entity.DcaBAchievement;
 
@@ -195,19 +196,28 @@ public void deleteDcaBAchievements(@NotBlank(message = "{required}") @PathVariab
         throw new FebsException(message);
         }
         }
-@PostMapping("excel")
-@RequiresPermissions("dcaBAchievement:export")
-public void export(QueryRequest request, DcaBAchievement dcaBAchievement,HttpServletResponse response)throws FebsException{
-        try{
-        List<DcaBAchievement> dcaBAchievements=this.iDcaBAchievementService.findDcaBAchievements(request, dcaBAchievement).getRecords();
-        ExcelKit.$Export(DcaBAchievement.class,response).downXlsx(dcaBAchievements,false);
-        }catch(Exception e){
-        message="导出Excel失败";
-        log.error(message,e);
-        throw new FebsException(message);
-        }
-        }
 
+    @PostMapping("excel")
+    public void export(QueryRequest request, DcaBAchievement dcaBSciencesearch,String dataJson,HttpServletResponse response)throws FebsException{
+        try{
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            User currentUser = FebsUtil.getCurrentUser();
+
+            dcaBSciencesearch.setIsDeletemark(1);
+            request.setSortField("user_account asc,state asc,display_Index");
+            request.setSortOrder("ascend");
+            List<DcaBAchievement> dcaBSciencepublishList=  this.iDcaBAchievementService.findDcaBAchievements(request, dcaBSciencesearch).getRecords();
+
+
+            //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
+        }catch(Exception e){
+            message="导出Excel失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
+    }
 @GetMapping("/{id}")
 public DcaBAchievement detail(@NotBlank(message = "{required}") @PathVariable String id){
     DcaBAchievement dcaBAchievement=this.iDcaBAchievementService.getById(id);

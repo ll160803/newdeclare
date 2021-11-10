@@ -101,6 +101,7 @@ public class DcaBReportController extends BaseController {
             {
                 dcaBReport.setIfdaitou("否");
             }
+
             if (StringUtils.isNotBlank(dcaBReport.getId()) && !dcaBReport.getId().contains(dcaBReport.getUserAccount())) {
                 this.iDcaBReportService.updateDcaBReport(dcaBReport);
             } else {
@@ -141,6 +142,7 @@ public class DcaBReportController extends BaseController {
                 if (!StringUtils.isNotBlank(dcaBReport.getIfdaitou())) {
                     dcaBReport.setIfdaitou("否");
                 }
+
                 if (StringUtils.isNotBlank(dcaBReport.getId())&&!dcaBReport.getId().equals(dcaBReport.getUserAccount())) {
                     this.iDcaBReportService.updateDcaBReport(dcaBReport);
                 } else {

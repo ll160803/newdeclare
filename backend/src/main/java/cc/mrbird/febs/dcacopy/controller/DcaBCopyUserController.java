@@ -319,7 +319,9 @@ public class DcaBCopyUserController extends BaseController {
                 destfile ="D:\\二三级.docx";
             }
 
-
+            dbcuser.setBirthdaystr(dbcuser.getBirthdaystr().substring(0,6));
+            dbcuser.setXrgwjbprsj(dbcuser.getXrgwjbprsj().substring(0,6));
+            dbcuser.setEduDate(dbcuser.getEduDate().substring(0,6));
            InputStream inputStream2 =new FileInputStream(new File(destfile));
             OutputStream out = response.getOutputStream();
             response.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");

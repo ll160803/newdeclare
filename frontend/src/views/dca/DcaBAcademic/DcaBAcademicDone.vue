@@ -218,6 +218,18 @@ export default {
             return "否"
           }
         },
+         {
+          title: '经审核是否与社会兼职重复',
+          dataIndex: 'isPartTimeJob',
+          customHeaderCell: function () {
+            return { style: { color: 'red' } }
+          },
+          customRender: (text, row, index) => {
+            if (text) return "是"
+            return "否"
+          },
+          width: 80
+        },
         {
           title: '附件',
           dataIndex: 'fileId',

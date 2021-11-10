@@ -237,7 +237,7 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
      * 毕业时间
      * @return
      */
-    @Select("select user_account,DATE_FORMAT(exp_end_TIME, '%Y%m') as audit_result ,'edu_date' audit_titletyp" +
+    @Select("select user_account,DATE_FORMAT(exp_end_TIME, '%Y%m%d') as audit_result ,'edu_date' audit_titletyp" +
             " from  dca_b_educationexperice " +
             "where is_hightest='是' AND state = 3 and IS_DELETEMARK=1")
     List<DcaBAuditdynamic> getExpericeBysj();
@@ -417,9 +417,28 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
             "\tdca_b_parttimejob\n" +
             "WHERE\n" +
             "\tIS_DELETEMARK = 1\n" +
-            "AND state = 3\n" +
-            "AND IsUse = 1")
+            "\tAND state = 3" )
+           // "\tAND IsUse = 1")
     List<DcaBParttimejob> getPartTimejob();
+
+    /**
+     * 社会兼职
+     * @return
+     */
+    @Select("SELECT\n" +
+            "\tuser_account,\n" +
+            "\tacademic_name,\n" +
+            "\tacademic_date,\n" +
+            "\tacademic_content,\n" +
+            "\tIsUse,\n" +
+            "\tis_part_time_job\n" +
+            "FROM\n" +
+            "\tdca_b_academic\n" +
+            "WHERE\n" +
+            "\tIS_DELETEMARK = 1\n" +
+            "\tAND state = 3\n" +
+            "\tAND IsUse = 1")
+    List<DcaBAcademic> getAcademic();
 
     /**
      * 博导硕导
@@ -461,6 +480,17 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
             "AND state = 3\n" +
             "AND IsUse = 1")
     List<String> getTutor();
+
+    @Select("SELECT\n" +
+            "\tpp_content,\n" +
+            "\tuser_account\n" +
+            "FROM\n" +
+            "\tdca_b_prizeorpunish\n" +
+            "WHERE\n" +
+            "\tIS_DELETEMARK = 1\n" +
+            "AND state = 3\n" +
+            "AND IsUse = 1")
+    List<DcaBPrizeorpunish> getPrizeOrPunish();
 
     /**
      * 教师资格证

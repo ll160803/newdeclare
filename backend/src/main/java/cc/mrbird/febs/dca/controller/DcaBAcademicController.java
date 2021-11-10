@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.service.IDcaBAcademicService;
 import cc.mrbird.febs.dca.entity.DcaBAcademic;
 
@@ -195,18 +196,27 @@ public void deleteDcaBAcademics(@NotBlank(message = "{required}") @PathVariable 
         throw new FebsException(message);
         }
         }
-@PostMapping("excel")
-@RequiresPermissions("dcaBAcademic:export")
-public void export(QueryRequest request, DcaBAcademic dcaBAcademic,HttpServletResponse response)throws FebsException{
+    @PostMapping("excel")
+    public void export(QueryRequest request, DcaBAcademic dcaBSciencesearch,String dataJson,HttpServletResponse response)throws FebsException{
         try{
-        List<DcaBAcademic> dcaBAcademics=this.iDcaBAcademicService.findDcaBAcademics(request, dcaBAcademic).getRecords();
-        ExcelKit.$Export(DcaBAcademic.class,response).downXlsx(dcaBAcademics,false);
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            User currentUser = FebsUtil.getCurrentUser();
+
+            dcaBSciencesearch.setIsDeletemark(1);
+            request.setSortField("user_account asc,state asc,display_Index");
+            request.setSortOrder("ascend");
+            List<DcaBAcademic> dcaBSciencepublishList=  this.iDcaBAcademicService.findDcaBAcademics(request, dcaBSciencesearch).getRecords();
+
+
+            //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
         }catch(Exception e){
-        message="导出Excel失败";
-        log.error(message,e);
-        throw new FebsException(message);
+            message="导出Excel失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        }
+    }
 
 @GetMapping("/{id}")
 public DcaBAcademic detail(@NotBlank(message = "{required}") @PathVariable String id){

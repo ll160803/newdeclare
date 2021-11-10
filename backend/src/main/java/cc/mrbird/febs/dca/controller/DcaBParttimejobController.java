@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.service.IDcaBParttimejobService;
 import cc.mrbird.febs.dca.entity.DcaBParttimejob;
 
@@ -185,19 +186,27 @@ public void deleteDcaBParttimejobs(@NotBlank(message = "{required}") @PathVariab
         throw new FebsException(message);
         }
         }
-@PostMapping("excel")
-@RequiresPermissions("dcaBParttimejob:export")
-public void export(QueryRequest request, DcaBParttimejob dcaBParttimejob,HttpServletResponse response)throws FebsException{
+    @PostMapping("excel")
+    public void export(QueryRequest request, DcaBParttimejob dcaBSciencesearch,String dataJson,HttpServletResponse response)throws FebsException{
         try{
-        List<DcaBParttimejob> dcaBParttimejobs=this.iDcaBParttimejobService.findDcaBParttimejobs(request, dcaBParttimejob).getRecords();
-        ExcelKit.$Export(DcaBParttimejob.class,response).downXlsx(dcaBParttimejobs,false);
-        }catch(Exception e){
-        message="导出Excel失败";
-        log.error(message,e);
-        throw new FebsException(message);
-        }
-        }
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            User currentUser = FebsUtil.getCurrentUser();
 
+            dcaBSciencesearch.setIsDeletemark(1);
+            request.setSortField("user_account asc,state asc,display_Index");
+            request.setSortOrder("ascend");
+            List<DcaBParttimejob> dcaBSciencepublishList=  this.iDcaBParttimejobService.findDcaBParttimejobs(request, dcaBSciencesearch).getRecords();
+
+
+            //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
+        }catch(Exception e){
+            message="导出Excel失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
+    }
 @GetMapping("/{id}")
 public DcaBParttimejob detail(@NotBlank(message = "{required}") @PathVariable String id){
     DcaBParttimejob dcaBParttimejob=this.iDcaBParttimejobService.getById(id);

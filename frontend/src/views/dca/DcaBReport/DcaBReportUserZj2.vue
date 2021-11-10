@@ -395,6 +395,18 @@
                 </a-textarea>
               </div>
             </template>
+             <template slot="mzsstjqkAudit" slot-scope="text, record">
+              <div v-if="record.state == 3 || record.state == 1">
+                {{ text }}
+              </div>
+              <div v-else>
+                <a-textarea
+                  @blur="(e) => inputChange(e.target.value, record, 'mzsstjqkAudit')"
+                  :value="record.mzsstjqkAudit"
+                >
+                </a-textarea>
+              </div>
+            </template>
             <template slot="ksrank" slot-scope="text, record">
               <div v-if="record.state == 3 || record.state == 1">
                 {{ text }}
@@ -553,6 +565,9 @@ export default {
           fieldName: "eduDate",
         },
         {
+          fieldName: "eduDateBack",
+        },
+        {
           fieldName: "ylpfbfz",
         },
         {
@@ -648,34 +663,40 @@ export default {
           fieldName: 'xhrzqk'
         },
          {
+          fieldName: 'prize'
+        },
+         {
           fieldName: 'mzsstjqk'
         },
-         {
-          fieldName: 'xjsxyw'
-        },
-         {
-          fieldName: 'xjsxywprize'
-        },
+        //  {
+        //   fieldName: 'xjsxyw'
+        // },
+        //  {
+        //   fieldName: 'xjsxywprize'
+        // },
         {
           fieldName: "rbdsj",
         },
-        {
-          fieldName: "j3nhxrlzypf",
-        },
-        {
-          fieldName: "j3ylzhpf",
-        },
-        {
-          fieldName: "j3nssztc",
-        },
-        {
-          fieldName: "j3nzyszbrsl",
-        },
-        {
-          fieldName: "j3nmzszbrsl",
-        },
+        // {
+        //   fieldName: "j3nhxrlzypf",
+        // },
+        // {
+        //   fieldName: "j3ylzhpf",
+        // },
+        // {
+        //   fieldName: "j3nssztc",
+        // },
+        // {
+        //   fieldName: "j3nzyszbrsl",
+        // },
+        // {
+        //   fieldName: "j3nmzszbrsl",
+        // },
         {
           fieldName: "dpsci10",
+        },
+         {
+          fieldName: "dpsci20",
         },
       ], // 当前用户包含的审核数据
       userAccount: "",
@@ -828,6 +849,7 @@ export default {
       this.sendInfo = value;
     },
     splitStr(text) {
+      if(text==null) return ''
       return text.split("#");
     },
     showUserInfo(text) {
@@ -896,8 +918,8 @@ export default {
           : pagination.pageSize;
       this.paginationInfo = pagination;
       this.fetch({
-        sortField: "user_account",
-        sortOrder: "ascend",
+         sortField: "user_account",
+          sortOrder: "ascend",
         ...this.queryParams,
       });
     },
@@ -990,6 +1012,10 @@ export default {
       let str = "";
       if (record.applyState == 2) {
         str = "退审";
+         if(record.clshjg==''){
+          record.clshjg= "退审"
+          return str;
+        }
       } else {
         str = record.clshjg == null ? "" : record.clshjg;
       }
@@ -997,7 +1023,11 @@ export default {
     },
     setNtyyValue(record) {
       if (record.applyState == 2) {
-        return "中途退回";
+        if(record.ntyy==''){
+          record.ntyy= "中途退回"
+          return "中途退回";
+        }
+       
       }
       return record.ntyy;
     },
@@ -1049,7 +1079,7 @@ export default {
         },
         {
           title: "科室分类3",
-          dataIndex: "pingshenfenzu",
+          dataIndex: "kslb",
           width: 180,
         },
         {
@@ -1158,17 +1188,18 @@ export default {
           dataIndex: "mzsstjqk",
           width: 80,
         },
+         {
+          title: "满足学术条件情况24",
+          dataIndex: "mzsstjqkAudit",
+          width: 80,
+        },
 
         {
           title: "等级24",
           dataIndex: "jxpfdj",
           width: 100,
         },
-        {
-          title: "分数25",
-          dataIndex: "jxpf",
-          width: 80,
-        },
+       
         {
           title: "近三年核心人力资源评分26",
           dataIndex: "j3nhxrlzypf",
@@ -1180,18 +1211,18 @@ export default {
           width: 100,
         },
         {
-          title: "近三年手术总台次28",
+          title: "近三年手术台次28",
           dataIndex: "j3nssztc",
           width: 100,
         },
 
         {
-          title: "近三年收治住院病人总数29",
+          title: "近三年收治住院病人数29",
           dataIndex: "j3nzyszbrsl",
           width: 100,
         },
         {
-          title: "近三年门诊收治病人总数30",
+          title: "近三年门诊收治病人数30",
           dataIndex: "j3nmzszbrsl",
           width: 100,
         },
@@ -1205,6 +1236,11 @@ export default {
           title: "负责的新技术新业务获奖情况32",
           dataIndex: "xjsxywprize",
           width: 100,
+        },
+         {
+          title: "单篇SCI高分文章≥2033",
+          dataIndex: "dpsci20",
+          width: 60,
         },
         {
           title: "单篇SCI高分文章≥1033",
@@ -1293,6 +1329,11 @@ export default {
           dataIndex: "xhrzqk",
           width: 100,
         },
+         {
+          title: "重要抗疫奖励",
+          dataIndex: "prize",
+          width: 100,
+        },
         {
           title: "是否符合基本条件50",
           dataIndex: "clshjg",
@@ -1311,6 +1352,11 @@ export default {
           width: 100,
           scopedSlots: { customRender: "note" },
         },
+         {
+          title: "备注2",
+          dataIndex: "paixu4",
+          width: 100,
+        },
         {
           title: "联系方式53",
           dataIndex: "telephone",
@@ -1320,6 +1366,7 @@ export default {
       let listj = [
         "edu",
         "eduDate",
+        "eduDateBack",
         "ylpfbfz",
         "ylpfdj",
         "jxpf",
@@ -1355,22 +1402,23 @@ export default {
         "teacherQualify",
 
            'xhrzqk',
-        
+        'prize',
          'mzsstjqk',
        
-          'xjsxyw',
+        //   'xjsxyw',
       
-         'xjsxywprize',
+        //  'xjsxywprize',
       
           "rbdsj",
         
         "rbdsj",
-        "j3nhxrlzypf",
-        "j3ylzhpf",
-        "j3nssztc",
-        "j3nzyszbrsl",
-        "j3nmzszbrsl",
+        // "j3nhxrlzypf",
+        // "j3ylzhpf",
+        // "j3nssztc",
+        // "j3nzyszbrsl",
+        // "j3nmzszbrsl",
         "dpsci10",
+        "dpsci20",
       ];
 
       json.forEach((element) => {
@@ -1381,8 +1429,8 @@ export default {
       let dataJson = JSON.stringify(json);
 
       this.$export("dcaUserAudit/excelBigTable", {
-        sortField: "user_account",
-        sortOrder: "ascend",
+         sortField: "user_account",
+          sortOrder: "ascend",
         dataJson: dataJson,
         excelIndex: 2,
         ...this.queryParams,
@@ -1411,6 +1459,8 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.pagination.defaultCurrent;
       }
+      params.sortField= "user_account";
+          params.sortOrder= "ascend";
 
       this.loading = true;
       let that = this;
@@ -1476,9 +1526,8 @@ export default {
         },
         {
           title: "科室分类",
-          dataIndex: "pingshenfenzu",
-          width: 180,
-          scopedSlots: { customRender: "pingshenfenzu" },
+          dataIndex: "kslb",
+          width: 180
           //    fixed: 'left',
         },
         {
@@ -1596,58 +1645,58 @@ export default {
           scopedSlots: { customRender: "ifbxyltj" },
         },
         {
-          title: "满足学术条件情况",
+          title: "满足学术条件情况(申报人填报)",
           dataIndex: "mzsstjqk",
           width: 300,
           scopedSlots: { customRender: "splitHang" },
         },
-        {
-          title: "教学评分",
-          children: [
-            {
-              title: "等级",
-              dataIndex: "jxpfdj",
-              width: 100,
-            },
-            {
-              title: "分数",
-              dataIndex: "jxpf2",
-              width: 80,
-              customRender: (text, row, index) => {
-                return row.jxpf;
-              },
-            },
-          ],
+          {
+          title: "满足学术条件情况(人事处审核)",
+          dataIndex: "mzsstjqkAudit",
+          width: 300,
+          scopedSlots: { customRender: "mzsstjqkAudit" },
         },
         {
-          title: "近三年核心人力资源评分",
+          title: "教学评分",
+          dataIndex: "jxpf2",
+              width: 80,
+              customRender: (text, row, index) => {
+                return row.jxpfdj;
+              },
+        },
+        {
+          title: "近三年核心人力资源评分均值",
           dataIndex: "j3nhxrlzypf",
           width: 80,
-          scopedSlots: { customRender: "j3nhxrlzypf" },
+          scopedSlots: { customRender: "splitHang" },
         },
         {
           title: "近三年医疗综合评分",
           dataIndex: "j3ylzhpf",
           width: 100,
+           scopedSlots: { customRender: "splitHang" },
         },
         {
-          title: "近三年手术总台次",
+          title: "近三年手术台次",
           dataIndex: "j3nssztc",
           width: 100,
+           scopedSlots: { customRender: "splitHang" },
         },
 
         {
-          title: "近三年收治住院病人总数",
+          title: "近三年收治住院病人数",
           dataIndex: "j3nzyszbrsl",
           width: 100,
+           scopedSlots: { customRender: "splitHang" },
         },
         {
-          title: "近三年门诊收治病人总数",
+          title: "近三年门诊收治病人数",
           dataIndex: "j3nmzszbrsl",
           width: 100,
+           scopedSlots: { customRender: "splitHang" },
         },
         {
-          title: "任现职以来新技术新业务",
+          title: "近三年新技术新业务",
           children: [
             {
               title: "负责开展的新技术新业务",
@@ -1664,6 +1713,11 @@ export default {
         {
           title: "任现岗位以来",
           children: [
+            {
+              title: "单篇SCI高分文章≥20",
+              dataIndex: "dpsci20",
+              width: 60,
+            },
             {
               title: "单篇SCI高分文章≥10",
               dataIndex: "dpsci10",
@@ -1772,7 +1826,13 @@ export default {
         {
           title: "学会任职",
           dataIndex: "xhrzqk",
-          width: 100,
+          width: 120,
+          scopedSlots: { customRender: "splitHang" },
+        },
+        {
+          title: "重要抗疫奖励",
+          dataIndex: "prize",
+          width: 120,
           scopedSlots: { customRender: "splitHang" },
         },
         {
@@ -1792,6 +1852,11 @@ export default {
           dataIndex: "note",
           width: 100,
           scopedSlots: { customRender: "note" },
+        },
+         {
+          title: "备注2",
+          dataIndex: "paixu4",
+          width: 100,
         },
         {
           title: "联系方式",

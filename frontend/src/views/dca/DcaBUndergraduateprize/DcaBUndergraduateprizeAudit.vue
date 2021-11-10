@@ -63,6 +63,15 @@
               :bordered="true"
               :scroll="scroll"
             >
+            <template
+                slot="userAccount"
+                slot-scope="text, record"
+              >
+                <a
+                  href="#"
+                  @click="showUserInfo(text)"
+                >{{text}}</a>
+              </template>
               <template
                 slot="spProjectName"
                 slot-scope="textw, record"
@@ -196,8 +205,18 @@
                 slot="action"
                 slot-scope="text, record"
               >
+               <a-button
+                  v-hasNoPermission="['dca:audit']"
+                  style="width:40%;padding-left:2px;padding-right:2px;"
+                  type="dashed"
+                  block
+                  @click="handleSave(record)"
+                >
+                  保存
+                </a-button>
                 <a-button
                 v-hasNoPermission="['dca:audit']"
+                style="width:50%;padding-left:2px;padding-right:2px;"
                   type="dashed"
                   block
                   @click="handleAudit(record)"
@@ -238,6 +257,12 @@
             </dcaBUndergraduateprize-done>
           </a-tab-pane>
         </a-tabs>
+         <audit-userInfo
+      ref="userinfo"
+      @close="onCloseUserInfo"
+      :visibleUserInfo="visibleUserInfo"
+      :userAccount="userAccount"
+    ></audit-userInfo>
       </a-card>
     </a-spin>
   </div>
@@ -246,6 +271,7 @@
 <script>
 import moment from 'moment';
 import DcaBUndergraduateprizeDone from './DcaBUndergraduateprizeDone'
+import AuditUserInfo from '../../common/AuditUserInfo'
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -281,9 +307,12 @@ export default {
         x: 1600,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
+      visibleUserInfo: false,
+      userAccount: '',
+      activeKey: 1,
     }
   },
-  components: { DcaBUndergraduateprizeDone },
+  components: { DcaBUndergraduateprizeDone, AuditUserInfo },
   mounted () {
     this.search()
   },
@@ -297,8 +326,8 @@ export default {
   },
   methods: {
     moment,
-    callback () {
-
+    callback (activeKey) {
+      this.activeKey = activeKey
     },
     search2 () {
      if (this.paginationInfo) {
@@ -306,7 +335,15 @@ export default {
      }
      this.search()
     },
-    
+    showUserInfo (text) {
+      //debugger
+      this.visibleUserInfo = true
+      this.userAccount = text
+    },
+
+    onCloseUserInfo () {
+      this.visibleUserInfo = false
+    },
     search () {
       let { sortedInfo } = this
       let sortField, sortOrder
@@ -381,6 +418,31 @@ export default {
     },
     onIsUseChange (e, record, filedName) {
       record[filedName] = e.target.checked;
+    },
+    handleSave (record) {
+      let that = this
+      this.$confirm({
+        title: '确定保存此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
+        centered: true,
+        onOk () {
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBUndergraduateprize/updateNew', {
+            jsonStr: jsonStr,
+            state: 1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+           // that.search()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
     },
     handleAudit (record) {
       let that = this
@@ -467,7 +529,8 @@ export default {
         {
           title: '发薪号',
           dataIndex: 'userAccount',
-          width: 80
+          width: 80,
+          scopedSlots: { customRender: 'userAccount' }
         },
         {
           title: '姓名',
