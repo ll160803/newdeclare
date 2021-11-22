@@ -320,7 +320,7 @@ public class DcaBCopyUserController extends BaseController {
             }
 
             dbcuser.setBirthdaystr(dbcuser.getBirthdaystr().substring(0,6));
-            dbcuser.setXrgwjbprsj(dbcuser.getXrgwjbprsj().substring(0,6));
+            dbcuser.setXrgwjbprsj(StringUtils.isEmpty(dbcuser.getXrgwjbprsj())?"": dbcuser.getXrgwjbprsj().substring(0,6));
             dbcuser.setEduDate(dbcuser.getEduDate().substring(0,6));
            InputStream inputStream2 =new FileInputStream(new File(destfile));
             OutputStream out = response.getOutputStream();

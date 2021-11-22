@@ -533,7 +533,7 @@ export default {
               width: 60,
             },
             {
-              title: "单篇SCI高分文章≥10",
+              title: "单篇SCI高分文章≥10且<20",
               dataIndex: "dpsci10",
               width: 60,
             },

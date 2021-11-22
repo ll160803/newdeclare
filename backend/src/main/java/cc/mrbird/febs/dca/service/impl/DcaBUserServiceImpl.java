@@ -2299,8 +2299,8 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
                  ) {
 
                 if(NumberUtil.isNumber(dbsci.getPaperCause()==null?"":dbsci.getPaperCause().trim())){
-                    if(Convert.toDouble(dbsci.getPaperCause())>=10){
-                        if(arrABC.contains( dbsci.getAuditQkjb())){
+                    if(Convert.toDouble(dbsci.getPaperCause())>=10 && Convert.toDouble(dbsci.getPaperCause())<20){
+                        if(arrABC.contains(dbsci.getAuditQkjb())){
                             if(dbsci.getJxzcsl() != null) {
                                 nameF_d +=Convert.toDouble(dbsci.getJxzcsl());
                             }
@@ -2392,7 +2392,18 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
                 delim="；#";
             }
             xhrzqk=xhrzqk+delim+xhrzqk_academic;
-            InsertDynamic(auditdynamicList, userAccount, xhrzqk , "xhrzqk");
+            String[] xuhui= xhrzqk.split("；#");
+            int g=1;
+            String xhrzqk2="";
+            for (String c :xuhui){
+                if(StringUtils.isNotEmpty(c)) {
+                    c = g + "." + c+"；#";
+                    xhrzqk2=xhrzqk2+c;
+                    g = g + 1;
+                }
+            }
+
+            InsertDynamic(auditdynamicList, userAccount, xhrzqk2 , "xhrzqk");
             /**
              * 新技术新业务
              */

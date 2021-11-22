@@ -10133,7 +10133,12 @@ public class PDFDemo {
             listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopySciencepublish.getPaperName()), 10, 0));
             listCells.add(generatePdfValue(pdfStyle_t, name7, 2, 0));
             listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopySciencepublish.getPaperPublishdate(),"yyyyMM"), 7, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, "",4, 0));
+            if(dcaBCopySciencepublish.getUserAccount().equals("10010990")){
+                listCells.add(generatePdfValue(pdfStyle_t, dcaBCopySciencepublish.getAuditSuggestion(),4, 0));
+            }
+            else {
+                listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+            }
         }
         for (DcaBCopySciencesearch dcaBCopySciencesearch : dcaBCopySciencesearchList
         ) {

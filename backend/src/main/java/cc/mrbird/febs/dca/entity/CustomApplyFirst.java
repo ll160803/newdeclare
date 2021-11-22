@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class CustomApplyFirst {
+
     /**
      * 姓名
      */
