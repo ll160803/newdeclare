@@ -108,7 +108,7 @@ export default {
       queryParams: {
         userAccount: '',
         dcaYear: this.dcaYear,
-        //auditManName: this.dcaType
+        gwdj: this.dcaType
       },
       sortedInfo: null,
       paginationInfo: null,

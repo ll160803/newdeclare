@@ -7,6 +7,7 @@ import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
 import cc.mrbird.febs.dca.entity.DcaUserYj;
+import cc.mrbird.febs.dca.service.IDcaBAuditdynamicService;
 import cc.mrbird.febs.dca.service.IDcaBUserapplyService;
 import cc.mrbird.febs.dca.entity.DcaBUserapply;
 
@@ -50,6 +51,9 @@ public IDcaBUserapplyService iDcaBUserapplyService;
     @Autowired
     public IDcaUserYjService iDcaUserYjService;
 
+    @Autowired
+    public IDcaBAuditdynamicService iDcaBAuditdynamicService;
+
 /**
  INSERT into t_menu(parent_id,menu_name,path,component,perms,icon,type,order_num,CREATE_time)
  VALUES (0,'','/dca/DcaBUserapply/DcaBUserapply','dca/DcaBUserapply/DcaBUserapply','dcaBUserapply:view','fork',0,1,NOW())
@@ -92,7 +96,7 @@ public Map<String, Object> List(QueryRequest request, DcaBUserapply dcaBUserappl
 @Log("新增/按钮")
 @PostMapping
 @RequiresPermissions("dcaBUserapply:add")
-public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs)throws FebsException{
+public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs,String deleFlag)throws FebsException{
         try{
         User currentUser= FebsUtil.getCurrentUser();
         dcaBUserapply.setCreateUserId(currentUser.getUserId());
@@ -106,6 +110,9 @@ public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs)thr
            if(StringUtils.isNotEmpty(yjIDs)) {
                String[] areaIds = yjIDs.split(StringPool.COMMA);
                setUserYj(currentUser, areaIds,dcaBUserapply.getDcaYear());
+           }
+           if(StringUtils.isNotEmpty(deleFlag) && deleFlag.equals("1")){ //删除考核表
+               this.iDcaBAuditdynamicService.DeleteByAccount(currentUser.getUsername());
            }
         }catch(Exception e){
         //message="新增/按钮失败" ;

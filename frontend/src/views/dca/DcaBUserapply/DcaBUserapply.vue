@@ -96,7 +96,7 @@
             v-hasPermission="['dcaBUserapply:update']"
             type="setting"
             theme="twoTone"
-            v-show="record.state==2"
+            v-show="record.state==2 && setState(record)"
             twoToneColor="#4a9ff5"
             @click="edit(record)"
             title="修改"
@@ -289,6 +289,24 @@ export default {
     edit (record) {
       this.$refs.dcaBUserapplyEdit.setFormValues(record)
       this.editVisiable = true
+    },
+    setState(record){
+      if(record.dcaYear=='2019' && record.gwdj=='中级'){
+         return false;
+      }
+      if(record.dcaYear=='2019' && record.gwdj=='初级'){
+         return false;
+      }
+      if(record.dcaYear=='2020' && record.gwdj=='二三级'){
+         return false;
+      }
+      if(record.dcaYear=='2020' && record.gwdj=='正高'){
+         return false;
+      }
+      if(record.dcaYear=='2020' && record.gwdj=='副高'){
+         return false;
+      }
+      return true;
     },
     batchDelete () {
       if (!this.selectedRowKeys.length) {

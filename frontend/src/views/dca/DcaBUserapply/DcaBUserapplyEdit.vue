@@ -40,9 +40,9 @@
           <a-select-option key="副高">
             副高
           </a-select-option> -->
-          <!--<a-select-option key="中级"> 中级 </a-select-option>
-          <a-select-option key="初级"> 初级 </a-select-option>-->
-          <a-select-option key="二三级"> 二三级 </a-select-option>
+          <a-select-option key="中级"> 中级 </a-select-option>
+          <a-select-option key="初级"> 初级 </a-select-option>
+          <!-- <a-select-option key="二三级"> 二三级 </a-select-option> -->
         </a-select>
       </a-form-item>
       <a-form-item v-bind="formItemLayout" label="申报职称">
@@ -60,7 +60,7 @@
           </a-select-option>
         </a-select>
       </a-form-item>
-      <yj-tree ref="yjTree" v-show="yjShow"> </yj-tree>
+      <!-- <yj-tree ref="yjTree" v-show="yjShow"> </yj-tree> -->
     </a-form>
     <div class="drawer-bootom-button">
       <a-popconfirm
@@ -385,18 +385,18 @@ export default {
       this.gwdj = value;
     },
     handleSubmit() {
-      var yjIds = this.$refs.yjTree.getAuditKey();
-      if (yjIds == "") {
-        this.$message.warning("请必须选择下述条件中的一项进行提交");
-        return;
-      } else {
+      // var yjIds = this.$refs.yjTree.getAuditKey();
+      // if (yjIds == "") {
+      //   this.$message.warning("请必须选择下述条件中的一项进行提交");
+      //   return;
+      // } else {
         this.form.validateFields((err, values) => {
           if (!err) {
             let dcaBUserapply = this.form.getFieldsValue();
             dcaBUserapply.id = this.dcaBUserapply.id;
             this.$put("dcaBUserapply", {
               ...dcaBUserapply,
-              yjIDs: yjIds,
+             // yjIDs: yjIds,//二三级
             })
               .then(() => {
                 this.reset();
@@ -407,7 +407,7 @@ export default {
               });
           }
         });
-      }
+     // }
     },
   },
 };

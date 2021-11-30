@@ -139,4 +139,10 @@ public class DcaBAuditdynamicServiceImpl extends ServiceImpl<DcaBAuditdynamicMap
     public List<DcaBCopyAuditdynamic> findDcaBCopyAuditdynamicList(DcaBCopyAuditdynamic dcaBAuditdynamic) {
         return this.baseMapper.findDcaBCopyAuditdynamicList(dcaBAuditdynamic);
     }
+
+    @Override
+    @Transactional
+    public void DeleteByAccount(String userAccount){
+        this.baseMapper.DeleteByAccountApply(userAccount);
+    }
 }

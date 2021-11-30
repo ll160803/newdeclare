@@ -228,6 +228,19 @@ public class DcaBUserapplyServiceImpl extends ServiceImpl<DcaBUserapplyMapper, D
             if (StringUtils.isNotBlank(dcaBUserapply.getDcaYear())) {
                 queryWrapper.eq(DcaBUserapply::getDcaYear, dcaBUserapply.getDcaYear());
             }
+            if (StringUtils.isNotBlank(dcaBUserapply.getGwdj())) {
+                if(dcaBUserapply.getGwdj().equals("高级")){
+                    queryWrapper.in(DcaBUserapply::getGwdj,"正高,副高".split(","));
+                }
+                else if(dcaBUserapply.getGwdj().equals("中级")){
+                    queryWrapper.in(DcaBUserapply::getGwdj,"中级,初级".split(","));
+                }
+                else if(dcaBUserapply.getGwdj().equals("初级")){
+                    queryWrapper.in(DcaBUserapply::getGwdj,"二三级".split(","));
+                }else {
+                    queryWrapper.eq(DcaBUserapply::getGwdj, dcaBUserapply.getGwdj());
+                }
+            }
             queryWrapper.eq(DcaBUserapply::getState, 1);
             Page<DcaBUserapply> page = new Page<>();
             SortUtil.handlePageSort(request, page, false);//true 是属性  false是数据库字段可两个

@@ -2397,8 +2397,15 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
             String xhrzqk2="";
             for (String c :xuhui){
                 if(StringUtils.isNotEmpty(c)) {
-                    c = g + "." + c+"；#";
-                    xhrzqk2=xhrzqk2+c;
+                    if(StringUtils.isNotEmpty(xhrzqk2)){
+                        c =";"+ g + "." + c;
+                        xhrzqk2=xhrzqk2+c;
+                    }
+                    else{
+                        c = g + "." + c;
+                        xhrzqk2=c;
+                    }
+
                     g = g + 1;
                 }
             }

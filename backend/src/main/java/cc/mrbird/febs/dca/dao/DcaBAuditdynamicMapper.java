@@ -5,10 +5,7 @@ import cc.mrbird.febs.dcacopy.entity.DcaBCopyAuditdynamic;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -45,4 +42,7 @@ List<DcaBAuditdynamic> getAllByUserAccount(@Param("userAccount") String userAcco
 
 
         List<DcaBCopyAuditdynamic> findDcaBCopyAuditdynamicList(@Param("dcaBCopyAuditdynamic") DcaBCopyAuditdynamic dcaBCopyAuditdynamic );
+
+        @Delete("delete from dca_b_auditdynamic  WHERE user_account =#{userAccount}")
+        void DeleteByAccountApply(@Param("userAccount") String userAccount);
         }

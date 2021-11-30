@@ -38,6 +38,8 @@ public interface IDcaBAuditdynamicService extends IService<DcaBAuditdynamic> {
 
        List<DcaBAuditdynamic> findAllAuditdynamics(String userAccount);
 
+    void DeleteByAccount(String userAccount);
+
 
     List<DcaBCopyAuditdynamic> findDcaBCopyAuditdynamicList(DcaBCopyAuditdynamic dcaBAuditdynamic);
         }

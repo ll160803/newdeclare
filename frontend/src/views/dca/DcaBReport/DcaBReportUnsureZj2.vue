@@ -150,7 +150,7 @@ export default {
         sortOrder = sortedInfo.order;
       }
       this.fetch2({
-        sortField: "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
+        sortField: "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
           sortOrder: "ascend",
         ...this.queryParams,
       });
@@ -171,7 +171,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.pagination.defaultCurrent;
       }
-      params.sortField= "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back";
+      params.sortField= "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back";
           params.sortOrder = "ascend";
       this.$get("dcaBReport", {
         state: this.state,
@@ -273,7 +273,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.paginationInfo.defaultCurrent;
       }
-      params.sortField = "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back";
+      params.sortField = "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back";
           params.sortOrder = "ascend";
       params.userAccount = userAccount;
       this.$get("dcaBReport", {
@@ -292,7 +292,7 @@ export default {
       this.sortedInfo = sorter;
       this.paginationInfo = pagination;
       this.fetch2({
-         sortField: "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
+         sortField: "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
           sortOrder: "ascend",
         ...this.queryParams,
       });
@@ -604,7 +604,7 @@ export default {
       let dataJson = JSON.stringify(json);
 
       this.$export("dcaUserAudit/excelBigTable", {
-         sortField: "clshjg, np_position_name desc ,ifbxyltj,paixu1,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
+         sortField: "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
           sortOrder: "ascend",
         state: this.state,
         dataJson: dataJson,

@@ -40,13 +40,13 @@
           <a-select-option key="副高">
             副高
           </a-select-option> -->
-          <!-- <a-select-option key="中级">
+          <a-select-option key="中级">
             中级
           </a-select-option>
           <a-select-option key="初级">
             初级
-          </a-select-option> -->
-          <a-select-option key="二三级"> 二三级 </a-select-option>
+          </a-select-option>
+          <!-- <a-select-option key="二三级"> 二三级 </a-select-option> -->
         </a-select>
       </a-form-item>
       <a-form-item v-bind="formItemLayout" label="申报职称">
@@ -64,9 +64,9 @@
           </a-select-option>
         </a-select>
       </a-form-item>
-      <div style="height: 300px; overflow: auto">
+      <!-- <div style="height: 300px; overflow: auto">
         <yj-tree ref="yjTree" v-show="yjShow"> </yj-tree>
-      </div>
+      </div> -->
     </a-form>
 
     <div class="drawer-bootom-button">
@@ -347,18 +347,19 @@ export default {
       this.gwdj = value;
     },
     handleSubmit() {
-      var yjIds = this.$refs.yjTree.getAuditKey();
-      if (yjIds == "") {
-        this.$message.warning("请必须选择下述条件中的一项进行提交");
-        return;
-      } else {
+      // var yjIds = this.$refs.yjTree.getAuditKey();
+      // if (yjIds == "") {
+      //   this.$message.warning("请必须选择下述条件中的一项进行提交");
+      //   return;
+      // } else {
         this.form.validateFields((err, values) => {
           if (!err) {
             this.$post("dcaBUserapply", {
               dcaYear: this.dcaYear,
               gwdj: this.gwdj,
               npPositionName: this.npPositionName,
-              yjIDs: yjIds,
+              deleFlag: '1',
+             // yjIDs: yjIds,
             })
               .then(() => {
                 this.reset();
@@ -369,7 +370,7 @@ export default {
               });
           }
         });
-      }
+      // }
     },
     setFields() {
       let values = this.form.getFieldsValue([
