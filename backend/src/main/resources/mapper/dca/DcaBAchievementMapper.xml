@@ -16,6 +16,7 @@
                     <result column="achievement_define" property="achievementDefine"/>
                     <result column="achievement_content" property="achievementContent"/>
                     <result column="state" property="state"/>
+            <result column="audit_state" property="auditState"/>
                     <result column="IS_DELETEMARK" property="isDeletemark"/>
                     <result column="CREATE_TIME" property="createTime"/>
                     <result column="MODIFY_TIME" property="modifyTime"/>
@@ -31,7 +32,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, file_id, file_url, user_account_name, user_account, achievement_name, rank_index, achievement_grade, achievement_date, achievement_define, achievement_content, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
+        id, file_id, file_url, user_account_name, user_account, achievement_name, rank_index, achievement_grade, achievement_date, achievement_define, achievement_content, state, audit_state,  IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
     </sql>
     <update id="updateDcaBAchievement" parameterType="cc.mrbird.febs.dca.entity.DcaBAchievement">
         update dca_b_achievement
@@ -47,6 +48,7 @@
 <if test="achievementDefine != null">achievement_define=#{achievementDefine},</if>
 <if test="achievementContent != null">achievement_content=#{achievementContent},</if>
 <if test="state != null">state=#{state},</if>
+            <if test="auditState != null">audit_state=#{auditState},</if>
 <if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
 <if test="createTime != null">CREATE_TIME=#{createTime},</if>
 <if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
@@ -82,6 +84,7 @@
             <if test="dcaBAchievement.achievementDefine != null and dcaBAchievement.achievementDefine != ''"> and dca_b_achievement.achievement_define like concat('%', #{ dcaBAchievement.achievementDefine} ,'%')</if>
             <if test="dcaBAchievement.achievementContent != null and dcaBAchievement.achievementContent != ''"> and dca_b_achievement.achievement_content like concat('%', #{ dcaBAchievement.achievementContent} ,'%')</if>
         <if test="dcaBAchievement.state != null"> and dca_b_achievement.state =#{ dcaBAchievement.state} </if>
+        <if test="dcaBAchievement.auditState != null"> and dca_b_achievement.audit_state =#{ dcaBAchievement.auditState} </if>
         <if test="dcaBAchievement.isDeletemark != null"> and dca_b_achievement.IS_DELETEMARK =#{ dcaBAchievement.isDeletemark} </if>
         <if test="dcaBAchievement.createTimeFrom!= null">
             AND dca_b_achievement.CREATE_TIME <![CDATA[ >= ]]>  #{dcaBAchievement.createTimeFrom}

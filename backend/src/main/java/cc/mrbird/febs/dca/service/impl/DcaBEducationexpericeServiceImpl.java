@@ -67,6 +67,9 @@ public class DcaBEducationexpericeServiceImpl extends ServiceImpl<DcaBEducatione
             if (dcaBEducationexperice.getState() != null) {
                 queryWrapper.eq(DcaBEducationexperice::getState, dcaBEducationexperice.getState());
             }
+            if (dcaBEducationexperice.getAuditState() != null && (dcaBEducationexperice.getAuditState() >= 0)) {
+                queryWrapper.eq(DcaBEducationexperice::getAuditState, dcaBEducationexperice.getAuditState());
+            }
             if (StringUtils.isNotBlank(dcaBEducationexperice.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBEducationexperice.getCreateTimeTo())) {
                 queryWrapper
                         .ge(DcaBEducationexperice::getCreateTime, dcaBEducationexperice.getCreateTimeFrom())

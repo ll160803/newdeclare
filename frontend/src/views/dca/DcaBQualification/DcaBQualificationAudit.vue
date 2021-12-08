@@ -261,6 +261,15 @@
                 
                 <a-button
                   v-hasNoPermission="['dca:audit']"
+                  style="width:40%;padding-left:2px;padding-right:2px;"
+                  type="dashed"
+                  block
+                  @click="handleAuditSave(record)"
+                >
+                  保存
+                </a-button>
+                 <a-button
+                  v-hasNoPermission="['dca:audit']"
                   style="width:50%;padding-left:2px;padding-right:2px;"
                   type="dashed"
                   block
@@ -278,6 +287,7 @@
                   通过
                 </a-button>
                 <a-button
+                style="width:50%;padding-left:2px;padding-right:2px;"
                   v-hasNoPermission="['dca:audit']"
                   type="danger"
                   block
@@ -526,8 +536,8 @@ export default {
     handleAuditNext (record) {
       let that = this
       this.$confirm({
-        title: '确定审核通过此记录?',
-        content: '当您点击确定按钮后，此记录将进入下一个审核人',
+        title: '确定保存通过此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
         centered: true,
         onOk () {
           let jsonStr = JSON.stringify(record)
@@ -538,9 +548,36 @@ export default {
             auditState: record.auditState
           }).then(() => {
             //this.reset()
-            that.$message.success('审核成功')
-            that.fetch()
-            that.freshTabs()
+            that.$message.success('保存成功')
+            that.search()
+           // that.freshTabs()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
+    handleAuditSave (record) {
+      let that = this
+      this.$confirm({
+        title: '确定保存通过此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
+        centered: true,
+        onOk () {
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBQualification/updateNew', {
+            jsonStr: jsonStr,
+            state: 1,
+            auditState: -1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+           // that.search()
+           // that.freshTabs()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -713,7 +750,7 @@ export default {
         }, {
           title: '初审状态',
           dataIndex: 'auditState',
-          width: 100,
+          width: 120,
           customRender: (text, row, index) => {
             switch (text) {
               case 0:
@@ -757,7 +794,7 @@ export default {
           title: '审核',
           key: 'action',
           scopedSlots: { customRender: 'action' },
-          width: 120
+          width: 150
         }]
     }
   }

@@ -501,6 +501,7 @@ export default {
        if(dcaBUser.xrgwjbprsj ==''){
            dcaBUser.xrgwjbprsj= null
          }
+       //  delete dcaBUser.birthday //日期总是少一天
           this.$put('dcaBUser', {
             ...dcaBUser
           }).then(() => {

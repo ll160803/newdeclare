@@ -68,6 +68,9 @@ public class DcaBPatentServiceImpl extends ServiceImpl<DcaBPatentMapper, DcaBPat
             if (dcaBPatent.getState() != null) {
                 queryWrapper.eq(DcaBPatent::getState, dcaBPatent.getState());
             }
+            if (dcaBPatent.getAuditState() != null && (dcaBPatent.getAuditState() >= 0)) {
+                queryWrapper.eq(DcaBPatent::getAuditState, dcaBPatent.getAuditState());
+            }
             if (StringUtils.isNotBlank(dcaBPatent.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBPatent.getCreateTimeTo())) {
                 queryWrapper
                         .ge(DcaBPatent::getCreateTime, dcaBPatent.getCreateTimeFrom())

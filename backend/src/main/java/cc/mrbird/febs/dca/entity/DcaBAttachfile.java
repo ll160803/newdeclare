@@ -2,6 +2,7 @@ package cc.mrbird.febs.dca.entity;
 
 import java.time.LocalDateTime;
 
+import cc.mrbird.febs.common.converter.AuditStateConverter;
 import cc.mrbird.febs.common.converter.BooleanConverter;
 import cc.mrbird.febs.common.converter.StateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -86,6 +87,12 @@ public class DcaBAttachfile implements Serializable {
      */
     @ExcelField(value = "状态", writeConverter = StateConverter.class)
     private Integer state;
+
+    /**
+     * 审核状态
+     */
+    @ExcelField(value = "审核状态", writeConverter = AuditStateConverter.class)
+    private Integer auditState;
 
     /**
      * 是否删除

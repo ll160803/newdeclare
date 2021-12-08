@@ -113,12 +113,20 @@ public void addDcaBTeacherqualifyCustom(@Valid String jsonStr,int state)throws F
         }
 @Log("审核/按钮")
 @PostMapping("updateNew")
-public void updateNewDcaBTeacherqualify(@Valid String jsonStr ,int state )throws FebsException{
+public void updateNewDcaBTeacherqualify(@Valid String jsonStr ,int state , int auditState)throws FebsException{
         try{
         User currentUser= FebsUtil.getCurrentUser();
     DcaBTeacherqualify dcaBTeacherqualify= JSON.parseObject(jsonStr, new TypeReference<DcaBTeacherqualify>() {
         });
     dcaBTeacherqualify.setState(state);
+            if (auditState >= 0) {
+                if (state == 2) {
+                    dcaBTeacherqualify.setAuditState(0);
+                } else {
+                    dcaBTeacherqualify.setAuditState(auditState + 1);
+                }
+
+            }
     dcaBTeacherqualify.setAuditMan(currentUser.getUsername());
     dcaBTeacherqualify.setAuditManName(currentUser.getRealname());
     dcaBTeacherqualify.setAuditDate(DateUtil.date());

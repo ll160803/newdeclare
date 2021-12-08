@@ -115,12 +115,20 @@ public void addDcaBAttachfileCustom(@Valid String jsonStr,int state)throws FebsE
         }
 @Log("审核/按钮")
 @PostMapping("updateNew")
-public void updateNewDcaBAttachfile(@Valid String jsonStr ,int state )throws FebsException{
+public void updateNewDcaBAttachfile(@Valid String jsonStr ,int state , int auditState)throws FebsException{
         try{
         User currentUser= FebsUtil.getCurrentUser();
     DcaBAttachfile dcaBAttachfile= JSON.parseObject(jsonStr, new TypeReference<DcaBAttachfile>() {
         });
     dcaBAttachfile.setState(state);
+            if (auditState >= 0) {
+                if (state == 2) {
+                    dcaBAttachfile.setAuditState(0);
+                } else {
+                    dcaBAttachfile.setAuditState(auditState + 1);
+                }
+
+            }
     dcaBAttachfile.setAuditMan(currentUser.getUsername());
     dcaBAttachfile.setAuditManName(currentUser.getRealname());
     dcaBAttachfile.setAuditDate(DateUtil.date());

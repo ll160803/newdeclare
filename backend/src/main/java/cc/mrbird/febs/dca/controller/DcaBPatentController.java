@@ -114,12 +114,20 @@ public void addDcaBPatentCustom(@Valid String jsonStr,int state)throws FebsExcep
         }
 @Log("审核/按钮")
 @PostMapping("updateNew")
-public void updateNewDcaBPatent(@Valid String jsonStr ,int state )throws FebsException{
+public void updateNewDcaBPatent(@Valid String jsonStr ,int state , int auditState)throws FebsException{
         try{
         User currentUser= FebsUtil.getCurrentUser();
     DcaBPatent dcaBPatent= JSON.parseObject(jsonStr, new TypeReference<DcaBPatent>() {
         });
     dcaBPatent.setState(state);
+            if (auditState >= 0) {
+                if (state == 2) {
+                    dcaBPatent.setAuditState(0);
+                } else {
+                    dcaBPatent.setAuditState(auditState + 1);
+                }
+
+            }
     dcaBPatent.setAuditMan(currentUser.getUsername());
     dcaBPatent.setAuditManName(currentUser.getRealname());
     dcaBPatent.setAuditDate(DateUtil.date());

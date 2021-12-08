@@ -116,12 +116,20 @@ public class DcaBPrizeorpunishController extends BaseController {
 
     @Log("审核/按钮")
     @PostMapping("updateNew")
-    public void updateNewDcaBPrizeorpunish(@Valid String jsonStr, int state) throws FebsException {
+    public void updateNewDcaBPrizeorpunish(@Valid String jsonStr, int state, int auditState) throws FebsException {
         try {
             User currentUser = FebsUtil.getCurrentUser();
             DcaBPrizeorpunish dcaBPrizeorpunish = JSON.parseObject(jsonStr, new TypeReference<DcaBPrizeorpunish>() {
             });
             dcaBPrizeorpunish.setState(state);
+            if (auditState >= 0) {
+                if (state == 2) {
+                    dcaBPrizeorpunish.setAuditState(0);
+                } else {
+                    dcaBPrizeorpunish.setAuditState(auditState + 1);
+                }
+
+            }
 
             dcaBPrizeorpunish.setAuditMan(currentUser.getUsername());
             dcaBPrizeorpunish.setAuditManName(currentUser.getRealname());
@@ -194,8 +202,8 @@ public class DcaBPrizeorpunishController extends BaseController {
     }
 
     @PostMapping("excel")
-    public void export(QueryRequest request, DcaBPrizeorpunish dcaBSciencesearch,String dataJson,HttpServletResponse response)throws FebsException{
-        try{
+    public void export(QueryRequest request, DcaBPrizeorpunish dcaBSciencesearch, String dataJson, HttpServletResponse response) throws FebsException {
+        try {
             request.setPageNum(1);
             request.setPageSize(10000);
             User currentUser = FebsUtil.getCurrentUser();
@@ -203,17 +211,18 @@ public class DcaBPrizeorpunishController extends BaseController {
             dcaBSciencesearch.setIsDeletemark(1);
             request.setSortField("user_account asc,state asc,display_Index");
             request.setSortOrder("ascend");
-            List<DcaBPrizeorpunish> dcaBSciencepublishList=  this.iDcaBPrizeorpunishService.findDcaBPrizeorpunishs(request, dcaBSciencesearch).getRecords();
+            List<DcaBPrizeorpunish> dcaBSciencepublishList = this.iDcaBPrizeorpunishService.findDcaBPrizeorpunishs(request, dcaBSciencesearch).getRecords();
 
 
             //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
-            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
-        }catch(Exception e){
-            message="导出Excel失败";
-            log.error(message,e);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList, dataJson, "");
+        } catch (Exception e) {
+            message = "导出Excel失败";
+            log.error(message, e);
             throw new FebsException(message);
         }
     }
+
     @GetMapping("/{id}")
     public DcaBPrizeorpunish detail(@NotBlank(message = "{required}") @PathVariable String id) {
         DcaBPrizeorpunish dcaBPrizeorpunish = this.iDcaBPrizeorpunishService.getById(id);

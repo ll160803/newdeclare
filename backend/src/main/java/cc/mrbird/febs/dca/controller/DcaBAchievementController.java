@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
  * @author viki
  * @since 2020-12-15
  */
@@ -41,165 +40,169 @@ import java.util.Map;
 @RestController
 @RequestMapping("dcaBAchievement")
 
-public class DcaBAchievementController extends BaseController{
+public class DcaBAchievementController extends BaseController {
 
-private String message;
-@Autowired
-public IDcaBAchievementService iDcaBAchievementService;
+    private String message;
+    @Autowired
+    public IDcaBAchievementService iDcaBAchievementService;
 
 
-/**
- * 分页查询数据
- *
- * @param  request 分页信息
- * @param dcaBAchievement 查询条件
- * @return
- */
-@GetMapping
-@RequiresPermissions("dcaBAchievement:view")
-public Map<String, Object> List(QueryRequest request, DcaBAchievement dcaBAchievement){
+    /**
+     * 分页查询数据
+     *
+     * @param request         分页信息
+     * @param dcaBAchievement 查询条件
+     * @return
+     */
+    @GetMapping
+    @RequiresPermissions("dcaBAchievement:view")
+    public Map<String, Object> List(QueryRequest request, DcaBAchievement dcaBAchievement) {
         return getDataTable(this.iDcaBAchievementService.findDcaBAchievements(request, dcaBAchievement));
-        }
-@GetMapping("custom")
-public Map<String, Object> ListCustom(QueryRequest request, DcaBAchievement dcaBAchievement){
-        User currentUser= FebsUtil.getCurrentUser();
-    dcaBAchievement.setUserAccount(currentUser.getUsername());
-    dcaBAchievement.setIsDeletemark(1);
+    }
+
+    @GetMapping("custom")
+    public Map<String, Object> ListCustom(QueryRequest request, DcaBAchievement dcaBAchievement) {
+        User currentUser = FebsUtil.getCurrentUser();
+        dcaBAchievement.setUserAccount(currentUser.getUsername());
+        dcaBAchievement.setIsDeletemark(1);
         request.setPageSize(100);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBAchievementService.findDcaBAchievements(request, dcaBAchievement));
-        }
-@GetMapping("audit")
-public Map<String, Object> List2(QueryRequest request, DcaBAchievement dcaBAchievement){
-        User currentUser= FebsUtil.getCurrentUser();
-    dcaBAchievement.setIsDeletemark(1);
+    }
+
+    @GetMapping("audit")
+    public Map<String, Object> List2(QueryRequest request, DcaBAchievement dcaBAchievement) {
+        User currentUser = FebsUtil.getCurrentUser();
+        dcaBAchievement.setIsDeletemark(1);
         request.setSortField("user_account asc,state asc,display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBAchievementService.findDcaBAchievements(request, dcaBAchievement));
+    }
+
+    @Log("新增/按钮")
+    @PostMapping("addNew")
+    public void addDcaBAchievementCustom(@Valid String jsonStr, int state) throws FebsException {
+        try {
+            User currentUser = FebsUtil.getCurrentUser();
+            List<DcaBAchievement> list = JSON.parseObject(jsonStr, new TypeReference<List<DcaBAchievement>>() {
+            });
+            int countid = 0;
+            /**
+             * 先删除数据，然后再添加
+             */
+            this.iDcaBAchievementService.deleteByuseraccount(currentUser.getUsername());
+            int display = this.iDcaBAchievementService.getMaxDisplayIndexByuseraccount(currentUser.getUsername()) + 1;
+            for (DcaBAchievement dcaBAchievement : list
+            ) {
+                if (dcaBAchievement.getState() != null && dcaBAchievement.getState().equals(3)) {
+                    dcaBAchievement.setState(3);
+                } else {
+                    dcaBAchievement.setState(state);
+                }
+                dcaBAchievement.setDisplayIndex(display);
+                display += 1;
+                dcaBAchievement.setCreateUserId(currentUser.getUserId());
+                dcaBAchievement.setUserAccount(currentUser.getUsername());
+                dcaBAchievement.setUserAccountName(currentUser.getRealname());
+                this.iDcaBAchievementService.createDcaBAchievement(dcaBAchievement);
+            }
+        } catch (Exception e) {
+            message = "新增/按钮失败";
+            log.error(message, e);
+            throw new FebsException(message);
         }
-@Log("新增/按钮")
-@PostMapping("addNew")
-public void addDcaBAchievementCustom(@Valid String jsonStr,int state)throws FebsException{
-        try{
-        User currentUser=FebsUtil.getCurrentUser();
-        List<DcaBAchievement> list=JSON.parseObject(jsonStr,new TypeReference<List<DcaBAchievement>>(){
-        });
-        int countid=0;
-        /**
-         * 先删除数据，然后再添加
-         */
-        this.iDcaBAchievementService.deleteByuseraccount(currentUser.getUsername());
-        int display=this.iDcaBAchievementService.getMaxDisplayIndexByuseraccount(currentUser.getUsername())+1;
-        for(DcaBAchievement dcaBAchievement:list
-        ){
-        if(dcaBAchievement.getState()!=null&&dcaBAchievement.getState().equals(3)) {
-    dcaBAchievement.setState(3);
+    }
+
+    @Log("审核/按钮")
+    @PostMapping("updateNew")
+    public void updateNewDcaBAchievement(@Valid String jsonStr, int state, int auditState) throws FebsException {
+        try {
+            User currentUser = FebsUtil.getCurrentUser();
+            DcaBAchievement dcaBAchievement = JSON.parseObject(jsonStr, new TypeReference<DcaBAchievement>() {
+            });
+            dcaBAchievement.setState(state);
+
+            if (auditState >= 0) {
+                if (state == 2) {
+                    dcaBAchievement.setAuditState(0);
+                } else {
+                    dcaBAchievement.setAuditState(auditState + 1);
+                }
+
+            }
+            dcaBAchievement.setAuditMan(currentUser.getUsername());
+            dcaBAchievement.setAuditManName(currentUser.getRealname());
+            dcaBAchievement.setAuditDate(DateUtil.date());
+            this.iDcaBAchievementService.updateDcaBAchievement(dcaBAchievement);
+
+        } catch (Exception e) {
+            message = "审核/按钮失败";
+            log.error(message, e);
+            throw new FebsException(message);
         }
-        else{
-    dcaBAchievement.setState(state);
-        }
-    dcaBAchievement.setDisplayIndex(display);
-        display+=1;
-    dcaBAchievement.setCreateUserId(currentUser.getUserId());
-    dcaBAchievement.setUserAccount(currentUser.getUsername());
-    dcaBAchievement.setUserAccountName(currentUser.getRealname());
-        this.iDcaBAchievementService.createDcaBAchievement(dcaBAchievement);
-        }
-        }catch(Exception e){
-        message="新增/按钮失败";
-        log.error(message,e);
-        throw new FebsException(message);
-        }
-        }
-@Log("审核/按钮")
-@PostMapping("updateNew")
-public void updateNewDcaBAchievement(@Valid String jsonStr ,int state )throws FebsException{
-        try{
-        User currentUser= FebsUtil.getCurrentUser();
-    DcaBAchievement dcaBAchievement= JSON.parseObject(jsonStr, new TypeReference<DcaBAchievement>() {
-        });
-    dcaBAchievement.setState(state);
+    }
+
     /**
-        if (auditState >= 0) {
-        if(state==2){
-    dcaBAchievement.setAuditState(0);
+     * 添加
+     *
+     * @param dcaBAchievement
+     * @return
+     */
+    @Log("新增/按钮")
+    @PostMapping
+    public void addDcaBAchievement(@Valid DcaBAchievement dcaBAchievement) throws FebsException {
+        try {
+            User currentUser = FebsUtil.getCurrentUser();
+            dcaBAchievement.setCreateUserId(currentUser.getUserId());
+            dcaBAchievement.setUserAccount(currentUser.getUsername());
+            this.iDcaBAchievementService.deleteByuseraccount(currentUser.getUsername());
+            this.iDcaBAchievementService.createDcaBAchievement(dcaBAchievement);
+        } catch (Exception e) {
+            message = "新增/按钮失败";
+            log.error(message, e);
+            throw new FebsException(message);
         }
-        else {
-    dcaBAchievement.setAuditState(auditState+1);
-        }
+    }
 
-        }*/
-    dcaBAchievement.setAuditMan(currentUser.getUsername());
-    dcaBAchievement.setAuditManName(currentUser.getRealname());
-    dcaBAchievement.setAuditDate(DateUtil.date());
-        this.iDcaBAchievementService.updateDcaBAchievement(dcaBAchievement);
-
-        }catch(Exception e){
-        message="审核/按钮失败" ;
-        log.error(message,e);
-        throw new FebsException(message);
+    /**
+     * 修改
+     *
+     * @param dcaBAchievement
+     * @return
+     */
+    @Log("修改")
+    @PutMapping
+    public void updateDcaBAchievement(@Valid DcaBAchievement dcaBAchievement) throws FebsException {
+        try {
+            User currentUser = FebsUtil.getCurrentUser();
+            dcaBAchievement.setModifyUserId(currentUser.getUserId());
+            this.iDcaBAchievementService.updateDcaBAchievement(dcaBAchievement);
+        } catch (Exception e) {
+            message = "修改失败";
+            log.error(message, e);
+            throw new FebsException(message);
         }
-        }
-
-/**
- * 添加
- * @param  dcaBAchievement
- * @return
- */
-@Log("新增/按钮")
-@PostMapping
-public void addDcaBAchievement(@Valid DcaBAchievement dcaBAchievement)throws FebsException{
-        try{
-        User currentUser=FebsUtil.getCurrentUser();
-    dcaBAchievement.setCreateUserId(currentUser.getUserId());
-    dcaBAchievement.setUserAccount(currentUser.getUsername());
-        this.iDcaBAchievementService.deleteByuseraccount(currentUser.getUsername());
-        this.iDcaBAchievementService.createDcaBAchievement(dcaBAchievement);
-        }catch(Exception e){
-        message="新增/按钮失败";
-        log.error(message,e);
-        throw new FebsException(message);
-        }
-        }
-
-/**
- * 修改
- * @param dcaBAchievement
- * @return
- */
-@Log("修改")
-@PutMapping
-public void updateDcaBAchievement(@Valid DcaBAchievement dcaBAchievement)throws FebsException{
-        try{
-        User currentUser=FebsUtil.getCurrentUser();
-    dcaBAchievement.setModifyUserId(currentUser.getUserId());
-        this.iDcaBAchievementService.updateDcaBAchievement(dcaBAchievement);
-        }catch(Exception e){
-        message="修改失败";
-        log.error(message,e);
-        throw new FebsException(message);
-        }
-        }
+    }
 
 
-@Log("删除")
-@DeleteMapping("/{ids}")
-@RequiresPermissions("dcaBAchievement:delete")
-public void deleteDcaBAchievements(@NotBlank(message = "{required}") @PathVariable String ids)throws FebsException{
-        try{
-        String[]arr_ids=ids.split(StringPool.COMMA);
-        this.iDcaBAchievementService.deleteDcaBAchievements(arr_ids);
-        }catch(Exception e){
-        message="删除失败";
-        log.error(message,e);
-        throw new FebsException(message);
+    @Log("删除")
+    @DeleteMapping("/{ids}")
+    @RequiresPermissions("dcaBAchievement:delete")
+    public void deleteDcaBAchievements(@NotBlank(message = "{required}") @PathVariable String ids) throws FebsException {
+        try {
+            String[] arr_ids = ids.split(StringPool.COMMA);
+            this.iDcaBAchievementService.deleteDcaBAchievements(arr_ids);
+        } catch (Exception e) {
+            message = "删除失败";
+            log.error(message, e);
+            throw new FebsException(message);
         }
-        }
+    }
 
     @PostMapping("excel")
-    public void export(QueryRequest request, DcaBAchievement dcaBSciencesearch,String dataJson,HttpServletResponse response)throws FebsException{
-        try{
+    public void export(QueryRequest request, DcaBAchievement dcaBSciencesearch, String dataJson, HttpServletResponse response) throws FebsException {
+        try {
             request.setPageNum(1);
             request.setPageSize(10000);
             User currentUser = FebsUtil.getCurrentUser();
@@ -207,20 +210,21 @@ public void deleteDcaBAchievements(@NotBlank(message = "{required}") @PathVariab
             dcaBSciencesearch.setIsDeletemark(1);
             request.setSortField("user_account asc,state asc,display_Index");
             request.setSortOrder("ascend");
-            List<DcaBAchievement> dcaBSciencepublishList=  this.iDcaBAchievementService.findDcaBAchievements(request, dcaBSciencesearch).getRecords();
+            List<DcaBAchievement> dcaBSciencepublishList = this.iDcaBAchievementService.findDcaBAchievements(request, dcaBSciencesearch).getRecords();
 
 
             //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
-            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
-        }catch(Exception e){
-            message="导出Excel失败";
-            log.error(message,e);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList, dataJson, "");
+        } catch (Exception e) {
+            message = "导出Excel失败";
+            log.error(message, e);
             throw new FebsException(message);
         }
     }
-@GetMapping("/{id}")
-public DcaBAchievement detail(@NotBlank(message = "{required}") @PathVariable String id){
-    DcaBAchievement dcaBAchievement=this.iDcaBAchievementService.getById(id);
+
+    @GetMapping("/{id}")
+    public DcaBAchievement detail(@NotBlank(message = "{required}") @PathVariable String id) {
+        DcaBAchievement dcaBAchievement = this.iDcaBAchievementService.getById(id);
         return dcaBAchievement;
-        }
-        }
+    }
+}

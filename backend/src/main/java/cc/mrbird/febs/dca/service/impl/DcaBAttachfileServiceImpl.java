@@ -65,6 +65,9 @@ public IPage<DcaBAttachfile> findDcaBAttachfiles(QueryRequest request, DcaBAttac
                                 if (dcaBAttachfile.getState()!=null) {
                                 queryWrapper.eq(DcaBAttachfile::getState, dcaBAttachfile.getState());
                                 }
+            if (dcaBAttachfile.getAuditState() != null && (dcaBAttachfile.getAuditState() >= 0)) {
+                queryWrapper.eq(DcaBAttachfile::getAuditState, dcaBAttachfile.getAuditState());
+            }
                                 if (StringUtils.isNotBlank(dcaBAttachfile.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBAttachfile.getCreateTimeTo())) {
                                 queryWrapper
                                 .ge(DcaBAttachfile::getCreateTime, dcaBAttachfile.getCreateTimeFrom())

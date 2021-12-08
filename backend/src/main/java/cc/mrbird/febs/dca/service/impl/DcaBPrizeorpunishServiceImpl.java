@@ -68,6 +68,9 @@ public class DcaBPrizeorpunishServiceImpl extends ServiceImpl<DcaBPrizeorpunishM
             if (dcaBPrizeorpunish.getState() != null) {
                 queryWrapper.eq(DcaBPrizeorpunish::getState, dcaBPrizeorpunish.getState());
             }
+            if (dcaBPrizeorpunish.getAuditState() != null && (dcaBPrizeorpunish.getAuditState() >= 0)) {
+                queryWrapper.eq(DcaBPrizeorpunish::getAuditState, dcaBPrizeorpunish.getAuditState());
+            }
             if (StringUtils.isNotBlank(dcaBPrizeorpunish.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBPrizeorpunish.getCreateTimeTo())) {
                 queryWrapper
                         .ge(DcaBPrizeorpunish::getCreateTime, dcaBPrizeorpunish.getCreateTimeFrom())

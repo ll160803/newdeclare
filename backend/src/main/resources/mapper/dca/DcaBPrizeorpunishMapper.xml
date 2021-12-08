@@ -17,6 +17,7 @@
                     <result column="pp_category" property="ppCategory"/>
                     <result column="pp_content" property="ppContent"/>
                     <result column="state" property="state"/>
+            <result column="audit_state" property="auditState"/>
                     <result column="IS_DELETEMARK" property="isDeletemark"/>
                     <result column="CREATE_TIME" property="createTime"/>
                     <result column="MODIFY_TIME" property="modifyTime"/>
@@ -31,7 +32,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, file_id, display_index, file_url, user_account_name, user_account, pp_start_time, pp_end_time, pp_lb, pp_partment, pp_category, pp_content, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
+        id, file_id, display_index, file_url, user_account_name, user_account, pp_start_time, pp_end_time, pp_lb, pp_partment, pp_category, pp_content, state, audit_state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
     </sql>
     <update id="updateDcaBPrizeorpunish" parameterType="cc.mrbird.febs.dca.entity.DcaBPrizeorpunish">
         update dca_b_prizeorpunish
@@ -48,6 +49,7 @@
 <if test="ppCategory != null">pp_category=#{ppCategory},</if>
 <if test="ppContent != null">pp_content=#{ppContent},</if>
 <if test="state != null">state=#{state},</if>
+            <if test="auditState != null">audit_state=#{auditState},</if>
 <if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
 <if test="createTime != null">CREATE_TIME=#{createTime},</if>
 <if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
@@ -88,6 +90,7 @@
             <if test="dcaBPrizeorpunish.ppCategory != null and dcaBPrizeorpunish.ppCategory != ''"> and dca_b_prizeorpunish.pp_category like concat('%', #{ dcaBPrizeorpunish.ppCategory} ,'%')</if>
             <if test="dcaBPrizeorpunish.ppContent != null and dcaBPrizeorpunish.ppContent != ''"> and dca_b_prizeorpunish.pp_content like concat('%', #{ dcaBPrizeorpunish.ppContent} ,'%')</if>
         <if test="dcaBPrizeorpunish.state != null"> and dca_b_prizeorpunish.state =#{ dcaBPrizeorpunish.state} </if>
+        <if test="dcaBPrizeorpunish.auditState != null"> and dca_b_prizeorpunish.audit_state =#{ dcaBPrizeorpunish.auditState} </if>
         <if test="dcaBPrizeorpunish.isDeletemark != null"> and dca_b_prizeorpunish.IS_DELETEMARK =#{ dcaBPrizeorpunish.isDeletemark} </if>
         <if test="dcaBPrizeorpunish.createTimeFrom!= null">
             AND dca_b_prizeorpunish.CREATE_TIME <![CDATA[ >= ]]>  #{dcaBPrizeorpunish.createTimeFrom}

@@ -76,6 +76,9 @@ public class DcaBAchievementServiceImpl extends ServiceImpl<DcaBAchievementMappe
                         .ge(DcaBAchievement::getCreateTime, dcaBAchievement.getCreateTimeFrom())
                         .le(DcaBAchievement::getCreateTime, dcaBAchievement.getCreateTimeTo());
             }
+            if (dcaBAchievement.getAuditState() != null && (dcaBAchievement.getAuditState() >= 0)) {
+                queryWrapper.eq(DcaBAchievement::getAuditState, dcaBAchievement.getAuditState());
+            }
             if (dcaBAchievement.getAuditXuhaoS() != null && (dcaBAchievement.getAuditXuhaoS() > 0)) {
                 if (dcaBAchievement.getAuditXuhaoE() == null || dcaBAchievement.getAuditXuhaoE().equals(0)) {
                     dcaBAchievement.setAuditXuhaoE(dcaBAchievement.getAuditXuhaoS());

@@ -67,6 +67,9 @@ public class DcaBTeacherqualifyServiceImpl extends ServiceImpl<DcaBTeacherqualif
             if (dcaBTeacherqualify.getState() != null) {
                 queryWrapper.eq(DcaBTeacherqualify::getState, dcaBTeacherqualify.getState());
             }
+            if (dcaBTeacherqualify.getAuditState() != null && (dcaBTeacherqualify.getAuditState() >= 0)) {
+                queryWrapper.eq(DcaBTeacherqualify::getAuditState, dcaBTeacherqualify.getAuditState());
+            }
             if (StringUtils.isNotBlank(dcaBTeacherqualify.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBTeacherqualify.getCreateTimeTo())) {
                 queryWrapper
                         .ge(DcaBTeacherqualify::getCreateTime, dcaBTeacherqualify.getCreateTimeFrom())

@@ -19,6 +19,7 @@
                     <result column="is_zhuanrang" property="isZhuanrang"/>
                     <result column="patent_good" property="patentGood"/>
                     <result column="state" property="state"/>
+            <result column="audit_state" property="auditState"/>
                     <result column="IS_DELETEMARK" property="isDeletemark"/>
                     <result column="CREATE_TIME" property="createTime"/>
                     <result column="MODIFY_TIME" property="modifyTime"/>
@@ -33,7 +34,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, file_id, display_index, file_url, user_account_name, user_account, patent_code, patent_name, patent_type, patent_date, patent_ranknum, is_authority, is_zhuanrang, patent_good, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
+        id, file_id, display_index, file_url, user_account_name, user_account, patent_code, patent_name, patent_type, patent_date, patent_ranknum, is_authority, is_zhuanrang, patent_good, state, audit_state,  IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
     </sql>
     <update id="updateDcaBPatent" parameterType="cc.mrbird.febs.dca.entity.DcaBPatent">
         update dca_b_patent
@@ -52,6 +53,7 @@
 <if test="isZhuanrang != null">is_zhuanrang=#{isZhuanrang},</if>
 <if test="patentGood != null">patent_good=#{patentGood},</if>
 <if test="state != null">state=#{state},</if>
+            <if test="auditState != null">audit_state=#{auditState},</if>
 <if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
 <if test="createTime != null">CREATE_TIME=#{createTime},</if>
 <if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
@@ -88,7 +90,8 @@
             <if test="dcaBPatent.isAuthority != null and dcaBPatent.isAuthority != ''"> and dcaBPatent.is_authority like concat('%', #{ dcaBPatent.isAuthority} ,'%')</if>
             <if test="dcaBPatent.isZhuanrang != null and dcaBPatent.isZhuanrang != ''"> and dcaBPatent.is_zhuanrang like concat('%', #{ dcaBPatent.isZhuanrang} ,'%')</if>
             <if test="dcaBPatent.patentGood != null and dcaBPatent.patentGood != ''"> and dcaBPatent.patent_good like concat('%', #{ dcaBPatent.patentGood} ,'%')</if>
-        <if test="dcaBPatent.state != null"> and dcaBPatent.state =#{ dcaBPatent.state} </if>
+        <if test="dcaBPatent.state != null"> and dca_B_Patent.state =#{ dcaBPatent.state} </if>
+        <if test="dcaBPatent.auditState != null"> and dca_B_Patent.audit_state =#{ dcaBPatent.auditState} </if>
         <if test="dcaBPatent.isDeletemark != null"> and dcaBPatent.IS_DELETEMARK =#{ dcaBPatent.isDeletemark} </if>
         <if test="dcaBPatent.createTimeFrom!= null">
             AND dcaBPatent.CREATE_TIME <![CDATA[ >= ]]>  #{dcaBPatent.createTimeFrom}

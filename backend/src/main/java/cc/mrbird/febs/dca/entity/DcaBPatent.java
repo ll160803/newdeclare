@@ -3,6 +3,7 @@ package cc.mrbird.febs.dca.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import cc.mrbird.febs.common.converter.AuditStateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
@@ -123,6 +124,12 @@ public class DcaBPatent implements Serializable {
      */
     @ExcelField(value = "状态")
     private Integer state;
+
+    /**
+     * 审核状态
+     */
+    @ExcelField(value = "审核状态", writeConverter = AuditStateConverter.class)
+    private Integer auditState;
 
     /**
      * 是否删除

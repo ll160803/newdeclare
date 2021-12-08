@@ -1,6 +1,8 @@
 package cc.mrbird.febs.dca.entity;
 
 import java.time.LocalDateTime;
+
+import cc.mrbird.febs.common.converter.AuditStateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
@@ -116,6 +118,12 @@ private static final long serialVersionUID=1L;
      */
             @ExcelField(value ="状态")
     private Integer state;
+
+    /**
+     * 审核状态
+     */
+    @ExcelField(value = "审核状态", writeConverter = AuditStateConverter.class)
+    private Integer auditState;
 
     /**
      * 是否删除

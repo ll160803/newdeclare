@@ -14,17 +14,27 @@ import com.ruiyun.jvppeteer.options.LaunchOptionsBuilder;
 import com.ruiyun.jvppeteer.options.PDFOptions;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class TestDate {
 
-    public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
-        RfcNOC rfcNOC =new RfcNOC();
-        List<BackInfo> backInfoList=  rfcNOC.GetInfoList("9457A555D8DC1EDBB2CAF0A0DD31681A");
-        System.out.print(backInfoList.get(0).getNACHN());
+    public static void main(String[] args) throws IOException, InterruptedException, ParseException, ExecutionException {
+        String stringDate = "Sun Sep 15 1991 00:00:00 GMT+0800";
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM ddHH:mm:ss 'GMT' yyyy", Locale.US);
+
+        Date date =sdf.parse(stringDate);
+
+//     System.out.println(date.toString());
+
+        sdf=new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
+
+        System.out.println(sdf.format(date));
     }
 }

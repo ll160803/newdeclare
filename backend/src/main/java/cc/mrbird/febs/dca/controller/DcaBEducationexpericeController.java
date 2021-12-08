@@ -114,12 +114,20 @@ public void addDcaBEducationexpericeCustom(@Valid String jsonStr,int state)throw
         }
 @Log("审核/按钮")
 @PostMapping("updateNew")
-public void updateNewDcaBEducationexperice(@Valid String jsonStr ,int state )throws FebsException{
+public void updateNewDcaBEducationexperice(@Valid String jsonStr ,int state, int auditState )throws FebsException{
         try{
         User currentUser= FebsUtil.getCurrentUser();
     DcaBEducationexperice dcaBEducationexperice= JSON.parseObject(jsonStr, new TypeReference<DcaBEducationexperice>() {
         });
     dcaBEducationexperice.setState(state);
+            if (auditState >= 0) {
+                if (state == 2) {
+                    dcaBEducationexperice.setAuditState(0);
+                } else {
+                    dcaBEducationexperice.setAuditState(auditState + 1);
+                }
+
+            }
     dcaBEducationexperice.setAuditMan(currentUser.getUsername());
     dcaBEducationexperice.setAuditManName(currentUser.getRealname());
     dcaBEducationexperice.setAuditDate(DateUtil.date());
