@@ -346,116 +346,13 @@ private static final long serialVersionUID=1L;
         }
         return  na;
     }
-    private  transient  String gwdj;
+    /**
+     * 岗位等级
+     */
+    @ExcelField(value ="岗位等级")
+    private String gwdj;
 
-    public String getGwdj(){
-        String name="";
-        if(npPositionName==null) {
-            return "";
-        }
-        switch (npPositionName) {
-            case "教授主任医师":
-                name = "正高";
-                break;
-            case "教授":
-                name = "正高";
-                break;
-            case "主任医师":
-                name = "正高";
-                break;
-            case "研究员":
-                name = "正高";
-                break;
-            case "主任护师":
-                name = "正高";
-                break;
-            case "主任技师":
-                name = "正高";
-                break;
-            case "主任药师":
-                name = "正高";
-                break;
-            case "教授级高级工程师":
-                name = "正高";
-                break;
-            case "编审":
-                name = "正高";
-                break;
-            case "副教授副主任医师":
-                name = "副高";
-                break;
-            case "副教授":
-                name = "副高";
-                break;
-            case "副主任医师":
-                name = "副高";
-                break;
-            case "副研究员":
-                name = "副高";
-                break;
-            case "副主任护师":
-                name = "副高";
-                break;
-            case "副主任技师":
-                name = "副高";
-                break;
-            case "副主任药师":
-                name = "副高";
-                break;
-            case "高级工程师":
-                name = "副高";
-                break;
-            case "副编审":
-                name = "副高";
-                break;
-        }
-        List<String> listCj=new ArrayList<String>(){
-            {
-                this.add("住院医师");
-                this.add("药师");
 
-                this.add("护师");
-
-                this.add("技师");
-
-                this.add("图书管理员");
-
-                this.add("会计员");
-
-                this.add("助理编辑");
-                this.add("助理工程师");
-                this.add("助理馆员");
-                this.add("助理会计师");
-                this.add("助理研究员");
-            }
-        };
-        if(listCj.contains(npPositionName)){
-            return "初级";
-        }
-
-        List<String> listZC=new ArrayList<String>(){
-            {
-                this.add("主治医师");
-                this.add("主管药师");
-                this.add("主管护师");
-                this.add("主管技师");
-                this.add("编辑");
-                this.add("工程师");
-                this.add("馆员");
-                this.add("会计师");
-                this.add("经济师");
-                this.add("审计师");
-                this.add("助理研究员");
-            }
-        };
-        if(listZC.contains(npPositionName)){
-            return "中级";
-        }
-        if(npPositionName.equals("二级")||npPositionName.equals("三级")){
-            return  "二三级";
-        }
-        return name;
-    }
 
     /**
      * 员工组

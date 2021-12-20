@@ -28,5 +28,5 @@ public interface IDcaBCopySciachievementService extends IService<DcaBCopySciachi
 
         void deleteDcaBCopySciachievements(String[]Ids);
 
-        List<DcaBCopySciachievement> getAll(String userAccount,String dcaYear);
+        List<DcaBCopySciachievement> getAll(String userAccount,String dcaYear, String gwDj);
         }

@@ -28,5 +28,5 @@ public interface IDcaBCopyParttimejobService extends IService<DcaBCopyParttimejo
 
         void deleteDcaBCopyParttimejobs(String[]Ids);
 
-        List<DcaBCopyParttimejob> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyParttimejob> getAll(String userAccount,String dcaYear, String gwDj);
         }

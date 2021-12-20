@@ -141,7 +141,7 @@ public class DcaBCopyUserController extends BaseController {
             String filePath = "D://scm//uploadPdf//" + UUID.randomUUID().toString() + ".pdf";
             String filePath2 = "D://scm//uploadPdf//" + UUID.randomUUID().toString() + ".pdf";
             ArrayList<String> mergeAddPdfList = new ArrayList<>();
-            CustomApplyFirst customApplyFirst = this.iDcaBCopyUserService.getPrintPdf(dcaBCopyUser.getUserAccount(), dcaBCopyUser.getDcaYear(),dcaBCopyUser.getNpPositionName());
+            CustomApplyFirst customApplyFirst = this.iDcaBCopyUserService.getPrintPdf(dcaBCopyUser.getUserAccount(), dcaBCopyUser.getDcaYear(),dcaBCopyUser.getNpPositionName(),dcaBCopyUser.getGwdj());
             List<String> npNameList=new ArrayList<>();
             npNameList.add("教授");
             npNameList.add("副教授");
@@ -156,6 +156,9 @@ public class DcaBCopyUserController extends BaseController {
             }
             if (StringUtils.isNotBlank(dcaBCopyUser.getDcaYear())) {
                 queryWrapper.eq(DcaBCopyUser::getDcaYear, dcaBCopyUser.getDcaYear());
+            }
+            if (StringUtils.isNotBlank(dcaBCopyUser.getGwdj())) {
+                queryWrapper.eq(DcaBCopyUser::getGwdj, dcaBCopyUser.getGwdj());
             }
             DcaBCopyUser dbcuser=this.iDcaBCopyUserService.getOne(queryWrapper);
             List<String> xl=new ArrayList<>();
@@ -222,7 +225,7 @@ public class DcaBCopyUserController extends BaseController {
             String filePath = "D://scm//uploadPdf//" + UUID.randomUUID().toString() +".pdf";
             String filePath2 = "D://scm//uploadPdf//" + UUID.randomUUID().toString() + ".pdf";
             ArrayList<String> mergeAddPdfList = new ArrayList<>();
-            CustomApplyFirst customApplyFirst = this.iDcaBCopyUserService.getPrintPdf(dcaBCopyUser.getUserAccount(), dcaBCopyUser.getDcaYear(),dcaBCopyUser.getNpPositionName());
+            CustomApplyFirst customApplyFirst = this.iDcaBCopyUserService.getPrintPdf(dcaBCopyUser.getUserAccount(), dcaBCopyUser.getDcaYear(),dcaBCopyUser.getNpPositionName(),dcaBCopyUser.getGwdj());
 
             pdfDemo.attachPdf(customApplyFirst, filePath2, filePath,  dcaBCopyUser.getDcaYear());
 

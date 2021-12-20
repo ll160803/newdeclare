@@ -28,5 +28,5 @@ public interface IDcaBCopyFivecommentService extends IService<DcaBCopyFivecommen
 
         void deleteDcaBCopyFivecomments(String[]Ids);
 
-        List<DcaBCopyFivecomment> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyFivecomment> getAll(String userAccount,String dcaYear, String gwDj);
         }

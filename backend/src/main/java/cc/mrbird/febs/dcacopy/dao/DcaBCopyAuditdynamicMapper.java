@@ -34,11 +34,11 @@ public interface DcaBCopyAuditdynamicMapper extends BaseMapper<DcaBCopyAuditdyna
                 "\tdca_b_copy_auditdynamic a\n" +
                 "\tRIGHT JOIN dca_d_auditinfo b ON a.audit_titletype = b.field_name \n" +
                 "and \n" +
-                "\ta.dca_year = #{dcaYear} and a.user_account = #{userAccount}\n" +
+                "\ta.dca_year = #{dcaYear} and a.gwdj = #{gwDj} and a.user_account = #{userAccount}\n" +
                 "\t\n" +
                 "ORDER BY\n" +
                 "\tb.display_index ASC")
-        List<DcaBCopyAuditdynamic> getAllByUserAccount(@Param("userAccount") String userAccount,@Param("dcaYear") String dcaYear);
+        List<DcaBCopyAuditdynamic> getAllByUserAccount(@Param("userAccount") String userAccount,@Param("dcaYear") String dcaYear,@Param("gwDj") String gwDj);
 
         @Select("SELECT\n" +
                 "\taudit_result\n" +
@@ -47,6 +47,7 @@ public interface DcaBCopyAuditdynamicMapper extends BaseMapper<DcaBCopyAuditdyna
                 "WHERE\n" +
                 "\tuser_account =  #{userAccount}\n" +
                 "AND audit_titletype = 'j5njxgz'\n" +
-                "AND dca_year = #{dcaYear}")
-   String  getZtkhqk(@Param("userAccount") String userAccount,@Param("dcaYear") String dcaYear);
+                "AND dca_year = #{dcaYear} and gwdj = #{gwDj}"
+        )
+   String  getZtkhqk(@Param("userAccount") String userAccount,@Param("dcaYear") String dcaYear,@Param("gwDj") String gwDj);
         }

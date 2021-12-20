@@ -49,6 +49,9 @@ export default {
     },
     dcaYear: {
       default: ''
+    },
+    gwdj: {
+      default: ''
     }
   },
   computed: {
@@ -108,7 +111,7 @@ export default {
   watch: {
     userAccount () {
       if (this.visibleUserInfo) {
-        this.getUserInfo(this.userAccount,this.dcaYear)
+        this.getUserInfo(this.userAccount,this.dcaYear, this.gwdj)
       }
     }
   },
@@ -134,7 +137,7 @@ export default {
         )
       }
     },
-    getUserInfo (userAccount,dcaYear) {
+    getUserInfo (userAccount,dcaYear,gwdj) {
       if (userAccount != '') {
         let url= 'dcaBAuditdynamic/userAccount';
         if(dcaYear!='') {
@@ -142,7 +145,8 @@ export default {
         }
         this.$get(url, {
           userAccount: userAccount,
-          dcaYear: dcaYear
+          dcaYear: dcaYear,
+          gwdj: gwdj
         }).then((r) => {
           let data = r.data
           this.dataSource = data

@@ -6,6 +6,7 @@
         <resultMap id="BaseResultMap" type="cc.mrbird.febs.dcacopy.entity.DcaBCopyAuditsuggestion">
                     <id column="id" property="id"/>
                     <result column="dca_year" property="dcaYear"/>
+            <result column="gwdj" property="gwdj"/>
                     <result column="file_id" property="fileId"/>
                     <result column="display_index" property="displayIndex"/>
                     <result column="AuditStep" property="AuditStep"/>
@@ -26,7 +27,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, dca_year, file_id, display_index, AuditStep, user_account_name, user_account, pre_goal, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion
+        id,   dca_year, gwdj, file_id, display_index, AuditStep, user_account_name, user_account, pre_goal, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion
     </sql>
     <update id="updateDcaBCopyAuditsuggestion" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopyAuditsuggestion">
         update dca_b_copy_auditsuggestion

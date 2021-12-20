@@ -95,7 +95,7 @@ public void deleteDcaBCopyParttimejobs(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyParttimejob> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyParttimejob> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyParttimejob> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyParttimejob::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyParttimejob> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyParttimejob::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyParttimejob::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

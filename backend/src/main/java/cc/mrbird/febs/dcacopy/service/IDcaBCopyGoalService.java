@@ -28,5 +28,5 @@ public interface IDcaBCopyGoalService extends IService<DcaBCopyGoal> {
 
         void deleteDcaBCopyGoals(String[]Ids);
 
-        List<DcaBCopyGoal> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyGoal> getAll(String userAccount,String dcaYear, String gwDj);
         }

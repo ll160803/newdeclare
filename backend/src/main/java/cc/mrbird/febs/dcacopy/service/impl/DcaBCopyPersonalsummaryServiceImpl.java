@@ -95,7 +95,7 @@ public void deleteDcaBCopyPersonalsummarys(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyPersonalsummary> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyPersonalsummary> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyPersonalsummary> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyPersonalsummary::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyPersonalsummary> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyPersonalsummary::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyPersonalsummary::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

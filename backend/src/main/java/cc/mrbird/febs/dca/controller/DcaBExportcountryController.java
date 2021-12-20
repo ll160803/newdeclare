@@ -113,12 +113,20 @@ public void addDcaBExportcountryCustom(@Valid String jsonStr,int state)throws Fe
         }
 @Log("审核/按钮")
 @PostMapping("updateNew")
-public void updateNewDcaBExportcountry(@Valid String jsonStr ,int state )throws FebsException{
+public void updateNewDcaBExportcountry(@Valid String jsonStr ,int state,int auditState )throws FebsException{
         try{
         User currentUser= FebsUtil.getCurrentUser();
     DcaBExportcountry dcaBExportcountry= JSON.parseObject(jsonStr, new TypeReference<DcaBExportcountry>() {
         });
     dcaBExportcountry.setState(state);
+            if (auditState >= 0) {
+                if (state == 2) {
+                    dcaBExportcountry.setAuditState(0);
+                } else {
+                    dcaBExportcountry.setAuditState(auditState + 1);
+                }
+
+            }
     dcaBExportcountry.setAuditMan(currentUser.getUsername());
     dcaBExportcountry.setAuditManName(currentUser.getRealname());
     dcaBExportcountry.setAuditDate(DateUtil.date());

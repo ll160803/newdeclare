@@ -99,6 +99,7 @@
         :visibleUserInfo="visibleUserInfo_right"
         :userAccount="userAccount_right"
         :dcaYear="deaYear"
+        :gwdj="gwDj"
       ></audit-resultInfo>
     </a-spin>
   </div>
@@ -138,7 +139,8 @@ export default {
       userAccount: '',
       userAccount_right: '',
       visibleUserInfo_right: false,
-      deaYear: ''
+      deaYear: '',
+      gwDj: '',
     }
   },
   components: { AuditUserInfo, AuditResultInfo },
@@ -208,6 +210,7 @@ export default {
       this.$download('dcaBCopyUser/excel', {
         userAccount: record.userAccount,
         dcaYear: record.year,
+        gwdj: record.gwdj,//岗位等级
         npPositionName: record.npPositionName,
         sexName: record.gwdj //岗位等级
       },record.userAccount+".pdf")
@@ -224,6 +227,7 @@ export default {
       this.$download('dcaBCopyUser/attach', {
         userAccount: record.userAccount,
         dcaYear: record.year,
+        gwdj: record.gwdj,//岗位等级
         npPositionName: record.npPositionName
       },record.year+record.userAccount+".pdf")
     },
@@ -260,6 +264,7 @@ export default {
       this.visibleUserInfo_right = true
       this.userAccount_right = record.userAccount
       this.deaYear = record.state==2?record.year :''
+      this.gwDj= record.gwdj
     },
     onCloseUserInfoRight () {
       this.visibleUserInfo_right = false

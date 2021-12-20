@@ -28,5 +28,5 @@ public interface IDcaBCopyMedicalaccidentService extends IService<DcaBCopyMedica
 
         void deleteDcaBCopyMedicalaccidents(String[]Ids);
 
-        List<DcaBCopyMedicalaccident> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyMedicalaccident> getAll(String userAccount,String dcaYear, String gwDj);
         }

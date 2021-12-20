@@ -56,11 +56,12 @@
                     <result column="staff_date" property="staffDate"/>
                     <result column="picture_id" property="pictureId"/>
                     <result column="picture_url" property="pictureUrl"/>
+            <result column="gwdj" property="gwdj"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, user_account_name, user_account, ks, xl, telephone, dept_name, position_name, np_position_name, sex_name, birthday, school_date, zyjsgw, zyjsgw_lc, xcszyjzc, appointed_date, patent_ranknum, is_authority, file_id, is_zhuanrang, file_url, patent_good, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, appointed_date_lc, file_id_lc, file_url_lc, yuangongzu, xrgwjb, xrgwjbprsj, djrdzzw, dca_year, is_chujikh, chujikh_date, is_zhongjikh, zhongjikh_date, political_status, staff_grade, id_card, staff_date, picture_id, picture_url
+        id, user_account_name, user_account, ks, xl, telephone, dept_name, position_name, np_position_name, sex_name, birthday, school_date, zyjsgw, zyjsgw_lc, xcszyjzc, appointed_date, patent_ranknum, is_authority, file_id, is_zhuanrang, file_url, patent_good, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, appointed_date_lc, file_id_lc, file_url_lc, yuangongzu, xrgwjb, xrgwjbprsj, djrdzzw,   dca_year, gwdj, is_chujikh, chujikh_date, is_zhongjikh, zhongjikh_date, political_status, staff_grade, id_card, staff_date, picture_id, picture_url
     </sql>
     <update id="updateDcaBCopyUser" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopyUser">
         update dca_b_copy_user

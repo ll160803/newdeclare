@@ -95,7 +95,7 @@ public void deleteDcaBCopyFivecomments(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyFivecomment> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyFivecomment> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyFivecomment> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyFivecomment::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyFivecomment> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyFivecomment::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyFivecomment::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

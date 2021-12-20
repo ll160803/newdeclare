@@ -28,5 +28,5 @@ public interface IDcaBCopyAttachfileService extends IService<DcaBCopyAttachfile>
 
         void deleteDcaBCopyAttachfiles(String[]Ids);
 
-        List<DcaBCopyAttachfile> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyAttachfile> getAll(String userAccount,String dcaYear, String gwDj);
         }

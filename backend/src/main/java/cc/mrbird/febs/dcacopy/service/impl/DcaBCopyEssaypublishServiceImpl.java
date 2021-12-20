@@ -95,7 +95,7 @@ public void deleteDcaBCopyEssaypublishs(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyEssaypublish> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyEssaypublish> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyEssaypublish> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyEssaypublish::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyEssaypublish> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyEssaypublish::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyEssaypublish::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

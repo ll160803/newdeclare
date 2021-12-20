@@ -95,7 +95,7 @@ public void deleteDcaBCopyExportcountrys(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyExportcountry> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyExportcountry> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyExportcountry> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyExportcountry::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyExportcountry> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyExportcountry::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyExportcountry::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

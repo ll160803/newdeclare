@@ -95,7 +95,7 @@ public void deleteDcaBCopyUndergraduates(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyUndergraduate> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyUndergraduate> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyUndergraduate> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyUndergraduate::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyUndergraduate> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyUndergraduate::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyUndergraduate::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

@@ -118,6 +118,7 @@
       :visibleUserInfo="visibleUserInfo_right"
       :userAccount="userAccount_right"
       :dcaYear="dcaYear"
+      :gwdj="gwDj"
     ></audit-resultInfo>
   </a-card>
 </template>
@@ -160,7 +161,8 @@ export default {
       state2: 1,
       userAccount_right: '',
       visibleUserInfo_right: false,
-      dcaYear: ''
+      dcaYear: '',
+      gwDj: ''
     }
   },
   components: { AuditResultInfo },
@@ -204,6 +206,7 @@ export default {
       this.userAccount_right = record.userAccount
       console.info(record.year)
       this.dcaYear = record.state==2?record.year :''
+       this.gwDj = record.gwdj
     },
     onCloseUserInfoRight () {
       this.visibleUserInfo_right = false
@@ -251,6 +254,7 @@ export default {
       vRecord.state = 2
       vRecord.userAccount = record.userAccount
       vRecord.year= record.year
+      vRecord.gwdj= record.gwdj
 
       let that = this
       that.$confirm({
@@ -286,6 +290,7 @@ export default {
       this.$download('dcaBCopyUser/attach', {
         userAccount: record.userAccount,
         dcaYear: record.year,
+        gwdj: record.gwdj,
         npPositionName: record.npPositionName,
       },record.year+record.userAccount+".pdf")
     },
@@ -293,6 +298,7 @@ export default {
       this.$download('dcaBCopyUser/excel', {
         userAccount: record.userAccount,
         dcaYear: record.year,
+        gwdj: record.gwdj,
         npPositionName: record.npPositionName,
         sexName: record.gwdj //岗位等级
       },record.userAccount+".pdf")

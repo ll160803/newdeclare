@@ -93,6 +93,8 @@ function go2(to, next) {
 
 function go(to, next) {
   asyncRouter = filterAsyncRouter(asyncRouter)
+  console.info("go:")
+  console.info(asyncRouter)
   router.addRoutes(asyncRouter)
   next({
     ...to,
@@ -109,6 +111,7 @@ function get(name) {
 }
 
 function filterAsyncRouter(routes) {
+  console.info(routes)
   return routes.filter((route) => {
     let component = route.component
     if (component) {
@@ -137,6 +140,7 @@ function filterAsyncRouter(routes) {
 }
 
 function view(path) {
+  console.info(path)
   return function (resolve) {
     import(`@/views/${path}.vue`).then(mod => {
       resolve(mod)

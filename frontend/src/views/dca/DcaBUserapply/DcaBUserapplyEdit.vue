@@ -34,14 +34,14 @@
             { rules: [{ required: true, message: '请输入岗位等级' }] },
           ]"
         >
-          <!-- <a-select-option key="正高">
+          <a-select-option key="正高">
             正高
           </a-select-option>
           <a-select-option key="副高">
             副高
-          </a-select-option> -->
-          <a-select-option key="中级"> 中级 </a-select-option>
-          <a-select-option key="初级"> 初级 </a-select-option>
+          </a-select-option> 
+          <!-- <a-select-option key="中级"> 中级 </a-select-option>
+          <a-select-option key="初级"> 初级 </a-select-option>-->
           <!-- <a-select-option key="二三级"> 二三级 </a-select-option> -->
         </a-select>
       </a-form-item>
@@ -281,7 +281,7 @@ export default {
   },
   computed: {
     yearArr() {
-      let arr = [{ value: 2020, text: 2020 }];
+      let arr = [{ value: 2021, text: 2021 }];
       // var myDate = new Date()
       // var startYear = myDate.getFullYear() - 2//起始年份
       // var endYear = myDate.getFullYear() + 1//结束年份

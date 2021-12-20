@@ -29,6 +29,6 @@ public interface IDcaBCopyUserService extends IService<DcaBCopyUser> {
 
         void deleteDcaBCopyUsers(String[]Ids);
 
-        List<DcaBCopyUser> getAll(String userAccount,String dcaYear);
-        CustomApplyFirst getPrintPdf(String userAccount, String dcaYear,String zc);
+        List<DcaBCopyUser> getAll(String userAccount,String dcaYear, String gwDj);
+        CustomApplyFirst getPrintPdf(String userAccount, String dcaYear,String zc, String gwDj);
         }

@@ -28,5 +28,5 @@ public interface IDcaBCopyTurtorService extends IService<DcaBCopyTurtor> {
 
         void deleteDcaBCopyTurtors(String[]Ids);
 
-        List<DcaBCopyTurtor> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyTurtor> getAll(String userAccount,String dcaYear, String gwDj);
         }

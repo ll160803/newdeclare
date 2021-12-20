@@ -95,7 +95,7 @@ public void deleteDcaBCopyAuditfives(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyAuditfive> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyAuditfive> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyAuditfive> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyAuditfive::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyAuditfive> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyAuditfive::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyAuditfive::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

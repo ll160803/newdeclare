@@ -28,5 +28,5 @@ public interface IDcaBCopyPublicarticleService extends IService<DcaBCopyPublicar
 
         void deleteDcaBCopyPublicarticles(String[]Ids);
 
-        List<DcaBCopyPublicarticle> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyPublicarticle> getAll(String userAccount,String dcaYear, String gwDj);
         }

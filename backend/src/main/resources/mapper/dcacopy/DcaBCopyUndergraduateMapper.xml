@@ -6,6 +6,7 @@
         <resultMap id="BaseResultMap" type="cc.mrbird.febs.dcacopy.entity.DcaBCopyUndergraduate">
                     <id column="id" property="id"/>
                     <result column="dca_year" property="dcaYear"/>
+            <result column="gwdj" property="gwdj"/>
                     <result column="file_id" property="fileId"/>
                     <result column="file_url" property="fileUrl"/>
                     <result column="user_account_name" property="userAccountName"/>
@@ -34,7 +35,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, dca_year, file_id, file_url, user_account_name, user_account, course_name, ug_start_date, ug_end_date, course_type, student_number, total_time, person_time, teach_score, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
+        id,   dca_year, gwdj, file_id, file_url, user_account_name, user_account, course_name, ug_start_date, ug_end_date, course_type, student_number, total_time, person_time, teach_score, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
     </sql>
     <update id="updateDcaBCopyUndergraduate" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopyUndergraduate">
         update dca_b_copy_undergraduate

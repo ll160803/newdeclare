@@ -95,7 +95,7 @@ public void deleteDcaBCopyTeachtalents(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyTeachtalent> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyTeachtalent> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyTeachtalent> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyTeachtalent::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyTeachtalent> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyTeachtalent::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyTeachtalent::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

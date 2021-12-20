@@ -6,6 +6,7 @@
         <resultMap id="BaseResultMap" type="cc.mrbird.febs.dcacopy.entity.DcaBCopyAuditdynamic">
                     <id column="id" property="id"/>
                     <result column="dca_year" property="dcaYear"/>
+            <result column="gwdj" property="gwdj"/>
                     <result column="user_account_name" property="userAccountName"/>
                     <result column="user_account" property="userAccount"/>
                     <result column="audit_title" property="auditTitle"/>
@@ -22,7 +23,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, dca_year, user_account_name, user_account, audit_title, audit_titletype, audit_result, audit_note, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+        id,   dca_year, gwdj, user_account_name, user_account, audit_title, audit_titletype, audit_result, audit_note, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
     </sql>
     <update id="updateDcaBCopyAuditdynamic" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopyAuditdynamic">
         update dca_b_copy_auditdynamic

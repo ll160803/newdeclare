@@ -28,5 +28,5 @@ public interface IDcaBCopyPatentService extends IService<DcaBCopyPatent> {
 
         void deleteDcaBCopyPatents(String[]Ids);
 
-        List<DcaBCopyPatent> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyPatent> getAll(String userAccount,String dcaYear, String gwDj);
         }

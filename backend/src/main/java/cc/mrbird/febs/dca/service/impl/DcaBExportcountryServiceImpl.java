@@ -66,6 +66,9 @@ public class DcaBExportcountryServiceImpl extends ServiceImpl<DcaBExportcountryM
             if (dcaBExportcountry.getState() != null) {
                 queryWrapper.eq(DcaBExportcountry::getState, dcaBExportcountry.getState());
             }
+            if (dcaBExportcountry.getAuditState() != null && (dcaBExportcountry.getAuditState() >= 0)) {
+                queryWrapper.eq(DcaBExportcountry::getAuditState, dcaBExportcountry.getAuditState());
+            }
             if (StringUtils.isNotBlank(dcaBExportcountry.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBExportcountry.getCreateTimeTo())) {
                 queryWrapper
                         .ge(DcaBExportcountry::getCreateTime, dcaBExportcountry.getCreateTimeFrom())

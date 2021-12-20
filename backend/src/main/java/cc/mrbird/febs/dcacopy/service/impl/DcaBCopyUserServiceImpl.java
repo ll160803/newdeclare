@@ -4,6 +4,7 @@ import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.dca.entity.CustomApplyFirst;
 import cc.mrbird.febs.dca.entity.DcaBReport;
+import cc.mrbird.febs.dca.entity.DcaBUser;
 import cc.mrbird.febs.dca.entity.DcaBYoungprize;
 import cc.mrbird.febs.dca.service.IDcaBAcademicService;
 import cc.mrbird.febs.dca.service.IDcaBAchievementService;
@@ -212,13 +213,16 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
 
     @Override
     @Transactional
-    public List<DcaBCopyUser> getAll(String userAccount, String dcaYear) {
+    public List<DcaBCopyUser> getAll(String userAccount, String dcaYear,String gwDj) {
         LambdaQueryWrapper<DcaBCopyUser> queryWrapper = new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
             queryWrapper.eq(DcaBCopyUser::getUserAccount, userAccount);
         }
         if (StringUtils.isNotBlank(dcaYear)) {
             queryWrapper.eq(DcaBCopyUser::getDcaYear, dcaYear);
+        }
+        if (StringUtils.isNotBlank(gwDj)) {
+            queryWrapper.eq(DcaBCopyUser::getGwdj, gwDj);
         }
         return this.baseMapper.selectList(queryWrapper);
     }
@@ -230,13 +234,13 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
 
     @Override
     @Transactional
-    public CustomApplyFirst getPrintPdf(String userAccount, String dcaYear, String zc) {
+    public CustomApplyFirst getPrintPdf(String userAccount, String dcaYear, String zc,String gwDj) {
 
         CustomApplyFirst customApplyFirst = new CustomApplyFirst();
         // List<DcaBCopyYoungprize> listDcaBCopyYoungprize =this.iDcaBCopyYoungprize.getAll(userAccount,dcaYear);
 
         List<DcaBReport> dcaBReportList =this.iDcaBReportService.getAll(userAccount,dcaYear,zc);
-        List<DcaBCopyPatent> listDcaBCopyPatent = this.iDcaBCopyPatentService.getAll(userAccount, dcaYear);
+        List<DcaBCopyPatent> listDcaBCopyPatent = this.iDcaBCopyPatentService.getAll(userAccount, dcaYear,gwDj);
         listDcaBCopyPatent=listDcaBCopyPatent.stream().sorted(new Comparator<DcaBCopyPatent>() {
             @Override
             public int compare(DcaBCopyPatent o1, DcaBCopyPatent o2) {
@@ -250,15 +254,15 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
             }
         }).collect(Collectors.toList());
         customApplyFirst.setDcaBPatentList(listDcaBCopyPatent);
-        List<DcaBCopyQualification> dcaBCopyQualificationList = this.iDcaBCopyQualificationService.getAll(userAccount, dcaYear);
-        List<DcaBCopyApplyjob> listDcaBApplyjob = this.iDcaBCopyApplyjobService.getAll(userAccount, dcaYear);
-        List<DcaBCopyAttachfile> listDcaBCopyAttachfile = this.iDcaBCopyAttachfileService.getAll(userAccount, dcaYear);
-        List<DcaBCopyAuditfive> listDcaBCopyAuditfive = this.iDcaBCopyAuditfiveService.getAll(userAccount, dcaYear);
-        List<DcaBCopyCourseclass> listDcaBCopyCourseclass = this.iDcaBCopyCourseclassService.getAll(userAccount, dcaYear);
-        List<DcaBCopyYoungprize> dcaBCopyYoungprizeList = this.iDcaBCopyYoungprizeService.getAll(userAccount, dcaYear);
-        List<DcaBCopyGoal> listDcaBCopyGoal = this.iDcaBCopyGoalService.getAll(userAccount, dcaYear);
-        List<DcaBCopyTeacherprize> dcaBCopyTeacherprizeList =this.iDcaBCopyTeacherprizeService.getAll(userAccount, dcaYear);
-        List<DcaBCopyEducationexperice> listDcaBCopyEducationexperice = this.iDcaBCopyEducationexpericeService.getAll(userAccount, dcaYear);
+        List<DcaBCopyQualification> dcaBCopyQualificationList = this.iDcaBCopyQualificationService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyApplyjob> listDcaBApplyjob = this.iDcaBCopyApplyjobService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyAttachfile> listDcaBCopyAttachfile = this.iDcaBCopyAttachfileService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyAuditfive> listDcaBCopyAuditfive = this.iDcaBCopyAuditfiveService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyCourseclass> listDcaBCopyCourseclass = this.iDcaBCopyCourseclassService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyYoungprize> dcaBCopyYoungprizeList = this.iDcaBCopyYoungprizeService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyGoal> listDcaBCopyGoal = this.iDcaBCopyGoalService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyTeacherprize> dcaBCopyTeacherprizeList =this.iDcaBCopyTeacherprizeService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyEducationexperice> listDcaBCopyEducationexperice = this.iDcaBCopyEducationexpericeService.getAll(userAccount, dcaYear,gwDj);
         listDcaBCopyEducationexperice=listDcaBCopyEducationexperice.stream().sorted(new Comparator<DcaBCopyEducationexperice>() {
             @Override
             public int compare(DcaBCopyEducationexperice o1, DcaBCopyEducationexperice o2) {
@@ -271,12 +275,12 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
                 return  o1.getExpStartTime().compareTo(o2.getExpStartTime());
             }
         }).collect(Collectors.toList());
-        List<DcaBCopyEmploy> listDcaBCopyEmploy = this.iDcaBCopyEmployService.getAll(userAccount, dcaYear);
-        List<DcaBCopyExportcountry> listDcaBCopyExportcountry = this.iDcaBCopyExportcountryService.getAll(userAccount, dcaYear);
-        String fivecomment = this.iDcaBCopyAuditdynamicService.GetZtkhqk(userAccount, dcaYear);
-        List<DcaBCopyGraduate> listDcaBCopyGraduate = this.iDcaBCopyGraduateService.getAll(userAccount, dcaYear);
-        List<DcaBCopyOtherwork> listDcaBCopyOtherwork = this.iDcaBCopyOtherworkService.getAll(userAccount, dcaYear);
-        List<DcaBCopyParttimejob> listDcaBCopyParttimejob = this.iDcaBCopyParttimejobService.getAll(userAccount, dcaYear);
+        List<DcaBCopyEmploy> listDcaBCopyEmploy = this.iDcaBCopyEmployService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyExportcountry> listDcaBCopyExportcountry = this.iDcaBCopyExportcountryService.getAll(userAccount, dcaYear,gwDj);
+        String fivecomment = this.iDcaBCopyAuditdynamicService.GetZtkhqk(userAccount, dcaYear,gwDj);
+        List<DcaBCopyGraduate> listDcaBCopyGraduate = this.iDcaBCopyGraduateService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyOtherwork> listDcaBCopyOtherwork = this.iDcaBCopyOtherworkService.getAll(userAccount, dcaYear,gwDj);
+        List<DcaBCopyParttimejob> listDcaBCopyParttimejob = this.iDcaBCopyParttimejobService.getAll(userAccount, dcaYear,gwDj);
         listDcaBCopyParttimejob=listDcaBCopyParttimejob.stream().sorted(new Comparator<DcaBCopyParttimejob>() {
             @Override
             public int compare(DcaBCopyParttimejob o1, DcaBCopyParttimejob o2) {
@@ -289,11 +293,11 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
                 return  o1.getJzStartTime().compareTo(o2.getJzStartTime());
             }
         }).collect(Collectors.toList());
-        List<DcaBCopyInnovatebuild> listDcaBCopyInnovatebuild = this.iDcaBCopyInnovatebuildService.getAll(userAccount, dcaYear);
-        List<DcaBCopyLastemploy> listDcaBCopyLastemploy = this.iDcaBCopyLastemployService.getAll(userAccount, dcaYear);
-        List<DcaBCopyPersonalsummary> listDcaBCopyPersonalsummary = this.iDcaBCopyPersonalsummaryService.getAll(userAccount, dcaYear);
-        List<DcaBCopyPolitalshow> listDcaBCopyPolitalshow = this.iDcaBCopyPolitalshowService.getAll(userAccount, dcaYear);
-        List<DcaBCopyPrizeorpunish> listDcaBCopyPrizeorpunish = this.iDcaBCopyPrizeorpunishService.getAll(userAccount, dcaYear);
+        List<DcaBCopyInnovatebuild> listDcaBCopyInnovatebuild = this.iDcaBCopyInnovatebuildService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyLastemploy> listDcaBCopyLastemploy = this.iDcaBCopyLastemployService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyPersonalsummary> listDcaBCopyPersonalsummary = this.iDcaBCopyPersonalsummaryService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyPolitalshow> listDcaBCopyPolitalshow = this.iDcaBCopyPolitalshowService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyPrizeorpunish> listDcaBCopyPrizeorpunish = this.iDcaBCopyPrizeorpunishService.getAll(userAccount, dcaYear, gwDj);
         listDcaBCopyPrizeorpunish=listDcaBCopyPrizeorpunish.stream().sorted(new Comparator<DcaBCopyPrizeorpunish>() {
             @Override
             public int compare(DcaBCopyPrizeorpunish o1, DcaBCopyPrizeorpunish o2) {
@@ -306,9 +310,9 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
                 return  o1.getPpStartTime().compareTo(o2.getPpStartTime());
             }
         }).collect(Collectors.toList());
-        List<DcaBCopyPublicarticle> listDcaBCopyPublicarticle = this.iDcaBCopyPublicarticleService.getAll(userAccount, dcaYear);
-        List<DcaBCopySchoolprize> listDcaBCopySchoolprize = this.iDcaBCopySchoolprizeService.getAll(userAccount, dcaYear);
-        List<DcaBCopySciencepublish> listDcaBCopySciencepublish = this.iDcaBCopySciencepublishService.getAll(userAccount, dcaYear);
+        List<DcaBCopyPublicarticle> listDcaBCopyPublicarticle = this.iDcaBCopyPublicarticleService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopySchoolprize> listDcaBCopySchoolprize = this.iDcaBCopySchoolprizeService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopySciencepublish> listDcaBCopySciencepublish = this.iDcaBCopySciencepublishService.getAll(userAccount, dcaYear, gwDj);
         listDcaBCopySciencepublish=listDcaBCopySciencepublish.stream().sorted(new Comparator<DcaBCopySciencepublish>() {
             @Override
             public int compare(DcaBCopySciencepublish o1, DcaBCopySciencepublish o2) {
@@ -323,7 +327,7 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
         }).collect(Collectors.toList());
 
 
-        List<DcaBCopySciencesearch> listDcaBCopySciencesearch = this.iDcaBCopySciencesearchService.getAll(userAccount, dcaYear);
+        List<DcaBCopySciencesearch> listDcaBCopySciencesearch = this.iDcaBCopySciencesearchService.getAll(userAccount, dcaYear, gwDj);
 
         listDcaBCopySciencesearch=listDcaBCopySciencesearch.stream().sorted(new Comparator<DcaBCopySciencesearch>() {
             @Override
@@ -338,7 +342,7 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
             }
         }).collect(Collectors.toList());
 
-        List<DcaBCopyScientificprize> listDcaBCopyScientificprize = this.iDcaBCopyScientificprizeService.getAll(userAccount, dcaYear);
+        List<DcaBCopyScientificprize> listDcaBCopyScientificprize = this.iDcaBCopyScientificprizeService.getAll(userAccount, dcaYear, gwDj);
         listDcaBCopyScientificprize=listDcaBCopyScientificprize.stream().sorted(new Comparator<DcaBCopyScientificprize>() {
             @Override
             public int compare(DcaBCopyScientificprize o1, DcaBCopyScientificprize o2) {
@@ -351,11 +355,11 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
                 return  o1.getSrPrizeDate().compareTo(o2.getSrPrizeDate());
             }
         }).collect(Collectors.toList());
-        List<DcaBCopyTalent> listDcaBCopyTalent = this.iDcaBCopyTalentService.getAll(userAccount, dcaYear);
-        List<DcaBCopyTeachtalent> listDcaBCopyTeachtalent = this.iDcaBCopyTeachtalentService.getAll(userAccount, dcaYear);
-        List<DcaBCopyTurtor> listDcaBCopyTurtor = this.iDcaBCopyTurtorService.getAll(userAccount, dcaYear);
-        List<DcaBCopyUndergraduate> listDcaBCopyUndergraduate = this.iDcaBCopyUndergraduateService.getAll(userAccount, dcaYear);
-        List<DcaBCopyUndergraduateprize> listDcaBCopyUndergraduateprize = this.iDcaBCopyUndergraduateprizeService.getAll(userAccount, dcaYear);
+        List<DcaBCopyTalent> listDcaBCopyTalent = this.iDcaBCopyTalentService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyTeachtalent> listDcaBCopyTeachtalent = this.iDcaBCopyTeachtalentService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyTurtor> listDcaBCopyTurtor = this.iDcaBCopyTurtorService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyUndergraduate> listDcaBCopyUndergraduate = this.iDcaBCopyUndergraduateService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyUndergraduateprize> listDcaBCopyUndergraduateprize = this.iDcaBCopyUndergraduateprizeService.getAll(userAccount, dcaYear, gwDj);
 
         listDcaBCopyUndergraduate=listDcaBCopyUndergraduate.stream().sorted(new Comparator<DcaBCopyUndergraduate>() {
             @Override
@@ -373,17 +377,17 @@ public class DcaBCopyUserServiceImpl extends ServiceImpl<DcaBCopyUserMapper, Dca
         /**
          * 二三级新增
          */
-        List<DcaBCopyTeacheryj> dcaBCopyTeacheryjs = this.iDcaBCopyTeacheryjService.getAll(userAccount, dcaYear);
-        List<DcaBCopySciachievement> dcaBCopySciachievements= this.iDcaBCopySciachievementService.getAll(userAccount, dcaYear);
-        List<DcaBCopySureachievement> dcaBCopySureachievements= this.iDcaBCopySureachievementService.getAll(userAccount, dcaYear);
+        List<DcaBCopyTeacheryj> dcaBCopyTeacheryjs = this.iDcaBCopyTeacheryjService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopySciachievement> dcaBCopySciachievements= this.iDcaBCopySciachievementService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopySureachievement> dcaBCopySureachievements= this.iDcaBCopySureachievementService.getAll(userAccount, dcaYear, gwDj);
 
-        List<DcaBCopyUser> listDcaBCopyUser = this.iDcaBCopyUserService.getAll(userAccount, dcaYear);
-        List<DcaBCopyTeacherqualify> listDcaBCopyTeacherqualify = this.iDcaBCopyTeacherqualifyService.getAll(userAccount, dcaYear);
+        List<DcaBCopyUser> listDcaBCopyUser = this.iDcaBCopyUserService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyTeacherqualify> listDcaBCopyTeacherqualify = this.iDcaBCopyTeacherqualifyService.getAll(userAccount, dcaYear, gwDj);
 
-        List<DcaBCopyAcademic> dcaBCopyAcademicList = this.iDcaBCopyAcademicService.getAll(userAccount, dcaYear);
-        List<DcaBCopyAchievement> dcaBCopyAchievementList = this.iDcaBCopyAchievementService.getAll(userAccount, dcaYear);
-        List<DcaBCopyMedicalaccident> dcaBCopyMedicalaccidentList = this.iDcaBCopyMedicalaccidentService.getAll(userAccount, dcaYear);
-        List<DcaBCopyDoctorturtor> dcaBCopyDoctorturtorList = this.iDcaBCopyDoctorturtorService.getAll(userAccount, dcaYear);
+        List<DcaBCopyAcademic> dcaBCopyAcademicList = this.iDcaBCopyAcademicService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyAchievement> dcaBCopyAchievementList = this.iDcaBCopyAchievementService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyMedicalaccident> dcaBCopyMedicalaccidentList = this.iDcaBCopyMedicalaccidentService.getAll(userAccount, dcaYear, gwDj);
+        List<DcaBCopyDoctorturtor> dcaBCopyDoctorturtorList = this.iDcaBCopyDoctorturtorService.getAll(userAccount, dcaYear, gwDj);
 
         DcaBCopyUser user = listDcaBCopyUser.get(0);
         customApplyFirst.setName(user.getUserAccountName());

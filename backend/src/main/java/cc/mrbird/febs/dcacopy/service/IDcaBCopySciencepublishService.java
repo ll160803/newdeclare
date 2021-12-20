@@ -28,5 +28,5 @@ public interface IDcaBCopySciencepublishService extends IService<DcaBCopyScience
 
         void deleteDcaBCopySciencepublishs(String[]Ids);
 
-        List<DcaBCopySciencepublish> getAll(String userAccount,String dcaYear);
+        List<DcaBCopySciencepublish> getAll(String userAccount,String dcaYear, String gwDj);
         }

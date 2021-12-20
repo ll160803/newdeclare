@@ -6,6 +6,7 @@
         <resultMap id="BaseResultMap" type="cc.mrbird.febs.dcacopy.entity.DcaBCopyMedicalaccident">
                     <id column="id" property="id"/>
                     <result column="dca_year" property="dcaYear"/>
+            <result column="gwdj" property="gwdj"/>
                     <result column="file_id" property="fileId"/>
                     <result column="file_url" property="fileUrl"/>
                     <result column="user_account_name" property="userAccountName"/>
@@ -29,7 +30,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, dca_year, file_id, file_url, user_account_name, user_account, medical_year, medical_result, medical_content, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
+        id,   dca_year, gwdj, file_id, file_url, user_account_name, user_account, medical_year, medical_result, medical_content, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
     </sql>
     <update id="updateDcaBCopyMedicalaccident" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopyMedicalaccident">
         update dca_b_copy_medicalaccident

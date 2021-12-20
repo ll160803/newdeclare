@@ -28,5 +28,5 @@ public interface IDcaBCopyAuditsuggestionService extends IService<DcaBCopyAudits
 
         void deleteDcaBCopyAuditsuggestions(String[]Ids);
 
-        List<DcaBCopyAuditsuggestion> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyAuditsuggestion> getAll(String userAccount,String dcaYear, String gwDj);
         }

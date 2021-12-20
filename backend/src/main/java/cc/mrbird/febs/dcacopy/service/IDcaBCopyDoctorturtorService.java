@@ -28,5 +28,5 @@ public interface IDcaBCopyDoctorturtorService extends IService<DcaBCopyDoctortur
 
         void deleteDcaBCopyDoctorturtors(String[]Ids);
 
-        List<DcaBCopyDoctorturtor> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyDoctorturtor> getAll(String userAccount,String dcaYear, String gwDj);
         }

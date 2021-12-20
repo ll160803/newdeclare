@@ -95,7 +95,7 @@ public void deleteDcaBCopySciencepublishs(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopySciencepublish> getAll(String userAccount,String dcaYear){
+public List<DcaBCopySciencepublish> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopySciencepublish> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopySciencepublish::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopySciencepublish> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopySciencepublish::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopySciencepublish::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

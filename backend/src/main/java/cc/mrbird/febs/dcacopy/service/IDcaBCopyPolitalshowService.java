@@ -28,5 +28,5 @@ public interface IDcaBCopyPolitalshowService extends IService<DcaBCopyPolitalsho
 
         void deleteDcaBCopyPolitalshows(String[]Ids);
 
-        List<DcaBCopyPolitalshow> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyPolitalshow> getAll(String userAccount,String dcaYear, String gwDj);
         }

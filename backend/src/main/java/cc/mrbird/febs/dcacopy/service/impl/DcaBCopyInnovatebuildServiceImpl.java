@@ -95,7 +95,7 @@ public void deleteDcaBCopyInnovatebuilds(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyInnovatebuild> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyInnovatebuild> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyInnovatebuild> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyInnovatebuild::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyInnovatebuild> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyInnovatebuild::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyInnovatebuild::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

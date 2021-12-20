@@ -28,5 +28,5 @@ public interface IDcaBCopySchoolprizeService extends IService<DcaBCopySchoolpriz
 
         void deleteDcaBCopySchoolprizes(String[]Ids);
 
-        List<DcaBCopySchoolprize> getAll(String userAccount,String dcaYear);
+        List<DcaBCopySchoolprize> getAll(String userAccount,String dcaYear, String gwDj);
         }

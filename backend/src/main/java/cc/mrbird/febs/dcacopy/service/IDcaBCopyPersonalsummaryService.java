@@ -28,5 +28,5 @@ public interface IDcaBCopyPersonalsummaryService extends IService<DcaBCopyPerson
 
         void deleteDcaBCopyPersonalsummarys(String[]Ids);
 
-        List<DcaBCopyPersonalsummary> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyPersonalsummary> getAll(String userAccount,String dcaYear, String gwDj);
         }

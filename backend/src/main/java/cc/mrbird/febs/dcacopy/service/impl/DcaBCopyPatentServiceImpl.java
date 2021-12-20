@@ -95,7 +95,7 @@ public void deleteDcaBCopyPatents(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyPatent> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyPatent> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyPatent> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyPatent::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyPatent> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyPatent::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyPatent::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

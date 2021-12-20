@@ -28,5 +28,5 @@ public interface IDcaBCopyOtherworkService extends IService<DcaBCopyOtherwork> {
 
         void deleteDcaBCopyOtherworks(String[]Ids);
 
-        List<DcaBCopyOtherwork> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyOtherwork> getAll(String userAccount,String dcaYear, String gwDj);
         }

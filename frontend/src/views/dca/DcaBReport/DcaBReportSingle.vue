@@ -118,6 +118,7 @@
       :visibleUserInfo="visibleUserInfo_right"
       :userAccount="userAccount_right"
       :dcaYear="dcaYear"
+      :gwdj="gwDj"
     ></audit-resultInfo>
     <a-modal
       v-model="modalVisible"
@@ -176,6 +177,7 @@ export default {
       visibleUserInfo_right: false,
       dcaYear: '',
       sendInfo: '',
+      gwDj: '',
       modalVisible: false,
       sendRecord: {}
     }
@@ -223,6 +225,7 @@ export default {
       this.userAccount_right = record.userAccount
       console.info(record.year)
       this.dcaYear = record.state == 2 ? record.year : ''
+      this.gwDj = record.gwdj
     },
     onCloseUserInfoRight () {
       this.visibleUserInfo_right = false
@@ -272,6 +275,7 @@ export default {
       vRecord.userAccount = record.userAccount
       vRecord.year = record.year
       vRecord.dbxcgbs = this.sendInfo
+      vRecord.gwdj= record.gwdj
      
       if (this.sendInfo.trim() === '' || this.sendInfo.length>30) {
         this.$message.warning('请填写个人亮点自述！！！,且个人亮点自述长度不能超过30！！！')
@@ -314,6 +318,7 @@ export default {
       this.$download('dcaBCopyUser/attach', {
         userAccount: record.userAccount,
         dcaYear: record.year,
+        gwdj: record.gwdj,//岗位等级
         npPositionName: record.npPositionName,
       }, record.year + record.userAccount + ".pdf")
     },
@@ -321,6 +326,7 @@ export default {
       this.$download('dcaBCopyUser/excel', {
         userAccount: record.userAccount,
         dcaYear: record.year,
+        gwdj: record.gwdj,//岗位等级
         npPositionName: record.npPositionName,
         sexName: record.gwdj //岗位等级
       }, record.userAccount + ".pdf")

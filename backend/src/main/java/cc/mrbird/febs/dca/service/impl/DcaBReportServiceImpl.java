@@ -160,6 +160,7 @@ public void createDcaBReport(DcaBReport dcaBReport){
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("userAccount", dcaBReport.getUserAccount());
             map.put("dcaYear", dcaBReport.getYear());
+            map.put("gw_dj2", dcaBReport.getGwdj());
             this.baseMapper.insertCopy(map);
         }
     }

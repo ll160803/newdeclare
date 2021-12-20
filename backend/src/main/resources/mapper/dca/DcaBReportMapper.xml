@@ -466,7 +466,8 @@
         <![CDATA[{
          call InsertCopyData(
                #{userAccount,mode=IN,jdbcType=VARCHAR},
-               #{dcaYear,mode=IN,jdbcType=VARCHAR}
+               #{dcaYear,mode=IN,jdbcType=VARCHAR},
+                #{gw_dj2,mode=IN,jdbcType=VARCHAR}
          )
       }]]>
   </select>

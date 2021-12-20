@@ -38,7 +38,11 @@ private static final long serialVersionUID=1L;
      */
             @ExcelField(value ="申报年度")
     private String dcaYear;
-
+    /**
+     * 岗位等级
+     */
+    @ExcelField(value ="岗位等级")
+    private String gwdj;
     /**
      * 附件
      */

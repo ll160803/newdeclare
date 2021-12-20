@@ -28,5 +28,5 @@ public interface IDcaBCopyExportcountryService extends IService<DcaBCopyExportco
 
         void deleteDcaBCopyExportcountrys(String[]Ids);
 
-        List<DcaBCopyExportcountry> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyExportcountry> getAll(String userAccount,String dcaYear, String gwDj);
         }

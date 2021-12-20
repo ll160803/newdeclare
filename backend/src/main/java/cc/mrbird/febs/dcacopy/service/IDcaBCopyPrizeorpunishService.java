@@ -28,5 +28,5 @@ public interface IDcaBCopyPrizeorpunishService extends IService<DcaBCopyPrizeorp
 
         void deleteDcaBCopyPrizeorpunishs(String[]Ids);
 
-        List<DcaBCopyPrizeorpunish> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyPrizeorpunish> getAll(String userAccount,String dcaYear, String gwDj);
         }

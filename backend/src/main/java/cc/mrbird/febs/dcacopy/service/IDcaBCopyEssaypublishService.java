@@ -28,5 +28,5 @@ public interface IDcaBCopyEssaypublishService extends IService<DcaBCopyEssaypubl
 
         void deleteDcaBCopyEssaypublishs(String[]Ids);
 
-        List<DcaBCopyEssaypublish> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyEssaypublish> getAll(String userAccount,String dcaYear, String gwDj);
         }

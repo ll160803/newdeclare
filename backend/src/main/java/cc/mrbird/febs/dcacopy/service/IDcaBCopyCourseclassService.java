@@ -28,5 +28,5 @@ public interface IDcaBCopyCourseclassService extends IService<DcaBCopyCourseclas
 
         void deleteDcaBCopyCourseclasss(String[]Ids);
 
-        List<DcaBCopyCourseclass> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyCourseclass> getAll(String userAccount,String dcaYear, String gwDj);
         }

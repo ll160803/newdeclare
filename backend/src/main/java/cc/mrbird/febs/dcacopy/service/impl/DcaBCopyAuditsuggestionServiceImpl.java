@@ -95,7 +95,7 @@ public void deleteDcaBCopyAuditsuggestions(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyAuditsuggestion> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyAuditsuggestion> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyAuditsuggestion> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyAuditsuggestion::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyAuditsuggestion> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyAuditsuggestion::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyAuditsuggestion::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

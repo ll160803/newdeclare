@@ -41,6 +41,11 @@ private static final long serialVersionUID=1L;
     private String dcaYear;
 
     /**
+     * 岗位等级
+     */
+    @ExcelField(value ="岗位等级")
+    private String gwdj;
+    /**
      * 附件
      */
             @ExcelField(value ="附件")

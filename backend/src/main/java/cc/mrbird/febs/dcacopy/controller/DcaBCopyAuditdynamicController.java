@@ -65,8 +65,8 @@ public Map<String, Object> List(QueryRequest request, DcaBCopyAuditdynamic dcaBC
         }
 
     @GetMapping("account")
-    public List<DcaBCopyAuditdynamic> List2(@Valid String userAccount,String dcaYear){
-        return this.iDcaBCopyAuditdynamicService.GetAllInfo(userAccount,dcaYear);
+    public List<DcaBCopyAuditdynamic> List2(@Valid String userAccount,String dcaYear,String gwdj){
+        return this.iDcaBCopyAuditdynamicService.GetAllInfo(userAccount,dcaYear,gwdj);
     }
 
 /**

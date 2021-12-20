@@ -28,5 +28,5 @@ public interface IDcaBCopyTeachtalentService extends IService<DcaBCopyTeachtalen
 
         void deleteDcaBCopyTeachtalents(String[]Ids);
 
-        List<DcaBCopyTeachtalent> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyTeachtalent> getAll(String userAccount,String dcaYear, String gwDj);
         }

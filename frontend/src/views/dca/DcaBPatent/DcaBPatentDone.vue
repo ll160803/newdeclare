@@ -57,7 +57,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1800,
+        x: 1900,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
         visibleUserInfo: false,
@@ -181,7 +181,7 @@ export default {
         {
           title: '专利名称',
           dataIndex: 'patentName',
-          width: 130
+          width: 180
         },
         {
           title: '专利类别',

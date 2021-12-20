@@ -95,13 +95,13 @@ public void deleteDcaBCopyAuditdynamics(String[]Ids){
         }
     @Override
     @Transactional
-    public List<DcaBCopyAuditdynamic> GetAllInfo(String userAccount,String dcaYear){
-      return  this.baseMapper.getAllByUserAccount(userAccount, dcaYear);
+    public List<DcaBCopyAuditdynamic> GetAllInfo(String userAccount,String dcaYear,String gwDj){
+      return  this.baseMapper.getAllByUserAccount(userAccount, dcaYear,gwDj);
     }
 
     @Override
     @Transactional
-    public String GetZtkhqk(String userAccount,String dcaYear){
-        return  this.baseMapper.getZtkhqk(userAccount, dcaYear);
+    public String GetZtkhqk(String userAccount,String dcaYear,String gwDj){
+        return  this.baseMapper.getZtkhqk(userAccount, dcaYear,gwDj);
     }
         }

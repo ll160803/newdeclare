@@ -95,7 +95,7 @@ public void deleteDcaBCopyDoctorturtors(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyDoctorturtor> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyDoctorturtor> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyDoctorturtor> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyDoctorturtor::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyDoctorturtor> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyDoctorturtor::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyDoctorturtor::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

@@ -28,5 +28,5 @@ public interface IDcaBCopyGraduateService extends IService<DcaBCopyGraduate> {
 
         void deleteDcaBCopyGraduates(String[]Ids);
 
-        List<DcaBCopyGraduate> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyGraduate> getAll(String userAccount,String dcaYear, String gwDj);
         }

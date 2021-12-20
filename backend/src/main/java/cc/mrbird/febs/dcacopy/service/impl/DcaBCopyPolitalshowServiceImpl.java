@@ -95,7 +95,7 @@ public void deleteDcaBCopyPolitalshows(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyPolitalshow> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyPolitalshow> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyPolitalshow> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyPolitalshow::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyPolitalshow> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyPolitalshow::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyPolitalshow::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

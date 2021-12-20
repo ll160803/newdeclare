@@ -1664,7 +1664,7 @@ public class PDFDemo {
 
         List<TableValue> tableValueList4_1 = new ArrayList<>();
         List<DcaBCopySciencepublish> sciencepublishList = customApplyFirst.getDcaBSciencepublishList();
-        sciencepublishList = sciencepublishList.stream().filter(p -> p.getWzlx().equals("教学")).collect(Collectors.toList());
+        sciencepublishList = sciencepublishList.stream().filter(p -> p.getWzlx()!=null&&p.getWzlx().equals("教学")).collect(Collectors.toList());
         kindex = 1;
         for (DcaBCopySciencepublish sciencepublish : sciencepublishList
         ) {
@@ -1696,7 +1696,7 @@ public class PDFDemo {
 
         List<TableValue> tableValueList4_2 = new ArrayList<>();
         List<DcaBCopySciencepublish> sciencepublishList2 = customApplyFirst.getDcaBSciencepublishList();
-        sciencepublishList2 = sciencepublishList2.stream().filter(p -> p.getWzlx().equals("科研")).collect(Collectors.toList());
+        sciencepublishList2 = sciencepublishList2.stream().filter(p -> p.getWzlx()!=null&&p.getWzlx().equals("科研")).collect(Collectors.toList());
         kindex = 1;
         for (DcaBCopySciencepublish sciencepublish : sciencepublishList2
         ) {

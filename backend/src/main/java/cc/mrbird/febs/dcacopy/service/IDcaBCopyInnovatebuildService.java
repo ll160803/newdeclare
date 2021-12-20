@@ -28,5 +28,5 @@ public interface IDcaBCopyInnovatebuildService extends IService<DcaBCopyInnovate
 
         void deleteDcaBCopyInnovatebuilds(String[]Ids);
 
-        List<DcaBCopyInnovatebuild> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyInnovatebuild> getAll(String userAccount,String dcaYear, String gwDj);
         }

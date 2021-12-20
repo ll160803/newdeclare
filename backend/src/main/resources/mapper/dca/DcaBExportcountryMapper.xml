@@ -16,6 +16,7 @@
                     <result column="lxdw" property="lxdw"/>
                     <result column="qudao" property="qudao"/>
                     <result column="state" property="state"/>
+            <result column="audit_state" property="auditState"/>
                     <result column="IS_DELETEMARK" property="isDeletemark"/>
                     <result column="CREATE_TIME" property="createTime"/>
                     <result column="MODIFY_TIME" property="modifyTime"/>
@@ -30,7 +31,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, file_id, display_index, file_url, user_account_name, user_account, cgsj, hgsj, lxgj, lxdw, qudao, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
+        id, file_id, display_index, file_url, user_account_name, user_account, cgsj, hgsj, lxgj, lxdw, qudao, state, audit_state,  IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
     </sql>
     <update id="updateDcaBExportcountry" parameterType="cc.mrbird.febs.dca.entity.DcaBExportcountry">
         update dca_b_exportcountry
@@ -46,6 +47,7 @@
 <if test="lxdw != null">lxdw=#{lxdw},</if>
 <if test="qudao != null">qudao=#{qudao},</if>
 <if test="state != null">state=#{state},</if>
+            <if test="auditState != null">audit_state=#{auditState},</if>
 <if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
 <if test="createTime != null">CREATE_TIME=#{createTime},</if>
 <if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>

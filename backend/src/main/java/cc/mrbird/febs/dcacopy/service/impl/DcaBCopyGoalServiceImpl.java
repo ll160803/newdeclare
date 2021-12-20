@@ -95,7 +95,7 @@ public void deleteDcaBCopyGoals(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyGoal> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyGoal> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyGoal> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyGoal::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyGoal> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyGoal::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyGoal::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

@@ -92,13 +92,16 @@ public void deleteDcaBCopySureachievements(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopySureachievement> getAll(String userAccount,String dcaYear){
+public List<DcaBCopySureachievement> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopySureachievement> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopySureachievement::getUserAccount, userAccount);
         }
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopySureachievement::getDcaYear, dcaYear);
+        }
+        if (StringUtils.isNotBlank(gwDj)) {
+                queryWrapper.eq(DcaBCopySureachievement::getGwdj, gwDj);
         }
       return  this.baseMapper.selectList(queryWrapper);
         }

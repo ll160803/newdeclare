@@ -252,9 +252,10 @@
         FROM
         dca_b_user
         INNER JOIN dca_b_userapply ON dca_b_user.user_account = dca_b_userapply.user_account
+        -- AND dca_b_userapply.dca_year = dca_b_user.dca_year
 
         LEFT JOIN dca_b_report ON dca_b_userapply.user_account = dca_b_report.user_account
-        AND dca_b_userapply.dca_year = dca_b_report.`year`
+        AND dca_b_userapply.dca_year = dca_b_report.`year` AND dca_b_userapply.gwdj=dca_b_report.gwdj
         WHERE
         (
         (dca_b_report.state IS NULL)

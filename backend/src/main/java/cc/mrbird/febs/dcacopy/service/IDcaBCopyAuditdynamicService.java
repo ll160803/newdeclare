@@ -28,6 +28,6 @@ public interface IDcaBCopyAuditdynamicService extends IService<DcaBCopyAuditdyna
 
         void deleteDcaBCopyAuditdynamics(String[]Ids);
 
-        List<DcaBCopyAuditdynamic> GetAllInfo(String userAccount,String dcaYear);
-        String GetZtkhqk(String userAccount,String dcaYear);
+        List<DcaBCopyAuditdynamic> GetAllInfo(String userAccount,String dcaYear, String gwDj);
+        String GetZtkhqk(String userAccount,String dcaYear, String gwDj);
         }

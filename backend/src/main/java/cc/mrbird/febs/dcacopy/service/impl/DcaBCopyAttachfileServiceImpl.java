@@ -95,7 +95,7 @@ public void deleteDcaBCopyAttachfiles(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyAttachfile> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyAttachfile> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyAttachfile> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyAttachfile::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyAttachfile> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyAttachfile::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyAttachfile::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

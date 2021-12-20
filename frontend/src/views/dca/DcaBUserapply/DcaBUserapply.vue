@@ -41,12 +41,12 @@
     </div>
     <div>
       <div class="operator">
-        <a-button
+         <a-button
           v-hasPermission="['dcaBUserapply:add']"
           type="primary"
           @click="add"
           style="width:200px;"
-        >新增</a-button>
+        >新增</a-button> 
         <a-button
           v-hasPermission="['dcaBUserapply:delete']"
           @click="batchDelete"
@@ -291,6 +291,12 @@ export default {
       this.editVisiable = true
     },
     setState(record){
+       if(record.dcaYear=='2020' && record.gwdj=='中级'){
+         return false;
+      }
+      if(record.dcaYear=='2020' && record.gwdj=='初级'){
+         return false;
+      }
       if(record.dcaYear=='2019' && record.gwdj=='中级'){
          return false;
       }

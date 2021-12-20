@@ -28,5 +28,5 @@ public interface IDcaBCopyAchievementService extends IService<DcaBCopyAchievemen
 
         void deleteDcaBCopyAchievements(String[]Ids);
 
-        List<DcaBCopyAchievement> getAll(String userAccount,String dcaYear);
+        List<DcaBCopyAchievement> getAll(String userAccount,String dcaYear, String gwDj);
         }

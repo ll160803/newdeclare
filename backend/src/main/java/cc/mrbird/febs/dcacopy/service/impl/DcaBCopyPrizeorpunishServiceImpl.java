@@ -95,7 +95,7 @@ public void deleteDcaBCopyPrizeorpunishs(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyPrizeorpunish> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyPrizeorpunish> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyPrizeorpunish> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyPrizeorpunish::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyPrizeorpunish> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyPrizeorpunish::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyPrizeorpunish::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 

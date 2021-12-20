@@ -95,7 +95,7 @@ public void deleteDcaBCopyTurtors(String[]Ids){
         }
 @Override
 @Transactional
-public List<DcaBCopyTurtor> getAll(String userAccount,String dcaYear){
+public List<DcaBCopyTurtor> getAll(String userAccount,String dcaYear,String gwDj){
         LambdaQueryWrapper<DcaBCopyTurtor> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBCopyTurtor::getUserAccount, userAccount);
@@ -103,6 +103,9 @@ public List<DcaBCopyTurtor> getAll(String userAccount,String dcaYear){
         if (StringUtils.isNotBlank(dcaYear)) {
         queryWrapper.eq(DcaBCopyTurtor::getDcaYear, dcaYear);
         }
+    if (StringUtils.isNotBlank(gwDj)) {
+        queryWrapper.eq(DcaBCopyTurtor::getGwdj, gwDj);
+    }
       return  this.baseMapper.selectList(queryWrapper);
         }
 
