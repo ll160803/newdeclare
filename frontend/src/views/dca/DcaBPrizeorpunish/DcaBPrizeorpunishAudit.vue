@@ -604,7 +604,7 @@ export default {
         sortField = sortedInfo.field
         sortOrder = sortedInfo.order
       }
-      let json = this.columns
+      let json = [...this.columns]
       json.splice(this.columns.length-1,1) //移出第一个
       console.info(json)
       let dataJson = JSON.stringify(json)

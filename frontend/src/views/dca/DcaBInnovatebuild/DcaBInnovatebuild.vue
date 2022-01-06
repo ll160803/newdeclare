@@ -455,13 +455,13 @@ export default {
         scopedSlots: { customRender: 'projectSource' }
       },
       {
-        title: '合同经费',
+        title: '合同经费(万元)',
         dataIndex: 'contractFund',
         width: 130,
         scopedSlots: { customRender: 'contractFund' }
       },
       {
-        title: '实到经费',
+        title: '实到经费(万元)',
         dataIndex: 'realFund',
         width: 130,
         scopedSlots: { customRender: 'realFund' }

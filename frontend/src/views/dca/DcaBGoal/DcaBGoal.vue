@@ -56,7 +56,7 @@ export default {
       else {
         this.loading = true
         this.$post('dcaBGoal', {
-          preGoal: this.preGoal.trim(),
+          preGoal: this.preGoal,
           state: 0
         }).then(() => {
           // this.reset()
@@ -81,7 +81,7 @@ export default {
             that.loading = true
 
             that.$post('dcaBGoal', {
-              preGoal: that.preGoal.trim(),
+              preGoal: that.preGoal,
               state: 1
             }).then(() => {
               // this.reset()

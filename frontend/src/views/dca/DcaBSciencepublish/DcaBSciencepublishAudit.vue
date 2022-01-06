@@ -346,11 +346,29 @@
                   {{text}}
                 </div>
                 <div v-else>
-                  <a-textarea
-                    @blur="e => inputChange(e.target.value,record,'authorRank')"
-                    :value="record.authorRank"
-                  >
-                  </a-textarea>
+                 <a-select
+           :default-value="record.authorRank"
+            style="width: 100%"
+            mode="multiple"
+            v-if="record['aus']!=undefined &&record['aus'] !=1"
+            @change="(e,f) => handleSelectChangeRank(e,f,record,'authorRank')"
+          >
+            <a-select-option value="第一作者">
+              第一作者
+            </a-select-option>
+            <a-select-option value="通讯作者">
+              通讯作者
+            </a-select-option>
+              <a-select-option value="共同第一作者">
+              共同第一作者
+            </a-select-option>
+              <a-select-option value="共同通讯作者">
+              共同通讯作者
+            </a-select-option>
+              <a-select-option value="其他">
+              其他
+            </a-select-option>
+          </a-select>
                 </div>
               </template>
               <template
@@ -773,7 +791,7 @@ export default {
         sortField = sortedInfo.field
         sortOrder = sortedInfo.order
       }
-      let json = this.columns
+      let json = [...this.columns]
      
 
       let queryParams = this.queryParams
@@ -784,12 +802,12 @@ export default {
       }
       if (this.activeKey == 2) {
         state = 3
-        json = this.columnsDone
+        json = [...this.columnsDone]
         delete queryParams.auditState
       }
       if (this.activeKey == 3) {
         state = 2
-        json = this.columnsDone
+        json = [...this.columnsDone]
         delete queryParams.auditState
       }
       json.splice(this.columns.length - 1, 1) //移出第一个
@@ -835,6 +853,13 @@ export default {
     handleSelectChange (value, option, record, filedName) {
       console.info(value)
       record[filedName] = value
+    },
+     handleSelectChangeRank (value, option, record, filedName) {
+      record[filedName] = value
+      record["aus"] = 1
+      setTimeout(() => {
+        record["aus"] = 0;
+      }, 300);
     },
     onSelectChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
@@ -1062,6 +1087,15 @@ export default {
         this.loading = false
         const pagination = { ...this.pagination }
         pagination.total = data.total
+         data.rows.forEach((element) => {
+             element['aus'] = 0;
+             if(element['authorRank']!=null&&element['authorRank'].indexOf('[')>=0){
+             element['authorRank']= JSON.parse(element['authorRank'])
+             }
+              if(element['authorRank']==''){
+               element['authorRank'] = []
+             }
+          })
         this.dataSource = data.rows
         this.pagination = pagination
       }
@@ -1151,7 +1185,7 @@ export default {
         {
           title: '第一或通讯作者',
           dataIndex: 'authorRank',
-          width: 120,
+          width: 150,
           scopedSlots: { customRender: 'authorRank' }
         },
         {

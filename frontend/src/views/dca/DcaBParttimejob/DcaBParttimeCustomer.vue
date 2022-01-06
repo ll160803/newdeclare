@@ -254,10 +254,10 @@ export default {
         onOk () {
           const dataSourceAll = [...that.dataSource]
           const dataSourceI=dataSourceAll.filter(p=>p.isUse==1)
-          if(dataSourceI.length==0||dataSourceI.length>4){
-            that.$message.warning('经审核是否构成职称晋升条件,此项最多勾选4个，至少勾选一个')
-          }
-          else{
+          // if(dataSourceI.length==0||dataSourceI.length>4){
+          //   that.$message.warning('经审核是否构成职称晋升条件,此项最多勾选4个，至少勾选一个')
+          // }
+          // else{
           const dataSource = dataSourceAll.filter(p=>p.state==0 ||p.state==2)
           let dataAdd = []
           dataSource.forEach(element => {
@@ -288,7 +288,7 @@ export default {
               that.loading = false
             })
           }
-          }
+        //  }
         },
         onCancel () {
           that.selectedRowKeys = []

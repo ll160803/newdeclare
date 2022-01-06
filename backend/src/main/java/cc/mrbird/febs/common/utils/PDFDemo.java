@@ -1678,16 +1678,27 @@ public class PDFDemo {
             lunWenChuBan.setField7(sciencepublish.getPaperCause());
             lunWenChuBan.setField8(sciencepublish.getOtherTimes());
             String zz = "";
-            if (sciencepublish.getAuditTotalnum() != null) {
-                if (sciencepublish.getAuditTotalnum() > 0) {
-                    zz = "第一作者或通讯作者共" + sciencepublish.getAuditTotalnum() + "人";
+//            if (sciencepublish.getAuditTotalnum() != null) {
+//                if (sciencepublish.getAuditTotalnum() > 0) {
+//                    zz = "第一作者或通讯作者共" + sciencepublish.getAuditTotalnum() + "人";
+//                }
+//            } else {
+//                if (sciencepublish.getAuditIsfirst() != null) {
+//                    if (sciencepublish.getAuditIsfirst()) {
+//                        zz = "非第一作者或通讯作者";
+//                    }
+//                }
+//            }
+            if (sciencepublish.getAuditIsfirst() != null) { // 2021 高级审核修改
+                if (sciencepublish.getAuditIsfirst()) {
+                    zz = "非第一作者或通讯作者";
                 }
-            } else {
-                if (sciencepublish.getAuditIsfirst() != null) {
-                    if (sciencepublish.getAuditIsfirst()) {
-                        zz = "非第一作者或通讯作者";
-                    }
+                else{
+                    zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"" ;
                 }
+            }
+            else{
+                zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"";
             }
             lunWenChuBan.setField9(zz);
             tableValueList4_1.add(lunWenChuBan);
@@ -1710,16 +1721,27 @@ public class PDFDemo {
             lunWenChuBan.setField7(sciencepublish.getIsBest());
             lunWenChuBan.setField8(sciencepublish.getOtherTimes());
             String zz = "";
-            if (sciencepublish.getAuditTotalnum() != null) {
-                if (sciencepublish.getAuditTotalnum() > 0) {
-                    zz = "第一作者或通讯作者共" + sciencepublish.getAuditTotalnum() + "人";
+//            if (sciencepublish.getAuditTotalnum() != null) {
+//                if (sciencepublish.getAuditTotalnum() > 0) {
+//                    zz = "第一作者或通讯作者共" + sciencepublish.getAuditTotalnum() + "人";
+//                }
+//            } else {
+//                if (sciencepublish.getAuditIsfirst() != null) {
+//                    if (sciencepublish.getAuditIsfirst()) {
+//                        zz = "非第一作者或通讯作者";
+//                    }
+//                }
+//            }
+            if (sciencepublish.getAuditIsfirst() != null) { // 2021 高级审核修改
+                if (sciencepublish.getAuditIsfirst()) {
+                    zz = "非第一作者或通讯作者";
                 }
-            } else {
-                if (sciencepublish.getAuditIsfirst() != null) {
-                    if (sciencepublish.getAuditIsfirst()) {
-                        zz = "非第一作者或通讯作者";
-                    }
+                else{
+                    zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"";
                 }
+            }
+            else{
+                zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"";
             }
             lunWenChuBan.setField9(zz);
             tableValueList4_2.add(lunWenChuBan);
@@ -1868,7 +1890,7 @@ public class PDFDemo {
         cell = new PdfPCell(new Phrase(title4_4_1, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight40);
+        cell.setFixedHeight(contentHeight45);
         cell.setColspan(numColumns);
         table.addCell(cell);
 
@@ -1877,63 +1899,63 @@ public class PDFDemo {
         cell = new PdfPCell(new Phrase(title4_5_1, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(1);
         table.addCell(cell);
         //论文（教材）名
         cell = new PdfPCell(new Phrase(title4_5_2, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(7);
         table.addCell(cell);
         //期刊名或出版社
         cell = new PdfPCell(new Phrase(title4_5_3, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(3);
         table.addCell(cell);
         //期刊号或书号
         cell = new PdfPCell(new Phrase(title4_5_4, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(3);
         table.addCell(cell);
         //发表年月或出版年月
         cell = new PdfPCell(new Phrase(title4_5_5, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(3);
         table.addCell(cell);
         //收录情况
         cell = new PdfPCell(new Phrase(title4_5_6, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(2);
         table.addCell(cell);
         //期刊影响因子
         cell = new PdfPCell(new Phrase(title4_5_7, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(2);
         table.addCell(cell);
         //他引次数
         cell = new PdfPCell(new Phrase(title4_5_8, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(2);
         table.addCell(cell);
         //第一或通讯作者
         cell = new PdfPCell(new Phrase(title4_5_9, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(2);
         table.addCell(cell);
 
@@ -2025,7 +2047,7 @@ public class PDFDemo {
         cell = new PdfPCell(new Phrase(title4_6_1, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight40);
+        cell.setFixedHeight(contentHeight45);
         cell.setColspan(numColumns);
         table.addCell(cell);
 
@@ -2034,63 +2056,63 @@ public class PDFDemo {
         cell = new PdfPCell(new Phrase(title4_7_1, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(1);
         table.addCell(cell);
         //论文（著作）名
         cell = new PdfPCell(new Phrase(title4_7_2, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(7);
         table.addCell(cell);
         //期刊名或出版社
         cell = new PdfPCell(new Phrase(title4_7_3, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(3);
         table.addCell(cell);
         //期刊号或书号
         cell = new PdfPCell(new Phrase(title4_7_4, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(3);
         table.addCell(cell);
         //发表年月或出版年月
         cell = new PdfPCell(new Phrase(title4_7_5, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(3);
         table.addCell(cell);
         //收录情况影响因子
         cell = new PdfPCell(new Phrase(title4_7_6, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(2);
         table.addCell(cell);
         //是否国际一流期刊
         cell = new PdfPCell(new Phrase(title4_7_7, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(2);
         table.addCell(cell);
         //他引次数
         cell = new PdfPCell(new Phrase(title4_7_8, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(2);
         table.addCell(cell);
         //第一或通讯作者
         cell = new PdfPCell(new Phrase(title4_7_9, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setFixedHeight(contentHeight35);
+        cell.setFixedHeight(contentHeight40);
         cell.setColspan(2);
         table.addCell(cell);
         for (TableValue item : tableValueList4_2) {
@@ -4196,7 +4218,7 @@ public class PDFDemo {
         listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getGrsxzzjsdsf(), numColumns, 260,fontgr));
      //   cell = new PdfPCell(new Phrase(value2_1_1, fontgr));
 
-        listCells.add(generatePdfValue(pdfStyle_t, title2_2_1, numColumns, 0, Element.ALIGN_LEFT, Element.ALIGN_TOP));
+        listCells.add(generatePdfValue(pdfStyle_t, title2_2_1, numColumns, 0, Element.ALIGN_CENTER, Element.ALIGN_TOP));
 
 
         //起止年月
@@ -4327,16 +4349,27 @@ public class PDFDemo {
         for (DcaBCopySciencepublish sciencepublish : sciencepublishList
         ) {
             String zz = "";
-            if (sciencepublish.getAuditTotalnum() != null) {
-                if (sciencepublish.getAuditTotalnum() > 0) {
-                    zz = "第一作者或通讯作者共" + sciencepublish.getAuditTotalnum() + "人";
+//            if (sciencepublish.getAuditTotalnum() != null) {
+//                if (sciencepublish.getAuditTotalnum() > 0) {
+//                    zz = "第一作者或通讯作者共" + sciencepublish.getAuditTotalnum() + "人";
+//                }
+//            } else {
+//                if (sciencepublish.getAuditIsfirst() != null) {
+//                    if (sciencepublish.getAuditIsfirst()) {
+//                        zz = "非第一作者或通讯作者";
+//                    }
+//                }
+//            }
+            if (sciencepublish.getAuditIsfirst() != null) { // 2021 高级审核修改
+                if (sciencepublish.getAuditIsfirst()) {
+                    zz = "非第一作者或通讯作者";
                 }
-            } else {
-                if (sciencepublish.getAuditIsfirst() != null) {
-                    if (sciencepublish.getAuditIsfirst()) {
-                        zz = "非第一作者或通讯作者";
-                    }
+                else{
+                    zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"";
                 }
+            }
+            else{
+                zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"";
             }
 
             //列二
@@ -7899,6 +7932,7 @@ public class PDFDemo {
                 }
             }
 
+
             //列二
             //序号
             listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(kindex), 1, 0));
@@ -10121,23 +10155,43 @@ public class PDFDemo {
 
         for (DcaBCopySciencepublish dcaBCopySciencepublish : dcaBCopySciencepublishList
         ) {
-            double dr= Convert.toDouble(dcaBCopySciencepublish.getJxzcsl()==null?"0":dcaBCopySciencepublish.getJxzcsl());
+//            double dr= Convert.toDouble(StringUtils.isNotEmpty(dcaBCopySciencepublish.getJxzcsl())?"0":dcaBCopySciencepublish.getJxzcsl());
             String name7="";
-            if(dr==1d){
-                name7 ="第一作者或通讯作者";
+//            if(dr==1d){
+//                name7 ="第一作者或通讯作者";
+//            }
+//            else{
+//                String fild=String.valueOf(dcaBCopySciencepublish.getAuditTotalnum() == null ? "" : dcaBCopySciencepublish.getAuditTotalnum());
+//                name7 ="共同第一作者或共同通讯作者(1/"+fild+")";
+//            }
+
+            if (dcaBCopySciencepublish.getAuditIsfirst() != null) { // 二三级
+                if (dcaBCopySciencepublish.getAuditIsfirst()) {
+                    name7 = "非第一作者或通讯作者";
+                }
+                else{
+                    name7= StringUtils.isNotEmpty(dcaBCopySciencepublish.getAuthorRank())?dcaBCopySciencepublish.getAuthorRank()+"；1/"+(dcaBCopySciencepublish.getAuditTotalnum()==null?"":String.valueOf(dcaBCopySciencepublish.getAuditTotalnum())):"";
+                }
             }
             else{
-                String fild=String.valueOf(dcaBCopySciencepublish.getAuditTotalnum() == null ? "" : dcaBCopySciencepublish.getAuditTotalnum());
-                name7 ="共同第一作者或共同通讯作者(1/"+fild+")";
+                name7= StringUtils.isNotEmpty(dcaBCopySciencepublish.getAuthorRank())?dcaBCopySciencepublish.getAuthorRank()+"；1/"+(dcaBCopySciencepublish.getAuditTotalnum()==null?"":String.valueOf(dcaBCopySciencepublish.getAuditTotalnum())):"";
             }
+
+
+
             listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopySciencepublish.getPaperName()), 10, 0));
             listCells.add(generatePdfValue(pdfStyle_t, name7, 2, 0));
             listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopySciencepublish.getPaperPublishdate(),"yyyyMM"), 7, 0));
-            if(dcaBCopySciencepublish.getUserAccount().equals("10010990")){
-                listCells.add(generatePdfValue(pdfStyle_t, dcaBCopySciencepublish.getAuditSuggestion(),4, 0));
+            if(dcaBCopySciencepublish.getUserAccount().equals("10010990")){//蔡开琳处长 特处
+                if(StringUtils.isNotEmpty(dcaBCopySciencepublish.getAuditSuggestion())) {
+                    listCells.add(generatePdfValue(pdfStyle_t, dcaBCopySciencepublish.getAuditSuggestion(), 4, 0));
+                }
+                else{
+                    listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopySciencepublish.getJournalName()), 4, 0));
+                }
             }
             else {
-                listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+                listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopySciencepublish.getJournalName()), 4, 0));
             }
         }
         for (DcaBCopySciencesearch dcaBCopySciencesearch : dcaBCopySciencesearchList
@@ -10145,14 +10199,14 @@ public class PDFDemo {
             listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopySciencesearch.getProjectName()), 10, 0));
             listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(dcaBCopySciencesearch.getAuditRank() == null ? "" : dcaBCopySciencesearch.getAuditRank()), 2, 0));
             listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopySciencesearch.getAuditDate2(),"yyyyMM"), 7, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopySciencesearch.getAuditLb())+"\n"+(dcaBCopySciencesearch.getAuditFund()==null?"":dcaBCopySciencesearch.getAuditFund()+"万"), 4, 0));
         }
         for (DcaBCopyScientificprize dcaBCopyScientificprize : dcaBScientificprizeList
         ) {
             listCells.add(generatePdfValue(pdfStyle_t, handleEmptyString(dcaBCopyScientificprize.getSpProjectName()), 10, 0));
             listCells.add(generatePdfValue(pdfStyle_t, String.valueOf(dcaBCopyScientificprize.getAuditRank() == null ? "" : dcaBCopyScientificprize.getAuditRank()), 2, 0));
             listCells.add(generatePdfValue(pdfStyle_t, DateStr(dcaBCopyScientificprize.getSrPrizeDate(),"yyyyMM"), 7, 0));
-            listCells.add(generatePdfValue(pdfStyle_t, "", 4, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "等级:"+handleEmptyString(dcaBCopyScientificprize.getAuditGrade()), 4, 0));
         }
         for (DcaBCopyPatent dcaBCopyPatent : dcaBCopyPatentList
         ) {
@@ -10244,6 +10298,9 @@ public class PDFDemo {
         float grH= 300f;
         if(value2_1_1.length()>800){
             grH= value2_1_1.length()*0.25f;
+            if(grH>650f){
+                grH =650f; //跨页时候 不跨页
+            }
         }
 
 

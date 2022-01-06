@@ -69,7 +69,8 @@ export default {
       this.importResultVisible = false
     },
     exportTemplate () {
-      this.$download(this.templateUrl, {}, '导入模板.xlsx')
+     // this.$download(this.templateUrl, {}, '导入模板.xlsx')
+      window.location.href='https://whuhhrm.asclepius.whxh.com.cn/导入模板.xlsx';
     },
     handleRemove (file) {
       if (this.uploading) {
@@ -91,9 +92,10 @@ export default {
       formData.append('file', fileList[0])
       this.uploading = true
       this.$upload(this.url, formData).then((r) => {
+        this.$emit('succ')
         let data = r.data.data
         if (data.data.length) {
-          this.fetch()
+          //this.fetch()
         }
         this.importData = data.data
         this.errors = data.error

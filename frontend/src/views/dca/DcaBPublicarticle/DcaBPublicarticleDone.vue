@@ -20,6 +20,18 @@
             @click="showUserInfo(text)"
           >{{text}}</a>
         </template>
+        <template
+                slot="action"
+                slot-scope="text, record"
+              >
+                <a-button
+                  type="dashed"
+                  block
+                  @click="handleAuditNext(record)"
+                >
+                  退回一审待审核
+                </a-button>
+              </template>
       </a-table>
       <audit-userInfo
         ref="userinfo"
@@ -58,7 +70,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 2600,
+        x: 2750,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -111,6 +123,34 @@ export default {
       //debugger
       this.visibleUserInfo = true
       this.userAccount = text
+    },
+     handleAuditNext (record) {
+      let that = this
+      this.$confirm({
+        title: '确定退回此记录?',
+        content: '当您点击确定按钮后，此记录将退回一审待审核',
+        centered: true,
+        onOk () {
+          record.auditState = 0
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBPublicarticle/updateNew', {
+            jsonStr: jsonStr,
+            state: 1,
+            auditState: -1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+            that.fetch2(that.queryParams)
+           // that.freshTabs()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
     },
     fetch (obj) {
       this.loading = true
@@ -299,6 +339,11 @@ export default {
             return ''
           },
           width: 80
+        }, {
+          title: '审核',
+          key: 'action',
+          scopedSlots: { customRender: 'action' },
+          width: 150
         }
       ]
     }

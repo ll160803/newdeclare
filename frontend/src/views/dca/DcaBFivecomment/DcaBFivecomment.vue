@@ -55,7 +55,7 @@ export default {
       else {
         this.loading = true
         this.$post('dcaBFivecomment', {
-          fivePercent: this.fivePercent.trim(),
+          fivePercent: this.fivePercent,
           state: 0
         }).then(() => {
           // this.reset()
@@ -80,7 +80,7 @@ export default {
             that.loading = true
 
             that.$post('dcaBFivecomment', {
-              fivePercent: that.fivePercent.trim(),
+              fivePercent: that.fivePercent,
               state: 1
             }).then(() => {
               // this.reset()

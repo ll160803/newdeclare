@@ -56,7 +56,7 @@ export default {
       else {
         this.loading = true
         this.$post('dcaBLastemploy', {
-          lastContent: this.lastContent.trim(),
+          lastContent: this.lastContent,
           state: 0
         }).then(() => {
           // this.reset()
@@ -81,7 +81,7 @@ export default {
             that.loading = true
 
             that.$post('dcaBLastemploy', {
-              lastContent: that.lastContent.trim(),
+              lastContent: that.lastContent,
               state: 1
             }).then(() => {
               // this.reset()

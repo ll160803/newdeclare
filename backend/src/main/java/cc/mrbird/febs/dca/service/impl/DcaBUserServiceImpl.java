@@ -259,7 +259,13 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
                 queryWrapper.eq(DcaBUser::getDcaYear, dcaBUser.getDcaYear());
             }
             if (StringUtils.isNotBlank(dcaBUser.getKs())) {
-                queryWrapper.apply("dca_b_user.user_account  in (select  user_account from dca_b_userapply where state=1 and  LOCATE(gwdj, '" + dcaBUser.getKs() + "')>0)");
+                if (StringUtils.isNotBlank(dcaBUser.getDcaYear())) {
+                    queryWrapper.apply("dca_b_user.user_account  in (select  user_account from dca_b_userapply where state=1 and  LOCATE(gwdj, '" + dcaBUser.getKs() + "')>0 and dca_year='"+dcaBUser.getDcaYear()+"' and np_position_name=dca_b_user.np_position_name)");
+                }
+                else{
+                    queryWrapper.apply("dca_b_user.user_account  in (select  user_account from dca_b_userapply where state=1 and  LOCATE(gwdj, '" + dcaBUser.getKs() + "')>0 and dca_year=dca_b_user.dca_year and np_position_name=dca_b_user.np_position_name)");
+                }
+                //queryWrapper.apply("dca_b_user.user_account  in (select  user_account from dca_b_userapply where state=1 and  LOCATE(gwdj, '" + dcaBUser.getKs() + "')>0)");
             }
             if (state == 3) {
                 queryWrapper.apply("dca_b_user.user_account  in (select  user_account from  dca_b_auditdynamic inner JOIN dca_d_auditinfo on dca_b_auditdynamic.audit_titletype=dca_d_auditinfo.field_name\n" +
@@ -1572,7 +1578,7 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
             InsertDynamic(auditdynamicList, userAccount, String.valueOf(!edulist.isPresent() ? "" : GetNullStr(edulist.get().getAuditResult())), "edu");
             Optional<DcaBAuditdynamic> eduBjlist = educationAuditBjList.stream()
                     .filter(p -> p.getUserAccount().equals(userAccount)).findFirst();
-            InsertDynamic(auditdynamicList, userAccount, String.valueOf(!eduBjlist.isPresent() ? "" : GetNullStr(eduBjlist.get().getAuditResult())), "eduDate");
+            InsertDynamic(auditdynamicList, userAccount, String.valueOf(!eduBjlist.isPresent() ? "" : (GetNullStr(eduBjlist.get().getAuditResult())==""?"":GetNullStr(eduBjlist.get().getAuditResult()).substring(0,6))), "eduDate");
 
             /**
              * 学历 中专、专科、本科

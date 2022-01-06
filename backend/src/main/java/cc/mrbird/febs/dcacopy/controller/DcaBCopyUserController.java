@@ -8,6 +8,7 @@ import cc.mrbird.febs.common.domain.QueryRequest;
 
 import cc.mrbird.febs.common.utils.DocUtil;
 import cc.mrbird.febs.common.utils.PDFDemo;
+import cc.mrbird.febs.common.utils.PDFDemoNew;
 import cc.mrbird.febs.dca.entity.CustomApplyFirst;
 import cc.mrbird.febs.dca.entity.DcaBReport;
 import cc.mrbird.febs.dca.service.IDcaBReportService;
@@ -137,6 +138,7 @@ public class DcaBCopyUserController extends BaseController {
     public void export(QueryRequest request, DcaBCopyUser dcaBCopyUser, HttpServletResponse response) throws FebsException {
         try {
             PDFDemo pdfDemo = new PDFDemo();
+            PDFDemoNew pdfDemoNew = new PDFDemoNew();
             String fileName = dcaBCopyUser.getUserAccount() + ".pdf";
             String filePath = "D://scm//uploadPdf//" + UUID.randomUUID().toString() + ".pdf";
             String filePath2 = "D://scm//uploadPdf//" + UUID.randomUUID().toString() + ".pdf";
@@ -152,6 +154,7 @@ public class DcaBCopyUserController extends BaseController {
             queryWrapper.eq(DcaBCopyUser::getIsDeletemark, 1);//1是未删 0是已删
 
             if (StringUtils.isNotBlank(dcaBCopyUser.getUserAccount())) {
+
                 queryWrapper.eq(DcaBCopyUser::getUserAccount, dcaBCopyUser.getUserAccount());
             }
             if (StringUtils.isNotBlank(dcaBCopyUser.getDcaYear())) {
@@ -168,10 +171,18 @@ public class DcaBCopyUserController extends BaseController {
             dj.add("中级");
             dj.add("初级");
             if(npNameList.contains(dcaBCopyUser.getNpPositionName())) {
-                pdfDemo.writePdf1(customApplyFirst, filePath2, filePath, mergeAddPdfList, dcaBCopyUser.getDcaYear());
+                if (dcaBCopyUser.getDcaYear().compareTo("2021")>=0) {
+                    pdfDemoNew.writePdf2021_1(customApplyFirst, filePath2, filePath, mergeAddPdfList, dcaBCopyUser.getDcaYear());
+                } else {
+                    pdfDemo.writePdf1(customApplyFirst, filePath2, filePath, mergeAddPdfList, dcaBCopyUser.getDcaYear());
+                }
             }
-            else if (dcaBCopyUser.getSexName().equals("正高")||dcaBCopyUser.getSexName().equals("副高")){
-                pdfDemo.writePdf(customApplyFirst, filePath2, filePath, mergeAddPdfList, dcaBCopyUser.getDcaYear());
+            else if (dcaBCopyUser.getSexName().equals("正高")||dcaBCopyUser.getSexName().equals("副高")) {
+                if (dcaBCopyUser.getDcaYear().compareTo("2021")>=0) {
+                    pdfDemoNew.writePdf2021(customApplyFirst, filePath2, filePath, mergeAddPdfList, dcaBCopyUser.getDcaYear());
+                } else {
+                    pdfDemo.writePdf(customApplyFirst, filePath2, filePath, mergeAddPdfList, dcaBCopyUser.getDcaYear());
+                }
             }
             else if(dj.contains(dcaBCopyUser.getSexName())&&xl.contains(dbcuser.getYuangongzu())){
                 pdfDemo.writePdf_zu2(customApplyFirst, filePath2, filePath, mergeAddPdfList, dcaBCopyUser.getDcaYear());

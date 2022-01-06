@@ -22,8 +22,8 @@ public class DcaBSciencepublish_Import {
     @ExcelField(value = "期刊号")
     private String journalCode;
 
-    @ExcelField(value = "发表年月", dateFormat = "yyyy-MM-dd",comment = "这里请填日期格式如2020-09-08")
-    private Date paperPublishdate;
+    @ExcelField(value = "发表年月",comment = "这里请填日期格式如2020-09-08")
+    private String paperPublishdate;
 
     @ExcelField(value = "收录情况")
     private String paperShoulu;

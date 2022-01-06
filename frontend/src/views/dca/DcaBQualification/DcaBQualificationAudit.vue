@@ -76,6 +76,10 @@
                 </a-col>
               </div>
               <span style="float: right; margin-top: 3px;">
+                 <a-button
+                  type="primary"
+                  @click="exportCustomExcel"
+                >导出</a-button>
                 <a-button
                   type="primary"
                   @click="search2"
@@ -458,9 +462,10 @@ export default {
         sortField = sortedInfo.field
         sortOrder = sortedInfo.order
       }
-      let json = this.columns
+      let json = [...this.columns]
+     
       json.splice(this.columns.length - 1, 1) //移出第一个
-      console.info(json)
+      json.push({ title:'唯一值',dataIndex:'id'});
       let dataJson = JSON.stringify(json)
 
       let queryParams = this.queryParams

@@ -20,6 +20,18 @@
             @click="showUserInfo(text)"
           >{{text}}</a>
         </template>
+         <template
+                slot="action"
+                slot-scope="text, record"
+              >
+                <a-button
+                  type="dashed"
+                  block
+                  @click="handleAudit(record)"
+                >
+                  退回待审核
+                </a-button>
+                 </template>
       </a-table>
     </a-spin>
         <audit-userInfo
@@ -56,7 +68,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 2000,
+        x: 2100,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -74,6 +86,31 @@ export default {
   },
   methods: {
     moment,
+    handleAudit (record) {
+      let that = this
+      this.$confirm({
+        title: '确定退回此记录?',
+        content: '当您点击确定按钮后，此记录将退回到待审核',
+        centered: true,
+        onOk () {
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBEmploy/updateNew', {
+            jsonStr: jsonStr,
+            state: 1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('退回成功')
+            that.fetch2(that.queryParams)
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
     fetch2 (params = {}) {
       this.loading = true
       if (this.paginationInfo) {
@@ -260,6 +297,11 @@ export default {
             return ''
           },
           width: 80
+        }, {
+          title: '审核',
+          key: 'action',
+          scopedSlots: { customRender: 'action' },
+          width: 150
         }
       ]
     }

@@ -345,6 +345,11 @@ export default {
         this.zc = this.j23;
       }
       this.gwdj = value;
+      this.form.getFieldDecorator("hk4");
+      this.form.setFieldsValue({
+        hk4: ''
+      });
+      this.npPositionName= '';
     },
     handleSubmit() {
       // var yjIds = this.$refs.yjTree.getAuditKey();

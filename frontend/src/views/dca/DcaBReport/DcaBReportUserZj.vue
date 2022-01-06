@@ -1652,11 +1652,11 @@ export default {
         "borad",
         "help",
         "auditMan",
-        "zzbysj",
-        "dzbysj",
-        "bkbysj",
-        "ssbysj",
-        "bsbysj",
+        // "zzbysj",
+        // "dzbysj",
+        // "bkbysj",
+        // "ssbysj",
+        // "bsbysj",
         "ydyf",
         "ydyffj",
         "zzsc",
@@ -1704,7 +1704,9 @@ export default {
         "beizhuyiwuchu",
         "beizhumenban",
         "beizhuhuli",
-        "fdzz"
+        "fdzz",
+        "zyjszwzg",
+        "zyjszwzgsj"
       ];
 
       json.forEach((element) => {

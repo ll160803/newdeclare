@@ -28,7 +28,7 @@
         <a-select
           show-search
           style="width: 200px"
-          @change="handleChangezw"
+          @change="handleChangezw2"
           v-decorator="[
             'gwdj',
             { rules: [{ required: true, message: '请输入岗位等级' }] },
@@ -383,6 +383,32 @@ export default {
         this.yjShow = true;
       }
       this.gwdj = value;
+     // this.npPositionName= '';
+    },
+    handleChangezw2(value) {
+      this.yjShow = false;
+      if (value == "正高") {
+        this.zc = this.zg;
+      }
+      if (value == "副高") {
+        this.zc = this.fg;
+      }
+      if (value == "中级") {
+        this.zc = this.zj;
+      }
+      if (value == "初级") {
+        this.zc = this.cj;
+      }
+      if (value == "二三级") {
+        this.zc = this.j23;
+        this.yjShow = true;
+      }
+      this.gwdj = value;
+       this.form.getFieldDecorator("npPositionName");
+      this.form.setFieldsValue({
+        npPositionName: ''
+      });
+     // this.npPositionName= '';
     },
     handleSubmit() {
       // var yjIds = this.$refs.yjTree.getAuditKey();

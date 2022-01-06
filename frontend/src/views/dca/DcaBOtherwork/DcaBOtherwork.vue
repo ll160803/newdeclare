@@ -56,7 +56,7 @@ export default {
       else {
         this.loading = true
         this.$post('dcaBOtherwork', {
-          otherWork: this.otherWork.trim(),
+          otherWork: this.otherWork,
           state: 0
         }).then(() => {
           // this.reset()
@@ -81,7 +81,7 @@ export default {
             that.loading = true
 
             that.$post('dcaBOtherwork', {
-              otherWork: that.otherWork.trim(),
+              otherWork: that.otherWork,
               state: 1
             }).then(() => {
               // this.reset()

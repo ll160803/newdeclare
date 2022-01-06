@@ -453,7 +453,7 @@ export default {
         sortField = sortedInfo.field
         sortOrder = sortedInfo.order
       }
-      let json = this.columns
+       let json = [...this.columns]
       json.splice(this.columns.length - 2, 2) //移出第一个
       console.info(json)
       let dataJson = JSON.stringify(json)
@@ -707,13 +707,13 @@ export default {
           scopedSlots: { customRender: 'projectSource' }
         },
         {
-          title: '合同经费',
+          title: '合同经费(万元)',
           dataIndex: 'contractFund',
           width: 130,
           scopedSlots: { customRender: 'contractFund' }
         },
         {
-          title: '实到经费',
+          title: '实到经费(万元)',
           dataIndex: 'realFund',
           width: 130,
           scopedSlots: { customRender: 'realFund' }
@@ -807,7 +807,7 @@ export default {
           title: '审核',
           key: 'action',
           scopedSlots: { customRender: 'action' },
-          width: 100
+          width: 150
         }]
     }
   }

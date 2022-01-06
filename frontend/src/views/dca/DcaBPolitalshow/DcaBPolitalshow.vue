@@ -56,7 +56,7 @@ export default {
       else {
         this.loading = true
         this.$post('dcaBPolitalshow', {
-          psContent: this.psContent.trim(),
+          psContent: this.psContent,
           state: 0
         }).then(() => {
           // this.reset()
@@ -81,7 +81,7 @@ export default {
             that.loading = true
 
             that.$post('dcaBPolitalshow', {
-              psContent: that.psContent.trim(),
+              psContent: that.psContent,
               state: 1
             }).then(() => {
               // this.reset()

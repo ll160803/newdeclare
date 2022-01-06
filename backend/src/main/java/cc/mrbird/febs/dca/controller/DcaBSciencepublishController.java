@@ -14,6 +14,7 @@ import cc.mrbird.febs.dca.entity.DcaBSciencepublish;
 
 import cc.mrbird.febs.dca.service.IDcaBUserapplyService;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.map.MapUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -263,10 +264,10 @@ public DcaBSciencepublish detail(@NotBlank(message = "{required}") @PathVariable
         return dcaBSciencepublish;
         }
     @RequestMapping(value = "downTemplate", method = RequestMethod.POST)
-    public void downTemplate(HttpServletResponse response) {
-        List<DcaBSciencepublish_Import> publishList = new ArrayList<>();
-        ExcelKit.$Export(DcaBSciencepublish_Import.class, response).downXlsx(publishList, true);
-    }
+public void downTemplate(HttpServletResponse response) {
+    List<DcaBSciencepublish_Import> publishList = new ArrayList<>();
+    ExcelKit.$Export(DcaBSciencepublish_Import.class, response).downXlsx(publishList, true);
+}
     @RequestMapping(value = "import", method = RequestMethod.POST)
     public ResponseEntity<?> importUser(@RequestParam MultipartFile file)
             throws IOException {
@@ -298,32 +299,32 @@ public DcaBSciencepublish detail(@NotBlank(message = "{required}") @PathVariable
                 });
 
         // TODO: 执行successList的入库操作。
-       if(CollectionUtil.isEmpty(errorList)){
-           for (DcaBSciencepublish_Import dcaBSciencepublishImport:successList
-                ) {
+        if(CollectionUtil.isEmpty(errorList)){
+            for (DcaBSciencepublish_Import dcaBSciencepublishImport:successList
+            ) {
                 DcaBSciencepublish dcaBSciencepublish =new DcaBSciencepublish();
-               dcaBSciencepublish.setAuthorRank(dcaBSciencepublishImport.getAuthorRank());
-               dcaBSciencepublish.setDjzz(dcaBSciencepublishImport.getDjzz());
-               dcaBSciencepublish.setIsBest(dcaBSciencepublishImport.getIsBest());
-               dcaBSciencepublish.setJournalCode(dcaBSciencepublishImport.getJournalCode());
-               dcaBSciencepublish.setJournalName(dcaBSciencepublishImport.getJournalName());
-               dcaBSciencepublish.setOtherTimes(dcaBSciencepublishImport.getOtherTimes());
-               dcaBSciencepublish.setPaperCause(dcaBSciencepublishImport.getPaperCause());
-               dcaBSciencepublish.setPaperName(dcaBSciencepublishImport.getPaperName());
-               dcaBSciencepublish.setWzlx(dcaBSciencepublishImport.getWzlx());
-               dcaBSciencepublish.setQkjb(dcaBSciencepublishImport.getQkjb());
-               dcaBSciencepublish.setPaperShoulu(dcaBSciencepublishImport.getPaperShoulu());
-               dcaBSciencepublish.setPaperPublishdate(dcaBSciencepublishImport.getPaperPublishdate());
+                dcaBSciencepublish.setAuthorRank(dcaBSciencepublishImport.getAuthorRank());
+                dcaBSciencepublish.setDjzz(dcaBSciencepublishImport.getDjzz());
+                dcaBSciencepublish.setIsBest(dcaBSciencepublishImport.getIsBest());
+                dcaBSciencepublish.setJournalCode(dcaBSciencepublishImport.getJournalCode());
+                dcaBSciencepublish.setJournalName(dcaBSciencepublishImport.getJournalName());
+                dcaBSciencepublish.setOtherTimes(dcaBSciencepublishImport.getOtherTimes());
+                dcaBSciencepublish.setPaperCause(dcaBSciencepublishImport.getPaperCause());
+                dcaBSciencepublish.setPaperName(dcaBSciencepublishImport.getPaperName());
+                dcaBSciencepublish.setWzlx(dcaBSciencepublishImport.getWzlx());
+                dcaBSciencepublish.setQkjb(dcaBSciencepublishImport.getQkjb());
+                dcaBSciencepublish.setPaperShoulu(dcaBSciencepublishImport.getPaperShoulu());
+                dcaBSciencepublish.setPaperPublishdate(Convert.toDate(dcaBSciencepublishImport.getPaperPublishdate()));
 
-               dcaBSciencepublish.setCreateUserId(currentUser.getUserId());
-               dcaBSciencepublish.setUserAccount(currentUser.getUsername());
-               dcaBSciencepublish.setIsDeletemark(1);
-               dcaBSciencepublish.setState(0);
-               dcaBSciencepublish.setDisplayIndex(display);
-               this.iDcaBSciencepublishService.createDcaBSciencepublish(dcaBSciencepublish);
-               display+=1;
-           }
-       }
+                dcaBSciencepublish.setCreateUserId(currentUser.getUserId());
+                dcaBSciencepublish.setUserAccount(currentUser.getUsername());
+                dcaBSciencepublish.setIsDeletemark(1);
+                dcaBSciencepublish.setState(0);
+                dcaBSciencepublish.setDisplayIndex(display);
+                this.iDcaBSciencepublishService.createDcaBSciencepublish(dcaBSciencepublish);
+                display+=1;
+            }
+        }
 
         resultList.add(MapUtil.of("data", successList));
         resultList.add(MapUtil.of("haveError", !CollectionUtil.isEmpty(errorList)));
@@ -331,4 +332,4 @@ public DcaBSciencepublish detail(@NotBlank(message = "{required}") @PathVariable
         resultList.add(MapUtil.of("timeConsuming", (System.currentTimeMillis() - beginMillis) / 1000L));
         return ResponseEntity.ok(resultList);
     }
-        }
+}

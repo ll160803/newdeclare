@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.service.IDcaBQualificationService;
 import cc.mrbird.febs.dca.entity.DcaBQualification;
 
@@ -195,18 +196,28 @@ public void deleteDcaBQualifications(@NotBlank(message = "{required}") @PathVari
         throw new FebsException(message);
         }
         }
-@PostMapping("excel")
-@RequiresPermissions("dcaBQualification:export")
-public void export(QueryRequest request, DcaBQualification dcaBQualification,HttpServletResponse response)throws FebsException{
-        try{
-        List<DcaBQualification> dcaBQualifications=this.iDcaBQualificationService.findDcaBQualifications(request, dcaBQualification).getRecords();
-        ExcelKit.$Export(DcaBQualification.class,response).downXlsx(dcaBQualifications,false);
-        }catch(Exception e){
-        message="导出Excel失败";
-        log.error(message,e);
-        throw new FebsException(message);
+    @PostMapping("excel")
+    public void export(QueryRequest request, DcaBQualification dcaBSciencesearch, String dataJson, HttpServletResponse response) throws FebsException {
+        try {
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            User currentUser = FebsUtil.getCurrentUser();
+
+            dcaBSciencesearch.setIsDeletemark(1);
+            request.setSortField("user_account asc,state asc,display_Index");
+            request.setSortOrder("ascend");
+            List<DcaBQualification> dcaBSciencepublishList = this.iDcaBQualificationService.findDcaBQualifications(request, dcaBSciencesearch).getRecords();
+
+
+            //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList, dataJson, "");
+        } catch (Exception e) {
+            message = "导出Excel失败";
+            log.error(message, e);
+            throw new FebsException(message);
         }
-        }
+    }
+
 
 @GetMapping("/{id}")
 public DcaBQualification detail(@NotBlank(message = "{required}") @PathVariable String id){

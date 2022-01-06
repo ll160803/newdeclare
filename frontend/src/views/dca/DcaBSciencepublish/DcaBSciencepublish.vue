@@ -21,6 +21,7 @@
           
           <import-excel 
           templateUrl="dcaBSciencepublish/downTemplate"
+          @succ="handleRefesh"
           url="dcaBSciencepublish/import">
           </import-excel>
         </a-col>
@@ -246,12 +247,30 @@
         <div v-if="record.state==3 || record.state==1">
           {{text}}
         </div>
-        <div v-else>
-          <a-textarea
-            @blur="e => inputChange(e.target.value,record,'authorRank')"
-            :value="record.authorRank"
+        <div v-else  style="overflow-y: scroll; height: 80px" >
+           <a-select
+            :default-value="record.authorRank"
+            style="width: 100%"
+            mode="multiple"
+            v-if="record['aus']!=undefined &&record['aus'] !=1"
+            @change="(e,f) => handleSelectChangeRank(e,f,record,'authorRank')"
           >
-          </a-textarea>
+            <a-select-option value="第一作者" key="第一作者">
+              第一作者
+            </a-select-option>
+            <a-select-option value="通讯作者" key="通讯作者">
+              通讯作者
+            </a-select-option>
+              <a-select-option value="共同第一作者" key="共同第一作者">
+              共同第一作者
+            </a-select-option>
+              <a-select-option value="共同通讯作者" key="共同通讯作者">
+              共同通讯作者
+            </a-select-option>
+              <a-select-option value="其他" key="其他">
+              其他
+            </a-select-option>
+          </a-select>
         </div>
       </template>
        <template
@@ -359,7 +378,7 @@ export default {
         fileId: ''
       },
       scroll: {
-        x: 2300,
+        x: 2400,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
     }
@@ -379,6 +398,9 @@ export default {
       if (record.fileId != undefined && record.fileId != '') {
         this.$refs.upFile.fetch(record.fileId)
       }
+    },
+    handleRefesh(){
+      this.fetch()
     },
     setFileId (fileId, fileUrl) {
       this.fileVisiable = false
@@ -409,6 +431,13 @@ export default {
       console.info(value)
       record[filedName] = value
     },
+    handleSelectChangeRank (value, option, record, filedName) {
+      record[filedName] = value
+      record["aus"] = 1
+      setTimeout(() => {
+        record["aus"] = 0;
+      }, 300);
+    },
     handleChange (date, dateStr, record, filedName) {
       const value = dateStr
       record[filedName] = value
@@ -429,14 +458,15 @@ export default {
           paperCause: '',
           isBest: '',
           otherTimes: '',
-          authorRank: '',
+          authorRank: [],
           wzlx: '',
           qkjb: '',
           djzz: '',
           state: 0,
           sciValue: '',
           rankValue: '',
-          isUse: false
+          isUse: false ,
+          aus: 0
         })
       }
       this.idNums = this.idNums + 4
@@ -552,17 +582,28 @@ export default {
       this.$get('dcaBSciencepublish/custom', {
       }).then((r) => {
         let data = r.data
-        this.dataSource = data.rows
+        
         if (data.rows.length > 0
         ) {
           if (data.rows[0].state === 0) {
             this.CustomVisiable = true
           }
+          data.rows.forEach((element) => {
+             element['aus'] = 0;
+             console.info(element['authorRank'])
+             if(element['authorRank']!=null&&element['authorRank'].indexOf('[')>=0){
+             element['authorRank']= JSON.parse(element['authorRank'])
+             }
+             if(element['authorRank']==''){
+               element['authorRank'] = []
+             }
+          })
           //this.idNums = data.rows[data.rows.length - 1].id
         }
         else {
           this.CustomVisiable = true
         }
+        this.dataSource = data.rows
         for (let i = 0; i < 4; i++) {
           this.dataSource.push({
             id: (this.idNums + i + 1).toString(),
@@ -574,14 +615,15 @@ export default {
             paperCause: '',
             isBest: '',
             otherTimes: '',
-            authorRank: '',
+            authorRank: [],
             wzlx: '',
             qkjb: '',
             djzz: '',
             state: 0,
             sciValue: '',
             rankValue: '',
-            isUse: false
+            isUse: false,
+            aus: 0
           })
           this.idNums = this.idNums + 4
         }
@@ -648,7 +690,7 @@ export default {
       {
         title: '第一或通讯作者',
         dataIndex: 'authorRank',
-        width: 120,
+        width: 200,
         scopedSlots: { customRender: 'authorRank' }
       },
       {

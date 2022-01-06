@@ -56,7 +56,7 @@ export default {
       else {
         this.loading = true
         this.$post('dcaBApplyjob', {
-          applyContent: this.applyContent.trim(),
+          applyContent: this.applyContent,
           id: this.id,
           state: 0
         }).then(() => {
@@ -82,7 +82,7 @@ export default {
             that.loading = true
 
             that.$post('dcaBApplyjob', {
-              applyContent: that.applyContent.trim(),
+              applyContent: that.applyContent,
               state: 1
             }).then(() => {
               // this.reset()
