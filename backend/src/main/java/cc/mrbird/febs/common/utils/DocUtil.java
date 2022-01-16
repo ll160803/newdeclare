@@ -68,7 +68,14 @@ public class DocUtil {
                     }
                 }
                 else {
-                    handleStrObject(ReflectUtil.getFieldValue(customApplyFirst,bookmark_title),run);
+                    if(bookmark_title.equals("year")){
+                        run.setFontSize(20);
+                        handleStrObject(ReflectUtil.getFieldValue(customApplyFirst, bookmark_title), run);
+                    }
+                    else {
+                        run.setFontSize(fontSize);
+                        handleStrObject(ReflectUtil.getFieldValue(customApplyFirst, bookmark_title), run);
+                    }
                 }
               //  run.setText(bookValue);
 

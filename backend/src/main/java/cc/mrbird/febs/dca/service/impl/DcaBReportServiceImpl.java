@@ -77,7 +77,7 @@ public IPage<DcaBReport> findDcaBReports(QueryRequest request, DcaBReport dcaBRe
         SortUtil.handlePageSort(request,page,false);//true 是属性  false是数据库字段可两个
             IPage<DcaBReport> result =this.page(page,queryWrapper);
             List<DcaBReport> list =result.getRecords();
-            String[] arr= {"ydyf","ydyffj","zzsc","zzscypfj","jlsc","xsddsc","xsddscypfj","yyxtsc","sfssds","sfbsds","sftgsdsf",
+            String[] arr= {"ylpfbfz","ylpfdj","ydyf","ydyffj","zzsc","zzscypfj","jlsc","xsddsc","xsddscypfj","yyxtsc","sfssds","sfbsds","sftgsdsf",
                     "sdsfypfj","sdsfypfj2","ynjbzr","j5njxgz","mzylpf","mzylpfdj","mzylsgypfj","jlscypfj","yyxtypfj"
                     ,"sfypfjyl","hlylpf","hlylpfdj","hljxpfbfz","hljxpfdl","hlhlzrypfj","sshbdts","sshkyxts","blxwjf","wfzgszcf"
                     ,"zypfyjxl","zypfdjyjxl","zypfbfz58","zypfdj59","sfyszgzs","sfjyhlzgzs","xingfscsftg","sfczxfypfj61","zypf52","zypfdj52","beizhumenban","beizhuhuli","beizhuyiwuchu"};
@@ -94,7 +94,12 @@ public IPage<DcaBReport> findDcaBReports(QueryRequest request, DcaBReport dcaBRe
               ) {
                   DcaBAuditdynamic fy = new DcaBAuditdynamic();
                   fy.setUserAccount(item.getUserAccount());
-                  fy.setAuditTitletype(item.getAuditTitletype());
+                  if(item.getAuditTitletype().equals("ylpfbfz") ||item.getAuditTitletype().equals("ylpfdj")){
+                      fy.setAuditTitletype(item.getAuditTitletype()+"2022");
+                  }
+                  else {
+                      fy.setAuditTitletype(item.getAuditTitletype());
+                  }
                   fy.setAuditTitle(item.getAuditTitle());
                   fy.setAuditResult(item.getAuditResult());
                   fy.setId(item.getId());

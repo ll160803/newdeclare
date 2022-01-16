@@ -6313,16 +6313,16 @@ public class PDFDemo {
         for (DcaBCopySciencepublish sciencepublish : sciencepublishList
         ) {
             String zz = "";
-            if (sciencepublish.getAuditTotalnum() != null) {
-                if (sciencepublish.getAuditTotalnum() > 0) {
-                    zz = "第一作者或通讯作者共" + sciencepublish.getAuditTotalnum() + "人";
+            if (sciencepublish.getAuditIsfirst() != null) { // 2021 高级审核修改
+                if (sciencepublish.getAuditIsfirst()) {
+                    zz = "非第一作者或通讯作者";
                 }
-            } else {
-                if (sciencepublish.getAuditIsfirst() != null) {
-                    if (sciencepublish.getAuditIsfirst()) {
-                        zz = "非第一作者或通讯作者";
-                    }
+                else{
+                    zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"";
                 }
+            }
+            else{
+                zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"";
             }
 
             //列二
@@ -7673,11 +7673,24 @@ public class PDFDemo {
 
         //列四、五、六
         // 为了使代码简洁，接下来的存值进行遍历
-        listCells.add(generatePdfValue(pdfStyleex, title1_4_1, 5, 75f));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getShjz(), 20, 75f, Element.ALIGN_LEFT, 0));
+        float hhjz2 = 75f;
+        hhjz2 = 20f * (customApplyFirst.getDcaBParttimejobList().size() > 5 ? customApplyFirst.getDcaBParttimejobList().size() : 5);
+        listCells.add(generatePdfValue(pdfStyleex, title1_4_1, 5, hhjz2));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getShjz(), 20, hhjz2, Element.ALIGN_LEFT, 0));
 
-        listCells.add(generatePdfValue(pdfStyleex, title1_5_1, 5, 75f));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getHshdshjljcf(), 20, 75f, Element.ALIGN_LEFT, 0));
+        float hhjz = 75f;
+
+
+
+        //  hhjz = 20f * (customApplyFirst.getDcaBParttimejobList().size() > 5 ? customApplyFirst.getDcaBParttimejobList().size() : 5);
+
+
+        hhjz = 20f * (customApplyFirst.getDcaBPrizeorpunishList().size() > 5 ? customApplyFirst.getDcaBPrizeorpunishList().size() : 5);
+
+        listCells.add(generatePdfValue(pdfStyleex, title1_5_1, 5, hhjz));
+
+
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getHshdshjljcf(), 20, hhjz, Element.ALIGN_LEFT, 0));
 
         listCells.add(generatePdfValue(pdfStyleex, title1_6_1, 5, 75f));
         listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getJ5nkhqk(), 20, 75f, Element.ALIGN_LEFT, 0));
@@ -7920,16 +7933,16 @@ public class PDFDemo {
         for (DcaBCopySciencepublish sciencepublish : sciencepublishList
         ) {
             String zz = "";
-            if (sciencepublish.getAuditTotalnum() != null) {
-                if (sciencepublish.getAuditTotalnum() > 0) {
-                    zz = "第一作者或通讯作者共" + sciencepublish.getAuditTotalnum() + "人";
+            if (sciencepublish.getAuditIsfirst() != null) { // 2021 高级审核修改
+                if (sciencepublish.getAuditIsfirst()) {
+                    zz = "非第一作者或通讯作者";
                 }
-            } else {
-                if (sciencepublish.getAuditIsfirst() != null) {
-                    if (sciencepublish.getAuditIsfirst()) {
-                        zz = "非第一作者或通讯作者";
-                    }
+                else{
+                    zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"";
                 }
+            }
+            else{
+                zz= StringUtils.isNotEmpty(sciencepublish.getAuthorRank())?sciencepublish.getAuthorRank()+"；1/"+(sciencepublish.getAuditTotalnum()==null?"":String.valueOf(sciencepublish.getAuditTotalnum())):"";
             }
 
 

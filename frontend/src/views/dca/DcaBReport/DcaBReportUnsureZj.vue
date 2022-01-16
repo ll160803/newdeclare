@@ -56,6 +56,15 @@
             >
               导出职称确认表
             </a-button>
+             <a-button
+              v-hasNoPermission="['dca:audit']"
+              style="width:100%;padding-left:2px;padding-right:2px;"
+              type="dashed"
+              block
+              @click="handleBack(record)"
+            >
+              退回待确认
+            </a-button>
           </div>
           <div v-else-if="record.state==1">
             <a-button
@@ -245,6 +254,26 @@ export default {
       }).then(() => {
         // this.reset()
         this.$message.success('保存成功')
+        this.search()
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
+     handleBack (record) {
+
+      // let jsonStr = JSON.stringify(record)
+      let vRecord = {}
+      vRecord.id = record.id
+      vRecord.userAccount = record.userAccount
+      vRecord.state = 1
+      // vRecord.dcaBAuditdynamicList=''
+      this.loading = true
+      this.$put('dcaBReport', {
+        ...vRecord
+      }).then(() => {
+        // this.reset()
+        this.$message.success('退回成功')
         this.search()
         this.loading = false
       }).catch(() => {

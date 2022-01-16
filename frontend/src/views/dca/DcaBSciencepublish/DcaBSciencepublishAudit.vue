@@ -700,7 +700,7 @@ export default {
       visibleUserInfo: false,
       paginationInfo: null,
       scroll: {
-        x: 3600,
+        x: 3500,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       userAccount: '',

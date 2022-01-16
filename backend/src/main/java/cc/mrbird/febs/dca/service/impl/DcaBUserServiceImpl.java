@@ -1452,6 +1452,21 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
             arrNew.add(ite);
         }
         List<DcaBAuditdynamic> listQcNew =auditdynamicAuditList.stream().filter(p -> arrNew.contains(p.getAuditTitletype())).collect(Collectors.toList());
+        List<DcaBAuditdynamic> listQcNew_2022 =auditdynamicAuditList.stream().filter(p -> p.getAuditTitletype().equals("ylpfbfz")||p.getAuditTitletype().equals("ylpfdj")).collect(Collectors.toList());
+        listQcNew_2022.forEach(u->
+        {
+            DcaBAuditdynamic newDynamic =new DcaBAuditdynamic();
+            newDynamic.setAuditTitletype(u.getAuditTitletype()+"2022");
+            newDynamic.setAuditTitle(u.getAuditTitle());
+            newDynamic.setAuditResult(u.getAuditResult());
+            newDynamic.setUserAccount(u.getUserAccount());
+            newDynamic.setUserAccountName(u.getUserAccountName());
+            newDynamic.setId(u.getId());
+            listQcNew.add(newDynamic);
+        }
+
+                ); //医疗评分百分制 重新获取
+
 
 
         /**

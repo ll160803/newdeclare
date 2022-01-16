@@ -154,7 +154,8 @@ export default {
         { fieldName: 'sftgsdsf' },
         { fieldName: 'sdsfypfj' },
         { fieldName: 'sdsfypfj2' },
-       
+       { fieldName: 'ylpfbfz2022' },
+        { fieldName: 'ylpfdj2022' },
 
         { fieldName: 'mzylsgypfj' }
         , { fieldName: 'sfypfjyl' },
@@ -1033,12 +1034,12 @@ export default {
 
         {
           title: '医疗评分84',
-          dataIndex: 'ylpfbfz',
+          dataIndex: 'ylpfbfz2022',
           width: 100,
         },
         {
           title: '医疗评分等级85',
-          dataIndex: 'ylpfdj',
+          dataIndex: 'ylpfdj2022',
           width: 120
         },
         {
@@ -1210,7 +1211,7 @@ export default {
           width: 100
         }
       ];
-      let listj = ['ydyf', 'ydyffj', 'zzsc', 'zzscypfj', 'jlsc', 'jlscypfj', 'xsddsc', 'xsddscypfj', 'zypfyjxl', 'zypfdjyjxl', 'yyxtsc', 'yyxtypfj', 'zypfbfz58', 'zypfdj59', 'sfssds', 'sfbsds', 'sftgsdsf',
+      let listj = ['ylpfbfz2022','ylpfdj2022','ydyf', 'ydyffj', 'zzsc', 'zzscypfj', 'jlsc', 'jlscypfj', 'xsddsc', 'xsddscypfj', 'zypfyjxl', 'zypfdjyjxl', 'yyxtsc', 'yyxtypfj', 'zypfbfz58', 'zypfdj59', 'sfssds', 'sfbsds', 'sftgsdsf',
         'sdsfypfj', 'sdsfypfj2', 'mzylsgypfj', 'sfypfjyl', 'sfyszgzs',
         'hlylpf', 'hlylpfdj', 'hljxpfbfz', 'hljxpfdl', 'hlhlzrypfj', 'sfjyhlzgzs', 'sshbdts', 'sshkyxts', 'blxwjf', 'wfzgszcf', 'xingfscsftg', 'sfczxfypfj61',
         'zypf52', 'zypfdj52', 'beizhuyiwuchu', 'beizhumenban', 'beizhuhuli'];
@@ -2110,12 +2111,12 @@ export default {
           children: [
             {
               title: '医疗评分(百分制)',
-              dataIndex: 'ylpfbfz',
+              dataIndex: 'ylpfbfz2022',
               width: 100,
             },
             {
               title: '医疗评分等级',
-              dataIndex: 'ylpfdj',
+              dataIndex: 'ylpfdj2022',
               width: 120
             },
             {

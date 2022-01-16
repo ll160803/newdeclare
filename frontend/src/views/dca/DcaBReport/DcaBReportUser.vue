@@ -581,6 +581,12 @@ export default {
         {
           fieldName: "ylpfdj",
         },
+         {
+          fieldName: "ylpfbfz2022",
+        },
+        {
+          fieldName: "ylpfdj2022",
+        },
         {
           fieldName: "jxpf",
         },
@@ -1734,12 +1740,12 @@ export default {
 
         {
           title: "医疗评分84",
-          dataIndex: "ylpfbfz",
+          dataIndex: "ylpfbfz2022",
           width: 100,
         },
         {
           title: "医疗评分等级85",
-          dataIndex: "ylpfdj",
+          dataIndex: "ylpfdj2022",
           width: 120,
         },
         {
@@ -1907,6 +1913,8 @@ export default {
         "eduDateBack",
         "ylpfbfz",
         "ylpfdj",
+         "ylpfbfz2022",
+        "ylpfdj2022",
         "jxpf",
         "jxpfdj",
         "sciName",
@@ -2968,12 +2976,12 @@ export default {
           children: [
             {
               title: "医疗评分(百分制)",
-              dataIndex: "ylpfbfz",
+              dataIndex: "ylpfbfz2022",
               width: 100,
             },
             {
               title: "医疗评分等级",
-              dataIndex: "ylpfdj",
+              dataIndex: "ylpfdj2022",
               width: 120,
             },
             {

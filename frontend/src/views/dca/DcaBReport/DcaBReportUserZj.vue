@@ -538,8 +538,12 @@ export default {
         {
           fieldName: "ylpfbfz",
         },
+        { fieldName: "ylpfbfz2022" },
         {
           fieldName: "ylpfdj",
+        },
+        {
+          fieldName: "ylpfdj2022",
         },
         {
           fieldName: "jxpf",
@@ -1058,10 +1062,13 @@ export default {
       return "否";
     },
     setValueClshjg(record) {
-      let str = "";
+     let str = "";
       if (record.applyState == 2) {
-        record.clshjg= "退审";
         str = "退审";
+         if(record.clshjg==''){
+          record.clshjg= "退审"
+          return str;
+        }
       } else {
         str = record.clshjg == null ? "" : record.clshjg;
       }
@@ -1069,8 +1076,10 @@ export default {
     },
     setNtyyValue(record) {
       if (record.applyState == 2) {
-        record.ntyy = "中途退回";
-        return "中途退回";
+        if(record.ntyy==''){
+          record.ntyy= "中途退回"
+          return "中途退回";
+        }
       }
       return record.ntyy;
     },
@@ -1480,12 +1489,12 @@ export default {
 
         {
           title: "医疗评分84",
-          dataIndex: "ylpfbfz",
+          dataIndex: "ylpfbfz2022",
           width: 100,
         },
         {
           title: "医疗评分等级85",
-          dataIndex: "ylpfdj",
+          dataIndex: "ylpfdj2022",
           width: 120,
         },
         {
@@ -1606,6 +1615,7 @@ export default {
         "eduDate",
         "eduDateBack",
         "ylpfbfz",
+        
         "ylpfdj",
         "jxpf",
         "jxpfdj",
@@ -1683,8 +1693,9 @@ export default {
         "mzylpf",
         "mzylpfdj",
         "mzylsgypfj",
-        "ylpfbfz",
+        "ylpfbfz2022",
         "ylpfdj",
+        "ylpfdj2022",
         "sfypfjyl",
         "sfyszgzs",
         "hlylpf",
@@ -2035,11 +2046,11 @@ export default {
             },
             {
               title: "医务分数",
-              dataIndex: "ylpfbfz2",
+              dataIndex: "ylpfbfz",
               width: 80,
-              customRender: (text, row, index) => {
-                return row.ylpfbfz;
-              },
+              // customRender: (text, row, index) => {
+              //   return row.ylpfbfz;
+              // },
             },
             {
               title: "门办等级",
@@ -2356,12 +2367,12 @@ export default {
           children: [
             {
               title: "医疗评分(百分制)",
-              dataIndex: "ylpfbfz",
+              dataIndex: "ylpfbfz2022",
               width: 100,
             },
             {
               title: "医疗评分等级",
-              dataIndex: "ylpfdj",
+              dataIndex: "ylpfdj2022",
               width: 120,
             },
             {

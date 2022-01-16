@@ -274,6 +274,15 @@
                     <a-select-option value="中华奖">
                       中华奖
                     </a-select-option>
+                      <a-select-option value="部科进">
+                      部科进
+                    </a-select-option>
+                    <a-select-option value="部发明">
+                      部发明
+                    </a-select-option>
+                    <a-select-option value="部推广">
+                      部推广
+                    </a-select-option>
                   </a-select>
                 </div>
               </template>
