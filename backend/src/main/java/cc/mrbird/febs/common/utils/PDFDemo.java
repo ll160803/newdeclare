@@ -6066,11 +6066,15 @@ public class PDFDemo {
 
         //列四、五、六
         // 为了使代码简洁，接下来的存值进行遍历
-        listCells.add(generatePdfValue(pdfStyleex, title1_4_1, 5, 75f));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getShjz(), 20, 75f, Element.ALIGN_LEFT, 0));
+        float hhjz2 = 75f;
+        hhjz2 = 20f * (customApplyFirst.getDcaBParttimejobList().size() > 5 ? customApplyFirst.getDcaBParttimejobList().size() : 5);
+        listCells.add(generatePdfValue(pdfStyleex, title1_4_1, 5, hhjz2));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getShjz(), 20, hhjz2, Element.ALIGN_LEFT, 0));
 
-        listCells.add(generatePdfValue(pdfStyleex, title1_5_1, 5, 75f));
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getHshdshjljcf(), 20, 75f, Element.ALIGN_LEFT, 0));
+        float hhjz = 75f;
+        hhjz = 20f * (customApplyFirst.getDcaBPrizeorpunishList().size() > 5 ? customApplyFirst.getDcaBPrizeorpunishList().size() : 5);
+        listCells.add(generatePdfValue(pdfStyleex, title1_5_1, 5, hhjz));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getHshdshjljcf(), 20, hhjz, Element.ALIGN_LEFT, 0));
 
         listCells.add(generatePdfValue(pdfStyleex, title1_6_1, 5, 75f));
         listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getJ5nkhqk(), 20, 75f, Element.ALIGN_LEFT, 0));

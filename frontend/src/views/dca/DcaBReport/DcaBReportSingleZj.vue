@@ -152,7 +152,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 2600,
+        x: 2700,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -626,6 +626,11 @@ export default {
           dataIndex: 'clshjg',
           width: 100,
           scopedSlots: { customRender: 'clshjg' }
+        },
+          {
+          title: '退审原因',
+          dataIndex: 'ntyy',
+          width: 100
         },
         {
           title: '联系方式',
