@@ -325,6 +325,9 @@
                   style="width: 100%"
                   @change="(e, f) => handleSelectChange(e, f, record, 'sblx')"
                 >
+                 <a-select-option value="评聘"> 评聘 </a-select-option>
+                  <a-select-option value="确定"> 确定 </a-select-option>
+                   <a-select-option value="退审"> 退审 </a-select-option>
                   <a-select-option value="顺升"> 顺升 </a-select-option>
                   <a-select-option value="单靠"> 单靠 </a-select-option>
                   <a-select-option value="援疆"> 援疆 </a-select-option>
