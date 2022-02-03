@@ -1228,6 +1228,32 @@ export default {
           dataIndex: "bsbysj",
           width: 100,
         },
+         {
+          title: "等级7",
+          dataIndex: "ylpfdj",
+          width: 100,
+        },
+        {
+          title: "分数8",
+          dataIndex: "ylpfbfz",
+        },
+        {
+          title: "门办等级90",
+          dataIndex: "mzylpfdj",
+        },
+        {
+          title: "门办分数91",
+          dataIndex: "mzylpf",
+        },
+
+        {
+          title: "等级9",
+          dataIndex: "jxpfdj",
+        },
+        {
+          title: "分数10",
+          dataIndex: "jxpf",
+        },
  {
           title: 'A 类',
           dataIndex: 'publishA',
@@ -1294,32 +1320,7 @@ export default {
           dataIndex: "sciDjranknum",
         },
 
-        {
-          title: "等级7",
-          dataIndex: "ylpfdj",
-          width: 100,
-        },
-        {
-          title: "分数8",
-          dataIndex: "ylpfbfz",
-        },
-        {
-          title: "门办等级90",
-          dataIndex: "mzylpfdj",
-        },
-        {
-          title: "门办分数91",
-          dataIndex: "mzylpf",
-        },
-
-        {
-          title: "等级9",
-          dataIndex: "jxpfdj",
-        },
-        {
-          title: "分数10",
-          dataIndex: "jxpf",
-        },
+       
         {
           title: "法定资质10",
           dataIndex: "fdzz",
@@ -1939,7 +1940,55 @@ export default {
           dataIndex: "bsbysj",
           width: 100,
         },
-
+ {
+          title: "医疗评价",
+          children: [
+            {
+              title: "医务等级",
+              dataIndex: "ylpfdj",
+              width: 100,
+            },
+            {
+              title: "医务分数",
+              dataIndex: "ylpfbfz",
+              width: 80,
+              // customRender: (text, row, index) => {
+              //   return row.ylpfbfz;
+              // },
+            },
+            {
+              title: "门办等级",
+              dataIndex: "mzylpfdj",
+              width: 100,
+            },
+            {
+              title: "门办分数",
+              dataIndex: "mzylpf2",
+              width: 80,
+              customRender: (text, row, index) => {
+                return row.mzylpf;
+              },
+            },
+          ],
+        },
+        {
+          title: "教学评价",
+          children: [
+            {
+              title: "等级",
+              dataIndex: "jxpfdj",
+              width: 100,
+            },
+            {
+              title: "分数",
+              dataIndex: "jxpf2",
+              width: 80,
+              customRender: (text, row, index) => {
+                return row.jxpf;
+              },
+            },
+          ],
+        },
         {
           title: "论文",
           children: [
@@ -2039,55 +2088,7 @@ export default {
           ],
         },
 
-        {
-          title: "医疗评价",
-          children: [
-            {
-              title: "医务等级",
-              dataIndex: "ylpfdj",
-              width: 100,
-            },
-            {
-              title: "医务分数",
-              dataIndex: "ylpfbfz",
-              width: 80,
-              // customRender: (text, row, index) => {
-              //   return row.ylpfbfz;
-              // },
-            },
-            {
-              title: "门办等级",
-              dataIndex: "mzylpfdj",
-              width: 100,
-            },
-            {
-              title: "门办分数",
-              dataIndex: "mzylpf2",
-              width: 80,
-              customRender: (text, row, index) => {
-                return row.mzylpf;
-              },
-            },
-          ],
-        },
-        {
-          title: "教学评价",
-          children: [
-            {
-              title: "等级",
-              dataIndex: "jxpfdj",
-              width: 100,
-            },
-            {
-              title: "分数",
-              dataIndex: "jxpf2",
-              width: 80,
-              customRender: (text, row, index) => {
-                return row.jxpf;
-              },
-            },
-          ],
-        },
+       
         {
           title: "法定资质",
           dataIndex: "fdzz",
