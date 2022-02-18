@@ -4,6 +4,7 @@ import MenuView from '@/views/common/MenuView'
 import PageView from '@/views/common/PageView'
 import LoginView from '@/views/login/Common'
 import CustomList from '@/views/login/CustomList'
+import CustomStr from '@/views/login/CustomStr'
 import EmptyPageView from '@/views/common/EmptyPageView'
 import HomePageView from '@/views/HomePage'
 
@@ -23,6 +24,11 @@ let constRouter = [{
     path: '/customHan/:id',
     name: '自定义数据',
     component: CustomList
+  },
+  {
+    path: '/customHan2/:id',
+    name: '自定义数据2',
+    component: CustomStr
   },
   {
     path: '/login',

@@ -50,6 +50,14 @@ public class WeatherController {
       List<BackInfo> backInfoList=  rfcNOC.GetInfoList(id);
      return  new FebsResponse().data(backInfoList);
     }
+    @GetMapping("info2")
+    public FebsResponse getList2( String id){
+
+        log.info("info2:"+id);
+        RfcNOC rfcNOC =new RfcNOC();
+        String reStr=  rfcNOC.GetStr(id);
+        return  new FebsResponse().data(reStr);
+    }
     @PostMapping("excel")
     public void export(QueryRequest request, String id, String dataJson, HttpServletResponse response)throws FebsException{
         String message="";

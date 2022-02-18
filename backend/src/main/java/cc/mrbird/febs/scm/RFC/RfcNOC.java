@@ -390,4 +390,49 @@ public class RfcNOC {
         return list;
     }
 
+    public String GetStr(String url) {
+        String fuName = "ZHR00_FM_HSLIST2";
+        log.info("ZHR00_FM_HSLIST2 begin");
+       String returnStr="";
+        JCoDestination destination;
+        try {
+
+            destination = RfcNOC.GetDestination();
+            if (destination == null) {
+                log.error("配置信息出错");
+                return null;
+            }
+
+            // JCoRepository rfcrep = destination.getRepository();
+            JCoFunction myfun = null;
+            myfun = destination.getRepository().getFunction(fuName);
+            //  myfun.SetValue("IS_SELCOND", "0");//SAP里面的传入参数
+            if (myfun == null)
+                log.info(fuName + " is null");
+//            JCoStructure IrfStruct = myfun.getImportParameterList().getStructure("IS_SELCOND");
+//            if (IrfStruct == null)
+//                log.info("IrfStruct is null");
+//            IrfStruct.setValue("URL", url);
+
+
+            JCoParameterList paramList = myfun.getImportParameterList();
+            paramList.setValue("URL", url);
+
+            //  myfun.setValue("IS_SELCOND", IrfStruct);
+            //提前实例化一个空的表结构出来
+            myfun.execute(destination);//执行
+            log.info(fuName + "myfun.Invoke succeed");
+             returnStr = myfun.getExportParameterList().getString("STRING"); //此处返回类型为Structure 如果是Single类型 则直接调用myfun.GetString("RETURN");
+
+
+            log.info("list fill succeed ,GetPurcharseList end");
+        } catch (Exception ex) {
+
+            log.error(ex.getMessage());
+        } finally {
+            destination = null;
+        }
+
+        return returnStr;
+    }
 }
