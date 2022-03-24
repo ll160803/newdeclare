@@ -392,7 +392,9 @@
                      <a-select-option value="重大专项子项">
                       重大专项子项
                     </a-select-option>
-                    
+                    <a-select-option value="国合作">
+                      国合作
+                    </a-select-option>
                   </a-select>
                 </div>
               </template>

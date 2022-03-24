@@ -10,6 +10,7 @@ import cc.mrbird.febs.dca.dao.DcaBUserMapper;
 import cc.mrbird.febs.dca.service.IDcaBReportService;
 import cc.mrbird.febs.dca.service.IDcaBUserService;
 import cc.mrbird.febs.dca.service.IDcaBUserapplyService;
+import cc.mrbird.febs.dca.service.IDcaDAuditinfoService;
 import cc.mrbird.febs.dcacopy.dao.DcaBCopyAuditdynamicMapper;
 import cc.mrbird.febs.dcacopy.entity.DcaBCopyAuditdynamic;
 import cn.hutool.Hutool;
@@ -66,6 +67,8 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
     IDcaBUserapplyService iDcaBUserapplyService;
     @Autowired
     private DcaBWorknumMapper dcaBWorknumMapper;
+    @Autowired
+    private IDcaDAuditinfoService iDcaDAuditinfoService;
 
     @Override
     public IPage<DcaBUser> findDcaBUserswithDoctor(QueryRequest request, DcaBUser dcaBUser) {
@@ -268,10 +271,24 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
                 //queryWrapper.apply("dca_b_user.user_account  in (select  user_account from dca_b_userapply where state=1 and  LOCATE(gwdj, '" + dcaBUser.getKs() + "')>0)");
             }
             if (state == 3) {
-                queryWrapper.apply("dca_b_user.user_account  in (select  user_account from  dca_b_auditdynamic inner JOIN dca_d_auditinfo on dca_b_auditdynamic.audit_titletype=dca_d_auditinfo.field_name\n" +
-                        "inner join dca_user_audit on dca_d_auditinfo.id=dca_user_audit.audit_id\n" +
-                        "where dca_user_audit.userId =" + dcaBUser.getCreateUserId() + ") and LENGTH(dca_b_user.np_position_name)>0 and \n" +
-                        "dca_b_user.np_position_name in (SELECT dca_d_xl.mudule_name  from dca_d_xl inner join dca_user_xl on dca_user_xl.xl_id=dca_d_xl.id where dca_user_xl.user_id=" + dcaBUser.getCreateUserId() + ")");
+                List<String> accountsUser= this.baseMapper.findAccounts(dcaBUser.getCreateUserId());
+                String accountsString= accountsUser.stream().map(p->"\'"+p+"\'").collect(Collectors.joining(","));
+                if (StringUtils.isNotEmpty(accountsString)) {
+                    queryWrapper.apply("dca_b_user.user_account  in (" + accountsString + ") and LENGTH(dca_b_user.np_position_name)>0 and \n" +
+                            "dca_b_user.np_position_name in (SELECT dca_d_xl.mudule_name  from dca_d_xl inner join dca_user_xl on dca_user_xl.xl_id=dca_d_xl.id where dca_user_xl.user_id=" + dcaBUser.getCreateUserId() + ")");
+                }
+                else{
+                    queryWrapper.apply("dca_b_user.user_account  in ('000000') and LENGTH(dca_b_user.np_position_name)>0 and \n" +
+                            "dca_b_user.np_position_name in (SELECT dca_d_xl.mudule_name  from dca_d_xl inner join dca_user_xl on dca_user_xl.xl_id=dca_d_xl.id where dca_user_xl.user_id=" + dcaBUser.getCreateUserId() + ")");
+
+                }
+//                queryWrapper.apply("dca_b_user.user_account  in (select  user_account from  dca_b_auditdynamic inner JOIN dca_d_auditinfo on dca_b_auditdynamic.audit_titletype=dca_d_auditinfo.field_name\n" +
+//                        "inner join dca_user_audit on dca_d_auditinfo.id=dca_user_audit.audit_id\n" +
+//                        "where dca_user_audit.userId =" + dcaBUser.getCreateUserId() + ") and LENGTH(dca_b_user.np_position_name)>0 and \n" +
+//                        "dca_b_user.np_position_name in (SELECT dca_d_xl.mudule_name  from dca_d_xl inner join dca_user_xl on dca_user_xl.xl_id=dca_d_xl.id where dca_user_xl.user_id=" + dcaBUser.getCreateUserId() + ")");
+
+//                queryWrapper.apply("dca_b_user.user_account  in (" + accountsString + ") and LENGTH(dca_b_user.np_position_name)>0 and \n" +
+//                        "dca_b_user.np_position_name in (SELECT dca_d_xl.mudule_name  from dca_d_xl inner join dca_user_xl on dca_user_xl.xl_id=dca_d_xl.id where dca_user_xl.user_id=" + dcaBUser.getCreateUserId() + ")");
             }
             if (state == 1) {
                 queryWrapper.apply("dca_b_user.user_account  not in (select  user_account from  dca_b_auditdynamic inner JOIN dca_d_auditinfo on dca_b_auditdynamic.audit_titletype=dca_d_auditinfo.field_name\n" +
@@ -285,10 +302,16 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
 
             if (state == 3) {
                 if (listResult.getRecords().size() > 0) {
+                    LambdaQueryWrapper<DcaDAuditinfo> queryWrapper2 = new LambdaQueryWrapper<>();
+                    queryWrapper2.apply("dca_d_auditinfo.id in (SELECT audit_id  from dca_user_audit where userId ="+dcaBUser.getCreateUserId()+")");//
+                    List<DcaDAuditinfo> list5 = this.iDcaDAuditinfoService.list(queryWrapper2);
+                    List<String> listTypeTitle= list5.stream().map(p->p.getFieldName()).collect(Collectors.toList());
+
                     List<String> listDynamic = listResult.getRecords().stream().map(p -> p.getUserAccount()).collect(Collectors.toList());
                     LambdaQueryWrapper<DcaBAuditdynamic> queryWrapperDynamic = new LambdaQueryWrapper<>();
                     if (listDynamic.size() > 0) {
                         queryWrapperDynamic.in(DcaBAuditdynamic::getUserAccount, listDynamic);
+                        queryWrapperDynamic.in(DcaBAuditdynamic::getAuditTitletype, listTypeTitle);
                         List<DcaBAuditdynamic> auditdynamicList = this.dcaBAuditdynamicMapper.selectList(queryWrapperDynamic);
                         for (DcaBUser user : listResult.getRecords()
                         ) {
@@ -532,10 +555,20 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
             }
 
             if (state == 3) {
-                queryWrapper.apply("dca_b_user.user_account  in (select  user_account from  dca_b_auditdynamic inner JOIN dca_d_auditinfo on dca_b_auditdynamic.audit_titletype=dca_d_auditinfo.field_name\n" +
-                        "inner join dca_user_audit on dca_d_auditinfo.id=dca_user_audit.audit_id\n" +
-                        "where dca_user_audit.userId =" + dcaBUser.getCreateUserId() + ") and LENGTH(dca_b_user.np_position_name)>0 and \n" +
-                        "dca_b_user.np_position_name in (SELECT dca_d_xl.mudule_name  from dca_d_xl inner join dca_user_xl on dca_user_xl.xl_id=dca_d_xl.id where dca_user_xl.user_id=" + dcaBUser.getCreateUserId() + ")");
+                List<String> accountsUser = this.baseMapper.findAccounts(dcaBUser.getCreateUserId());
+                String accountsString = accountsUser.stream().map(p -> "\'" + p + "\'").collect(Collectors.joining(","));
+//                queryWrapper.apply("dca_b_user.user_account  in (select  user_account from  dca_b_auditdynamic inner JOIN dca_d_auditinfo on dca_b_auditdynamic.audit_titletype=dca_d_auditinfo.field_name\n" +
+//                        "inner join dca_user_audit on dca_d_auditinfo.id=dca_user_audit.audit_id\n" +
+//                        "where dca_user_audit.userId =" + dcaBUser.getCreateUserId() + ") and LENGTH(dca_b_user.np_position_name)>0 and \n" +
+//                        "dca_b_user.np_position_name in (SELECT dca_d_xl.mudule_name  from dca_d_xl inner join dca_user_xl on dca_user_xl.xl_id=dca_d_xl.id where dca_user_xl.user_id=" + dcaBUser.getCreateUserId() + ")");
+                if (StringUtils.isNotEmpty(accountsString)) {
+                    queryWrapper.apply("dca_b_user.user_account  in (" + accountsString + ") and LENGTH(dca_b_user.np_position_name)>0 and \n" +
+                            "dca_b_user.np_position_name in (SELECT dca_d_xl.mudule_name  from dca_d_xl inner join dca_user_xl on dca_user_xl.xl_id=dca_d_xl.id where dca_user_xl.user_id=" + dcaBUser.getCreateUserId() + ")");
+                } else {
+                    queryWrapper.apply("dca_b_user.user_account  in ('000000') and LENGTH(dca_b_user.np_position_name)>0 and \n" +
+                            "dca_b_user.np_position_name in (SELECT dca_d_xl.mudule_name  from dca_d_xl inner join dca_user_xl on dca_user_xl.xl_id=dca_d_xl.id where dca_user_xl.user_id=" + dcaBUser.getCreateUserId() + ")");
+
+                }
             }
             if (state == 1) {
                 queryWrapper.apply("dca_b_user.user_account  not in (select  user_account from  dca_b_auditdynamic inner JOIN dca_d_auditinfo on dca_b_auditdynamic.audit_titletype=dca_d_auditinfo.field_name\n" +

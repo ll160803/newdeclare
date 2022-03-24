@@ -10,11 +10,33 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class Common {
     @Autowired
     public IDcaBWorknumService iDcaBWorknumService;
+    public List<DcaBWorknum> getWorknumByAccount(List<String> accounts){
+        LambdaQueryWrapper<DcaBWorknum> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(DcaBWorknum::getIsDeletemark, 1);//1是未删 0是已删
+        queryWrapper.in(DcaBWorknum::getUserAccount,accounts);
+        //queryWrapper.eq(DcaBWorknum::getYear,dcaBWorknum.getYear());
+        List<DcaBWorknum> list=this.iDcaBWorknumService.list(queryWrapper);
+        return  list;
+    }
+
+    public void  InsertAuditResult2(DcaBWorknum dcaBWorknum,List<DcaBWorknum> list2){
+        List<DcaBWorknum> list= list2.stream().filter(p->p.getUserAccount().equals(dcaBWorknum.getUserAccount())&&p.getYear().equals(dcaBWorknum.getYear())).collect(Collectors.toList());
+        if(list.size()>0){
+            dcaBWorknum.setId(list.get(0).getId());
+            this.iDcaBWorknumService.updateDcaBWorknum(dcaBWorknum);
+        }
+        else{
+            dcaBWorknum.setState(3);
+            dcaBWorknum.setIsDeletemark(1);
+            this.iDcaBWorknumService.createDcaBWorknum(dcaBWorknum);
+        }
+    }
     public void  InsertAuditResult(DcaBWorknum dcaBWorknum){
         LambdaQueryWrapper<DcaBWorknum> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(DcaBWorknum::getIsDeletemark, 1);//1是未删 0是已删

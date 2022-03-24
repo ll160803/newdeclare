@@ -23,6 +23,8 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
 
     IPage<DcaBUser> findDcaBUser(Page page, @Param("dcaBUser") DcaBUser dcaBUser);
 
+   List<String> findAccounts(@Param("userId") Long userId);
+
     @Update(" update dca_b_user set IS_DELETEMARK=0 where user_account=#{useraccount}  and (state=0 or state=2)")
     void deleteByAccount(@Param("useraccount") String useraccount);
 

@@ -1875,6 +1875,11 @@ export default {
           width: 150,
         },
         {
+          title: '任现职以来出国时长（月）',
+          dataIndex: 'chuguonianyue',
+          width: 120
+        },
+        {
           title: "支援情况",
           dataIndex: "help",
           width: 150,
@@ -1884,6 +1889,11 @@ export default {
           dataIndex: "qtzlxzy",
           width: 150,
         },
+         {
+              title: '支援类型222',
+              dataIndex: 'zhiyuanchuguo',
+              width: 100
+            },
         {
           title: "时长（月）",
           dataIndex: "helpmonth",
@@ -3137,6 +3147,11 @@ export default {
           width: 150,
           scopedSlots: { customRender: "splitHang" },
         },
+         {
+          title: '任现职以来出国时长（月）',
+          dataIndex: 'chuguonianyue',
+          width: 120
+        },
         {
           title: "任现职以来参加指令性支援情况",
           children: [
@@ -3151,6 +3166,11 @@ export default {
               dataIndex: "qtzlxzy",
               width: 150,
               scopedSlots: { customRender: "splitHang" },
+            },
+             {
+              title: '支援类型',
+              dataIndex: 'zhiyuanchuguo',
+              width: 100
             },
             {
               title: "时长（月）",

@@ -124,6 +124,16 @@
                 where id=#{id}
 
     </update>
+    <select id="findAccounts" resultType="String" >
+          SELECT
+			   distinct	user_account
+			FROM
+				dca_b_auditdynamic
+			INNER JOIN dca_d_auditinfo ON dca_b_auditdynamic.audit_titletype = dca_d_auditinfo.field_name
+			INNER JOIN dca_user_audit ON dca_d_auditinfo.id = dca_user_audit.audit_id
+			WHERE
+				dca_user_audit.userId = #{userId}
+    </select>
     <select id="findDcaBUser" resultType="cc.mrbird.febs.dca.entity.DcaBUser" parameterType="cc.mrbird.febs.dca.entity.DcaBUser">
         select  *  from dca_b_user
         where  1=1

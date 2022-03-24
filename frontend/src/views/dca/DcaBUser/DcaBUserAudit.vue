@@ -82,7 +82,7 @@
                 :beforeUpload="beforeUpload"
                 @change="handleChangeFile"
               >
-                <a-button>
+                <a-button :loading="loading2">
                   <a-icon type="upload" /> 上传审核结果
                 </a-button>
               </a-upload>
@@ -219,6 +219,7 @@ export default {
       formItemLayout,
       selectedRowKeys: [],
       loading: false,
+      loading2: false,
       dcaBParttimeVisiable: false,
       idNums: 10000,
       pagination: {
@@ -322,6 +323,7 @@ export default {
       return isJPG && isLt2M
     },
     handleUpload () {
+      this.loading2=true
       const { fileList } = this
       let json = [
         {
@@ -355,9 +357,11 @@ export default {
       formData.append('dataJson', dataJson)
       // You can use any AJAX library you like
       this.$upload('dcaUserAudit/importAudit', formData).then((r) => {
+        this.loading2 =false
         this.$message.success('上传成功.')
         this.search()
       }).catch(() => {
+        this.loading2 =false
         this.$message.error('上传失败.')
       })
       this.fileList = []

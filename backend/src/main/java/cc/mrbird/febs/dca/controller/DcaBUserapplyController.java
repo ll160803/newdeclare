@@ -6,8 +6,10 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.dca.entity.DcaBReport;
 import cc.mrbird.febs.dca.entity.DcaUserYj;
 import cc.mrbird.febs.dca.service.IDcaBAuditdynamicService;
+import cc.mrbird.febs.dca.service.IDcaBReportService;
 import cc.mrbird.febs.dca.service.IDcaBUserapplyService;
 import cc.mrbird.febs.dca.entity.DcaBUserapply;
 
@@ -53,6 +55,9 @@ public IDcaBUserapplyService iDcaBUserapplyService;
 
     @Autowired
     public IDcaBAuditdynamicService iDcaBAuditdynamicService;
+
+    @Autowired
+    public IDcaBReportService iDcaBReportService;
 
 /**
  INSERT into t_menu(parent_id,menu_name,path,component,perms,icon,type,order_num,CREATE_time)
@@ -102,11 +107,26 @@ public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs,Str
         dcaBUserapply.setCreateUserId(currentUser.getUserId());
         dcaBUserapply.setUserAccount(currentUser.getUsername());
             dcaBUserapply.setUserAccountName(currentUser.getRealname());
-           if(this.iDcaBUserapplyService.IsExistApply(dcaBUserapply)){
-        this.iDcaBUserapplyService.createDcaBUserapply(dcaBUserapply);
-           }else {
-               throw new FebsException("当前年度已经有申报记录");
+
+
+           // 2021年中初级 需要判断是否在2020年中初级里 此人是否已经申报，且 审核结果为  确定或者评聘
+
+            LambdaQueryWrapper<DcaBReport> queryWrapper= new LambdaQueryWrapper<>();
+           queryWrapper.eq(DcaBReport::getUserAccount,dcaBUserapply.getUserAccount());
+           queryWrapper.eq(DcaBReport::getYear,"2020");
+           queryWrapper.eq(DcaBReport::getGwdj,dcaBUserapply.getGwdj());
+           queryWrapper.eq(DcaBReport::getClshjg,"合格");
+           List<DcaBReport> bReportList= this.iDcaBReportService.list(queryWrapper);
+           if(bReportList.size()>0){
+               throw new FebsException("2020年已经申报，请勿须重复申报");
            }
+
+            if(this.iDcaBUserapplyService.IsExistApply(dcaBUserapply)){
+                this.iDcaBUserapplyService.createDcaBUserapply(dcaBUserapply);
+            }else {
+                throw new FebsException("当前年度已经有申报记录");
+            }
+
            if(StringUtils.isNotEmpty(yjIDs)) {
                String[] areaIds = yjIDs.split(StringPool.COMMA);
                setUserYj(currentUser, areaIds,dcaBUserapply.getDcaYear());
@@ -143,11 +163,27 @@ public void updateDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs)
         User currentUser= FebsUtil.getCurrentUser();
       dcaBUserapply.setModifyUserId(currentUser.getUserId());
             dcaBUserapply.setUserAccount(currentUser.getUsername());
+
+
+
+            // 2021年中初级 需要判断是否在2020年中初级里 此人是否已经申报，且 审核结果为  确定或者评聘
+
+            LambdaQueryWrapper<DcaBReport> queryWrapper= new LambdaQueryWrapper<>();
+            queryWrapper.eq(DcaBReport::getUserAccount,dcaBUserapply.getUserAccount());
+            queryWrapper.eq(DcaBReport::getYear,"2020");
+            queryWrapper.eq(DcaBReport::getGwdj,dcaBUserapply.getGwdj());
+            queryWrapper.eq(DcaBReport::getClshjg,"合格");
+            List<DcaBReport> bReportList= this.iDcaBReportService.list(queryWrapper);
+            if(bReportList.size()>0){
+                throw new FebsException("2020年已经申报，请勿须重复申报");
+            }
+
             if(this.iDcaBUserapplyService.IsExistApply(dcaBUserapply)){
-        this.iDcaBUserapplyService.updateDcaBUserapply(dcaBUserapply);}
-         else {
-                    throw new FebsException("当前年度已经有申报记录");
-                }
+                this.iDcaBUserapplyService.updateDcaBUserapply(dcaBUserapply);}
+            else {
+                throw new FebsException("当前年度已经有申报记录");
+            }
+
          //删除已经存在的
             this.iDcaUserYjService.deleteByuserid(currentUser.getUsername(),dcaBUserapply.getDcaYear());
 

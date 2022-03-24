@@ -75,6 +75,7 @@ public class DcaBUserapplyServiceImpl extends ServiceImpl<DcaBUserapplyMapper, D
             }
 
             Page<DcaBUserapply> page = new Page<>();
+
             SortUtil.handlePageSort(request, page, false);//true 是属性  false是数据库字段可两个
             IPage<DcaBUserapply> result = this.page(page, queryWrapper);
 

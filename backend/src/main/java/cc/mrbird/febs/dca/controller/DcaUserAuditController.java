@@ -193,6 +193,7 @@ public class DcaUserAuditController extends BaseController {
 
         List<DcaBAuditdynamic> successList = Lists.newArrayList();
         List<String> accounts = new ArrayList<>();
+        List<DcaBWorknum> dcaBWorknumList =new ArrayList<>();
         List<String> dataIndexList = new ArrayList<>();
         List<Map<String, Object>> errorList = Lists.newArrayList();
 
@@ -238,6 +239,8 @@ public class DcaUserAuditController extends BaseController {
             dcaBWorknum2021.setUserAccount(userAccount2);
             dcaBWorknum2021.setUserAccountName(userAccountName);
             dcaBWorknum2021.setYear(i_year_qu);
+            List<DcaBWorknum> listDcaBWorknum =new ArrayList<>();
+
             //endregion
             for (ExportAfferentCustomExcel export:exportList
                  ) {
@@ -264,19 +267,33 @@ public class DcaUserAuditController extends BaseController {
             }
             flag=1;
             if(listWork.size()>0) {
+               // List<DcaBWorknum> listDcaBWorknum=common.getWorknumByAccount(accounts);
                 //region 插入数据工作量
-                common.InsertAuditResult(dcaBWorknum2019);
-                common.InsertAuditResult(dcaBWorknum2020);
-                common.InsertAuditResult(dcaBWorknum2021);
+               // common.InsertAuditResult2(dcaBWorknum2019,listDcaBWorknum);
+               // common.InsertAuditResult2(dcaBWorknum2020,listDcaBWorknum);
+               // common.InsertAuditResult2(dcaBWorknum2021,listDcaBWorknum);
+                dcaBWorknumList.add(dcaBWorknum2019);
+                dcaBWorknumList.add(dcaBWorknum2020);
+                dcaBWorknumList.add(dcaBWorknum2021);
                 //endregion
             }
 
         }
-        iDcaBAuditdynamicService.deleteBy(accounts,dataIndexList);
-        for (DcaBAuditdynamic dcaBAuditdynamic: successList
-             ) {
-            iDcaBAuditdynamicService.createDcaBAuditdynamic(dcaBAuditdynamic);
+        if(dcaBWorknumList.size()>0){ //2022-3-8
+          List<DcaBWorknum>  listDcaBWorknum = common.getWorknumByAccount(accounts);
+//            for (DcaBWorknum work:dcaBWorknumList
+//                 ) {
+//                common.InsertAuditResult2(work,listDcaBWorknum);
+//            }
+            dcaBWorknumList.stream().parallel().forEach(p->common.InsertAuditResult2(p,listDcaBWorknum));
+
         }
+        iDcaBAuditdynamicService.deleteBy(accounts,dataIndexList);
+//        for (DcaBAuditdynamic dcaBAuditdynamic: successList
+//             ) {
+//            iDcaBAuditdynamicService.createDcaBAuditdynamic(dcaBAuditdynamic);
+//        }
+        successList.stream().parallel().forEach(t->iDcaBAuditdynamicService.createDcaBAuditdynamic(t));
         return new FebsResponse().data(errorList);
     }
 

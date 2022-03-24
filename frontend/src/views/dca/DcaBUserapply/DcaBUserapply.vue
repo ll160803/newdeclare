@@ -312,6 +312,12 @@ export default {
       if(record.dcaYear=='2020' && record.gwdj=='副高'){
          return false;
       }
+      if(record.dcaYear=='2021' && record.gwdj=='正高'){
+         return false;
+      }
+      if(record.dcaYear=='2021' && record.gwdj=='副高'){
+         return false;
+      }
       return true;
     },
     batchDelete () {
@@ -404,6 +410,8 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.pagination.defaultCurrent
       }
+      params.sortField = "dca_year"
+      params.sortOrder = "descend"
       this.$get('dcaBUserapply/person', {
         ...params
       }).then((r) => {
