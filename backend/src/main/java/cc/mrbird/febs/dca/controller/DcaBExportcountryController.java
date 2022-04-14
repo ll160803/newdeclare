@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.service.IDcaBExportcountryService;
 import cc.mrbird.febs.dca.entity.DcaBExportcountry;
 
@@ -193,19 +194,39 @@ public void deleteDcaBExportcountrys(@NotBlank(message = "{required}") @PathVari
         throw new FebsException(message);
         }
         }
-@PostMapping("excel")
-@RequiresPermissions("dcaBExportcountry:export")
-public void export(QueryRequest request, DcaBExportcountry dcaBExportcountry,HttpServletResponse response)throws FebsException{
-        try{
-        List<DcaBExportcountry> dcaBExportcountrys=this.iDcaBExportcountryService.findDcaBExportcountrys(request, dcaBExportcountry).getRecords();
-        ExcelKit.$Export(DcaBExportcountry.class,response).downXlsx(dcaBExportcountrys,false);
-        }catch(Exception e){
-        message="导出Excel失败";
-        log.error(message,e);
-        throw new FebsException(message);
-        }
-        }
+//@PostMapping("excel")
+//@RequiresPermissions("dcaBExportcountry:export")
+//public void export(QueryRequest request, DcaBExportcountry dcaBExportcountry,HttpServletResponse response)throws FebsException{
+//        try{
+//        List<DcaBExportcountry> dcaBExportcountrys=this.iDcaBExportcountryService.findDcaBExportcountrys(request, dcaBExportcountry).getRecords();
+//        ExcelKit.$Export(DcaBExportcountry.class,response).downXlsx(dcaBExportcountrys,false);
+//        }catch(Exception e){
+//        message="导出Excel失败";
+//        log.error(message,e);
+//        throw new FebsException(message);
+//        }
+//        }
+    @PostMapping("excel")
+    public void export(QueryRequest request, DcaBExportcountry dcaBExportcountry, String dataJson, HttpServletResponse response) throws FebsException {
+        try {
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            User currentUser = FebsUtil.getCurrentUser();
 
+            dcaBExportcountry.setIsDeletemark(1);
+            request.setSortField("user_account asc,state ");
+            request.setSortOrder("ascend");
+            List<DcaBExportcountry> dcaBSciencepublishList = this.iDcaBExportcountryService.findDcaBExportcountrys(request, dcaBExportcountry).getRecords();
+
+
+            //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList, dataJson, "");
+        } catch (Exception e) {
+            message = "导出Excel失败";
+            log.error(message, e);
+            throw new FebsException(message);
+        }
+    }
 @GetMapping("/{id}")
 public DcaBExportcountry detail(@NotBlank(message = "{required}") @PathVariable String id){
     DcaBExportcountry dcaBExportcountry=this.iDcaBExportcountryService.getById(id);

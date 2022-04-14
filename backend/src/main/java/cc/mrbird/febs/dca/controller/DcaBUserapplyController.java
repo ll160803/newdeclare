@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.entity.DcaBReport;
 import cc.mrbird.febs.dca.entity.DcaUserYj;
 import cc.mrbird.febs.dca.service.IDcaBAuditdynamicService;
@@ -92,6 +93,20 @@ public Map<String, Object> List(QueryRequest request, DcaBUserapply dcaBUserappl
     @GetMapping("audit")
     public Map<String, Object> List4(QueryRequest request, DcaBUserapply dcaBUserapply){
         return getDataTable(this.iDcaBUserapplyService.findDcaBUserapplyAudit(request, dcaBUserapply));
+    }
+    @PostMapping("auditExcel")
+    public void export_depart(QueryRequest request, DcaBUserapply dcaBUserapply,String dataJson, HttpServletResponse response) throws FebsException {
+        try {
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            String url="D:/depart.xlsx";
+            List<DcaBUserapply> dcaBUserapplys = this.iDcaBUserapplyService.findDcaBUserapplyAudit(request, dcaBUserapply).getRecords();
+            ExportExcelUtils.exportCustomExcel_departAudit(response,dcaBUserapplys,dataJson,"");
+        } catch (Exception e) {
+            message = "导出Excel失败";
+            log.error(message, e);
+            throw new FebsException(message);
+        }
     }
 /**
  * 添加

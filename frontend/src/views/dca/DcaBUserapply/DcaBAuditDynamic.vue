@@ -181,15 +181,15 @@ export default {
         sortField = sortedInfo.field
         sortOrder = sortedInfo.order
       }
-      let json = this.columns
-      json.splice(this.columns.length - 1, 1) //移出第一个
+      let json = [...this.columns]
+     // json.splice(this.columns.length - 1, 1) //移出第一个
       console.info(json)
       let dataJson = JSON.stringify(json)
 
       let queryParams = this.queryParams
 
 
-      this.$export('dcaBAuditdynamic/excel', {
+      this.$export('dcaBUserapply/auditExcel', {
         sortField: 'user_account',
         sortOrder: 'ascend',
         dataJson: dataJson,

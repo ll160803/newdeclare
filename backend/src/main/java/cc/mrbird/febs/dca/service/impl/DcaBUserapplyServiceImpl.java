@@ -255,11 +255,15 @@ public class DcaBUserapplyServiceImpl extends ServiceImpl<DcaBUserapplyMapper, D
                 dcaBCopyAuditdynamic.setUserAccountList(listDynamic);
                 List<DcaBCopyAuditdynamic> auditdynamicList = dcaBAuditdynamicService.findDcaBCopyAuditdynamicList(dcaBCopyAuditdynamic);
 
-                for (DcaBUserapply dcaBUserapply1: pageResults.getRecords()
-                     ) {
+                pageResults.getRecords().stream().parallel().forEach(dcaBUserapply1->{
                     List<DcaBCopyAuditdynamic> listDy = auditdynamicList.stream().filter(p -> p.getUserAccount().equals(dcaBUserapply1.getUserAccount())&& p.getDcaYear().equals(dcaBUserapply1.getDcaYear())).collect(Collectors.toList());
                     dcaBUserapply1.setDcaBAuditdynamicList(listDy);
-                }
+                });
+//                for (DcaBUserapply dcaBUserapply1: pageResults.getRecords()
+//                     ) {
+//                    List<DcaBCopyAuditdynamic> listDy = auditdynamicList.stream().filter(p -> p.getUserAccount().equals(dcaBUserapply1.getUserAccount())&& p.getDcaYear().equals(dcaBUserapply1.getDcaYear())).collect(Collectors.toList());
+//                    dcaBUserapply1.setDcaBAuditdynamicList(listDy);
+//                }
 
             }
             return pageResults;

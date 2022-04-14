@@ -9,10 +9,12 @@ import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.entity.DcaBSciencepublish_Import;
 import cc.mrbird.febs.dca.entity.DcaBUserapply;
+import cc.mrbird.febs.dca.entity.DcaDJb;
 import cc.mrbird.febs.dca.service.IDcaBSciencepublishService;
 import cc.mrbird.febs.dca.entity.DcaBSciencepublish;
 
 import cc.mrbird.febs.dca.service.IDcaBUserapplyService;
+import cc.mrbird.febs.dca.service.IDcaDJbService;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.map.MapUtil;
@@ -65,7 +67,8 @@ public IDcaBSciencepublishService iDcaBSciencepublishService;
 
 @Autowired
 private IDcaBUserapplyService iDcaBUserapplyService;
-
+    @Autowired
+    private IDcaDJbService iDcaDJbService;
 
 /**
  * 分页查询数据
@@ -79,6 +82,12 @@ private IDcaBUserapplyService iDcaBUserapplyService;
 public Map<String, Object> List(QueryRequest request, DcaBSciencepublish dcaBSciencepublish){
         return getDataTable(this.iDcaBSciencepublishService.findDcaBSciencepublishs(request, dcaBSciencepublish));
         }
+
+        @GetMapping("jbLb")
+        public List<DcaDJb> ListJb(){
+              return  this.iDcaDJbService.list();
+        }
+
 @GetMapping("custom")
 public Map<String, Object> ListCustom(QueryRequest request, DcaBSciencepublish dcaBSciencepublish){
         User currentUser= FebsUtil.getCurrentUser();

@@ -31,6 +31,10 @@
                 </a-col>
               </div>
               <span style="float: right; margin-top: 3px;">
+                 <a-button
+                  type="primary"
+                  @click="exportCustomExcel"
+                >导出</a-button>
                 <a-button
                   type="primary"
                   @click="search2"
@@ -193,16 +197,303 @@ export default {
         sortField = sortedInfo.field
         sortOrder = sortedInfo.order
       }
-      let json = this.columns
-      json.splice(this.columns.length - 1, 1) //移出第一个
+      let cls= [
+        {
+          title: '发薪号',
+          dataIndex: 'userAccount',
+          isDynamic: 0,
+          width: 80,
+        },
+        {
+          title: '姓名',
+          isDynamic: 0,
+          dataIndex: 'userAccountName',
+          width: 80
+        },
+        {
+          title: '年度',
+          isDynamic: 0,
+          dataIndex: 'dcaYear',
+          width: 100
+        },
+       
+            {
+              title: '是否通过医德医风审核',
+              dataIndex: 'ydyf',
+              width: 100,
+             isDynamic: 1
+            },
+            {
+              title: '是否存在医德医风一票否决的情况',
+              dataIndex: 'ydyffj',
+              width: 120,
+              isDynamic: 1
+            },
+            {
+              title: '是否通过政治综合评价',
+              dataIndex: 'zzsc',
+              width: 100,
+              isDynamic: 1
+            },
+            {
+              title: '是否存在政治综合评价一票否决的情况',
+              dataIndex: 'zzscypfj',
+              width: 120,
+              isDynamic: 1
+            },
+            {
+              title: '是否通过纪律审查',
+              dataIndex: 'jlsc',
+              width: 100,
+              isDynamic: 1
+            },
+            {
+              title: '是否存在纪律审查一票否决的情况',
+              dataIndex: 'jlscypfj',
+              width: 120,
+              isDynamic: 1
+            },
+            {
+              title: '是否通过学术道德审查',
+              dataIndex: 'xsddsc',
+              width: 100, 
+              isDynamic: 1
+            },
+            {
+              title: '是否存在学术道德一票否决的情况',
+              dataIndex: 'xsddscypfj',
+              width: 120,
+              isDynamic: 1
+            },
+             {
+              title: '专业评分（仅研究系列需要填写）(百分制)',
+              dataIndex: 'zypfyjxl',
+              width: 150,
+              isDynamic: 1
+            },
+            {
+              title: '专业评分等级（仅研究系列需要填写）',
+              dataIndex: 'zypfdjyjxl',
+              width: 150,
+              isDynamic: 1
+            },
+            {
+              title: '是否通过意识形态审查',
+              dataIndex: 'yyxtsc',
+              width: 100,
+              isDynamic: 1
+            },
+            {
+              title: '是否存在意识形态一票否决的情况',
+              dataIndex: 'yyxtypfj',
+              width: 120,
+              isDynamic: 1
+            },
+             {
+              title: '专业评分（仅宣传部职工需要填写）(百分制）',
+              dataIndex: 'zypfbfz58',
+              width: 150,
+              isDynamic: 1
+            },
+            {
+              title: '专业评分等级（仅宣传部职工需要填写）',
+              dataIndex: 'zypfdj59',
+              width: 150,
+              isDynamic: 1
+            },
+            {
+              title: '是否硕士导师',
+              dataIndex: 'sfssds',
+              width: 100,
+              isDynamic: 1
+            },
+            {
+              title: '是否博士导师',
+              dataIndex: 'sfbsds',
+              width: 120,
+              isDynamic: 1
+            },
+            {
+              title: '是否通过师德师风审查',
+              dataIndex: 'sftgsdsf',
+              width: 120,
+              isDynamic: 1
+              
+            },
+             {
+              title: '是否存在师德师风一票否决的情况',
+              dataIndex: 'sdsfypfj',
+              width: 120,
+              isDynamic: 1
+            },
+            {
+              title: '教学评分(百分制)',
+              dataIndex: 'jxpf',
+              width: 100,
+              isDynamic: 1
+            },
+            {
+              title: '教学评分等级',
+              dataIndex: 'jxpfdj',
+              width: 120,
+              isDynamic: 1
+            },
+              {
+              title: '是否存在师德师风一票否决的情况',
+              dataIndex: 'sdsfypfj2',
+              width: 120,
+              isDynamic: 1
+            },
+             {
+              title: '是否担任一年辅导员或班主任并考核合格',
+              dataIndex: 'ynjbzr',
+              width: 120,
+              isDynamic: 1
+            },
+             {
+              title: '近五年教学工作在本单位总体评价情况（前%）',
+              dataIndex: 'j5njxgz',
+              width: 150,
+              isDynamic: 1
+            },
+            {
+              title: '门诊医疗评分(百分制)',
+              dataIndex: 'mzylpf',
+              width: 100,
+              isDynamic: 1
+            },
+            {
+              title: '门诊医疗评分等级',
+              dataIndex: 'mzylpfdj',
+              width: 120,
+              isDynamic: 1
+            },
+              {
+              title: '是否门诊医疗事故一票否决的情况',
+              dataIndex: 'mzylsgypfj',
+              width: 150,
+              isDynamic: 1
+            },
+            {
+              title: '医疗评分(百分制)',
+              dataIndex: 'ylpfbfz',
+              width: 100,
+              isDynamic: 1
+            },
+            {
+              title: '医疗评分等级',
+              dataIndex: 'ylpfdj',
+              width: 120,
+              isDynamic: 1
+            },
+              {
+              title: '是否有一票否决的情况',
+              dataIndex: 'sfypfjyl',
+              width: 120,
+              isDynamic: 1
+            },
+              {
+              title: '是否具有医师资格证书',
+              dataIndex: 'sfyszgzs',
+              width: 120,
+              isDynamic: 1
+            },
+            {
+              title: '医疗评分(百分制)',
+              dataIndex: 'hlylpf',
+              width: 100,
+              isDynamic: 1
+            },
+            {
+              title: '医疗评分等级',
+              dataIndex: 'hlylpfdj',
+              width: 120,
+              isDynamic: 1
+            },
+              {
+              title: '教学评分(百分制)',
+              dataIndex: 'hljxpfbfz',
+              width: 120,
+              isDynamic: 1
+            },
+            {
+              title: '教学评分等级',
+              dataIndex: 'hljxpfdl',
+              width: 120,
+              isDynamic: 1
+            },
+              {
+              title: '是否有护理责任事故一票否决的情况',
+              dataIndex: 'hlhlzrypfj',
+              width: 120,
+              isDynamic: 1
+            },
+             {
+              title: '是否具有护理资格证书',
+              dataIndex: 'sfjyhlzgzs',
+              width: 120,
+              isDynamic: 1
+            },
+            {
+              title: '是否存在收受红包的有效投诉',
+              dataIndex: 'sshbdts',
+              width: 100,
+              isDynamic: 1
+            },
+            {
+              title: '是否存在收受回扣的有效投诉',
+              dataIndex: 'sshkyxts',
+              width: 120,
+              isDynamic: 1
+            },
+              {
+              title: '是否违反湖北省医务人员不良执业行为记分管理办法，并被卫生健康部门一次记12分、6分',
+              dataIndex: 'blxwjf',
+              width: 200,
+              isDynamic: 1
+            },
+            {
+              title: '是否违反《职工守则》有关行风建设规定并被处罚',
+              dataIndex: 'wfzgszcf',
+              width: 150,
+              isDynamic: 1
+            },
+             {
+              title: '行风审查是否通过',
+              dataIndex: 'xingfscsftg',
+              width: 120,
+              isDynamic: 1
+             
+            },
+             {
+              title: '是否存在行风建设一票否决的情况',
+              dataIndex: 'sfczxfypfj61',
+              width: 150,
+              isDynamic: 1
+            },
+            {
+              title: '专业评分',
+              dataIndex: 'zypf52',
+              width: 80,
+              isDynamic: 1
+            },
+            {
+              title: '专业评分等级',
+              dataIndex: 'zypfdj52',
+              width: 100,
+              isDynamic: 1
+            }
+      ];
+      let json = cls
+      //json.splice(this.columns.length - 1, 1) //移出第一个
       console.info(json)
       let dataJson = JSON.stringify(json)
 
       let queryParams = this.queryParams
 
 
-      this.$export('dcaBAuditdynamic/excel', {
-        sortField: 'user_account',
+      this.$export('dcaBUserapply/auditExcel', {
+        sortField: 'user_account asc, dca_year',
         sortOrder: 'ascend',
         dataJson: dataJson,
         ...queryParams
@@ -368,16 +659,19 @@ export default {
         {
           title: '发薪号',
           dataIndex: 'userAccount',
+          isDynamic: 0,
           width: 80,
           scopedSlots: { customRender: 'userAccount' }
         },
         {
           title: '姓名',
+          isDynamic: 0,
           dataIndex: 'userAccountName',
           width: 80
         },
         {
           title: '年度',
+          isDynamic: 0,
           dataIndex: 'dcaYear',
           width: 100
         },

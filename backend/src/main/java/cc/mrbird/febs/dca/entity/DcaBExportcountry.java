@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import cc.mrbird.febs.common.converter.AuditStateConverter;
+import cc.mrbird.febs.common.converter.DateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
@@ -72,7 +73,7 @@ public class DcaBExportcountry implements Serializable {
     /**
      * 出国时间
      */
-    @ExcelField(value = "出国时间")
+    @ExcelField(value = "出国时间", writeConverter = DateConverter.class)
     private Date cgsj;
     private transient String cgsjFrom;
     private transient String cgsjTo;
@@ -80,7 +81,7 @@ public class DcaBExportcountry implements Serializable {
     /**
      * 回国时间
      */
-    @ExcelField(value = "回国时间")
+    @ExcelField(value = "回国时间", writeConverter = DateConverter.class)
     private Date hgsj;
     private transient String hgsjFrom;
     private transient String hgsjTo;
