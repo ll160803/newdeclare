@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.kh.dao.KhBCopyPublicarticleMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.kh.entity.KhBCopyPublicarticle">
+                    <id column="id" property="id"/>
+                    <result column="dca_year" property="dcaYear"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="zzlx" property="zzlx"/>
+                    <result column="zzmc" property="zzmc"/>
+                    <result column="zzsf" property="zzsf"/>
+                    <result column="cb_date" property="cbDate"/>
+                    <result column="ranknum" property="ranknum"/>
+                    <result column="printnum" property="printnum"/>
+                    <result column="book_no" property="bookNo"/>
+                    <result column="cbsmc" property="cbsmc"/>
+                    <result column="bxzjmc" property="bxzjmc"/>
+                    <result column="bxwzqzy" property="bxwzqzy"/>
+                    <result column="bxwzzshj" property="bxwzzshj"/>
+                    <result column="cdzs" property="cdzs"/>
+                    <result column="audit_state" property="auditState"/>
+                    <result column="state" property="state"/>
+                    <result column="audit_xuhao" property="auditXuhao"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="auditMan" property="auditMan"/>
+                    <result column="auditManName" property="auditManName"/>
+                    <result column="auditDate" property="auditDate"/>
+                    <result column="auditSuggestion" property="auditSuggestion"/>
+                    <result column="IsUse" property="IsUse"/>
+                    <result column="gwdj" property="gwdj"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dca_year, file_id, display_index, file_url, user_account_name, user_account, zzlx, zzmc, zzsf, cb_date, ranknum, printnum, book_no, cbsmc, bxzjmc, bxwzqzy, bxwzzshj, cdzs, audit_state, state, audit_xuhao, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, gwdj
+    </sql>
+    <update id="updateKhBCopyPublicarticle" parameterType="cc.mrbird.febs.kh.entity.KhBCopyPublicarticle">
+        update kh_b_copy_publicarticle
+        <trim prefix="set" suffixOverrides=",">
+<if test="dcaYear != null">dca_year=#{dcaYear},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="zzlx != null">zzlx=#{zzlx},</if>
+<if test="zzmc != null">zzmc=#{zzmc},</if>
+<if test="zzsf != null">zzsf=#{zzsf},</if>
+<if test="cbDate != null">cb_date=#{cbDate},</if>
+<if test="ranknum != null">ranknum=#{ranknum},</if>
+<if test="printnum != null">printnum=#{printnum},</if>
+<if test="bookNo != null">book_no=#{bookNo},</if>
+<if test="cbsmc != null">cbsmc=#{cbsmc},</if>
+<if test="bxzjmc != null">bxzjmc=#{bxzjmc},</if>
+<if test="bxwzqzy != null">bxwzqzy=#{bxwzqzy},</if>
+<if test="bxwzzshj != null">bxwzzshj=#{bxwzzshj},</if>
+<if test="cdzs != null">cdzs=#{cdzs},</if>
+<if test="auditState != null">audit_state=#{auditState},</if>
+<if test="state != null">state=#{state},</if>
+<if test="auditXuhao != null">audit_xuhao=#{auditXuhao},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="auditMan != null">auditMan=#{auditMan},</if>
+<if test="auditManName != null">auditManName=#{auditManName},</if>
+<if test="auditDate != null">auditDate=#{auditDate},</if>
+<if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
+<if test="IsUse != null">IsUse=#{IsUse},</if>
+<if test="gwdj != null">gwdj=#{gwdj},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findKhBCopyPublicarticle" resultType="cc.mrbird.febs.kh.entity.KhBCopyPublicarticle" parameterType="cc.mrbird.febs.kh.entity.KhBCopyPublicarticle">
+        select  *  from kh_b_copy_publicarticle
+        where  1=1
+            <if test="khBCopyPublicarticle.id != null and khBCopyPublicarticle.id != ''"> and khBCopyPublicarticle.id =#{ khBCopyPublicarticle.id} </if>
+            <if test="khBCopyPublicarticle.dcaYear != null and khBCopyPublicarticle.dcaYear != ''"> and khBCopyPublicarticle.dca_year like concat('%', #{ khBCopyPublicarticle.dcaYear} ,'%')</if>
+            <if test="khBCopyPublicarticle.fileId != null and khBCopyPublicarticle.fileId != ''"> and khBCopyPublicarticle.file_id like concat('%', #{ khBCopyPublicarticle.fileId} ,'%')</if>
+        <if test="khBCopyPublicarticle.displayIndex != null"> and khBCopyPublicarticle.display_index =#{ khBCopyPublicarticle.displayIndex} </if>
+            <if test="khBCopyPublicarticle.fileUrl != null and khBCopyPublicarticle.fileUrl != ''"> and khBCopyPublicarticle.file_url like concat('%', #{ khBCopyPublicarticle.fileUrl} ,'%')</if>
+            <if test="khBCopyPublicarticle.userAccountName != null and khBCopyPublicarticle.userAccountName != ''"> and khBCopyPublicarticle.user_account_name like concat('%', #{ khBCopyPublicarticle.userAccountName} ,'%')</if>
+            <if test="khBCopyPublicarticle.userAccount != null and khBCopyPublicarticle.userAccount != ''"> and khBCopyPublicarticle.user_account like concat('%', #{ khBCopyPublicarticle.userAccount} ,'%')</if>
+            <if test="khBCopyPublicarticle.zzlx != null and khBCopyPublicarticle.zzlx != ''"> and khBCopyPublicarticle.zzlx like concat('%', #{ khBCopyPublicarticle.zzlx} ,'%')</if>
+            <if test="khBCopyPublicarticle.zzmc != null and khBCopyPublicarticle.zzmc != ''"> and khBCopyPublicarticle.zzmc like concat('%', #{ khBCopyPublicarticle.zzmc} ,'%')</if>
+            <if test="khBCopyPublicarticle.zzsf != null and khBCopyPublicarticle.zzsf != ''"> and khBCopyPublicarticle.zzsf like concat('%', #{ khBCopyPublicarticle.zzsf} ,'%')</if>
+        <if test="khBCopyPublicarticle.cbDateFrom!= null">
+            AND khBCopyPublicarticle.cb_date <![CDATA[ >= ]]>  #{khBCopyPublicarticle.cbDateFrom}
+        </if>
+        <if test="khBCopyPublicarticle.cbDateTo!= null">
+            AND khBCopyPublicarticle.cb_date <![CDATA[ <= ]]>  #{khBCopyPublicarticle.cbDateTo}
+        </if>
+        <if test="khBCopyPublicarticle.ranknum != null"> and khBCopyPublicarticle.ranknum =#{ khBCopyPublicarticle.ranknum} </if>
+        <if test="khBCopyPublicarticle.printnum != null"> and khBCopyPublicarticle.printnum =#{ khBCopyPublicarticle.printnum} </if>
+            <if test="khBCopyPublicarticle.bookNo != null and khBCopyPublicarticle.bookNo != ''"> and khBCopyPublicarticle.book_no like concat('%', #{ khBCopyPublicarticle.bookNo} ,'%')</if>
+            <if test="khBCopyPublicarticle.cbsmc != null and khBCopyPublicarticle.cbsmc != ''"> and khBCopyPublicarticle.cbsmc like concat('%', #{ khBCopyPublicarticle.cbsmc} ,'%')</if>
+            <if test="khBCopyPublicarticle.bxzjmc != null and khBCopyPublicarticle.bxzjmc != ''"> and khBCopyPublicarticle.bxzjmc like concat('%', #{ khBCopyPublicarticle.bxzjmc} ,'%')</if>
+            <if test="khBCopyPublicarticle.bxwzqzy != null and khBCopyPublicarticle.bxwzqzy != ''"> and khBCopyPublicarticle.bxwzqzy like concat('%', #{ khBCopyPublicarticle.bxwzqzy} ,'%')</if>
+        <if test="khBCopyPublicarticle.auditState != null"> and khBCopyPublicarticle.audit_state =#{ khBCopyPublicarticle.auditState} </if>
+        <if test="khBCopyPublicarticle.state != null"> and khBCopyPublicarticle.state =#{ khBCopyPublicarticle.state} </if>
+        <if test="khBCopyPublicarticle.auditXuhao != null"> and khBCopyPublicarticle.audit_xuhao =#{ khBCopyPublicarticle.auditXuhao} </if>
+        <if test="khBCopyPublicarticle.isDeletemark != null"> and khBCopyPublicarticle.IS_DELETEMARK =#{ khBCopyPublicarticle.isDeletemark} </if>
+        <if test="khBCopyPublicarticle.createTimeFrom!= null">
+            AND khBCopyPublicarticle.CREATE_TIME <![CDATA[ >= ]]>  #{khBCopyPublicarticle.createTimeFrom}
+        </if>
+        <if test="khBCopyPublicarticle.createTimeTo!= null">
+            AND khBCopyPublicarticle.CREATE_TIME <![CDATA[ <= ]]>  #{khBCopyPublicarticle.createTimeTo}
+        </if>
+        <if test="khBCopyPublicarticle.modifyTimeFrom!= null">
+            AND khBCopyPublicarticle.MODIFY_TIME <![CDATA[ >= ]]>  #{khBCopyPublicarticle.modifyTimeFrom}
+        </if>
+        <if test="khBCopyPublicarticle.modifyTimeTo!= null">
+            AND khBCopyPublicarticle.MODIFY_TIME <![CDATA[ <= ]]>  #{khBCopyPublicarticle.modifyTimeTo}
+        </if>
+            <if test="khBCopyPublicarticle.auditMan != null and khBCopyPublicarticle.auditMan != ''"> and khBCopyPublicarticle.auditMan like concat('%', #{ khBCopyPublicarticle.auditMan} ,'%')</if>
+            <if test="khBCopyPublicarticle.auditManName != null and khBCopyPublicarticle.auditManName != ''"> and khBCopyPublicarticle.auditManName like concat('%', #{ khBCopyPublicarticle.auditManName} ,'%')</if>
+        <if test="khBCopyPublicarticle.auditDateFrom!= null">
+            AND khBCopyPublicarticle.auditDate <![CDATA[ >= ]]>  #{khBCopyPublicarticle.auditDateFrom}
+        </if>
+        <if test="khBCopyPublicarticle.auditDateTo!= null">
+            AND khBCopyPublicarticle.auditDate <![CDATA[ <= ]]>  #{khBCopyPublicarticle.auditDateTo}
+        </if>
+            <if test="khBCopyPublicarticle.auditSuggestion != null and khBCopyPublicarticle.auditSuggestion != ''"> and khBCopyPublicarticle.auditSuggestion like concat('%', #{ khBCopyPublicarticle.auditSuggestion} ,'%')</if>
+            <if test="khBCopyPublicarticle.gwdj != null and khBCopyPublicarticle.gwdj != ''"> and khBCopyPublicarticle.gwdj like concat('%', #{ khBCopyPublicarticle.gwdj} ,'%')</if>
+</select>
+
+</mapper>

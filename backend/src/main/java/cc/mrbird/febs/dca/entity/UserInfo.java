@@ -18,4 +18,5 @@ public class UserInfo {
     private List<DcaBExportcountry> boardList;
     private List<DcaBAuditfive> auditList;
     private List<DcaBAcademic> acdemicList;
+
 }

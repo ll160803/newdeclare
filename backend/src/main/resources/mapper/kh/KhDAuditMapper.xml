@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.kh.dao.KhDAuditMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.kh.entity.KhDAudit">
+                    <id column="id" property="id"/>
+                    <result column="audit_user_account" property="auditUserAccount"/>
+                    <result column="audit_user_account_name" property="auditUserAccountName"/>
+                    <result column="audit_dept_name" property="auditDeptName"/>
+                    <result column="audit_fenzu" property="auditFenzu"/>
+                    <result column="audit_type" property="auditType"/>
+                    <result column="year" property="year"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, audit_user_account, audit_user_account_name, audit_dept_name, audit_fenzu, audit_type, year, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateKhDAudit" parameterType="cc.mrbird.febs.kh.entity.KhDAudit">
+        update kh_d_audit
+        <trim prefix="set" suffixOverrides=",">
+<if test="auditUserAccount != null">audit_user_account=#{auditUserAccount},</if>
+<if test="auditUserAccountName != null">audit_user_account_name=#{auditUserAccountName},</if>
+<if test="auditDeptName != null">audit_dept_name=#{auditDeptName},</if>
+<if test="auditFenzu != null">audit_fenzu=#{auditFenzu},</if>
+<if test="auditType != null">audit_type=#{auditType},</if>
+<if test="year != null">year=#{year},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findKhDAudit" resultType="cc.mrbird.febs.kh.entity.KhDAudit" parameterType="cc.mrbird.febs.kh.entity.KhDAudit">
+        select  *  from kh_d_audit
+        where  1=1
+            <if test="khDAudit.auditUserAccount != null and khDAudit.auditUserAccount != ''"> and khDAudit.audit_user_account like concat('%', #{ khDAudit.auditUserAccount} ,'%')</if>
+            <if test="khDAudit.auditUserAccountName != null and khDAudit.auditUserAccountName != ''"> and khDAudit.audit_user_account_name like concat('%', #{ khDAudit.auditUserAccountName} ,'%')</if>
+            <if test="khDAudit.auditDeptName != null and khDAudit.auditDeptName != ''"> and khDAudit.audit_dept_name like concat('%', #{ khDAudit.auditDeptName} ,'%')</if>
+            <if test="khDAudit.auditFenzu != null and khDAudit.auditFenzu != ''"> and khDAudit.audit_fenzu like concat('%', #{ khDAudit.auditFenzu} ,'%')</if>
+            <if test="khDAudit.auditType != null and khDAudit.auditType != ''"> and khDAudit.audit_type like concat('%', #{ khDAudit.auditType} ,'%')</if>
+            <if test="khDAudit.year != null and khDAudit.year != ''"> and khDAudit.year like concat('%', #{ khDAudit.year} ,'%')</if>
+        <if test="khDAudit.state != null"> and khDAudit.state =#{ khDAudit.state} </if>
+        <if test="khDAudit.isDeletemark != null"> and khDAudit.IS_DELETEMARK =#{ khDAudit.isDeletemark} </if>
+        <if test="khDAudit.createTimeFrom!= null">
+            AND khDAudit.CREATE_TIME <![CDATA[ >= ]]>  #{khDAudit.createTimeFrom}
+        </if>
+        <if test="khDAudit.createTimeTo!= null">
+            AND khDAudit.CREATE_TIME <![CDATA[ <= ]]>  #{khDAudit.createTimeTo}
+        </if>
+        <if test="khDAudit.modifyTimeFrom!= null">
+            AND khDAudit.MODIFY_TIME <![CDATA[ >= ]]>  #{khDAudit.modifyTimeFrom}
+        </if>
+        <if test="khDAudit.modifyTimeTo!= null">
+            AND khDAudit.MODIFY_TIME <![CDATA[ <= ]]>  #{khDAudit.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

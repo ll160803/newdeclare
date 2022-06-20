@@ -672,6 +672,12 @@ public class DcaBUser implements Serializable {
 
     private transient int  applyState;
 
+    private transient String auditType;
+
+    private transient String deptName3;
+
+    private transient  String dcaYear2;
+
     public static final String ID = "id";
 
     public static final String USER_ACCOUNT_NAME = "user_account_name";

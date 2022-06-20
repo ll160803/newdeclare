@@ -220,7 +220,7 @@ public class DcaBReportController extends BaseController {
       //  String[] asblx= "评聘,确定".split(","); //中初级
         LambdaQueryWrapper<DcaBReport> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(DcaBReport::getIsDeletemark, 1);//1是未删 0是已删
-        queryWrapper.eq(DcaBReport::getClshjg,"正常"); //正高,二三级
+        queryWrapper.eq(DcaBReport::getClshjg,"合格"); //正高,二三级
       //  queryWrapper.in(DcaBReport::getSblx,asblx); //中初级
         queryWrapper.in(DcaBReport::getYear,"2020");
         queryWrapper.in(DcaBReport::getUserAccount,arr);

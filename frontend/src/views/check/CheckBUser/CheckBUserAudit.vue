@@ -391,8 +391,9 @@ export default {
           }).then(() => {
             //this.reset()
             that.$message.success('审核成功')
-            that.search()
-            // that.freshTabs()
+            //that.search()
+            that.deleteCurrentRecord(record)
+            that.freshTabs()
             that.loading = false
           }).catch(() => {
             that.loading = false
@@ -402,7 +403,12 @@ export default {
         }
       })
     },
-
+    deleteCurrentRecord(record){
+        const index = this.dataSource.indexOf(record)
+        const newList = this.dataSource.slice()
+        newList.splice(index, 1)
+        this.dataSource = newList
+    },
     fetchUseraudit () {
       this.$get('checkBSetting/userCheck', {
       }).then((r) => {

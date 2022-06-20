@@ -76,7 +76,7 @@ public class CheckBUserServiceImpl extends ServiceImpl<CheckBUserMapper, CheckBU
 
             List<TotalResultNum> checkBAuditresultTotalList = this.iCheckBAuditresultService.findTotalResult(checkBAuditresult);
 
-            List<CheckShowTitle> listAlltitles= this.iCheckBSettingService.findAllTitle();
+            List<CheckShowTitle> listAlltitles= this.iCheckBSettingService.findAllTitle2();
             List<CheckBAuditresult> auditresultList =this.iCheckBAuditresultService.list();
             if (pageResult.getTotal() > 0L) {
                 for (CheckBUser checkBUser1 : pageResult.getRecords()
@@ -87,36 +87,36 @@ public class CheckBUserServiceImpl extends ServiceImpl<CheckBUserMapper, CheckBU
                     List<CheckBAuditresult> checkBAuditresultList =new ArrayList<>();
                     for (CheckShowTitle checkShowTitle:listAlltitles
                          ) {
+
                         CheckBAuditresult checkBAuditresult1=new CheckBAuditresult();
                         if(StringUtils.isNotBlank(checkShowTitle.getKs())){
-                            if(checkShowTitle.getLb().contains(checkBUser1.getZjlb())){
+                            if(checkShowTitle.getDcaYear().equals(checkBUser1.getDcaYear())) {
+                                if (checkShowTitle.getLb().contains(checkBUser1.getZjlb())) {
 
-                             List<CheckBAuditresult> auditresultList1=  auditresultList.stream().filter(p->p.getDcaYear().equals(checkBUser1.getDcaYear())&&
-                                                p.getUserAccount().equals(checkBUser1.getUserAccount())
-                                     &&p.getCheckUserId().equals(checkShowTitle.getUserAccount())
-                                                        &&p.getAuditTitletype().equals(checkShowTitle.getAuditTitletype())).collect(Collectors.toList());
-                             if(auditresultList1.size()>0) {
-                                 checkBAuditresult1.setAuditTitle(checkShowTitle.getFiledTitle());
-                                 checkBAuditresult1.setAuditTitletype(checkShowTitle.getFiledName());
-                                 checkBAuditresult1.setAuditResult(auditresultList1.get(0).getAuditResult());
-                             }
-                             else{
-                                 if("A016,A019".contains(checkShowTitle.getAuditTitletype())){
-                                     checkBAuditresult1.setAuditTitle(checkShowTitle.getFiledTitle());
-                                     checkBAuditresult1.setAuditTitletype(checkShowTitle.getFiledName());
-                                     checkBAuditresult1.setAuditResult("");
-                                 }
-                                 else{
-                                     checkBAuditresult1.setAuditTitle(checkShowTitle.getFiledTitle());
-                                     checkBAuditresult1.setAuditTitletype(checkShowTitle.getFiledName());
-                                     checkBAuditresult1.setAuditResult("未完成");
-                                 }
-                             }
-                            }
-                            else{
-                                checkBAuditresult1.setAuditTitle(checkShowTitle.getFiledTitle());
-                                checkBAuditresult1.setAuditTitletype(checkShowTitle.getFiledName());
-                                checkBAuditresult1.setAuditResult("不审核");
+                                    List<CheckBAuditresult> auditresultList1 = auditresultList.stream().filter(p -> p.getDcaYear().equals(checkBUser1.getDcaYear()) &&
+                                            p.getUserAccount().equals(checkBUser1.getUserAccount())
+                                            && p.getCheckUserId().equals(checkShowTitle.getUserAccount())
+                                            && p.getAuditTitletype().equals(checkShowTitle.getAuditTitletype())).collect(Collectors.toList());
+                                    if (auditresultList1.size() > 0) {
+                                        checkBAuditresult1.setAuditTitle(checkShowTitle.getFiledTitle());
+                                        checkBAuditresult1.setAuditTitletype(checkShowTitle.getFiledName());
+                                        checkBAuditresult1.setAuditResult(auditresultList1.get(0).getAuditResult());
+                                    } else {
+                                        if ("A016,A019".contains(checkShowTitle.getAuditTitletype())) {
+                                            checkBAuditresult1.setAuditTitle(checkShowTitle.getFiledTitle());
+                                            checkBAuditresult1.setAuditTitletype(checkShowTitle.getFiledName());
+                                            checkBAuditresult1.setAuditResult("");
+                                        } else {
+                                            checkBAuditresult1.setAuditTitle(checkShowTitle.getFiledTitle());
+                                            checkBAuditresult1.setAuditTitletype(checkShowTitle.getFiledName());
+                                            checkBAuditresult1.setAuditResult("未完成");
+                                        }
+                                    }
+                                } else {
+                                    checkBAuditresult1.setAuditTitle(checkShowTitle.getFiledTitle());
+                                    checkBAuditresult1.setAuditTitletype(checkShowTitle.getFiledName());
+                                    checkBAuditresult1.setAuditResult("不审核");
+                                }
                             }
                         }
                         else{
@@ -135,7 +135,9 @@ public class CheckBUserServiceImpl extends ServiceImpl<CheckBUserMapper, CheckBU
                                 checkBAuditresult1.setAuditResult("未完成");
                             }
                         }
-                        checkBAuditresultList.add(checkBAuditresult1);
+                        if(StringUtils.isNotEmpty(checkBAuditresult1.getAuditResult())) {
+                            checkBAuditresultList.add(checkBAuditresult1);
+                        }
                     }
                     checkBUser1.setCheckBAuditresultList(checkBAuditresultList);
                 }
@@ -223,9 +225,9 @@ public class CheckBUserServiceImpl extends ServiceImpl<CheckBUserMapper, CheckBU
                     "\t\tFROM\n" +
                     "\t\t\tcheck_b_setting\n" +
                     "\t\tWHERE\n" +
-                    "\t\t\tuser_account = '" + userAccount + "' AND LOCATE(check_b_user.zjlb, lb) > 0\n" +
+                    "\t\t\tuser_account = '" + userAccount + "' AND check_b_user.dca_year=dca_year  AND LOCATE(check_b_user.zjlb, lb) > 0\n" +
                     "\t)\n" +
-                    "OR check_b_user.ks_leader_pernr = '" + userAccount + "'\n" +
+                    "OR check_b_user.ks_leader_pernr = '" + userAccount + "' \n" +
                     "OR check_b_user.zg_leader_pernr = '" + userAccount + "')");
             if (state == 3) {
                 queryWrapper.apply("EXISTS (\n" +

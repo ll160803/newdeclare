@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.kh.dao.KhDPersonMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.kh.entity.KhDPerson">
+                    <id column="id" property="id"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="dept_name" property="deptName"/>
+                    <result column="fenzu" property="fenzu"/>
+                    <result column="year" property="year"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account, user_account_name, dept_name, fenzu, year, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateKhDPerson" parameterType="cc.mrbird.febs.kh.entity.KhDPerson">
+        update kh_d_person
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="deptName != null">dept_name=#{deptName},</if>
+<if test="fenzu != null">fenzu=#{fenzu},</if>
+<if test="year != null">year=#{year},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findKhDPerson" resultType="cc.mrbird.febs.kh.entity.KhDPerson" parameterType="cc.mrbird.febs.kh.entity.KhDPerson">
+        select  *  from kh_d_person
+        where  1=1
+            <if test="khDPerson.userAccount != null and khDPerson.userAccount != ''"> and khDPerson.user_account like concat('%', #{ khDPerson.userAccount} ,'%')</if>
+            <if test="khDPerson.userAccountName != null and khDPerson.userAccountName != ''"> and khDPerson.user_account_name like concat('%', #{ khDPerson.userAccountName} ,'%')</if>
+            <if test="khDPerson.deptName != null and khDPerson.deptName != ''"> and khDPerson.dept_name like concat('%', #{ khDPerson.deptName} ,'%')</if>
+            <if test="khDPerson.fenzu != null and khDPerson.fenzu != ''"> and khDPerson.fenzu like concat('%', #{ khDPerson.fenzu} ,'%')</if>
+            <if test="khDPerson.year != null and khDPerson.year != ''"> and khDPerson.year like concat('%', #{ khDPerson.year} ,'%')</if>
+        <if test="khDPerson.state != null"> and khDPerson.state =#{ khDPerson.state} </if>
+        <if test="khDPerson.isDeletemark != null"> and khDPerson.IS_DELETEMARK =#{ khDPerson.isDeletemark} </if>
+        <if test="khDPerson.createTimeFrom!= null">
+            AND khDPerson.CREATE_TIME <![CDATA[ >= ]]>  #{khDPerson.createTimeFrom}
+        </if>
+        <if test="khDPerson.createTimeTo!= null">
+            AND khDPerson.CREATE_TIME <![CDATA[ <= ]]>  #{khDPerson.createTimeTo}
+        </if>
+        <if test="khDPerson.modifyTimeFrom!= null">
+            AND khDPerson.MODIFY_TIME <![CDATA[ >= ]]>  #{khDPerson.modifyTimeFrom}
+        </if>
+        <if test="khDPerson.modifyTimeTo!= null">
+            AND khDPerson.MODIFY_TIME <![CDATA[ <= ]]>  #{khDPerson.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

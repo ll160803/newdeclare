@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.kh.dao.KhDScoreMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.kh.entity.KhDScore">
+                    <id column="id" property="id"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="dept_name" property="deptName"/>
+                    <result column="fenzu" property="fenzu"/>
+                    <result column="audit_user_account" property="auditUserAccount"/>
+                    <result column="audit_user_account_name" property="auditUserAccountName"/>
+                    <result column="audit_dept_name" property="auditDeptName"/>
+                    <result column="audit_fenzu" property="auditFenzu"/>
+                    <result column="audit_type" property="auditType"/>
+            <result column="calc_type" property="calcType"/>
+                    <result column="year" property="year"/>
+                    <result column="score" property="score"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account, user_account_name, dept_name, fenzu, audit_user_account, audit_user_account_name, audit_dept_name, audit_fenzu, audit_type, calc_type, year, score, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <select id="insertKhCopy" parameterType="java.util.Map" statementType="CALLABLE" >
+        <![CDATA[{
+         call InsertKhCopyData(
+               #{startDate,mode=IN,jdbcType=VARCHAR},
+               #{dcaYear,mode=IN,jdbcType=VARCHAR}
+         )
+      }]]>
+  </select>
+    <update id="updateKhDScore" parameterType="cc.mrbird.febs.kh.entity.KhDScore">
+        update kh_d_score
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="deptName != null">dept_name=#{deptName},</if>
+<if test="fenzu != null">fenzu=#{fenzu},</if>
+<if test="auditUserAccount != null">audit_user_account=#{auditUserAccount},</if>
+<if test="auditUserAccountName != null">audit_user_account_name=#{auditUserAccountName},</if>
+<if test="auditDeptName != null">audit_dept_name=#{auditDeptName},</if>
+<if test="auditFenzu != null">audit_fenzu=#{auditFenzu},</if>
+<if test="auditType != null">audit_type=#{auditType},</if>
+            <if test="calcType != null">calc_type=#{calcType},</if>
+<if test="year != null">year=#{year},</if>
+<if test="score != null">score=#{score},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findKhDScore" resultType="cc.mrbird.febs.kh.entity.KhDScore" parameterType="cc.mrbird.febs.kh.entity.KhDScore">
+        select  *  from kh_d_score
+        where  1=1
+            <if test="khDScore.userAccount != null and khDScore.userAccount != ''"> and khDScore.user_account like concat('%', #{ khDScore.userAccount} ,'%')</if>
+            <if test="khDScore.userAccountName != null and khDScore.userAccountName != ''"> and khDScore.user_account_name like concat('%', #{ khDScore.userAccountName} ,'%')</if>
+            <if test="khDScore.deptName != null and khDScore.deptName != ''"> and khDScore.dept_name like concat('%', #{ khDScore.deptName} ,'%')</if>
+            <if test="khDScore.fenzu != null and khDScore.fenzu != ''"> and khDScore.fenzu like concat('%', #{ khDScore.fenzu} ,'%')</if>
+            <if test="khDScore.auditUserAccount != null and khDScore.auditUserAccount != ''"> and khDScore.audit_user_account like concat('%', #{ khDScore.auditUserAccount} ,'%')</if>
+            <if test="khDScore.auditUserAccountName != null and khDScore.auditUserAccountName != ''"> and khDScore.audit_user_account_name like concat('%', #{ khDScore.auditUserAccountName} ,'%')</if>
+            <if test="khDScore.auditDeptName != null and khDScore.auditDeptName != ''"> and khDScore.audit_dept_name like concat('%', #{ khDScore.auditDeptName} ,'%')</if>
+            <if test="khDScore.auditFenzu != null and khDScore.auditFenzu != ''"> and khDScore.audit_fenzu like concat('%', #{ khDScore.auditFenzu} ,'%')</if>
+            <if test="khDScore.auditType != null and khDScore.auditType != ''"> and khDScore.audit_type like concat('%', #{ khDScore.auditType} ,'%')</if>
+            <if test="khDScore.year != null and khDScore.year != ''"> and khDScore.year like concat('%', #{ khDScore.year} ,'%')</if>
+        <if test="khDScore.score != null"> and khDScore.score =#{ khDScore.score} </if>
+        <if test="khDScore.state != null"> and khDScore.state =#{ khDScore.state} </if>
+        <if test="khDScore.isDeletemark != null"> and khDScore.IS_DELETEMARK =#{ khDScore.isDeletemark} </if>
+        <if test="khDScore.createTimeFrom!= null">
+            AND khDScore.CREATE_TIME <![CDATA[ >= ]]>  #{khDScore.createTimeFrom}
+        </if>
+        <if test="khDScore.createTimeTo!= null">
+            AND khDScore.CREATE_TIME <![CDATA[ <= ]]>  #{khDScore.createTimeTo}
+        </if>
+        <if test="khDScore.modifyTimeFrom!= null">
+            AND khDScore.MODIFY_TIME <![CDATA[ >= ]]>  #{khDScore.modifyTimeFrom}
+        </if>
+        <if test="khDScore.modifyTimeTo!= null">
+            AND khDScore.MODIFY_TIME <![CDATA[ <= ]]>  #{khDScore.modifyTimeTo}
+        </if>
+</select>
+
+    <select id="getAllUserInfo" resultType="cc.mrbird.febs.kh.entity.KhUser" parameterType="cc.mrbird.febs.kh.entity.KhDScore">
+        SELECT uuid() id,
+        a.user_account,
+        a.user_account_name,
+        a.zyjsgw_lc,
+        a.zyjsgw,
+        a.political_status,
+        a.appointed_date,
+        a.appointed_date_lc,
+        a.telephone,
+        a.sex_name,
+        a.birthday,
+        a.xcszyjzc,
+        c.audit_type,
+        b.dept_name,
+        b.YEAR year,
+        b.fenzu,
+        c.audit_dept_name,
+        c.audit_user_account,
+        c.audit_user_account_name,
+        c.audit_fenzu,
+        c.audit_type,
+        a.picture_url,
+        d.score from dca_b_user a INNER join
+        kh_d_person b on a.user_account =b.user_account
+        INNER join kh_d_audit c on (b.fenzu=c.audit_fenzu and c.audit_type='科室主任' ) or (
+        b.dept_name=c.audit_dept_name and c.audit_type!='科室主任'
+        )
+        left join kh_d_score d on b.user_account=d.user_account and c.audit_user_account=d.audit_user_account and c.audit_type=d.audit_type
+        and d.`year` =c.`year`
+        where 1=1
+        <if test="khDScore.year != null and khDScore.year != ''">
+         and b.`year`= #{khDScore.year} and c.`year`= #{khDScore.year}
+        </if>
+       <if test="khDScore.state==0" >
+            and d.score is null
+       </if>
+        <if test="khDScore.state==3" >
+            and d.score is not null
+        </if>
+        <if test="khDScore.userAccount != null and khDScore.userAccount != ''"> and (b.user_account_name like concat('%', #{ khDScore.userAccount} ,'%') or b.user_account=#{khDScore.userAccount})</if>
+        <if test="khDScore.auditUserAccount != null and khDScore.auditUserAccount != ''"> and  c.audit_user_account=#{khDScore.auditUserAccount}</if>
+         order by a.user_account
+    </select>
+
+    <select id="getUserInfoReport" resultType="cc.mrbird.febs.kh.entity.KhUser" parameterType="cc.mrbird.febs.kh.entity.KhDScore">
+      SELECT
+	uuid() id,
+	a.user_account,
+	a.user_account_name,
+	a.zyjsgw_lc,
+	a.zyjsgw,
+	a.political_status,
+	a.appointed_date,
+	a.appointed_date_lc,
+	a.telephone,
+	a.sex_name,
+	a.birthday,
+	a.xcszyjzc,
+	b.dept_name,
+	b.YEAR YEAR,
+	b.fenzu,
+	a.picture_url
+FROM
+	kh_d_person b
+	INNER JOIN dca_b_user a ON a.user_account = b.user_account
+        where 1=1
+        <if test="khDScore.year != null and khDScore.year != ''">
+            and b.`year`= #{khDScore.year}
+        </if>
+        <if test="khDScore.userAccount != null and khDScore.userAccount != ''"> and (b.user_account_name like concat('%', #{ khDScore.userAccount} ,'%') or b.user_account=#{khDScore.userAccount})</if>
+        order by a.user_account
+    </select>
+
+    <select id="getUserInfoReportScore" resultType="cc.mrbird.febs.kh.entity.KhScore" parameterType="cc.mrbird.febs.kh.entity.KhDScore">
+        SELECT  user_account,ROUND(sum(CASE
+        WHEN calc_type=1 THEN score * 0.35
+        WHEN calc_type=2 THEN score * 0.3
+        WHEN calc_type=3 THEN score * 0.2
+        WHEN calc_type=5 THEN score * 0.15
+        END) ,2) score from (
+        SELECT
+        a.user_account,a.calc_type,AVG(a.score) as  score
+        FROM
+        kh_d_score a
+        where 1=1
+        <if test="khDScore.year != null and khDScore.year != ''">
+            and a.`year`= #{khDScore.year}
+        </if>
+        <if test="khDScore.userAccount != null and khDScore.userAccount != ''"> and (a.user_account_name like concat('%', #{ khDScore.userAccount} ,'%') or a.user_account=#{khDScore.userAccount})</if>
+        GROUP BY a.user_account,a.calc_type) p
+        GROUP BY user_account
+    </select>
+
+</mapper>

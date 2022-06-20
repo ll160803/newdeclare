@@ -16,4 +16,5 @@ public class CheckShowTitle {
     private  String auditTitletype;
     private  String lb;
     private  String userAccount;
+    private  String dcaYear;
 }

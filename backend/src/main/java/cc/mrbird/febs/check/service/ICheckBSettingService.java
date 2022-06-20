@@ -35,4 +35,5 @@ public interface ICheckBSettingService extends IService<CheckBSetting> {
         List<CheckDTitle> getTitleByUserAccount(String userAccount);
 
         List<CheckShowTitle> findAllTitle();
+        List<CheckShowTitle> findAllTitle2();
         }

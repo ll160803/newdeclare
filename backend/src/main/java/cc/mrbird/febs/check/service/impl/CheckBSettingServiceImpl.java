@@ -113,4 +113,10 @@ public List<CheckBSetting> getAll(String userAccount,String dcaYear){
     public  List<CheckShowTitle> findAllTitle(){
         return  this.baseMapper.findAllTitle();
     }
+    @Override
+    @Transactional
+    @DS("slave")
+    public  List<CheckShowTitle> findAllTitle2(){
+        return  this.baseMapper.findAllTitle2();
+    }
         }

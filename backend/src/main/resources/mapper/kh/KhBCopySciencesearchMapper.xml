@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.kh.dao.KhBCopySciencesearchMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.kh.entity.KhBCopySciencesearch">
+                    <id column="id" property="id"/>
+                    <result column="dca_year" property="dcaYear"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="project_name" property="projectName"/>
+                    <result column="project_type" property="projectType"/>
+                    <result column="project_source" property="projectSource"/>
+                    <result column="contract_fund" property="contractFund"/>
+                    <result column="real_fund" property="realFund"/>
+                    <result column="audit_date" property="auditDate"/>
+                    <result column="start_date" property="startDate"/>
+                    <result column="end_date" property="endDate"/>
+                    <result column="rank_num" property="rankNum"/>
+                    <result column="audit_typetp" property="auditTypetp"/>
+                    <result column="audit_lb" property="auditLb"/>
+                    <result column="audit_fund" property="auditFund"/>
+                    <result column="audit_rank" property="auditRank"/>
+                    <result column="audit_state" property="auditState"/>
+                    <result column="state" property="state"/>
+                    <result column="audit_xuhao" property="auditXuhao"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="auditMan" property="auditMan"/>
+                    <result column="auditManName" property="auditManName"/>
+                    <result column="auditDate" property="auditDate2"/>
+                    <result column="auditSuggestion" property="auditSuggestion"/>
+                    <result column="IsUse" property="IsUse"/>
+                    <result column="gwdj" property="gwdj"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dca_year, file_id, file_url, user_account_name, user_account, project_name, project_type, project_source, contract_fund, real_fund, audit_date, start_date, end_date, rank_num, audit_typetp, audit_lb, audit_fund, audit_rank, audit_state, state, audit_xuhao, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, gwdj
+    </sql>
+    <update id="updateKhBCopySciencesearch" parameterType="cc.mrbird.febs.kh.entity.KhBCopySciencesearch">
+        update kh_b_copy_sciencesearch
+        <trim prefix="set" suffixOverrides=",">
+<if test="dcaYear != null">dca_year=#{dcaYear},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="projectName != null">project_name=#{projectName},</if>
+<if test="projectType != null">project_type=#{projectType},</if>
+<if test="projectSource != null">project_source=#{projectSource},</if>
+<if test="contractFund != null">contract_fund=#{contractFund},</if>
+<if test="realFund != null">real_fund=#{realFund},</if>
+<if test="auditDate != null">audit_date=#{auditDate},</if>
+<if test="startDate != null">start_date=#{startDate},</if>
+<if test="endDate != null">end_date=#{endDate},</if>
+<if test="rankNum != null">rank_num=#{rankNum},</if>
+<if test="auditTypetp != null">audit_typetp=#{auditTypetp},</if>
+<if test="auditLb != null">audit_lb=#{auditLb},</if>
+<if test="auditFund != null">audit_fund=#{auditFund},</if>
+<if test="auditRank != null">audit_rank=#{auditRank},</if>
+<if test="auditState != null">audit_state=#{auditState},</if>
+<if test="state != null">state=#{state},</if>
+<if test="auditXuhao != null">audit_xuhao=#{auditXuhao},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="auditMan != null">auditMan=#{auditMan},</if>
+<if test="auditManName != null">auditManName=#{auditManName},</if>
+<if test="auditDate2 != null">auditDate=#{auditDate2},</if>
+<if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
+<if test="IsUse != null">IsUse=#{IsUse},</if>
+<if test="gwdj != null">gwdj=#{gwdj},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findKhBCopySciencesearch" resultType="cc.mrbird.febs.kh.entity.KhBCopySciencesearch" parameterType="cc.mrbird.febs.kh.entity.KhBCopySciencesearch">
+        select  *  from kh_b_copy_sciencesearch
+        where  1=1
+            <if test="khBCopySciencesearch.id != null and khBCopySciencesearch.id != ''"> and khBCopySciencesearch.id =#{ khBCopySciencesearch.id} </if>
+            <if test="khBCopySciencesearch.dcaYear != null and khBCopySciencesearch.dcaYear != ''"> and khBCopySciencesearch.dca_year like concat('%', #{ khBCopySciencesearch.dcaYear} ,'%')</if>
+            <if test="khBCopySciencesearch.fileId != null and khBCopySciencesearch.fileId != ''"> and khBCopySciencesearch.file_id like concat('%', #{ khBCopySciencesearch.fileId} ,'%')</if>
+            <if test="khBCopySciencesearch.fileUrl != null and khBCopySciencesearch.fileUrl != ''"> and khBCopySciencesearch.file_url like concat('%', #{ khBCopySciencesearch.fileUrl} ,'%')</if>
+            <if test="khBCopySciencesearch.userAccountName != null and khBCopySciencesearch.userAccountName != ''"> and khBCopySciencesearch.user_account_name like concat('%', #{ khBCopySciencesearch.userAccountName} ,'%')</if>
+            <if test="khBCopySciencesearch.userAccount != null and khBCopySciencesearch.userAccount != ''"> and khBCopySciencesearch.user_account like concat('%', #{ khBCopySciencesearch.userAccount} ,'%')</if>
+            <if test="khBCopySciencesearch.projectName != null and khBCopySciencesearch.projectName != ''"> and khBCopySciencesearch.project_name like concat('%', #{ khBCopySciencesearch.projectName} ,'%')</if>
+            <if test="khBCopySciencesearch.projectType != null and khBCopySciencesearch.projectType != ''"> and khBCopySciencesearch.project_type like concat('%', #{ khBCopySciencesearch.projectType} ,'%')</if>
+            <if test="khBCopySciencesearch.projectSource != null and khBCopySciencesearch.projectSource != ''"> and khBCopySciencesearch.project_source like concat('%', #{ khBCopySciencesearch.projectSource} ,'%')</if>
+        <if test="khBCopySciencesearch.auditDateFrom!= null">
+            AND khBCopySciencesearch.audit_date <![CDATA[ >= ]]>  #{khBCopySciencesearch.auditDateFrom}
+        </if>
+        <if test="khBCopySciencesearch.auditDateTo!= null">
+            AND khBCopySciencesearch.audit_date <![CDATA[ <= ]]>  #{khBCopySciencesearch.auditDateTo}
+        </if>
+        <if test="khBCopySciencesearch.startDateFrom!= null">
+            AND khBCopySciencesearch.start_date <![CDATA[ >= ]]>  #{khBCopySciencesearch.startDateFrom}
+        </if>
+        <if test="khBCopySciencesearch.startDateTo!= null">
+            AND khBCopySciencesearch.start_date <![CDATA[ <= ]]>  #{khBCopySciencesearch.startDateTo}
+        </if>
+        <if test="khBCopySciencesearch.endDateFrom!= null">
+            AND khBCopySciencesearch.end_date <![CDATA[ >= ]]>  #{khBCopySciencesearch.endDateFrom}
+        </if>
+        <if test="khBCopySciencesearch.endDateTo!= null">
+            AND khBCopySciencesearch.end_date <![CDATA[ <= ]]>  #{khBCopySciencesearch.endDateTo}
+        </if>
+        <if test="khBCopySciencesearch.rankNum != null"> and khBCopySciencesearch.rank_num =#{ khBCopySciencesearch.rankNum} </if>
+            <if test="khBCopySciencesearch.auditTypetp != null and khBCopySciencesearch.auditTypetp != ''"> and khBCopySciencesearch.audit_typetp like concat('%', #{ khBCopySciencesearch.auditTypetp} ,'%')</if>
+            <if test="khBCopySciencesearch.auditLb != null and khBCopySciencesearch.auditLb != ''"> and khBCopySciencesearch.audit_lb like concat('%', #{ khBCopySciencesearch.auditLb} ,'%')</if>
+        <if test="khBCopySciencesearch.auditRank != null"> and khBCopySciencesearch.audit_rank =#{ khBCopySciencesearch.auditRank} </if>
+        <if test="khBCopySciencesearch.auditState != null"> and khBCopySciencesearch.audit_state =#{ khBCopySciencesearch.auditState} </if>
+        <if test="khBCopySciencesearch.state != null"> and khBCopySciencesearch.state =#{ khBCopySciencesearch.state} </if>
+        <if test="khBCopySciencesearch.auditXuhao != null"> and khBCopySciencesearch.audit_xuhao =#{ khBCopySciencesearch.auditXuhao} </if>
+        <if test="khBCopySciencesearch.isDeletemark != null"> and khBCopySciencesearch.IS_DELETEMARK =#{ khBCopySciencesearch.isDeletemark} </if>
+        <if test="khBCopySciencesearch.createTimeFrom!= null">
+            AND khBCopySciencesearch.CREATE_TIME <![CDATA[ >= ]]>  #{khBCopySciencesearch.createTimeFrom}
+        </if>
+        <if test="khBCopySciencesearch.createTimeTo!= null">
+            AND khBCopySciencesearch.CREATE_TIME <![CDATA[ <= ]]>  #{khBCopySciencesearch.createTimeTo}
+        </if>
+        <if test="khBCopySciencesearch.displayIndex != null"> and khBCopySciencesearch.display_index =#{ khBCopySciencesearch.displayIndex} </if>
+        <if test="khBCopySciencesearch.modifyTimeFrom!= null">
+            AND khBCopySciencesearch.MODIFY_TIME <![CDATA[ >= ]]>  #{khBCopySciencesearch.modifyTimeFrom}
+        </if>
+        <if test="khBCopySciencesearch.modifyTimeTo!= null">
+            AND khBCopySciencesearch.MODIFY_TIME <![CDATA[ <= ]]>  #{khBCopySciencesearch.modifyTimeTo}
+        </if>
+            <if test="khBCopySciencesearch.auditMan != null and khBCopySciencesearch.auditMan != ''"> and khBCopySciencesearch.auditMan like concat('%', #{ khBCopySciencesearch.auditMan} ,'%')</if>
+            <if test="khBCopySciencesearch.auditManName != null and khBCopySciencesearch.auditManName != ''"> and khBCopySciencesearch.auditManName like concat('%', #{ khBCopySciencesearch.auditManName} ,'%')</if>
+        <if test="khBCopySciencesearch.auditDateFrom!= null">
+            AND khBCopySciencesearch.auditDate <![CDATA[ >= ]]>  #{khBCopySciencesearch.auditDateFrom}
+        </if>
+        <if test="khBCopySciencesearch.auditDateTo!= null">
+            AND khBCopySciencesearch.auditDate <![CDATA[ <= ]]>  #{khBCopySciencesearch.auditDateTo}
+        </if>
+            <if test="khBCopySciencesearch.auditSuggestion != null and khBCopySciencesearch.auditSuggestion != ''"> and khBCopySciencesearch.auditSuggestion like concat('%', #{ khBCopySciencesearch.auditSuggestion} ,'%')</if>
+            <if test="khBCopySciencesearch.gwdj != null and khBCopySciencesearch.gwdj != ''"> and khBCopySciencesearch.gwdj like concat('%', #{ khBCopySciencesearch.gwdj} ,'%')</if>
+</select>
+
+</mapper>
