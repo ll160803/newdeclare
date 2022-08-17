@@ -296,14 +296,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     }
 
+//    @Override
+//    @Transactional
+//    public void resetPassword(String[] usernames) throws Exception {
+//        for (String username : usernames) {
+//
+//            User user = new User();
+//            user.setPassword(MD5Util.encrypt(username, User.DEFAULT_PASSWORD));
+//
+//            this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUsername, username));
+//            // 重新将用户信息加载到 redis中
+//            cacheService.saveUser(username);
+//        }
+//
+//    }
     @Override
     @Transactional
-    public void resetPassword(String[] usernames) throws Exception {
+    public void resetPassword(String[] usernames,String pwd) throws Exception {
         for (String username : usernames) {
 
             User user = new User();
-            user.setPassword(MD5Util.encrypt(username, User.DEFAULT_PASSWORD));
-
+            if(pwd == null || pwd.equals("")) {
+                user.setPassword(MD5Util.encrypt(username, User.DEFAULT_PASSWORD));
+            } else {
+                user.setPassword(MD5Util.encrypt(username, pwd));
+            }
             this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUsername, username));
             // 重新将用户信息加载到 redis中
             cacheService.saveUser(username);

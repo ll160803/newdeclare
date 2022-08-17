@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.zq.dao.ZqBCopySciencepublishMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.zq.entity.ZqBCopySciencepublish">
+                    <id column="id" property="id"/>
+                    <result column="dca_year" property="dcaYear"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="paper_name" property="paperName"/>
+                    <result column="journal_name" property="journalName"/>
+                    <result column="journal_code" property="journalCode"/>
+                    <result column="paper_publishdate" property="paperPublishdate"/>
+                    <result column="wzlx" property="wzlx"/>
+                    <result column="djzz" property="djzz"/>
+                    <result column="qkjb" property="qkjb"/>
+                    <result column="cdzs" property="cdzs"/>
+                    <result column="paper_shoulu" property="paperShoulu"/>
+                    <result column="paper_cause" property="paperCause"/>
+                    <result column="is_best" property="isBest"/>
+                    <result column="author_rank" property="authorRank"/>
+                    <result column="other_times" property="otherTimes"/>
+                    <result column="is_jxzcsb" property="isJxzcsb"/>
+                    <result column="is_lczcsb" property="isLczcsb"/>
+                    <result column="audit_qkjb" property="auditQkjb"/>
+                    <result column="jxzcsl" property="jxzcsl"/>
+                    <result column="lczcsl" property="lczcsl"/>
+                    <result column="audit_xuhao" property="auditXuhao"/>
+                    <result column="audit_totalnum" property="auditTotalnum"/>
+                    <result column="audit_isfirst" property="auditIsfirst"/>
+                    <result column="sci_value" property="sciValue"/>
+                    <result column="rank_value" property="rankValue"/>
+                    <result column="state" property="state"/>
+                    <result column="audit_state" property="auditState"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="auditMan" property="auditMan"/>
+                    <result column="auditManName" property="auditManName"/>
+                    <result column="auditDate" property="auditDate"/>
+                    <result column="auditSuggestion" property="auditSuggestion"/>
+                    <result column="IsUse" property="IsUse"/>
+                    <result column="gwdj" property="gwdj"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dca_year, file_id, file_url, user_account_name, user_account, paper_name, journal_name, journal_code, paper_publishdate, wzlx, djzz, qkjb, cdzs, paper_shoulu, paper_cause, is_best, author_rank, other_times, is_jxzcsb, is_lczcsb, audit_qkjb, jxzcsl, lczcsl, audit_xuhao, audit_totalnum, audit_isfirst, sci_value, rank_value, state, audit_state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, gwdj
+    </sql>
+    <update id="updateZqBCopySciencepublish" parameterType="cc.mrbird.febs.zq.entity.ZqBCopySciencepublish">
+        update zq_b_copy_sciencepublish
+        <trim prefix="set" suffixOverrides=",">
+<if test="dcaYear != null">dca_year=#{dcaYear},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="paperName != null">paper_name=#{paperName},</if>
+<if test="journalName != null">journal_name=#{journalName},</if>
+<if test="journalCode != null">journal_code=#{journalCode},</if>
+<if test="paperPublishdate != null">paper_publishdate=#{paperPublishdate},</if>
+<if test="wzlx != null">wzlx=#{wzlx},</if>
+<if test="djzz != null">djzz=#{djzz},</if>
+<if test="qkjb != null">qkjb=#{qkjb},</if>
+<if test="cdzs != null">cdzs=#{cdzs},</if>
+<if test="paperShoulu != null">paper_shoulu=#{paperShoulu},</if>
+<if test="paperCause != null">paper_cause=#{paperCause},</if>
+<if test="isBest != null">is_best=#{isBest},</if>
+<if test="authorRank != null">author_rank=#{authorRank},</if>
+<if test="otherTimes != null">other_times=#{otherTimes},</if>
+<if test="isJxzcsb != null">is_jxzcsb=#{isJxzcsb},</if>
+<if test="isLczcsb != null">is_lczcsb=#{isLczcsb},</if>
+<if test="auditQkjb != null">audit_qkjb=#{auditQkjb},</if>
+<if test="jxzcsl != null">jxzcsl=#{jxzcsl},</if>
+<if test="lczcsl != null">lczcsl=#{lczcsl},</if>
+<if test="auditXuhao != null">audit_xuhao=#{auditXuhao},</if>
+<if test="auditTotalnum != null">audit_totalnum=#{auditTotalnum},</if>
+<if test="auditIsfirst != null">audit_isfirst=#{auditIsfirst},</if>
+<if test="sciValue != null">sci_value=#{sciValue},</if>
+<if test="rankValue != null">rank_value=#{rankValue},</if>
+<if test="state != null">state=#{state},</if>
+<if test="auditState != null">audit_state=#{auditState},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="auditMan != null">auditMan=#{auditMan},</if>
+<if test="auditManName != null">auditManName=#{auditManName},</if>
+<if test="auditDate != null">auditDate=#{auditDate},</if>
+<if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
+<if test="IsUse != null">IsUse=#{IsUse},</if>
+<if test="gwdj != null">gwdj=#{gwdj},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findZqBCopySciencepublish" resultType="cc.mrbird.febs.zq.entity.ZqBCopySciencepublish" parameterType="cc.mrbird.febs.zq.entity.ZqBCopySciencepublish">
+        select  *  from zq_b_copy_sciencepublish
+        where  1=1
+            <if test="zqBCopySciencepublish.id != null and zqBCopySciencepublish.id != ''"> and zqBCopySciencepublish.id =#{ zqBCopySciencepublish.id} </if>
+            <if test="zqBCopySciencepublish.dcaYear != null and zqBCopySciencepublish.dcaYear != ''"> and zqBCopySciencepublish.dca_year like concat('%', #{ zqBCopySciencepublish.dcaYear} ,'%')</if>
+            <if test="zqBCopySciencepublish.fileId != null and zqBCopySciencepublish.fileId != ''"> and zqBCopySciencepublish.file_id like concat('%', #{ zqBCopySciencepublish.fileId} ,'%')</if>
+            <if test="zqBCopySciencepublish.fileUrl != null and zqBCopySciencepublish.fileUrl != ''"> and zqBCopySciencepublish.file_url like concat('%', #{ zqBCopySciencepublish.fileUrl} ,'%')</if>
+            <if test="zqBCopySciencepublish.userAccountName != null and zqBCopySciencepublish.userAccountName != ''"> and zqBCopySciencepublish.user_account_name like concat('%', #{ zqBCopySciencepublish.userAccountName} ,'%')</if>
+            <if test="zqBCopySciencepublish.userAccount != null and zqBCopySciencepublish.userAccount != ''"> and zqBCopySciencepublish.user_account like concat('%', #{ zqBCopySciencepublish.userAccount} ,'%')</if>
+            <if test="zqBCopySciencepublish.paperName != null and zqBCopySciencepublish.paperName != ''"> and zqBCopySciencepublish.paper_name like concat('%', #{ zqBCopySciencepublish.paperName} ,'%')</if>
+            <if test="zqBCopySciencepublish.journalName != null and zqBCopySciencepublish.journalName != ''"> and zqBCopySciencepublish.journal_name like concat('%', #{ zqBCopySciencepublish.journalName} ,'%')</if>
+            <if test="zqBCopySciencepublish.journalCode != null and zqBCopySciencepublish.journalCode != ''"> and zqBCopySciencepublish.journal_code like concat('%', #{ zqBCopySciencepublish.journalCode} ,'%')</if>
+        <if test="zqBCopySciencepublish.paperPublishdateFrom!= null">
+            AND zqBCopySciencepublish.paper_publishdate <![CDATA[ >= ]]>  #{zqBCopySciencepublish.paperPublishdateFrom}
+        </if>
+        <if test="zqBCopySciencepublish.paperPublishdateTo!= null">
+            AND zqBCopySciencepublish.paper_publishdate <![CDATA[ <= ]]>  #{zqBCopySciencepublish.paperPublishdateTo}
+        </if>
+            <if test="zqBCopySciencepublish.wzlx != null and zqBCopySciencepublish.wzlx != ''"> and zqBCopySciencepublish.wzlx like concat('%', #{ zqBCopySciencepublish.wzlx} ,'%')</if>
+            <if test="zqBCopySciencepublish.djzz != null and zqBCopySciencepublish.djzz != ''"> and zqBCopySciencepublish.djzz like concat('%', #{ zqBCopySciencepublish.djzz} ,'%')</if>
+            <if test="zqBCopySciencepublish.qkjb != null and zqBCopySciencepublish.qkjb != ''"> and zqBCopySciencepublish.qkjb like concat('%', #{ zqBCopySciencepublish.qkjb} ,'%')</if>
+            <if test="zqBCopySciencepublish.paperShoulu != null and zqBCopySciencepublish.paperShoulu != ''"> and zqBCopySciencepublish.paper_shoulu like concat('%', #{ zqBCopySciencepublish.paperShoulu} ,'%')</if>
+            <if test="zqBCopySciencepublish.paperCause != null and zqBCopySciencepublish.paperCause != ''"> and zqBCopySciencepublish.paper_cause like concat('%', #{ zqBCopySciencepublish.paperCause} ,'%')</if>
+            <if test="zqBCopySciencepublish.isBest != null and zqBCopySciencepublish.isBest != ''"> and zqBCopySciencepublish.is_best like concat('%', #{ zqBCopySciencepublish.isBest} ,'%')</if>
+            <if test="zqBCopySciencepublish.authorRank != null and zqBCopySciencepublish.authorRank != ''"> and zqBCopySciencepublish.author_rank like concat('%', #{ zqBCopySciencepublish.authorRank} ,'%')</if>
+            <if test="zqBCopySciencepublish.otherTimes != null and zqBCopySciencepublish.otherTimes != ''"> and zqBCopySciencepublish.other_times like concat('%', #{ zqBCopySciencepublish.otherTimes} ,'%')</if>
+            <if test="zqBCopySciencepublish.isJxzcsb != null and zqBCopySciencepublish.isJxzcsb != ''"> and zqBCopySciencepublish.is_jxzcsb like concat('%', #{ zqBCopySciencepublish.isJxzcsb} ,'%')</if>
+            <if test="zqBCopySciencepublish.isLczcsb != null and zqBCopySciencepublish.isLczcsb != ''"> and zqBCopySciencepublish.is_lczcsb like concat('%', #{ zqBCopySciencepublish.isLczcsb} ,'%')</if>
+            <if test="zqBCopySciencepublish.auditQkjb != null and zqBCopySciencepublish.auditQkjb != ''"> and zqBCopySciencepublish.audit_qkjb like concat('%', #{ zqBCopySciencepublish.auditQkjb} ,'%')</if>
+            <if test="zqBCopySciencepublish.jxzcsl != null and zqBCopySciencepublish.jxzcsl != ''"> and zqBCopySciencepublish.jxzcsl like concat('%', #{ zqBCopySciencepublish.jxzcsl} ,'%')</if>
+            <if test="zqBCopySciencepublish.lczcsl != null and zqBCopySciencepublish.lczcsl != ''"> and zqBCopySciencepublish.lczcsl like concat('%', #{ zqBCopySciencepublish.lczcsl} ,'%')</if>
+        <if test="zqBCopySciencepublish.auditXuhao != null"> and zqBCopySciencepublish.audit_xuhao =#{ zqBCopySciencepublish.auditXuhao} </if>
+        <if test="zqBCopySciencepublish.auditTotalnum != null"> and zqBCopySciencepublish.audit_totalnum =#{ zqBCopySciencepublish.auditTotalnum} </if>
+            <if test="zqBCopySciencepublish.sciValue != null and zqBCopySciencepublish.sciValue != ''"> and zqBCopySciencepublish.sci_value like concat('%', #{ zqBCopySciencepublish.sciValue} ,'%')</if>
+        <if test="zqBCopySciencepublish.state != null"> and zqBCopySciencepublish.state =#{ zqBCopySciencepublish.state} </if>
+        <if test="zqBCopySciencepublish.auditState != null"> and zqBCopySciencepublish.audit_state =#{ zqBCopySciencepublish.auditState} </if>
+        <if test="zqBCopySciencepublish.isDeletemark != null"> and zqBCopySciencepublish.IS_DELETEMARK =#{ zqBCopySciencepublish.isDeletemark} </if>
+        <if test="zqBCopySciencepublish.createTimeFrom!= null">
+            AND zqBCopySciencepublish.CREATE_TIME <![CDATA[ >= ]]>  #{zqBCopySciencepublish.createTimeFrom}
+        </if>
+        <if test="zqBCopySciencepublish.createTimeTo!= null">
+            AND zqBCopySciencepublish.CREATE_TIME <![CDATA[ <= ]]>  #{zqBCopySciencepublish.createTimeTo}
+        </if>
+        <if test="zqBCopySciencepublish.displayIndex != null"> and zqBCopySciencepublish.display_index =#{ zqBCopySciencepublish.displayIndex} </if>
+        <if test="zqBCopySciencepublish.modifyTimeFrom!= null">
+            AND zqBCopySciencepublish.MODIFY_TIME <![CDATA[ >= ]]>  #{zqBCopySciencepublish.modifyTimeFrom}
+        </if>
+        <if test="zqBCopySciencepublish.modifyTimeTo!= null">
+            AND zqBCopySciencepublish.MODIFY_TIME <![CDATA[ <= ]]>  #{zqBCopySciencepublish.modifyTimeTo}
+        </if>
+            <if test="zqBCopySciencepublish.auditMan != null and zqBCopySciencepublish.auditMan != ''"> and zqBCopySciencepublish.auditMan like concat('%', #{ zqBCopySciencepublish.auditMan} ,'%')</if>
+            <if test="zqBCopySciencepublish.auditManName != null and zqBCopySciencepublish.auditManName != ''"> and zqBCopySciencepublish.auditManName like concat('%', #{ zqBCopySciencepublish.auditManName} ,'%')</if>
+        <if test="zqBCopySciencepublish.auditDateFrom!= null">
+            AND zqBCopySciencepublish.auditDate <![CDATA[ >= ]]>  #{zqBCopySciencepublish.auditDateFrom}
+        </if>
+        <if test="zqBCopySciencepublish.auditDateTo!= null">
+            AND zqBCopySciencepublish.auditDate <![CDATA[ <= ]]>  #{zqBCopySciencepublish.auditDateTo}
+        </if>
+            <if test="zqBCopySciencepublish.auditSuggestion != null and zqBCopySciencepublish.auditSuggestion != ''"> and zqBCopySciencepublish.auditSuggestion like concat('%', #{ zqBCopySciencepublish.auditSuggestion} ,'%')</if>
+            <if test="zqBCopySciencepublish.gwdj != null and zqBCopySciencepublish.gwdj != ''"> and zqBCopySciencepublish.gwdj like concat('%', #{ zqBCopySciencepublish.gwdj} ,'%')</if>
+</select>
+
+</mapper>

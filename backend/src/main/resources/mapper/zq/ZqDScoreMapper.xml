@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.zq.dao.ZqDScoreMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.zq.entity.ZqDScore">
+                    <id column="id" property="id"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="dept_name" property="deptName"/>
+                    <result column="fenzu" property="fenzu"/>
+                    <result column="audit_user_account" property="auditUserAccount"/>
+                    <result column="audit_user_account_name" property="auditUserAccountName"/>
+                    <result column="if_done" property="ifDone"/>
+                    <result column="suggestion" property="suggestion"/>
+                    <result column="year" property="year"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, user_account, user_account_name, dept_name, fenzu, audit_user_account, audit_user_account_name, if_done, suggestion, year, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateZqDScore" parameterType="cc.mrbird.febs.zq.entity.ZqDScore">
+        update zq_d_score
+        <trim prefix="set" suffixOverrides=",">
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="deptName != null">dept_name=#{deptName},</if>
+<if test="fenzu != null">fenzu=#{fenzu},</if>
+<if test="auditUserAccount != null">audit_user_account=#{auditUserAccount},</if>
+<if test="auditUserAccountName != null">audit_user_account_name=#{auditUserAccountName},</if>
+<if test="ifDone != null">if_done=#{ifDone},</if>
+<if test="suggestion != null">suggestion=#{suggestion},</if>
+<if test="year != null">year=#{year},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findZqDScore" resultType="cc.mrbird.febs.zq.entity.ZqDScore" parameterType="cc.mrbird.febs.zq.entity.ZqDScore">
+        select  *  from zq_d_score
+        where  1=1
+            <if test="zqDScore.userAccount != null and zqDScore.userAccount != ''"> and zqDScore.user_account like concat('%', #{ zqDScore.userAccount} ,'%')</if>
+            <if test="zqDScore.userAccountName != null and zqDScore.userAccountName != ''"> and zqDScore.user_account_name like concat('%', #{ zqDScore.userAccountName} ,'%')</if>
+            <if test="zqDScore.deptName != null and zqDScore.deptName != ''"> and zqDScore.dept_name like concat('%', #{ zqDScore.deptName} ,'%')</if>
+            <if test="zqDScore.fenzu != null and zqDScore.fenzu != ''"> and zqDScore.fenzu like concat('%', #{ zqDScore.fenzu} ,'%')</if>
+            <if test="zqDScore.auditUserAccount != null and zqDScore.auditUserAccount != ''"> and zqDScore.audit_user_account like concat('%', #{ zqDScore.auditUserAccount} ,'%')</if>
+            <if test="zqDScore.auditUserAccountName != null and zqDScore.auditUserAccountName != ''"> and zqDScore.audit_user_account_name like concat('%', #{ zqDScore.auditUserAccountName} ,'%')</if>
+            <if test="zqDScore.ifDone != null and zqDScore.ifDone != ''"> and zqDScore.if_done like concat('%', #{ zqDScore.ifDone} ,'%')</if>
+            <if test="zqDScore.suggestion != null and zqDScore.suggestion != ''"> and zqDScore.suggestion like concat('%', #{ zqDScore.suggestion} ,'%')</if>
+            <if test="zqDScore.year != null and zqDScore.year != ''"> and zqDScore.year like concat('%', #{ zqDScore.year} ,'%')</if>
+        <if test="zqDScore.state != null"> and zqDScore.state =#{ zqDScore.state} </if>
+        <if test="zqDScore.isDeletemark != null"> and zqDScore.IS_DELETEMARK =#{ zqDScore.isDeletemark} </if>
+        <if test="zqDScore.createTimeFrom!= null">
+            AND zqDScore.CREATE_TIME <![CDATA[ >= ]]>  #{zqDScore.createTimeFrom}
+        </if>
+        <if test="zqDScore.createTimeTo!= null">
+            AND zqDScore.CREATE_TIME <![CDATA[ <= ]]>  #{zqDScore.createTimeTo}
+        </if>
+        <if test="zqDScore.modifyTimeFrom!= null">
+            AND zqDScore.MODIFY_TIME <![CDATA[ >= ]]>  #{zqDScore.modifyTimeFrom}
+        </if>
+        <if test="zqDScore.modifyTimeTo!= null">
+            AND zqDScore.MODIFY_TIME <![CDATA[ <= ]]>  #{zqDScore.modifyTimeTo}
+        </if>
+</select>
+    <select id="insertZqCopy" parameterType="java.util.Map" statementType="CALLABLE" >
+    <![CDATA[{
+         call InsertZqCopyData(
+               #{startDate,mode=IN,jdbcType=VARCHAR},
+               #{dcaYear,mode=IN,jdbcType=VARCHAR}
+         )
+      }]]>
+    </select>
+    <select id="getAllUserInfo" resultType="cc.mrbird.febs.zq.entity.ZqUser" parameterType="cc.mrbird.febs.zq.entity.ZqDScore">
+      select  d.id id,
+        a.user_account,
+        a.user_account_name,
+        a.zyjsgw_lc,
+        a.zyjsgw,
+        a.political_status,
+        a.appointed_date,
+        a.appointed_date_lc,
+        a.telephone,
+        a.sex_name,
+        a.birthday,
+        a.xcszyjzc,
+
+        d.dept_name,
+        d.YEAR year,
+
+        d.audit_user_account,
+        d.audit_user_account_name,
+
+        d.fenzu,
+        a.picture_url,
+        d.if_done,
+        d.suggestion
+        from dca_b_user a
+        INNER join zq_d_score d on a.user_account=d.user_account
+        where 1=1
+        <if test="zqDScore.year != null and zqDScore.year != ''">
+            and d.`year`= #{zqDScore.year}
+        </if>
+        <if test="zqDScore.state==0" >
+            and d.if_done is null
+        </if>
+        <if test="zqDScore.state==3" >
+            and d.if_done is not null
+        </if>
+        <if test="zqDScore.userAccount != null and zqDScore.userAccount != ''"> and (d.user_account_name like concat('%', #{ zqDScore.userAccount} ,'%') or d.user_account=#{zqDScore.userAccount})</if>
+        <if test="zqDScore.auditUserAccount != null and zqDScore.auditUserAccount != ''"> and  d.audit_user_account=#{zqDScore.auditUserAccount}</if>
+        order by a.user_account
+    </select>
+
+</mapper>

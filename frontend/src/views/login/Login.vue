@@ -12,7 +12,7 @@
         @change="handleTabsChange"
       >
         <a-tab-pane
-          tab="账户密码登录"
+          tab="HRI登录"
           key="1"
         >
           <a-alert

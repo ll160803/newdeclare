@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.zq.dao.ZqBCopyGoalMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.zq.entity.ZqBCopyGoal">
+                    <id column="id" property="id"/>
+                    <result column="dca_year" property="dcaYear"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="pre_goal" property="preGoal"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="auditMan" property="auditMan"/>
+                    <result column="auditManName" property="auditManName"/>
+                    <result column="auditDate" property="auditDate"/>
+                    <result column="auditSuggestion" property="auditSuggestion"/>
+                    <result column="IsUse" property="IsUse"/>
+                    <result column="gwdj" property="gwdj"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dca_year, file_id, file_url, user_account_name, user_account, pre_goal, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, gwdj
+    </sql>
+    <update id="updateZqBCopyGoal" parameterType="cc.mrbird.febs.zq.entity.ZqBCopyGoal">
+        update zq_b_copy_goal
+        <trim prefix="set" suffixOverrides=",">
+<if test="dcaYear != null">dca_year=#{dcaYear},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="preGoal != null">pre_goal=#{preGoal},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="auditMan != null">auditMan=#{auditMan},</if>
+<if test="auditManName != null">auditManName=#{auditManName},</if>
+<if test="auditDate != null">auditDate=#{auditDate},</if>
+<if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
+<if test="IsUse != null">IsUse=#{IsUse},</if>
+<if test="gwdj != null">gwdj=#{gwdj},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findZqBCopyGoal" resultType="cc.mrbird.febs.zq.entity.ZqBCopyGoal" parameterType="cc.mrbird.febs.zq.entity.ZqBCopyGoal">
+        select  *  from zq_b_copy_goal
+        where  1=1
+            <if test="zqBCopyGoal.id != null and zqBCopyGoal.id != ''"> and zqBCopyGoal.id =#{ zqBCopyGoal.id} </if>
+            <if test="zqBCopyGoal.dcaYear != null and zqBCopyGoal.dcaYear != ''"> and zqBCopyGoal.dca_year like concat('%', #{ zqBCopyGoal.dcaYear} ,'%')</if>
+            <if test="zqBCopyGoal.fileId != null and zqBCopyGoal.fileId != ''"> and zqBCopyGoal.file_id like concat('%', #{ zqBCopyGoal.fileId} ,'%')</if>
+            <if test="zqBCopyGoal.fileUrl != null and zqBCopyGoal.fileUrl != ''"> and zqBCopyGoal.file_url like concat('%', #{ zqBCopyGoal.fileUrl} ,'%')</if>
+            <if test="zqBCopyGoal.userAccountName != null and zqBCopyGoal.userAccountName != ''"> and zqBCopyGoal.user_account_name like concat('%', #{ zqBCopyGoal.userAccountName} ,'%')</if>
+            <if test="zqBCopyGoal.userAccount != null and zqBCopyGoal.userAccount != ''"> and zqBCopyGoal.user_account like concat('%', #{ zqBCopyGoal.userAccount} ,'%')</if>
+            <if test="zqBCopyGoal.preGoal != null and zqBCopyGoal.preGoal != ''"> and zqBCopyGoal.pre_goal like concat('%', #{ zqBCopyGoal.preGoal} ,'%')</if>
+        <if test="zqBCopyGoal.state != null"> and zqBCopyGoal.state =#{ zqBCopyGoal.state} </if>
+        <if test="zqBCopyGoal.isDeletemark != null"> and zqBCopyGoal.IS_DELETEMARK =#{ zqBCopyGoal.isDeletemark} </if>
+        <if test="zqBCopyGoal.createTimeFrom!= null">
+            AND zqBCopyGoal.CREATE_TIME <![CDATA[ >= ]]>  #{zqBCopyGoal.createTimeFrom}
+        </if>
+        <if test="zqBCopyGoal.createTimeTo!= null">
+            AND zqBCopyGoal.CREATE_TIME <![CDATA[ <= ]]>  #{zqBCopyGoal.createTimeTo}
+        </if>
+        <if test="zqBCopyGoal.displayIndex != null"> and zqBCopyGoal.display_index =#{ zqBCopyGoal.displayIndex} </if>
+        <if test="zqBCopyGoal.modifyTimeFrom!= null">
+            AND zqBCopyGoal.MODIFY_TIME <![CDATA[ >= ]]>  #{zqBCopyGoal.modifyTimeFrom}
+        </if>
+        <if test="zqBCopyGoal.modifyTimeTo!= null">
+            AND zqBCopyGoal.MODIFY_TIME <![CDATA[ <= ]]>  #{zqBCopyGoal.modifyTimeTo}
+        </if>
+            <if test="zqBCopyGoal.auditMan != null and zqBCopyGoal.auditMan != ''"> and zqBCopyGoal.auditMan like concat('%', #{ zqBCopyGoal.auditMan} ,'%')</if>
+            <if test="zqBCopyGoal.auditManName != null and zqBCopyGoal.auditManName != ''"> and zqBCopyGoal.auditManName like concat('%', #{ zqBCopyGoal.auditManName} ,'%')</if>
+        <if test="zqBCopyGoal.auditDateFrom!= null">
+            AND zqBCopyGoal.auditDate <![CDATA[ >= ]]>  #{zqBCopyGoal.auditDateFrom}
+        </if>
+        <if test="zqBCopyGoal.auditDateTo!= null">
+            AND zqBCopyGoal.auditDate <![CDATA[ <= ]]>  #{zqBCopyGoal.auditDateTo}
+        </if>
+            <if test="zqBCopyGoal.auditSuggestion != null and zqBCopyGoal.auditSuggestion != ''"> and zqBCopyGoal.auditSuggestion like concat('%', #{ zqBCopyGoal.auditSuggestion} ,'%')</if>
+            <if test="zqBCopyGoal.gwdj != null and zqBCopyGoal.gwdj != ''"> and zqBCopyGoal.gwdj like concat('%', #{ zqBCopyGoal.gwdj} ,'%')</if>
+</select>
+
+</mapper>

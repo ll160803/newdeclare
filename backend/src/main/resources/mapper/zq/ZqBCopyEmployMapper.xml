@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.zq.dao.ZqBCopyEmployMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.zq.entity.ZqBCopyEmploy">
+                    <id column="id" property="id"/>
+                    <result column="dca_year" property="dcaYear"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="em_start_TIME" property="emStartTime"/>
+                    <result column="em_end_TIME" property="emEndTime"/>
+                    <result column="em_coursename" property="emCoursename"/>
+                    <result column="em_otherwork" property="emOtherwork"/>
+                    <result column="em_studentcount" property="emStudentcount"/>
+                    <result column="em_weektime" property="emWeektime"/>
+                    <result column="em_totaltime" property="emTotaltime"/>
+                    <result column="em_content" property="emContent"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="auditMan" property="auditMan"/>
+                    <result column="auditManName" property="auditManName"/>
+                    <result column="auditDate" property="auditDate"/>
+                    <result column="auditSuggestion" property="auditSuggestion"/>
+                    <result column="IsUse" property="IsUse"/>
+                    <result column="gwdj" property="gwdj"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dca_year, file_id, file_url, user_account_name, user_account, em_start_TIME, em_end_TIME, em_coursename, em_otherwork, em_studentcount, em_weektime, em_totaltime, em_content, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, gwdj
+    </sql>
+    <update id="updateZqBCopyEmploy" parameterType="cc.mrbird.febs.zq.entity.ZqBCopyEmploy">
+        update zq_b_copy_employ
+        <trim prefix="set" suffixOverrides=",">
+<if test="dcaYear != null">dca_year=#{dcaYear},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="emStartTime != null">em_start_TIME=#{emStartTime},</if>
+<if test="emEndTime != null">em_end_TIME=#{emEndTime},</if>
+<if test="emCoursename != null">em_coursename=#{emCoursename},</if>
+<if test="emOtherwork != null">em_otherwork=#{emOtherwork},</if>
+<if test="emStudentcount != null">em_studentcount=#{emStudentcount},</if>
+<if test="emWeektime != null">em_weektime=#{emWeektime},</if>
+<if test="emTotaltime != null">em_totaltime=#{emTotaltime},</if>
+<if test="emContent != null">em_content=#{emContent},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="auditMan != null">auditMan=#{auditMan},</if>
+<if test="auditManName != null">auditManName=#{auditManName},</if>
+<if test="auditDate != null">auditDate=#{auditDate},</if>
+<if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
+<if test="IsUse != null">IsUse=#{IsUse},</if>
+<if test="gwdj != null">gwdj=#{gwdj},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findZqBCopyEmploy" resultType="cc.mrbird.febs.zq.entity.ZqBCopyEmploy" parameterType="cc.mrbird.febs.zq.entity.ZqBCopyEmploy">
+        select  *  from zq_b_copy_employ
+        where  1=1
+            <if test="zqBCopyEmploy.id != null and zqBCopyEmploy.id != ''"> and zqBCopyEmploy.id =#{ zqBCopyEmploy.id} </if>
+            <if test="zqBCopyEmploy.dcaYear != null and zqBCopyEmploy.dcaYear != ''"> and zqBCopyEmploy.dca_year like concat('%', #{ zqBCopyEmploy.dcaYear} ,'%')</if>
+            <if test="zqBCopyEmploy.fileId != null and zqBCopyEmploy.fileId != ''"> and zqBCopyEmploy.file_id like concat('%', #{ zqBCopyEmploy.fileId} ,'%')</if>
+            <if test="zqBCopyEmploy.fileUrl != null and zqBCopyEmploy.fileUrl != ''"> and zqBCopyEmploy.file_url like concat('%', #{ zqBCopyEmploy.fileUrl} ,'%')</if>
+            <if test="zqBCopyEmploy.userAccountName != null and zqBCopyEmploy.userAccountName != ''"> and zqBCopyEmploy.user_account_name like concat('%', #{ zqBCopyEmploy.userAccountName} ,'%')</if>
+            <if test="zqBCopyEmploy.userAccount != null and zqBCopyEmploy.userAccount != ''"> and zqBCopyEmploy.user_account like concat('%', #{ zqBCopyEmploy.userAccount} ,'%')</if>
+        <if test="zqBCopyEmploy.emStartTimeFrom!= null">
+            AND zqBCopyEmploy.em_start_TIME <![CDATA[ >= ]]>  #{zqBCopyEmploy.emStartTimeFrom}
+        </if>
+        <if test="zqBCopyEmploy.emStartTimeTo!= null">
+            AND zqBCopyEmploy.em_start_TIME <![CDATA[ <= ]]>  #{zqBCopyEmploy.emStartTimeTo}
+        </if>
+        <if test="zqBCopyEmploy.emEndTimeFrom!= null">
+            AND zqBCopyEmploy.em_end_TIME <![CDATA[ >= ]]>  #{zqBCopyEmploy.emEndTimeFrom}
+        </if>
+        <if test="zqBCopyEmploy.emEndTimeTo!= null">
+            AND zqBCopyEmploy.em_end_TIME <![CDATA[ <= ]]>  #{zqBCopyEmploy.emEndTimeTo}
+        </if>
+            <if test="zqBCopyEmploy.emCoursename != null and zqBCopyEmploy.emCoursename != ''"> and zqBCopyEmploy.em_coursename like concat('%', #{ zqBCopyEmploy.emCoursename} ,'%')</if>
+            <if test="zqBCopyEmploy.emOtherwork != null and zqBCopyEmploy.emOtherwork != ''"> and zqBCopyEmploy.em_otherwork like concat('%', #{ zqBCopyEmploy.emOtherwork} ,'%')</if>
+        <if test="zqBCopyEmploy.emStudentcount != null"> and zqBCopyEmploy.em_studentcount =#{ zqBCopyEmploy.emStudentcount} </if>
+            <if test="zqBCopyEmploy.emContent != null and zqBCopyEmploy.emContent != ''"> and zqBCopyEmploy.em_content like concat('%', #{ zqBCopyEmploy.emContent} ,'%')</if>
+        <if test="zqBCopyEmploy.state != null"> and zqBCopyEmploy.state =#{ zqBCopyEmploy.state} </if>
+        <if test="zqBCopyEmploy.isDeletemark != null"> and zqBCopyEmploy.IS_DELETEMARK =#{ zqBCopyEmploy.isDeletemark} </if>
+        <if test="zqBCopyEmploy.createTimeFrom!= null">
+            AND zqBCopyEmploy.CREATE_TIME <![CDATA[ >= ]]>  #{zqBCopyEmploy.createTimeFrom}
+        </if>
+        <if test="zqBCopyEmploy.createTimeTo!= null">
+            AND zqBCopyEmploy.CREATE_TIME <![CDATA[ <= ]]>  #{zqBCopyEmploy.createTimeTo}
+        </if>
+        <if test="zqBCopyEmploy.displayIndex != null"> and zqBCopyEmploy.display_index =#{ zqBCopyEmploy.displayIndex} </if>
+        <if test="zqBCopyEmploy.modifyTimeFrom!= null">
+            AND zqBCopyEmploy.MODIFY_TIME <![CDATA[ >= ]]>  #{zqBCopyEmploy.modifyTimeFrom}
+        </if>
+        <if test="zqBCopyEmploy.modifyTimeTo!= null">
+            AND zqBCopyEmploy.MODIFY_TIME <![CDATA[ <= ]]>  #{zqBCopyEmploy.modifyTimeTo}
+        </if>
+            <if test="zqBCopyEmploy.auditMan != null and zqBCopyEmploy.auditMan != ''"> and zqBCopyEmploy.auditMan like concat('%', #{ zqBCopyEmploy.auditMan} ,'%')</if>
+            <if test="zqBCopyEmploy.auditManName != null and zqBCopyEmploy.auditManName != ''"> and zqBCopyEmploy.auditManName like concat('%', #{ zqBCopyEmploy.auditManName} ,'%')</if>
+        <if test="zqBCopyEmploy.auditDateFrom!= null">
+            AND zqBCopyEmploy.auditDate <![CDATA[ >= ]]>  #{zqBCopyEmploy.auditDateFrom}
+        </if>
+        <if test="zqBCopyEmploy.auditDateTo!= null">
+            AND zqBCopyEmploy.auditDate <![CDATA[ <= ]]>  #{zqBCopyEmploy.auditDateTo}
+        </if>
+            <if test="zqBCopyEmploy.auditSuggestion != null and zqBCopyEmploy.auditSuggestion != ''"> and zqBCopyEmploy.auditSuggestion like concat('%', #{ zqBCopyEmploy.auditSuggestion} ,'%')</if>
+            <if test="zqBCopyEmploy.gwdj != null and zqBCopyEmploy.gwdj != ''"> and zqBCopyEmploy.gwdj like concat('%', #{ zqBCopyEmploy.gwdj} ,'%')</if>
+</select>
+
+</mapper>

@@ -4,6 +4,7 @@ package cc.mrbird.febs.kh.entity;
 import lombok.Data;
 
 import java.util.List;
+
 @Data
 public class UserInfo {
     private List<KhBCopySciencepublish> publishList;

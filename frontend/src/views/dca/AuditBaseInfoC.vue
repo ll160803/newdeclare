@@ -307,6 +307,11 @@
                 v-if="index==500">
                 <!--主要医疗认可-->
               </dcaB-sureachievementAudit> 
+               <dca-b-letter
+              :dcaYear="dcaYear"
+               :dcaType="dcaType"
+                v-if="index==600">
+              </dca-b-letter>
           </div>
         </a-layout-content>
       </a-layout>
@@ -362,6 +367,7 @@ import DcaBAuditDynamicAudit from "../dca/DcaBUserapply/DcaBAuditDynamicAudit";
 import DcaBTeacheryjAudit from "../dca/DcaBTeacheryj/DcaBTeacheryjAudit";
 import DcaBSciachievementAudit from "../dca/DcaBSciachievement/DcaBSciachievementAudit";
 import DcaBSureachievementAudit from "../dca/DcaBSureachievement/DcaBSureachievementAudit";
+import DcaBLetter from './DcaBLetter/DcaBLetter.vue';
 
 export default {
   name: "AuditBaseInfo",
@@ -408,7 +414,8 @@ export default {
     DcaBQualificationAudit,
     DcaBTeacheryjAudit,
     DcaBSciachievementAudit,
-    DcaBSureachievementAudit
+    DcaBSureachievementAudit,
+    DcaBLetter
   },
   data() {
     return {

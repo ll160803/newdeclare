@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.zq.dao.ZqBCopyPersonalsummaryMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.zq.entity.ZqBCopyPersonalsummary">
+                    <id column="id" property="id"/>
+                    <result column="dca_year" property="dcaYear"/>
+                    <result column="file_id" property="fileId"/>
+                    <result column="file_url" property="fileUrl"/>
+                    <result column="user_account_name" property="userAccountName"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="ps_content" property="psContent"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="display_index" property="displayIndex"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+                    <result column="auditMan" property="auditMan"/>
+                    <result column="auditManName" property="auditManName"/>
+                    <result column="auditDate" property="auditDate"/>
+                    <result column="auditSuggestion" property="auditSuggestion"/>
+                    <result column="IsUse" property="IsUse"/>
+                    <result column="gwdj" property="gwdj"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, dca_year, file_id, file_url, user_account_name, user_account, ps_content, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, gwdj
+    </sql>
+    <update id="updateZqBCopyPersonalsummary" parameterType="cc.mrbird.febs.zq.entity.ZqBCopyPersonalsummary">
+        update zq_b_copy_personalsummary
+        <trim prefix="set" suffixOverrides=",">
+<if test="dcaYear != null">dca_year=#{dcaYear},</if>
+<if test="fileId != null">file_id=#{fileId},</if>
+<if test="fileUrl != null">file_url=#{fileUrl},</if>
+<if test="userAccountName != null">user_account_name=#{userAccountName},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="psContent != null">ps_content=#{psContent},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="displayIndex != null">display_index=#{displayIndex},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+<if test="auditMan != null">auditMan=#{auditMan},</if>
+<if test="auditManName != null">auditManName=#{auditManName},</if>
+<if test="auditDate != null">auditDate=#{auditDate},</if>
+<if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
+<if test="IsUse != null">IsUse=#{IsUse},</if>
+<if test="gwdj != null">gwdj=#{gwdj},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findZqBCopyPersonalsummary" resultType="cc.mrbird.febs.zq.entity.ZqBCopyPersonalsummary" parameterType="cc.mrbird.febs.zq.entity.ZqBCopyPersonalsummary">
+        select  *  from zq_b_copy_personalsummary
+        where  1=1
+            <if test="zqBCopyPersonalsummary.id != null and zqBCopyPersonalsummary.id != ''"> and zqBCopyPersonalsummary.id =#{ zqBCopyPersonalsummary.id} </if>
+            <if test="zqBCopyPersonalsummary.dcaYear != null and zqBCopyPersonalsummary.dcaYear != ''"> and zqBCopyPersonalsummary.dca_year like concat('%', #{ zqBCopyPersonalsummary.dcaYear} ,'%')</if>
+            <if test="zqBCopyPersonalsummary.fileId != null and zqBCopyPersonalsummary.fileId != ''"> and zqBCopyPersonalsummary.file_id like concat('%', #{ zqBCopyPersonalsummary.fileId} ,'%')</if>
+            <if test="zqBCopyPersonalsummary.fileUrl != null and zqBCopyPersonalsummary.fileUrl != ''"> and zqBCopyPersonalsummary.file_url like concat('%', #{ zqBCopyPersonalsummary.fileUrl} ,'%')</if>
+            <if test="zqBCopyPersonalsummary.userAccountName != null and zqBCopyPersonalsummary.userAccountName != ''"> and zqBCopyPersonalsummary.user_account_name like concat('%', #{ zqBCopyPersonalsummary.userAccountName} ,'%')</if>
+            <if test="zqBCopyPersonalsummary.userAccount != null and zqBCopyPersonalsummary.userAccount != ''"> and zqBCopyPersonalsummary.user_account like concat('%', #{ zqBCopyPersonalsummary.userAccount} ,'%')</if>
+            <if test="zqBCopyPersonalsummary.psContent != null and zqBCopyPersonalsummary.psContent != ''"> and zqBCopyPersonalsummary.ps_content like concat('%', #{ zqBCopyPersonalsummary.psContent} ,'%')</if>
+        <if test="zqBCopyPersonalsummary.state != null"> and zqBCopyPersonalsummary.state =#{ zqBCopyPersonalsummary.state} </if>
+        <if test="zqBCopyPersonalsummary.isDeletemark != null"> and zqBCopyPersonalsummary.IS_DELETEMARK =#{ zqBCopyPersonalsummary.isDeletemark} </if>
+        <if test="zqBCopyPersonalsummary.createTimeFrom!= null">
+            AND zqBCopyPersonalsummary.CREATE_TIME <![CDATA[ >= ]]>  #{zqBCopyPersonalsummary.createTimeFrom}
+        </if>
+        <if test="zqBCopyPersonalsummary.createTimeTo!= null">
+            AND zqBCopyPersonalsummary.CREATE_TIME <![CDATA[ <= ]]>  #{zqBCopyPersonalsummary.createTimeTo}
+        </if>
+        <if test="zqBCopyPersonalsummary.displayIndex != null"> and zqBCopyPersonalsummary.display_index =#{ zqBCopyPersonalsummary.displayIndex} </if>
+        <if test="zqBCopyPersonalsummary.modifyTimeFrom!= null">
+            AND zqBCopyPersonalsummary.MODIFY_TIME <![CDATA[ >= ]]>  #{zqBCopyPersonalsummary.modifyTimeFrom}
+        </if>
+        <if test="zqBCopyPersonalsummary.modifyTimeTo!= null">
+            AND zqBCopyPersonalsummary.MODIFY_TIME <![CDATA[ <= ]]>  #{zqBCopyPersonalsummary.modifyTimeTo}
+        </if>
+            <if test="zqBCopyPersonalsummary.auditMan != null and zqBCopyPersonalsummary.auditMan != ''"> and zqBCopyPersonalsummary.auditMan like concat('%', #{ zqBCopyPersonalsummary.auditMan} ,'%')</if>
+            <if test="zqBCopyPersonalsummary.auditManName != null and zqBCopyPersonalsummary.auditManName != ''"> and zqBCopyPersonalsummary.auditManName like concat('%', #{ zqBCopyPersonalsummary.auditManName} ,'%')</if>
+        <if test="zqBCopyPersonalsummary.auditDateFrom!= null">
+            AND zqBCopyPersonalsummary.auditDate <![CDATA[ >= ]]>  #{zqBCopyPersonalsummary.auditDateFrom}
+        </if>
+        <if test="zqBCopyPersonalsummary.auditDateTo!= null">
+            AND zqBCopyPersonalsummary.auditDate <![CDATA[ <= ]]>  #{zqBCopyPersonalsummary.auditDateTo}
+        </if>
+            <if test="zqBCopyPersonalsummary.auditSuggestion != null and zqBCopyPersonalsummary.auditSuggestion != ''"> and zqBCopyPersonalsummary.auditSuggestion like concat('%', #{ zqBCopyPersonalsummary.auditSuggestion} ,'%')</if>
+            <if test="zqBCopyPersonalsummary.gwdj != null and zqBCopyPersonalsummary.gwdj != ''"> and zqBCopyPersonalsummary.gwdj like concat('%', #{ zqBCopyPersonalsummary.gwdj} ,'%')</if>
+</select>
+
+</mapper>

@@ -355,7 +355,6 @@ export default {
           dataIndex: "projectType",
           width: 130,
           scopedSlots: { customRender: "projectType" },
-          fixed: 'left'
         },
         {
           title: "项目来源",
