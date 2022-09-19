@@ -64,7 +64,7 @@ public Map<String, Object> List(QueryRequest request, DcaUserYj dcaUserYj){
 public Map<String, Object> ListCustom(QueryRequest request, DcaUserYj dcaUserYj){
         User currentUser= FebsUtil.getCurrentUser();
 
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaUserYjService.findDcaUserYjs(request, dcaUserYj));

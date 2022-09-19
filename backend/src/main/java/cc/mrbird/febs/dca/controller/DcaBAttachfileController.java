@@ -66,7 +66,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBAttachfile dcaBA
         User currentUser= FebsUtil.getCurrentUser();
     dcaBAttachfile.setUserAccount(currentUser.getUsername());
     dcaBAttachfile.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(10000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBAttachfileService.findDcaBAttachfiles(request, dcaBAttachfile));

@@ -603,6 +603,7 @@ export default {
         else {
           this.CustomVisiable = true
         }
+        console.info(data.rows.length)
         this.dataSource = data.rows
         for (let i = 0; i < 4; i++) {
           this.dataSource.push({

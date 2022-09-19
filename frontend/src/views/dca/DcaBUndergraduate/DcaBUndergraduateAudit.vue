@@ -310,7 +310,9 @@
       ref="userinfo"
       @close="onCloseUserInfo"
       :visibleUserInfo="visibleUserInfo"
-      :userAccount="userAccount"
+        :userAccount="userAccount"
+        :dcaYear="queryParams.auditMan"
+        :gwdj="queryParams.auditManName"
     ></audit-userInfo>
   </div>
 </template>

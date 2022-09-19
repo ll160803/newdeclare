@@ -188,6 +188,7 @@ public class DcaBUserapplyServiceImpl extends ServiceImpl<DcaBUserapplyMapper, D
         LambdaQueryWrapper<DcaBUserapply> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(DcaBUserapply::getIsDeletemark, 1);//1是未删 0是已删
         queryWrapper.eq(DcaBUserapply::getDcaYear, dcaBUserapply.getDcaYear());
+      //  queryWrapper.eq(DcaBUserapply::getGwdj, dcaBUserapply.getGwdj());
         queryWrapper.eq(DcaBUserapply::getUserAccount, dcaBUserapply.getUserAccount());
         if (dcaBUserapply.getId() != null) {
             queryWrapper.ne(DcaBUserapply::getId, dcaBUserapply.getId());

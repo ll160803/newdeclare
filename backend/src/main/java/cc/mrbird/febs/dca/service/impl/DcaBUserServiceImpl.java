@@ -126,6 +126,30 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
                         }
                     }
                 }
+
+                if(StringUtils.isNotEmpty(dcaBUser.getDcaYear())){
+                    LambdaQueryWrapper<DcaBUserapply> queryWrapperApply = new LambdaQueryWrapper<>();
+                    queryWrapperApply.eq(DcaBUserapply::getDcaYear,dcaBUser.getDcaYear());
+                    if(StringUtils.isNotEmpty(dcaBUser.getIdCard())){
+                        if(dcaBUser.getIdCard().equals("高级")){
+                            queryWrapperApply.in(DcaBUserapply::getGwdj,new String[]{"正高","副高"});
+                        }
+                        if(dcaBUser.getIdCard().equals("中级")){
+                            queryWrapperApply.in(DcaBUserapply::getGwdj,new String[]{"中级","初级"});
+                        }
+                        if(dcaBUser.getIdCard().equals("初级")){
+                            queryWrapperApply.in(DcaBUserapply::getGwdj,new String[]{"二三级"});
+                        }
+
+                    }
+                    queryWrapperApply.eq(DcaBUserapply::getUserAccount, user.getUserAccount());
+                    queryWrapperApply.eq(DcaBUserapply::getIsDeletemark,1);
+                    List<DcaBUserapply> userapplyList= this.iDcaBUserapplyService.list(queryWrapperApply);
+                    if(userapplyList.size()>0){
+                        user.setNpPositionName(userapplyList.get(0).getNpPositionName());
+                    }
+
+                }
             }
             return listResult;
         } catch (Exception e) {

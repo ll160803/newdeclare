@@ -65,7 +65,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBSciencesearch dc
         User currentUser= FebsUtil.getCurrentUser();
     dcaBSciencesearch.setUserAccount(currentUser.getUsername());
     dcaBSciencesearch.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBSciencesearchService.findDcaBSciencesearchs(request, dcaBSciencesearch));

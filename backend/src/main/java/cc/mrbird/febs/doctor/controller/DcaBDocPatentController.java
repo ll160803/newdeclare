@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBDocPatent dcaBDo
         User currentUser= FebsUtil.getCurrentUser();
     dcaBDocPatent.setUserAccount(currentUser.getUsername());
     dcaBDocPatent.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBDocPatentService.findDcaBDocPatents(request, dcaBDocPatent));

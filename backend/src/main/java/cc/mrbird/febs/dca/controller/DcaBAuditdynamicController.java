@@ -83,7 +83,7 @@ public class DcaBAuditdynamicController extends BaseController {
         User currentUser = FebsUtil.getCurrentUser();
         dcaBAuditdynamic.setUserAccount(currentUser.getUsername());
         dcaBAuditdynamic.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(10000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBAuditdynamicService.findDcaBAuditdynamics(request, dcaBAuditdynamic));

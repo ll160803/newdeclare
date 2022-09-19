@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBDocMedicalaccide
         User currentUser= FebsUtil.getCurrentUser();
     dcaBDocMedicalaccident.setUserAccount(currentUser.getUsername());
     dcaBDocMedicalaccident.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBDocMedicalaccidentService.findDcaBDocMedicalaccidents(request, dcaBDocMedicalaccident));

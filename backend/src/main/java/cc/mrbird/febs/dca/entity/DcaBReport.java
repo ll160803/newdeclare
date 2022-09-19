@@ -795,6 +795,12 @@ private static final long serialVersionUID=1L;
     private String paixu4;
 
     /**
+     * 排序5
+     */
+    @ExcelField(value ="排序5" )
+    private String paixu5;
+
+    /**
      * 现任岗位级别
      */
             @ExcelField(value ="现任岗位级别" )

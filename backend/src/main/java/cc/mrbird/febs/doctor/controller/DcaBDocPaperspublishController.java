@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBDocPaperspublish
         User currentUser= FebsUtil.getCurrentUser();
     dcaBDocPaperspublish.setUserAccount(currentUser.getUsername());
     dcaBDocPaperspublish.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBDocPaperspublishService.findDcaBDocPaperspublishs(request, dcaBDocPaperspublish));

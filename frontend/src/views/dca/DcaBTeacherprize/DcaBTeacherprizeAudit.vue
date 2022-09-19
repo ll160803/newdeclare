@@ -281,6 +281,8 @@
           @close="onCloseUserInfo"
           :visibleUserInfo="visibleUserInfo"
           :userAccount="userAccount"
+        :dcaYear="queryParams.auditMan"
+        :gwdj="queryParams.auditManName"
         ></audit-userInfo>
       </a-card>
     </a-spin>

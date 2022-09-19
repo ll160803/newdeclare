@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBTurtor dcaBTurto
         User currentUser= FebsUtil.getCurrentUser();
     dcaBTurtor.setUserAccount(currentUser.getUsername());
     dcaBTurtor.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBTurtorService.findDcaBTurtors(request, dcaBTurtor));

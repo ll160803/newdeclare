@@ -318,6 +318,15 @@ export default {
       if(record.dcaYear=='2021' && record.gwdj=='副高'){
          return false;
       }
+       if(record.dcaYear=='2021' && record.gwdj=='中级'){
+         return false;
+      }
+      if(record.dcaYear=='2021' && record.gwdj=='初级'){
+         return false;
+      }
+      if(record.dcaYear=='2021' && record.gwdj=='二三级'){
+         return false;
+      }
       return true;
     },
     batchDelete () {

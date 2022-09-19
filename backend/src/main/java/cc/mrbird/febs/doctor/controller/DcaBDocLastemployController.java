@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBDocLastemploy dc
         User currentUser= FebsUtil.getCurrentUser();
     dcaBDocLastemploy.setUserAccount(currentUser.getUsername());
     dcaBDocLastemploy.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBDocLastemployService.findDcaBDocLastemploys(request, dcaBDocLastemploy));

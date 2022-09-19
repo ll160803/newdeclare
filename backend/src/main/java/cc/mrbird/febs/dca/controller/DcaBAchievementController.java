@@ -65,7 +65,7 @@ public class DcaBAchievementController extends BaseController {
         User currentUser = FebsUtil.getCurrentUser();
         dcaBAchievement.setUserAccount(currentUser.getUsername());
         dcaBAchievement.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBAchievementService.findDcaBAchievements(request, dcaBAchievement));

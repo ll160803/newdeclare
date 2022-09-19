@@ -65,7 +65,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBSchoolprize dcaB
         User currentUser= FebsUtil.getCurrentUser();
     dcaBSchoolprize.setUserAccount(currentUser.getUsername());
     dcaBSchoolprize.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBSchoolprizeService.findDcaBSchoolprizes(request, dcaBSchoolprize));

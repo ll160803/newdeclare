@@ -71,7 +71,7 @@ public Map<String, Object> List(QueryRequest request, DcaBLetter dcaBLetter){
         User currentUser= FebsUtil.getCurrentUser();
         dcaBWorknum.setUserAccount(currentUser.getUsername());
         dcaBWorknum.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("year");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBLetterService.findDcaBLetters(request, dcaBWorknum));

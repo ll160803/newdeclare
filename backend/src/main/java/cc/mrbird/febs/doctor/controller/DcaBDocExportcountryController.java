@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBDocExportcountry
         User currentUser= FebsUtil.getCurrentUser();
     dcaBDocExportcountry.setUserAccount(currentUser.getUsername());
     dcaBDocExportcountry.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBDocExportcountryService.findDcaBDocExportcountrys(request, dcaBDocExportcountry));

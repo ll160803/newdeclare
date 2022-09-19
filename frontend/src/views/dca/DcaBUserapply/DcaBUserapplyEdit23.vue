@@ -1,12 +1,12 @@
 <template>
   <a-drawer
-    title="职称申报"
+    title="修改"
     :maskClosable="false"
-    width="800"
+    width="650"
     placement="right"
     :closable="false"
     @close="onClose"
-    :visible="addVisiable"
+    :visible="editVisiable"
     style="height: calc(100% - 55px); overflow: auto; padding-bottom: 53px"
   >
     <a-form :form="form">
@@ -15,7 +15,7 @@
           style="width: 200px"
           @change="handleChange"
           v-decorator="[
-            'hk3',
+            'dcaYear',
             { rules: [{ required: true, message: '请输入申报年度' }] },
           ]"
         >
@@ -28,15 +28,21 @@
         <a-select
           show-search
           style="width: 200px"
-          @change="handleChangezw"
+          @change="handleChangezw2"
           v-decorator="[
-            'hk2',
+            'gwdj',
             { rules: [{ required: true, message: '请输入岗位等级' }] },
           ]"
         >
-         <a-select-option v-for="d in arrDj" :key="d.value">
-            {{ d.text }}
+        <!--   <a-select-option key="正高">
+            正高
           </a-select-option>
+          <a-select-option key="副高">
+            副高
+          </a-select-option>  
+          <a-select-option key="中级"> 中级 </a-select-option>
+          <a-select-option key="初级"> 初级 </a-select-option> -->
+            <a-select-option key="二三级"> 二三级 </a-select-option> 
         </a-select>
       </a-form-item>
       <a-form-item v-bind="formItemLayout" label="申报职称">
@@ -45,7 +51,7 @@
           style="width: 200px"
           @change="handleChangezc"
           v-decorator="[
-            'hk4',
+            'npPositionName',
             { rules: [{ required: true, message: '请输入申报职称' }] },
           ]"
         >
@@ -54,12 +60,9 @@
           </a-select-option>
         </a-select>
       </a-form-item>
-    
-       <div style="height: 300px; overflow: auto">
-        <yj-tree ref="yjTree" v-show="yjShow"> </yj-tree>
-      </div> 
+   
+       <yj-tree ref="yjTree" v-show="yjShow"> </yj-tree> 
     </a-form>
-
     <div class="drawer-bootom-button">
       <a-popconfirm
         title="确定放弃编辑？"
@@ -69,43 +72,38 @@
       >
         <a-button style="margin-right: 0.8rem">取消</a-button>
       </a-popconfirm>
-      <a-button @click="handleSubmitTotal" type="primary" :loading="loading"
+      <a-button @click="handleSubmit" type="primary" :loading="loading"
         >提交</a-button
       >
     </div>
   </a-drawer>
 </template>
 <script>
+import moment from "moment";
 import YjTree from "./YjTree";
+
 const formItemLayout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 15 },
+  labelCol: { span: 3 },
+  wrapperCol: { span: 18 },
 };
 export default {
-  name: "DcaBUserapplyAdd",
+  name: "DcaBUserapplyEdit",
   props: {
-    addVisiable: {
+    editVisiable: {
       default: false,
     },
   },
   components: { YjTree },
   data() {
     return {
-      current: {
-        default: 0,
-      },
       loading: false,
+      formItemLayout,
       yjShow: false,
       yjDj: "三级",
-      formItemLayout,
+      yjData: {},
       form: this.$form.createForm(this),
       dcaBUserapply: {},
-      dcaYear: "",
-      npPositionName: "",
-      gwdj: "",
-      zc: "",
-      arrDj: [{text: '正高', value: '正高'} ,{text: '副高', value: '副高'} ,{text: '二三级', value: '二三级'} ],
-      yjData: {},
+      zc: [],
       zj: [
         {
           value: "主治医师",
@@ -284,7 +282,7 @@ export default {
   },
   computed: {
     yearArr() {
-      let arr = [{ value: 2022, text: 2022 }];
+      let arr = [{ value: 2021, text: 2021 }];
       // var myDate = new Date()
       // var startYear = myDate.getFullYear() - 2//起始年份
       // var endYear = myDate.getFullYear() + 1//结束年份
@@ -298,37 +296,74 @@ export default {
     reset() {
       this.loading = false;
       this.yjShow = false;
-      this.dcaBUserapply = {};
       this.form.resetFields();
     },
     onClose() {
       this.reset();
       this.$emit("close");
     },
-    handleChange(value) {
-      this.dcaYear = value;
-       this.form.getFieldDecorator("hk2");
-      this.form.setFieldsValue({
-        hk2: ''
+    setFormValues({ ...dcaBUserapply }) {
+      let fields = ["npPositionName", "gwdj", "dcaYear"];
+      let fieldDates = [];
+      Object.keys(dcaBUserapply).forEach((key) => {
+        if (fields.indexOf(key) !== -1) {
+          this.form.getFieldDecorator(key);
+          let obj = {};
+          if (fieldDates.indexOf(key) !== -1) {
+            if (dcaBUserapply[key] !== "") {
+              obj[key] = moment(dcaBUserapply[key]);
+            } else {
+              obj[key] = "";
+            }
+          } else {
+            obj[key] = dcaBUserapply[key];
+          }
+          this.form.setFieldsValue(obj);
+        }
       });
-      // if(this.dcaYear=='2022'){
-      //   this.arrDj =[{text: '正高',value: '正高' },{text: '副高',value: '副高'}];
-      // }
-      // if(this.dcaYear=='2021'){
-      //   this.arrDj =[{text: '二三级',value: '二三级' }];
-      // }
+      this.dcaBUserapply.id = dcaBUserapply.id;
+      this.handleChangezw(dcaBUserapply.gwdj);
+      if (
+        dcaBUserapply.npPositionName == "二级" ||
+        dcaBUserapply.npPositionName == "三级"
+      ) {
+        this.getByzc(dcaBUserapply.npPositionName);
+      }
+    },
+    handleChange(value) {
+      // this.dcaYear = value
     },
     handleChangezc(value) {
-     this.yjShow = false;
-      this.npPositionName = value;
+      // this.npPositionName = value
       if (value == "二级" || value == "三级") {
-         this.yjShow = true;
-        this.$get("dcaDYj/tree", { dj: value }).then((r) => {
-          this.$refs.yjTree.menuTreeData = r.data.rows.children;
-          this.$refs.yjTree.allTreeKeys = r.data.ids;
-        });
+        this.getByzc(value);
       }
-      // this.$refs.yjTree.allTreeKeys = r.data.ids
+    },
+    getByzc(value) {
+      let that = this;
+      this.$get("dcaDYj/tree", { dj: value }).then((r) => {
+        setTimeout(() => {
+          that.$refs.yjTree.menuTreeData = r.data.rows.children;
+          that.$refs.yjTree.allTreeKeys = r.data.ids;
+        }, 300);
+        that
+          .$get("dcaUserYj/mudules/" + that.yearArr[0].value, { dj: value })
+          .then((r) => {
+            //申报年度是写死了的
+            console.info(r.data);
+            setTimeout(function () {
+              console.info(that.$refs.yjTree.defaultCheckedKeys);
+              that.$refs.yjTree.defaultCheckedKeys.splice(
+                0,
+                that.$refs.yjTree.defaultCheckedKeys.length,
+                r.data
+              );
+              that.$refs.yjTree.checkedKeys = r.data;
+              that.$refs.yjTree.expandedKeys = r.data;
+              that.$refs.yjTree.menuTreeKey = +new Date();
+            }, 300);
+          });
+      });
     },
     handleChangezw(value) {
       this.yjShow = false;
@@ -346,23 +381,37 @@ export default {
       }
       if (value == "二三级") {
         this.zc = this.j23;
+        this.yjShow = true;
       }
       this.gwdj = value;
-      this.form.getFieldDecorator("hk4");
+     // this.npPositionName= '';
+    },
+    handleChangezw2(value) {
+      this.yjShow = false;
+      if (value == "正高") {
+        this.zc = this.zg;
+      }
+      if (value == "副高") {
+        this.zc = this.fg;
+      }
+      if (value == "中级") {
+        this.zc = this.zj;
+      }
+      if (value == "初级") {
+        this.zc = this.cj;
+      }
+      if (value == "二三级") {
+        this.zc = this.j23;
+        this.yjShow = true;
+      }
+      this.gwdj = value;
+       this.form.getFieldDecorator("npPositionName");
       this.form.setFieldsValue({
-        hk4: ''
+        npPositionName: ''
       });
-      this.npPositionName= '';
+     // this.npPositionName= '';
     },
-    handleSubmitTotal() {
-      if(this.gwdj=='正高'||this.gwdj=='副高'){
-        this.handleSubmit();
-      }
-      if(this.gwdj=='二三级'){
-        this.handleSubmit23();
-      }
-    },
-    handleSubmit23() {
+    handleSubmit() {
       var yjIds = this.$refs.yjTree.getAuditKey();
       if (yjIds == "") {
         this.$message.warning("请必须选择下述条件中的一项进行提交");
@@ -370,12 +419,11 @@ export default {
       } else {
         this.form.validateFields((err, values) => {
           if (!err) {
-            this.$post("dcaBUserapply", {
-              dcaYear: this.dcaYear,
-              gwdj: this.gwdj,
-              npPositionName: this.npPositionName,
-              deleFlag: '1',
-              yjIDs: yjIds, //二三级
+            let dcaBUserapply = this.form.getFieldsValue();
+            dcaBUserapply.id = this.dcaBUserapply.id;
+            this.$put("dcaBUserapply", {
+              ...dcaBUserapply,
+              yjIDs: yjIds,//二三级
             })
               .then(() => {
                 this.reset();
@@ -385,55 +433,6 @@ export default {
                 this.loading = false;
               });
           }
-        });
-       }
-    },
-    handleSubmit() {
-      // var yjIds = this.$refs.yjTree.getAuditKey();
-      // if (yjIds == "") {
-      //   this.$message.warning("请必须选择下述条件中的一项进行提交");
-      //   return;
-      // } else {
-        this.form.validateFields((err, values) => {
-          if (!err) {
-            this.$post("dcaBUserapply", {
-              dcaYear: this.dcaYear,
-              gwdj: this.gwdj,
-              npPositionName: this.npPositionName,
-              deleFlag: '1',
-            //  yjIDs: yjIds, //二三级
-            })
-              .then(() => {
-                this.reset();
-                this.$emit("success");
-              })
-              .catch(() => {
-                this.loading = false;
-              });
-          }
-        });
-      // }
-    },
-    setFields() {
-      let values = this.form.getFieldsValue([
-        "ks",
-        "xl",
-        "sexName",
-        "birthday",
-        "telephone",
-        "zyjsgw",
-        "appointedDate",
-        "npPositionName",
-        "gwdj",
-        "deptName",
-        "positionName",
-        "schoolDate",
-        "xcszyjzc",
-        "dcaYear",
-      ]);
-      if (typeof values !== "undefined") {
-        Object.keys(values).forEach((_key) => {
-          this.dcaBUserapply[_key] = values[_key];
         });
       }
     },

@@ -63,7 +63,7 @@ public Map<String, Object> ListCustom(QueryRequest request, ${entity} ${table.en
         User currentUser= FebsUtil.getCurrentUser();
     ${table.entityPath}.setUserAccount(currentUser.getUsername());
     ${table.entityPath}.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.i${entity}Service.find${entity}s(request, ${table.entityPath}));

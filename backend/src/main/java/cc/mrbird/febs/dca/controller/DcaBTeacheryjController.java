@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBTeacheryj dcaBTe
         User currentUser= FebsUtil.getCurrentUser();
     dcaBTeacheryj.setUserAccount(currentUser.getUsername());
     dcaBTeacheryj.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBTeacheryjService.findDcaBTeacheryjs(request, dcaBTeacheryj));

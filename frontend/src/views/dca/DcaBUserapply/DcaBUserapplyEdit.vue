@@ -34,15 +34,9 @@
             { rules: [{ required: true, message: '请输入岗位等级' }] },
           ]"
         >
-          <!-- <a-select-option key="正高">
-            正高
+        <a-select-option v-for="d in arrDj" :key="d.value">
+            {{ d.text }}
           </a-select-option>
-          <a-select-option key="副高">
-            副高
-          </a-select-option>  -->
-          <a-select-option key="中级"> 中级 </a-select-option>
-          <a-select-option key="初级"> 初级 </a-select-option>
-          <!-- <a-select-option key="二三级"> 二三级 </a-select-option> -->
         </a-select>
       </a-form-item>
       <a-form-item v-bind="formItemLayout" label="申报职称">
@@ -60,7 +54,8 @@
           </a-select-option>
         </a-select>
       </a-form-item>
-      <!-- <yj-tree ref="yjTree" v-show="yjShow"> </yj-tree> -->
+      
+       <yj-tree ref="yjTree" v-show="yjShow"> </yj-tree> 
     </a-form>
     <div class="drawer-bootom-button">
       <a-popconfirm
@@ -71,7 +66,7 @@
       >
         <a-button style="margin-right: 0.8rem">取消</a-button>
       </a-popconfirm>
-      <a-button @click="handleSubmit" type="primary" :loading="loading"
+      <a-button @click="handleSubmitTotal" type="primary" :loading="loading"
         >提交</a-button
       >
     </div>
@@ -102,6 +97,7 @@ export default {
       yjData: {},
       form: this.$form.createForm(this),
       dcaBUserapply: {},
+      arrDj: [{text: '正高', value: '正高'} ,{text: '副高', value: '副高'} ,{text: '二三级', value: '二三级'} ],
       zc: [],
       zj: [
         {
@@ -281,7 +277,7 @@ export default {
   },
   computed: {
     yearArr() {
-      let arr = [{ value: 2021, text: 2021 }];
+    let arr = [{ value: 2022, text: 2022 },{ value: 2021, text: 2021 }];
       // var myDate = new Date()
       // var startYear = myDate.getFullYear() - 2//起始年份
       // var endYear = myDate.getFullYear() + 1//结束年份
@@ -330,7 +326,14 @@ export default {
       }
     },
     handleChange(value) {
+      
       // this.dcaYear = value
+      // if(value=='2022'){
+      //   this.arrDj =[{text: '正高',value: '正高' },{text: '副高',value: '副高'}];
+      // }
+      // if(value=='2021'){
+      //   this.arrDj =[{text: '二三级',value: '二三级' }];
+      // }
     },
     handleChangezc(value) {
       // this.npPositionName = value
@@ -410,6 +413,39 @@ export default {
       });
      // this.npPositionName= '';
     },
+     handleSubmitTotal() {
+      if(this.gwdj=='正高'||this.gwdj=='副高'){
+        this.handleSubmit();
+      }
+      if(this.gwdj=='二三级'){
+        this.handleSubmit23();
+      }
+    },
+    handleSubmit23() {
+      var yjIds = this.$refs.yjTree.getAuditKey();
+      if (yjIds == "") {
+        this.$message.warning("请必须选择下述条件中的一项进行提交");
+        return;
+      } else {
+        this.form.validateFields((err, values) => {
+          if (!err) {
+            let dcaBUserapply = this.form.getFieldsValue();
+            dcaBUserapply.id = this.dcaBUserapply.id;
+            this.$put("dcaBUserapply", {
+              ...dcaBUserapply,
+              yjIDs: yjIds,//二三级
+            })
+              .then(() => {
+                this.reset();
+                this.$emit("success");
+              })
+              .catch(() => {
+                this.loading = false;
+              });
+          }
+        });
+      }
+    },
     handleSubmit() {
       // var yjIds = this.$refs.yjTree.getAuditKey();
       // if (yjIds == "") {
@@ -422,7 +458,7 @@ export default {
             dcaBUserapply.id = this.dcaBUserapply.id;
             this.$put("dcaBUserapply", {
               ...dcaBUserapply,
-             // yjIDs: yjIds,//二三级
+            //  yjIDs: yjIds,//二三级
             })
               .then(() => {
                 this.reset();

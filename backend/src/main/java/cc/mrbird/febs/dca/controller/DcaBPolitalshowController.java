@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBPolitalshow dcaB
         User currentUser= FebsUtil.getCurrentUser();
     dcaBPolitalshow.setUserAccount(currentUser.getUsername());
     dcaBPolitalshow.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("state");
         request.setSortOrder("descend");
         return getDataTable(this.iDcaBPolitalshowService.findDcaBPolitalshows(request, dcaBPolitalshow));

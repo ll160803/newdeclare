@@ -525,7 +525,7 @@ export default {
       paginationInfo: null,
       visibleUserInfo: false,
       scroll: {
-        x: 4000,
+        x: 4200,
         y: window.innerHeight - 200 - 100 - 20 - 80,
       },
       listAuditInfo: [
@@ -1612,7 +1612,15 @@ export default {
           title: '备注',
           dataIndex: 'note',
           width: 100
-        }
+        },
+          {
+          title: "科室排序（护理）",
+          dataIndex: "kspaixu",
+        },
+         {
+          title: "科室排序（其他）",
+          dataIndex: "paixu5",
+        },
       ];
       let listj = [
         "edu",
@@ -2525,6 +2533,16 @@ export default {
           dataIndex: 'note',
           width: 100,
           scopedSlots: { customRender: "note" },
+        },
+         {
+          title: "科室排序（护理）",
+          dataIndex: "kspaixu",
+          width: 100,
+        },
+        {
+          title: "科室排序（其他）",
+          dataIndex: "paixu5",
+          width: 100,
         },
         {
           title: "操作",

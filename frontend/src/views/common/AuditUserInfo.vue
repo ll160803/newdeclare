@@ -148,7 +148,13 @@ export default {
     },
     userAccount: {
       default: ''
-    }
+    },
+    dcaYear: {
+      default: ''
+    },
+    gwdj: {
+      default: ''
+    },
   },
   mounted () {
 
@@ -156,7 +162,7 @@ export default {
   watch: {
     userAccount () {
       if (this.visibleUserInfo) {
-        this.getUserInfo(this.userAccount)
+        this.getUserInfo(this.userAccount,this.dcaYear,this.gwdj)
       }
     }
   },
@@ -182,10 +188,12 @@ export default {
         )
       }
     },
-    getUserInfo (userAccount) {
+    getUserInfo (userAccount, dcaYear, gwdj) {
       if (userAccount != '') {
         this.$get('dcaBUser', {
-          userAccount: userAccount
+          userAccount: userAccount,
+          dcaYear: dcaYear,
+          idCard: gwdj
         }).then((r) => {
           let data = r.data
           if (data.rows.length > 0

@@ -130,6 +130,7 @@
                     <result column="zhiyuanchuguo" property="zhiyuanchuguo"/>
                     <result column="kspaixu" property="kspaixu"/>
                     <result column="paixu4" property="paixu4"/>
+            <result column="paixu5" property="paixu5"/>
                     <result column="xrgwjb" property="xrgwjb"/>
                     <result column="xrgwjbprsj" property="xrgwjbprsj"/>
             <result column="xrgwjbprsj_back" property="xrgwjbprsjBack"/>
@@ -153,7 +154,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, year, display_index, user_account_name, user_account, confirm_index, dangan_index, baoming_index, xl, pingshenfenzu, ifshuangbao, gwdj, ks, kslb, birthdaystr, age, sex_name, edu, edu_date, position_name, zygw_date, np_position_name, school_date, ifdaitou, ylpfbfz, jxpf, iffuhekeyan, iffuhediyi, iffuhebibei, sci_name, sci_dengji, sci_ranknum, teach_name, teach_dengji, teach_ranknum, patent_num, patent_fund, publish_a, publish_b, publish_c, publish_d, publish_e, publish_f, publish_dup, publish_eup, publish_fup, publicarticle1, publicarticle2, schoolprize_name, schoolprize_dengji, schoolprize_ranknum, schoolprize_date, course_name, course_ranknum, course_date, young_name, young_dengji, young_ranknum, young_date, sci_djlb, sci_djfund, sci_djranknum, sci_jflb, sci_jffund, sci_jfranknum, ylpfdj, jxpfdj, pf_heji, tutor, sblx, choosepos, clshjg, ntyy, ksrank, teacher_qualify, npqk, borad, note, help, telephone, course_dengji, state, yuangongzu, zzbysj, dzbysj, bkbysj, ssbysj, bsbysj, gqpxqk, gfhyspxqk, zjspnlceqk, sbleix, rzqedu, fdzz, zyjszwzg, zyjszwzgsj, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, mzylpf, mzylpfdj, j5njxgz, ifxjjl, yearmore, yxryqk, qtzlxzy, helpmonth, ifgoucheng, wchshuangbao, dbxcgbs, paixu1, paixu2, paixu3, chuguonianyue, zhiyuanchuguo, kspaixu, paixu4, xrgwjb, xrgwjbprsj, ifsyyltj, rbdsj, ifbxyltj, mzsstjqk, j3nhxrlzypf, j3ylzhpf, j3nssztc, j3nzyszbrsl, j3nmzszbrsl, xjsxyw, xjsxywprize, dpsci10, xhrzqk, prize, mzsstjqk_Audit, xrgwjbprsj_back, birthdaystr_back,edu_date_back, dpsci20
+        id, year, display_index, user_account_name, user_account, confirm_index, dangan_index, baoming_index, xl, pingshenfenzu, ifshuangbao, gwdj, ks, kslb, birthdaystr, age, sex_name, edu, edu_date, position_name, zygw_date, np_position_name, school_date, ifdaitou, ylpfbfz, jxpf, iffuhekeyan, iffuhediyi, iffuhebibei, sci_name, sci_dengji, sci_ranknum, teach_name, teach_dengji, teach_ranknum, patent_num, patent_fund, publish_a, publish_b, publish_c, publish_d, publish_e, publish_f, publish_dup, publish_eup, publish_fup, publicarticle1, publicarticle2, schoolprize_name, schoolprize_dengji, schoolprize_ranknum, schoolprize_date, course_name, course_ranknum, course_date, young_name, young_dengji, young_ranknum, young_date, sci_djlb, sci_djfund, sci_djranknum, sci_jflb, sci_jffund, sci_jfranknum, ylpfdj, jxpfdj, pf_heji, tutor, sblx, choosepos, clshjg, ntyy, ksrank, teacher_qualify, npqk, borad, note, help, telephone, course_dengji, state, yuangongzu, zzbysj, dzbysj, bkbysj, ssbysj, bsbysj, gqpxqk, gfhyspxqk, zjspnlceqk, sbleix, rzqedu, fdzz, zyjszwzg, zyjszwzgsj, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, mzylpf, mzylpfdj, j5njxgz, ifxjjl, yearmore, yxryqk, qtzlxzy, helpmonth, ifgoucheng, wchshuangbao, dbxcgbs, paixu1, paixu2, paixu3, chuguonianyue, zhiyuanchuguo, kspaixu, paixu4,paixu5, xrgwjb, xrgwjbprsj, ifsyyltj, rbdsj, ifbxyltj, mzsstjqk, j3nhxrlzypf, j3ylzhpf, j3nssztc, j3nzyszbrsl, j3nmzszbrsl, xjsxyw, xjsxywprize, dpsci10, xhrzqk, prize, mzsstjqk_Audit, xrgwjbprsj_back, birthdaystr_back,edu_date_back, dpsci20
     </sql>
     <update id="updateDcaBReport" parameterType="cc.mrbird.febs.dca.entity.DcaBReport">
         update dca_b_report
@@ -283,6 +284,7 @@
 <if test="zhiyuanchuguo != null">zhiyuanchuguo=#{zhiyuanchuguo},</if>
 <if test="kspaixu != null">kspaixu=#{kspaixu},</if>
 <if test="paixu4 != null">paixu4=#{paixu4},</if>
+            <if test="paixu5 != null">paixu5=#{paixu5},</if>
 <if test="xrgwjb != null">xrgwjb=#{xrgwjb},</if>
 <if test="xrgwjbprsj != null">xrgwjbprsj=#{xrgwjbprsj},</if>
             <if test="xrgwjbprsjBack != null">xrgwjbprsj_back=#{xrgwjbprsjBack},</if>

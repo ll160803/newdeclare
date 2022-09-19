@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBDocGoal dcaBDocG
         User currentUser= FebsUtil.getCurrentUser();
     dcaBDocGoal.setUserAccount(currentUser.getUsername());
     dcaBDocGoal.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBDocGoalService.findDcaBDocGoals(request, dcaBDocGoal));

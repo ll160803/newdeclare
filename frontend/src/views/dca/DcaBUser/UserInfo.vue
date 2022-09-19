@@ -250,14 +250,20 @@ export default {
     },
     picUrl: {
       default: ''
-    }
+    },
+     dcaYear: {
+      default: ''
+    },
+    gwdj: {
+      default: ''
+    },
   },
   watch: {
     infoVisiable () {
       if (this.infoVisiable) {
         this.fetch(this.userAccount)
         //this.dcaBUser = this.dcaBUser1
-        this.getUserInfo(this.userAccount)
+        this.getUserInfo(this.userAccount, this.dcaYear, this.gwdj)
       }
     }
   },
@@ -528,10 +534,12 @@ export default {
         this.acdemicList = data.acdemicList
       })
     },
-    getUserInfo (userAccount) {
+    getUserInfo (userAccount, dcaYear, gwdj) {
       if (userAccount != '') {
         this.$get('dcaBUser', {
-          userAccount: userAccount
+          userAccount: userAccount,
+          dcaYear: dcaYear,
+          idCard: gwdj
         }).then((r) => {
           let data = r.data
           if (data.rows.length > 0

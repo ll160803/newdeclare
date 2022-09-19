@@ -76,6 +76,8 @@
       <user-info
         :infoVisiable="infoVisiable"
         :userAccount="userAccount"
+        :dcaYear="year"
+        :gwdj="gwdj"
         :picUrl="picUrl"
         @close="onCloseUserInfo"
       >
@@ -151,7 +153,7 @@ export default {
       //debugger
       this.infoVisiable = true
       this.userAccount = record.userAccount
-      console.info(record)
+      console.info(this.year)
       this.picUrl= record.pictureUrl
      // this.user=[]
      // this.user.push(record)
@@ -326,7 +328,21 @@ export default {
           width: 130,
         }
       ]
-    }
+    },
+     year: {
+      get: function () {
+        return this.dcaYear
+      },
+      set: function () {
+      }
+    },
+    gwdj: {
+      get: function () {
+        return this.dcaType
+      },
+      set: function () {
+      }
+    },
   }
 }
 </script>

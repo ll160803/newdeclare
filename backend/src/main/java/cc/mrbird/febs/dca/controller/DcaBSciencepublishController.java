@@ -93,7 +93,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBSciencepublish d
         User currentUser= FebsUtil.getCurrentUser();
     dcaBSciencepublish.setUserAccount(currentUser.getUsername());
     dcaBSciencepublish.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBSciencepublishService.findDcaBSciencepublishs(request, dcaBSciencepublish));

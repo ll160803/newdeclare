@@ -65,7 +65,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBUndergraduate dc
         User currentUser= FebsUtil.getCurrentUser();
     dcaBUndergraduate.setUserAccount(currentUser.getUsername());
     dcaBUndergraduate.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBUndergraduateService.findDcaBUndergraduates(request, dcaBUndergraduate));

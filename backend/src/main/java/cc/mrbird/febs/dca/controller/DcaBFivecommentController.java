@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBFivecomment dcaB
         User currentUser= FebsUtil.getCurrentUser();
     dcaBFivecomment.setUserAccount(currentUser.getUsername());
     dcaBFivecomment.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("state");
         request.setSortOrder("descend");
         return getDataTable(this.iDcaBFivecommentService.findDcaBFivecomments(request, dcaBFivecomment));

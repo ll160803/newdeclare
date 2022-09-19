@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBDocParttimejob d
         User currentUser= FebsUtil.getCurrentUser();
     dcaBDocParttimejob.setUserAccount(currentUser.getUsername());
     dcaBDocParttimejob.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("display_Index");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBDocParttimejobService.findDcaBDocParttimejobs(request, dcaBDocParttimejob));

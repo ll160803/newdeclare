@@ -64,7 +64,7 @@ public Map<String, Object> ListCustom(QueryRequest request, DcaBWorknum dcaBWork
         User currentUser= FebsUtil.getCurrentUser();
     dcaBWorknum.setUserAccount(currentUser.getUsername());
     dcaBWorknum.setIsDeletemark(1);
-        request.setPageSize(100);
+        request.setPageSize(1000);
         request.setSortField("year");
         request.setSortOrder("ascend");
         return getDataTable(this.iDcaBWorknumService.findDcaBWorknums(request, dcaBWorknum));
