@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import cc.mrbird.febs.common.converter.AuditStateConverter;
+import cc.mrbird.febs.common.converter.DateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
@@ -78,7 +79,7 @@ public class DcaBTeacherqualify implements Serializable {
     /**
      * 获得时间
      */
-    @ExcelField(value = "获得时间")
+    @ExcelField(value = "获得时间", writeConverter = DateConverter.class)
     private Date tqReceiveDate;
     private transient String tqReceiveDateFrom;
     private transient String tqReceiveDateTo;

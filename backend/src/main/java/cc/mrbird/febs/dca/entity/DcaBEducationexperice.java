@@ -3,6 +3,9 @@ package cc.mrbird.febs.dca.entity;
 import java.time.LocalDateTime;
 
 import cc.mrbird.febs.common.converter.AuditStateConverter;
+import cc.mrbird.febs.common.converter.BooleanConverter;
+import cc.mrbird.febs.common.converter.DateConverter;
+import cc.mrbird.febs.common.converter.StateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
@@ -69,7 +72,7 @@ private static final long serialVersionUID=1L;
      * 自何年月
      */
     @TableField("exp_start_TIME")
-            @ExcelField(value ="自何年月")
+            @ExcelField(value ="自何年月", writeConverter = DateConverter.class)
     private Date expStartTime;
     private transient String expStartTimeFrom;
     private transient String expStartTimeTo;
@@ -78,7 +81,7 @@ private static final long serialVersionUID=1L;
      * 至何年月
      */
     @TableField("exp_end_TIME")
-            @ExcelField(value ="至何年月")
+            @ExcelField(value ="至何年月", writeConverter = DateConverter.class)
     private Date expEndTime;
     private transient String expEndTimeFrom;
     private transient String expEndTimeTo;
@@ -116,7 +119,7 @@ private static final long serialVersionUID=1L;
     /**
      * 状态
      */
-            @ExcelField(value ="状态")
+            @ExcelField(value ="状态", writeConverter = StateConverter.class)
     private Integer state;
 
     /**
@@ -198,7 +201,7 @@ private static final long serialVersionUID=1L;
      * 是否用于本次评审
      */
     @TableField("IsUse")
-            @ExcelField(value ="是否用于本次评审")
+            @ExcelField(value ="是否用于本次评审", writeConverter = BooleanConverter.class)
     private Boolean IsUse;
 
     private  transient Integer auditXuhao;

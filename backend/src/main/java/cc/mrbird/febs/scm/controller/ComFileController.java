@@ -16,6 +16,7 @@ import cc.mrbird.febs.scm.entity.ComFile;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.system.domain.User;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.itextpdf.text.pdf.PdfReader;
 import com.wuwenze.poi.ExcelKit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -134,7 +135,21 @@ public class ComFileController extends BaseController{
             throw new FebsException(message);
         }
     }
+    @GetMapping("xc/{id}")
+    public OutComFile detail2(@NotBlank(message = "{required}") @PathVariable String id) {
+        ComFile comFile=this.iComFileService.getById(id);
+        OutComFile outComFile =new OutComFile();
 
+        outComFile.setUid(comFile.getId());
+        outComFile.setName(comFile.getClientName());
+        outComFile.setStatus("done");
+
+        String fileUrl =  "/uploadFile/"  + comFile.getServerName();
+        outComFile.setUrl(fileUrl);
+        outComFile.setThumbUrl(fileUrl);
+        outComFile.setSerName(comFile.getServerName());
+        return outComFile;
+    }
     @GetMapping("/{id}")
     public OutComFile detail(@NotBlank(message = "{required}") @PathVariable String id) {
         ComFile comFile=this.iComFileService.getById(id);
@@ -151,8 +166,7 @@ public class ComFileController extends BaseController{
         return outComFile;
     }
 
-
-    @PostMapping("upload")
+    @PostMapping("upload2")
     public FebsResponse Upload(@RequestParam("file") MultipartFile file) throws FebsException {
         if (file.isEmpty()) {
             throw new FebsException("空文件");
@@ -166,7 +180,61 @@ public class ComFileController extends BaseController{
             dest.getParentFile().mkdirs();
         }
         try {
+            if(suffixName.equals(".pdf")) {
+                PdfReader reader = new PdfReader(file.getInputStream());
+                if (reader.isEncrypted()) {
+                    throw new FebsException("加密文件不能上传");
+                }
+            }
             file.transferTo(dest);
+        } catch (IOException e) {
+            throw new FebsException(e.getMessage());
+        }
+        String Id=UUID.randomUUID().toString();
+        ComFile cf=new ComFile();
+        cf.setId(Id);
+        cf.setCreateTime(new Date());
+        cf.setClientName(fileName2);//客户端的名称
+        cf.setServerName(fileName);
+        iComFileService.createComFile(cf);
+        String fileUrl =  "/uploadFile/"  + fileName;
+
+        OutComFile outComFile = new OutComFile();
+        outComFile.setUid(Id);
+        outComFile.setName(fileName2);
+        outComFile.setStatus("done");
+        outComFile.setUrl(fileUrl);
+        outComFile.setThumbUrl(fileUrl);
+        outComFile.setSerName(fileName);
+        // return new FebsResponse().put("data", outComFile);
+        return new FebsResponse().data(outComFile) ;
+    }
+
+
+    @PostMapping("upload")
+    public FebsResponse Upload2(@RequestParam("file") MultipartFile file) throws FebsException {
+        if (file.isEmpty()) {
+            throw new FebsException("空文件");
+        }
+
+        String fileName2 = file.getOriginalFilename();  // 文件名
+        String suffixName = fileName2.substring(fileName2.lastIndexOf("."));  // 后缀名
+        String filePath = febsProperties.getUploadPath(); // 上传后的路径
+        String fileName = UUID.randomUUID() + suffixName; // 新文件名
+        File dest = new File(filePath + fileName);
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdirs();
+        }
+        try {
+            if(suffixName.equals(".pdf")) {
+                PdfReader reader = new PdfReader(file.getInputStream());
+                if (reader.isEncrypted()) {
+                    throw new FebsException("加密文件不能上传");
+                }
+            }
+
+            file.transferTo(dest);
+
         } catch (IOException e) {
             throw new FebsException(e.getMessage());
         }

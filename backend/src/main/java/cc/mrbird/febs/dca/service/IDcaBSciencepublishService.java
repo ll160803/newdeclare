@@ -30,5 +30,9 @@ public interface IDcaBSciencepublishService extends IService<DcaBSciencepublish>
 
         void deleteByuseraccount(String userAccount);
 
+        void deleteRealByuseraccount(String userAccount);
+
         int getMaxDisplayIndexByuseraccount(String userAccount);
+
+        void updateStateByUserAccount(String userAccount);
         }

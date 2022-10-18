@@ -1,650 +1,163 @@
 <template>
-  <a-card
-    class="card-area"
-    title="任现职以来发表的论文"
-  >
-    <div>
-      <a-row>
-        <a-col :span="12">
-          <a-button
-            @click="handleAdd"
-            type="primary"
-            :loading="loading"
-          >添加行</a-button>
-          <a-button
-            @click="handleDelete"
-            type="primary"
-            :loading="loading"
-          >删除行</a-button>
-        </a-col>
-        <a-col :span="12">
-          
-          <import-excel 
-          templateUrl="dcaBSciencepublish/downTemplate"
-          @succ="handleRefesh"
-          url="dcaBSciencepublish/import">
-          </import-excel>
-        </a-col>
-      </a-row>
+  <a-card :bordered="false" class="card-area">
+    <div :class="advanced ? 'search' : null">
+      <a-form layout="horizontal">
+        <a-row>
+          <div :class="advanced ? null : 'fold'">
+            <a-col :md="8" :sm="24">
+              <a-form-item label="论文名" v-bind="formItemLayout">
+                <a-input v-model="queryParams.paperName" />
+              </a-form-item>
+            </a-col>
+             <a-col :md="8" :sm="24">
+              <a-form-item label="期刊名" v-bind="formItemLayout">
+                <a-input v-model="queryParams.journalName" />
+              </a-form-item>
+            </a-col>
+          </div>
+          <span style="float: right; margin-top: 3px">
+            <a-button type="primary" @click="search">查询</a-button>
+            <a-button style="margin-left: 8px" @click="reset">重置</a-button>
+            <a @click="toggleAdvanced" style="margin-left: 8px">
+              {{ advanced ? "收起" : "展开" }}
+              <a-icon :type="advanced ? 'up' : 'down'" />
+            </a>
+          </span>
+        </a-row>
+      </a-form>
     </div>
-    <a-table
-      :columns="columns"
-      :data-source="dataSource"
-      :rowKey="record => record.id"
-      :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
-      bordered
-      :scroll="scroll"
-    >
-      <template
-        slot="paperName"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <div key="jzContent">
-            <a-textarea
-              @blur="e => inputChange(e.target.value,record,'paperName')"
-              :value="record.paperName"
-            >
-            </a-textarea>
-          </div>
-        </div>
-      </template>
-      <template
-        slot="journalName"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <div key="jzContent">
-            <a-textarea
-              @blur="e => inputChange(e.target.value,record,'journalName')"
-              :value="record.journalName"
-            >
-            </a-textarea>
-          </div>
-        </div>
-      </template>
-      <template
-        slot="journalCode"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <div key="jzContent">
-            <a-textarea
-              @blur="e => inputChange(e.target.value,record,'journalCode')"
-              :value="record.journalCode"
-            >
-            </a-textarea>
-          </div>
-        </div>
-      </template>
-      <template
-        slot="paperPublishdate"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text==""|| text==null?"":text.substr(0,10)}}
-        </div>
-        <div v-else>
-          <a-date-picker
-            :defaultValue="(text=='' || text==null)?'':moment(text, dateFormat)"
-            @change="(e,f) => handleChange(e,f,record,'paperPublishdate')"
-          />
-        </div>
-      </template>
-      <template
-        slot="paperShoulu"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <div key="jzContent">
-            <a-textarea
-              @blur="e => inputChange(e.target.value,record,'paperShoulu')"
-              :value="record.paperShoulu"
-            >
-            </a-textarea>
-          </div>
-        </div>
-      </template>
-      <template
-        slot="paperCause"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <div key="jzContent">
-            <a-textarea
-              @blur="e => inputChange(e.target.value,record,'paperCause')"
-              :value="record.paperCause"
-            >
-            </a-textarea>
-          </div>
-        </div>
-      </template>
-      <template
-        slot="djzz"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <div key="djzz">
-            <a-textarea
-              @blur="e => inputChange(e.target.value,record,'djzz')"
-              :value="record.djzz"
-            >
-            </a-textarea>
-          </div>
-        </div>
-      </template>
-      <template
-        slot="qkjb"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <a-select
-            :value="record.qkjb"
-            style="width: 100px"
-            @change="(e,f) => handleSelectChange(e,f,record,'qkjb')"
-          >
-            <a-select-option value="A">
-              A
-            </a-select-option>
-            <a-select-option value="B">
-              B
-            </a-select-option>
-            <a-select-option value="C">
-              C
-            </a-select-option>
-            <a-select-option value="D">
-              D
-            </a-select-option>
-            <a-select-option value="E">
-              E
-            </a-select-option>
-            <a-select-option value="F">
-              F
-            </a-select-option>
-          </a-select>
-        </div>
-      </template>
-      <template
-        slot="wzlx"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <a-select
-            :value="record.wzlx"
-            style="width: 100%"
-            @change="(e,f) => handleSelectChange(e,f,record,'wzlx')"
-          >
-            <a-select-option value="科研">
-              科研
-            </a-select-option>
-            <a-select-option value="教学">
-              教学
-            </a-select-option>
-          </a-select>
-        </div>
-      </template>
-      <template
-        slot="isBest"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-
-          <a-switch
-            checked-children="是"
-            un-checked-children="否"
-            @change="(e1,f) => inputCheckChange(e1,f,record,'isBest')"
-            :checked="record.isBest=='是'"
-          >
-          </a-switch>
-        </div>
-      </template>
-      <template
-        slot="otherTimes"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <a-textarea
-            @blur="e => inputChange(e.target.value,record,'otherTimes')"
-            :value="record.otherTimes"
-          >
-          </a-textarea>
-        </div>
-      </template>
-      <template
-        slot="authorRank"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else  style="overflow-y: scroll; height: 80px" >
-           <a-select
-            :default-value="record.authorRank"
-            style="width: 100%"
-            mode="multiple"
-            v-if="record['aus']!=undefined &&record['aus'] !=1"
-            @change="(e,f) => handleSelectChangeRank(e,f,record,'authorRank')"
-          >
-            <a-select-option value="第一作者" key="第一作者">
-              第一作者
-            </a-select-option>
-            <a-select-option value="通讯作者" key="通讯作者">
-              通讯作者
-            </a-select-option>
-              <a-select-option value="共同第一作者" key="共同第一作者">
-              共同第一作者
-            </a-select-option>
-              <a-select-option value="共同通讯作者" key="共同通讯作者">
-              共同通讯作者
-            </a-select-option>
-              <a-select-option value="其他" key="其他">
-              其他
-            </a-select-option>
-          </a-select>
-        </div>
-      </template>
-       <template
-                slot="rankValue"
-                slot-scope="text, record"
-              >
-                <div v-if="record.state==3 || record.state==1">
-                  {{text}}
-                </div>
-                <div v-else>
-                  <a-input-number
-                    style="width:100%;"
-                    @blur="e => inputChange(e.target.value,record,'rankValue')"
-                    :value="record.rankValue"
-                    :precision="3"
-                  >
-                  </a-input-number>
-                </div>
-              </template>
-              <template
-        slot="sciValue"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          {{text}}
-        </div>
-        <div v-else>
-          <a-switch
-            checked-children="是"
-            un-checked-children="否"
-            @change="(e1,f) => inputCheckChange(e1,f,record,'sciValue')"
-            :checked="record.sciValue=='是'"
-          >
-          </a-switch>
-        </div>
-      </template>
-      <template
-        slot="isUse"
-        slot-scope="text, record"
-      >
-        <a-checkbox
-          @change="e => onIsUseChange(e,record,'isUse')"
-          :checked="text"
-        ></a-checkbox>
-      </template>
-      <template
-        slot="fileId"
-        slot-scope="text, record"
-      >
-        <div v-if="record.state==3 || record.state==1">
-          <a
-            :href="record.fileUrl"
-            v-if="text!=null && text !=''"
-            target="_blank"
-          >查看</a>
-        </div>
-        <div v-else>
-          <a-button
-            type="dashed"
-            block
-            @click="OpenFile(record)"
-          >
-            {{record.fileId!=null &&record.fileId !=''?'已上传':'上传' }}
-          </a-button>
-        </div>
-      </template>
-    </a-table>
     <div>
-      <a-button
-        @click="handleSave"
-        type="primary"
+      <div class="operator">
+        <a-button
+          type="primary"
+          ghost
+          @click="add"
+          >新增</a-button
+        >
+        <a-button
+         type="primary"
+          ghost
+          @click="handleDelete"
+          >删除</a-button
+        >
+        <a-button
+         type="primary"
+          ghost
+          @click="handleAll"
+          >全部一起提交</a-button
+        >
+      </div>
+      <!-- 表格区域 -->
+      <a-table
+        ref="TableInfo"
+        :columns="columns"
+        :rowKey="(record) => record.id"
+        :dataSource="dataSource"
+        :pagination="pagination"
         :loading="loading"
-      >保存草稿</a-button>
-      <a-button
-        @click="handleSubmit"
-        type="primary"
-        :loading="loading"
-      >提交</a-button>
+        :rowSelection="{
+          selectedRowKeys: selectedRowKeys,
+          onChange: onSelectChange,
+        }"
+        @change="handleTableChange"
+        :bordered="bordered"
+         :scroll="scroll"
+      >
+        <template slot="remark" slot-scope="text, record">
+          <a-popover placement="topLeft">
+            <template slot="content">
+              <div style="max-width: 200px">{{ text }}</div>
+            </template>
+            <p style="width: 200px; margin-bottom: 0">{{ text }}</p>
+          </a-popover>
+        </template>
+        <template slot="operation" slot-scope="text, record">
+          <a-icon
+            type="setting"
+            theme="twoTone"
+            twoToneColor="#4a9ff5"
+            @click="edit(record)"
+            :title="`${record.state==0?'修改':'查看'}`"
+          ></a-icon>
+        </template>
+      </a-table>
     </div>
-    <tableUpload-file
-      ref="upFile"
-      :fileId="editRecord.fileId"
-      :fileVisiable="fileVisiable"
-      @setFileId="setFileId"
+    <!-- 新增字典 -->
+    <dcaBSciencepublish-add
+      @close="handleAddClose"
+      @success="handleAddSuccess"
+      :addVisiable="addVisiable"
     >
-    </tableUpload-file>
+    </dcaBSciencepublish-add>
+    <!-- 修改字典 -->
+    <dcaBSciencepublish-edit
+      ref="dcaBSciencepublishEdit"
+      @close="handleEditClose"
+      @success="handleEditSuccess"
+      :editVisiable="editVisiable"
+    >
+    </dcaBSciencepublish-edit>
   </a-card>
 </template>
 
 <script>
+import DcaBSciencepublishAdd from "./DcaBSciencepublishAdd";
+import DcaBSciencepublishEdit from "./DcaBSciencepublishEdit";
 import moment from 'moment';
-import TableUploadFile from '../../common/TableUploadFile'
-import ImportExcel from '../../common/ImportExcel'
+
+const formItemLayout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 15, offset: 1 },
+};
 export default {
-  data () {
+  name: "DcaBSciencepublish",
+  components: { DcaBSciencepublishAdd, DcaBSciencepublishEdit },
+  data() {
     return {
-      dateFormat: 'YYYY-MM-DD',
+      advanced: false,
       dataSource: [],
       selectedRowKeys: [],
+      sortedInfo: null,
+      paginationInfo: null,
+      formItemLayout,
+      pagination: {
+        pageSizeOptions: ["10", "20", "30", "40", "100"],
+        defaultCurrent: 1,
+        defaultPageSize: 10,
+        showQuickJumper: true,
+        showSizeChanger: true,
+        showTotal: (total, range) =>
+          `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`,
+      },
+      queryParams: {},
+      addVisiable: false,
+      editVisiable: false,
       loading: false,
-      CustomVisiable: false,
-      idNums: 10000,
-      fileVisiable: false,
-      editRecord: {
-        fileId: ''
-      },
-      scroll: {
-        x: 2400,
-        y: window.innerHeight - 200 - 100 - 20 - 80
-      },
-    }
-  },
-  components: { TableUploadFile, ImportExcel },
-  mounted () {
-    this.fetch()
-  },
-  methods: {
-    moment,
-    showFile (record) {
-      window.location.href = record.fileUrl
-    },
-    OpenFile (record) {
-      this.editRecord = record
-      this.fileVisiable = true
-      if (record.fileId != undefined && record.fileId != '') {
-        this.$refs.upFile.fetch(record.fileId)
-      }
-    },
-    handleRefesh(){
-      this.fetch()
-    },
-    setFileId (fileId, fileUrl) {
-      this.fileVisiable = false
-      console.log(fileUrl)
-      /**
-       const dataSource = [...this.dataSource]
-       console.log(this.editRecord.id)
-       let record=dataSource.filter(p=>p.id===this.editRecord.id)
-       console.log(record)*/
-      this.editRecord["fileId"] = fileId
-      this.editRecord["fileUrl"] = fileUrl
-      //this.dataSource =[...dataSource]
-    },
-    onSelectChange (selectedRowKeys, selectedRows) {
-      if (selectedRows.length > 0) {
-        if (selectedRows[0].state != 3 && selectedRows[0].state != 1) {
-          this.selectedRowKeys = selectedRowKeys
-        }
-      }
-      else {
-        this.selectedRowKeys = selectedRowKeys
-      }
-    },
-    onIsUseChange (e, record, filedName) {
-      record[filedName] = e.target.checked;
-    },
-    handleSelectChange (value, option, record, filedName) {
-      console.info(value)
-      record[filedName] = value
-    },
-    handleSelectChangeRank (value, option, record, filedName) {
-      record[filedName] = value
-      record["aus"] = 1
-      setTimeout(() => {
-        record["aus"] = 0;
-      }, 300);
-    },
-    handleChange (date, dateStr, record, filedName) {
-      const value = dateStr
-      record[filedName] = value
-    },
-    inputChange (value, record, filedName) {
-      console.info(value)
-      record[filedName] = value
-    },
-    handleAdd () {
-      for (let i = 0; i < 4; i++) {
-        this.dataSource.push({
-          id: (this.idNums + i + 1).toString(),
-          paperName: '',
-          journalName: '',
-          journalCode: '',
-          paperPublishdate: '',
-          paperShoulu: '',
-          paperCause: '',
-          isBest: '',
-          otherTimes: '',
-          authorRank: [],
-          wzlx: '',
-          qkjb: '',
-          djzz: '',
-          state: 0,
-          sciValue: '',
-          rankValue: '',
-          isUse: false ,
-          aus: 0
-        })
-      }
-      this.idNums = this.idNums + 4
-    },
-    handleSave () {
-      const dataSourceAll = [...this.dataSource]
-      const dataSource = dataSourceAll.filter(p => p.state == 0 || p.state == 2)
-      let dataAdd = []
-      dataSource.forEach(element => {
-        if (element.paperName != '' || element.journalName != '' || element.journalCode != '' || element.paperPublishdate != '' || element.paperShoulu != '' || element.paperCause != '' || element.isBest != '' || element.otherTimes != '' || element.authorRank != '') {
-          dataAdd.push(element)
-        }
-      });
-      if (dataAdd.length < 0) {
-        this.$message.warning('请填写数据！！！')
-      }
-      else {
-        let jsonStr = JSON.stringify(dataAdd)
-        this.loading = true
-        this.$post('dcaBSciencepublish/addNew', {
-          jsonStr: jsonStr,
-          state: 0
-        }).then(() => {
-          // this.reset()
-          this.$message.success('保存成功')
-          this.fetch()
-          this.loading = false
-        }).catch(() => {
-          this.loading = false
-        })
-      }
-    },
-    inputCheckChange (blFlag, f, record, filedName) {
-      record[filedName] = blFlag ? '是' : '否'
-    },
-    handleSubmit () {
-      let that = this
-      this.$confirm({
-        title: '确定提交全部记录?',
-        content: '当您点击确定按钮后，信息将不能修改',
-        centered: true,
-        onOk () {
-          const dataSourceAll = [...that.dataSource]
-          const dataSource = dataSourceAll.filter(p => p.state == 0 || p.state == 2)
-          let dataAdd = []
-          dataSource.forEach(element => {
-            if (element.paperName != '' || element.journalName != '' || element.journalCode != '' || element.paperPublishdate != '' || element.paperShoulu != '' || element.paperCause != '' || element.isBest != '' || element.otherTimes != '' || element.authorRank != '') {
-              dataAdd.push(element)
-            }
-          });
-          if (dataAdd.length < 0) {
-            that.$message.warning('请填写数据！！！')
-          }
-          else {
-            let jsonStr = JSON.stringify(dataAdd)
-            that.loading = true
-            that.$post('dcaBSciencepublish/addNew', {
-              jsonStr: jsonStr,
-              state: 1
-            }).then(() => {
-              //this.reset()
-              that.$message.success('提交成功')
-             // that.fetch()
-              that.CustomVisiable = false //提交之后 不能再修改
-              that.loading = false
-               setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
-              that.$EventBus.$emit('selectMoudles',80)
-            }, 300);
-            }).catch(() => {
-              that.loading = false
-            })
-          }
-        },
-        onCancel () {
-          that.selectedRowKeys = []
-        }
-      })
-
-
-    },
-    handleDelete () {
-      if (!this.selectedRowKeys.length || this.selectedRowKeys.length > 1) {
-        this.$message.warning('请选择一条需要删除的记录')
-        return
-      }
-      let that = this
-      this.$confirm({
-        title: '确定删除所选中的记录?',
-        content: '当您点击确定按钮后，这些记录将会被彻底删除',
-        centered: true,
-        onOk () {
-          let dcaBPatentIds = that.selectedRowKeys.join(',')
-          const dataSource = [...that.dataSource];
-          let new_dataSource = dataSource.filter(p => that.selectedRowKeys.indexOf(p.id) < 0)
-          that.$put('dcaBSciencepublish', {
-            id: that.selectedRowKeys[0],
-            isDeletemark: 0
-          }).then(() => {
-
-          }).catch(() => {
-
-          })
-          that.dataSource = new_dataSource
-          that.$message.success('删除成功')
-          that.selectedRowKeys = []
-        },
-        onCancel () {
-          that.selectedRowKeys = []
-        }
-      })
-    },
-    fetch () {
-      this.$get('dcaBSciencepublish/custom', {
-      }).then((r) => {
-        let data = r.data
-        
-        if (data.rows.length > 0
-        ) {
-          if (data.rows[0].state === 0) {
-            this.CustomVisiable = true
-          }
-          data.rows.forEach((element) => {
-             element['aus'] = 0;
-             console.info(element['authorRank'])
-             if(element['authorRank']!=null&&element['authorRank'].indexOf('[')>=0){
-             element['authorRank']= JSON.parse(element['authorRank'])
-             }
-             if(element['authorRank']==''){
-               element['authorRank'] = []
-             }
-          })
-          //this.idNums = data.rows[data.rows.length - 1].id
-        }
-        else {
-          this.CustomVisiable = true
-        }
-        console.info(data.rows.length)
-        this.dataSource = data.rows
-        for (let i = 0; i < 4; i++) {
-          this.dataSource.push({
-            id: (this.idNums + i + 1).toString(),
-            paperName: '',
-            journalName: '',
-            journalCode: '',
-            paperPublishdate: '',
-            paperShoulu: '',
-            paperCause: '',
-            isBest: '',
-            otherTimes: '',
-            authorRank: [],
-            wzlx: '',
-            qkjb: '',
-            djzz: '',
-            state: 0,
-            sciValue: '',
-            rankValue: '',
-            isUse: false,
-            aus: 0
-          })
-          this.idNums = this.idNums + 4
-        }
-      })
-    },
-    
+      bordered: true,
+      scroll: { 
+        x: 2700,
+        y: window.innerHeight - 200 - 100  - 80,
+       }
+    };
   },
   computed: {
-    columns () {
-      return [{
+    columns() {
+      let { sortedInfo } = this;
+      sortedInfo = sortedInfo || {};
+      return [
+       {
         title: '论文名',
         dataIndex: 'paperName',
-        width: 200,
-        scopedSlots: { customRender: 'paperName' }
+        width: 400,
+        scopedSlots: { customRender: 'paperName' },
+        fixed: "left",
       },
       {
         title: '期刊名',
         dataIndex: 'journalName',
         width: 200,
-        scopedSlots: { customRender: 'journalName' }
+        scopedSlots: { customRender: 'journalName' },
+        fixed: "left",
       },
       {
         title: '期刊号',
@@ -653,11 +166,14 @@ export default {
         scopedSlots: { customRender: 'journalCode' }
       },
       {
-        title: '发表年月',
-        dataIndex: 'paperPublishdate',
-        width: 130,
-        scopedSlots: { customRender: 'paperPublishdate' }
-      },
+          title: '发表年月',
+          dataIndex: 'paperPublishdate',
+          width: 130,
+          customRender: (text, row, index) => {
+            if(text == null) return ''
+            return moment(text).format('YYYY-MM-DD')
+          },
+        },
       {
         title: '收录情况',
         dataIndex: 'paperShoulu',
@@ -741,21 +257,219 @@ export default {
         title: '审核意见',
         dataIndex: 'auditSuggestion'
       },
-      {
-        title: '经审核是否构成职称晋升条件',
-        dataIndex: 'isUse',
-        scopedSlots: { customRender: 'isUse' },
-        width: 80
-      }, {
-        title: '附件',
-        dataIndex: 'fileId',
-        scopedSlots: { customRender: 'fileId' },
-        width: 80
-      }
-      ]
-    }
+     {
+          title: '经审核是否构成职称晋升条件',
+          dataIndex: 'isUse',
+          width: 100,
+          customRender: (text, row, index) => {
+            if (text) return  <a-tag color="green">是</a-tag>
+             return <a-tag color="red">否</a-tag>
+          }
+        },  {
+          title: '附件',
+          dataIndex: 'fileId',
+          customRender: (text, row, index) => {
+            if (text != null && text != '') {
+              return <a href={row.fileUrl} target="_blank" >查看</a>
+            }
+            return ''
+          },
+          width: 80
+        },
+        {
+          title: "操作",
+          dataIndex: "operation",
+          scopedSlots: { customRender: "operation" },
+          fixed: "right",
+          width: 100,
+        },
+      ];
+    },
   },
-}
+  mounted() {
+    this.fetch();
+  },
+  methods: {
+    moment,
+    onSelectChange(selectedRowKeys) {
+      this.selectedRowKeys = selectedRowKeys;
+    },
+    toggleAdvanced() {
+      this.advanced = !this.advanced;
+      if (!this.advanced) {
+        this.queryParams.comments = "";
+      }
+    },
+    handleAddSuccess() {
+      this.addVisiable = false;
+      this.$message.success("新增成功");
+      this.search();
+    },
+    handleAddClose() {
+      this.addVisiable = false;
+    },
+    add() {
+      this.addVisiable = true;
+    },
+    handleEditSuccess() {
+      this.editVisiable = false;
+      this.$message.success("修改成功");
+      this.search();
+    },
+    handleEditClose() {
+      this.editVisiable = false;
+    },
+    edit(record) {
+      this.$refs.dcaBSciencepublishEdit.setFormValues(record);
+      this.editVisiable = true;
+    },
+     handleDelete () {
+      if (!this.selectedRowKeys.length || this.selectedRowKeys.length > 1) {
+        this.$message.warning('请选择一条需要删除的记录')
+        return
+      }
+     let rows = this.dataSource.filter(p => this.selectedRowKeys.indexOf(p.id) >= 0)
+       if (rows[0].state != 3 && rows[0].state != 1) {
+          
+        
+      let that = this
+      this.$confirm({
+        title: '确定删除所选中的记录?',
+        content: '当您点击确定按钮后，这些记录将会被彻底删除',
+        centered: true,
+        onOk () {
+          let dcaBPatentIds = that.selectedRowKeys.join(',')
+          const dataSource = [...that.dataSource];
+         // let new_dataSource = dataSource.filter(p => that.selectedRowKeys.indexOf(p.id) < 0)
+          that.$put('dcaBSciencepublish', {
+            id: that.selectedRowKeys[0],
+            isDeletemark: 0
+          }).then(() => {
+
+          }).catch(() => {
+
+          })
+       //   that.dataSource = new_dataSource
+          that.search()
+          that.$message.success('删除成功')
+          that.selectedRowKeys = []
+        },
+        onCancel () {
+          that.selectedRowKeys = []
+        }
+      })
+       }
+       else{
+        this.$message.warning('已提交或已审核数据不能删除')
+        return
+       }
+    },
+    handleAll(){
+      let that = this
+      this.$confirm({
+        title: '确定提交全部记录?',
+        content: '当您点击确定按钮后，信息将全部提交',
+        centered: true,
+        onOk () {
+            that.loading = true
+            that.$post('dcaBSciencepublish/updateState', {
+            }).then(() => {
+              //this.reset()
+              that.$message.success('提交成功')
+             
+              that.loading = false
+              that.search()
+            }).catch(() => {
+              that.loading = false
+            })
+          
+        },
+        onCancel () {
+          that.selectedRowKeys = []
+        }
+      })
+
+    },
+    exportExcel() {
+      let { sortedInfo } = this;
+      let sortField, sortOrder;
+      // 获取当前列的排序和列的过滤规则
+      if (sortedInfo) {
+        sortField = sortedInfo.field;
+        sortOrder = sortedInfo.order;
+      }
+      this.$export("dcaBSciencepublish/excel", {
+        sortField: sortField,
+        sortOrder: sortOrder,
+        ...this.queryParams,
+      });
+    },
+    search() {
+      let { sortedInfo } = this;
+      let sortField, sortOrder;
+      // 获取当前列的排序和列的过滤规则
+      if (sortedInfo) {
+        sortField = sortedInfo.field;
+        sortOrder = sortedInfo.order;
+      }
+      this.fetch({
+        sortField: sortField,
+        sortOrder: sortOrder,
+        ...this.queryParams,
+      });
+    },
+    reset() {
+      // 取消选中
+      this.selectedRowKeys = [];
+      // 重置分页
+      this.$refs.TableInfo.pagination.current = this.pagination.defaultCurrent;
+      if (this.paginationInfo) {
+        this.paginationInfo.current = this.pagination.defaultCurrent;
+        this.paginationInfo.pageSize = this.pagination.defaultPageSize;
+      }
+      // 重置列排序规则
+      this.sortedInfo = null;
+      this.paginationInfo = null;
+      // 重置查询参数
+      this.queryParams = {};
+      this.fetch();
+    },
+    handleTableChange(pagination, filters, sorter) {
+      this.sortedInfo = sorter;
+      this.paginationInfo = pagination;
+      this.fetch({
+        sortField: sorter.field,
+        sortOrder: sorter.order,
+        ...this.queryParams,
+      });
+    },
+    fetch(params = {}) {
+      this.loading = true;
+      if (this.paginationInfo) {
+        // 如果分页信息不为空，则设置表格当前第几页，每页条数，并设置查询分页参数
+        this.$refs.TableInfo.pagination.current = this.paginationInfo.current;
+        this.$refs.TableInfo.pagination.pageSize = this.paginationInfo.pageSize;
+        params.pageSize = this.paginationInfo.pageSize;
+        params.pageNum = this.paginationInfo.current;
+      } else {
+        // 如果分页信息为空，则设置为默认值
+        params.pageSize = this.pagination.defaultPageSize;
+        params.pageNum = this.pagination.defaultCurrent;
+      }
+      this.$get("dcaBSciencepublish/custom", {
+        ...params,
+      }).then((r) => {
+        let data = r.data;
+       
+        const pagination = { ...this.pagination };
+        pagination.total = data.total;
+        this.loading = false;
+        this.dataSource = data.rows;
+        this.pagination = pagination;
+      });
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>

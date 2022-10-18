@@ -952,18 +952,19 @@ export default {
             {
               title: '援疆援藏援非援滇',
               dataIndex: 'help',
-              width: 150,
+              width: 170,
               scopedSlots: { customRender: 'splitHang' }
             },
             {
               title: '其他指令性支援情况',
               dataIndex: 'qtzlxzy',
-              width: 150,
+              width: 170,
               scopedSlots: { customRender: 'splitHang' }
             },
             {
               title: '时长（月）',
               dataIndex: 'helpmonth',
+              scopedSlots: { customRender: "splitHang" },
               width: 60
             }
           ]

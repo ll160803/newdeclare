@@ -251,6 +251,14 @@ const formItemLayout = {
 }
 
 export default {
+  props: {
+    dcaYear: {
+      default: '' //年度
+    },
+    dcaType: {
+      default: '' //中高级
+    }
+  },
   data () {
     return {
       dateFormat: 'YYYY-MM-DD',
@@ -290,14 +298,6 @@ export default {
   components: { DcaBParttimejobDone, AuditUserInfo },
   mounted () {
     this.search()
-  },
-  props: {
-    dcaYear: {
-      default: '' //年度
-    },
-    dcaType: {
-      default: '' //中高级
-    }
   },
   methods: {
     moment,

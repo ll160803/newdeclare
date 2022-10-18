@@ -294,9 +294,17 @@ public class DcaBSciencepublish implements Serializable {
     @ExcelField(value = "rank值")
     private BigDecimal rankValue;
 
+    @ExcelField(value = "rank原始数据")
+    private String rankSear;
+
     @ExcelField(value = "是否SCI")
     private String sciValue;
 
+    @ExcelField(value = "是否认可智能搜索结果")
+    private String isPermit;
+
+    @ExcelField(value = "智能搜索相似度")
+    private String xsd;
 
     /**
      * 期刊号级别

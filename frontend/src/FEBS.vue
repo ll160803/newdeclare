@@ -1,7 +1,7 @@
 <template>
   <a-locale-provider :locale="chinese">
     <div id="febs">
-      <router-view />
+      <router-view :key="$route.path"/>
     </div>
   </a-locale-provider>
 </template>

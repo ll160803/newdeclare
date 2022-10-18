@@ -56,6 +56,15 @@
             >
               导出高级职称确认表
             </a-button>
+             <a-button
+              v-hasNoPermission="['dca:audit']"
+              style="width: 100%; padding-left: 2px; padding-right: 2px"
+              type="dashed"
+              block
+              @click="handleBack(record)"
+            >
+              退回待处理
+            </a-button>
           </div>
           <div v-else-if="record.state==1">
             <a-button
@@ -131,7 +140,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 2600,
+        x: 2700,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -151,6 +160,10 @@ export default {
         { fieldName: 'yyxtsc' },
         { fieldName: 'sfssds' },
         { fieldName: 'sfbsds' },
+
+{ fieldName: 'sfdlwcyjspy' },
+{ fieldName: 'pyzlsfyl' },
+
         { fieldName: 'sftgsdsf' },
         { fieldName: 'sdsfypfj' },
         { fieldName: 'sdsfypfj2' },
@@ -300,6 +313,37 @@ export default {
         dcaYear: record.year,
         npPositionName: record.npPositionName
       }, record.year + record.userAccount + ".pdf")
+    },
+      handleBack(record) {
+      // let jsonStr = JSON.stringify(record)
+      let vRecord = {};
+      vRecord.id = record.id;
+      vRecord.userAccount = record.userAccount;
+      vRecord.state = 0;
+      var that = this;
+      that.$confirm({
+        title: "确定退回所选中的记录?",
+        content: "当您点击确定按钮后，此记录将退回待处理状态！",
+        centered: true,
+        onOk() {
+          // vRecord.dcaBAuditdynamicList=''
+          that.loading = true;
+          that
+            .$put("dcaBReport", {
+              ...vRecord,
+            })
+            .then(() => {
+              // this.reset()
+              that.$message.success("退回成功");
+              that.search();
+              that.loading = false;
+            })
+            .catch(() => {
+              that.loading = false;
+            });
+        },
+        onCancel() {},
+      });
     },
     handleSave (record) {
 
@@ -983,7 +1027,16 @@ export default {
           width: 120
         }
         ,
-
+ {
+              title: "是否独立完成一届以上研究生培养工作（截止申报年度10月31日）",
+              dataIndex: "sfdlwcyjspy",
+              width: 120,
+            },
+             {
+              title: "培养质量是否优良",
+              dataIndex: "pyzlsfyl",
+              width: 120,
+            },
         {
           title: '教学评分(百分制)76',
           dataIndex: 'jxpf',
@@ -1212,7 +1265,7 @@ export default {
         }
       ];
       let listj = ['ylpfbfz2022','ylpfdj2022','ydyf', 'ydyffj', 'zzsc', 'zzscypfj', 'jlsc', 'jlscypfj', 'xsddsc', 'xsddscypfj', 'zypfyjxl', 'zypfdjyjxl', 'yyxtsc', 'yyxtypfj', 'zypfbfz58', 'zypfdj59', 'sfssds', 'sfbsds', 'sftgsdsf',
-        'sdsfypfj', 'sdsfypfj2', 'mzylsgypfj', 'sfypfjyl', 'sfyszgzs',
+        'sdsfypfj', 'sdsfypfj2', 'mzylsgypfj', 'sfypfjyl', 'sfyszgzs','sfdlwcyjspy','pyzlsfyl',
         'hlylpf', 'hlylpfdj', 'hljxpfbfz', 'hljxpfdl', 'hlhlzrypfj', 'sfjyhlzgzs', 'sshbdts', 'sshkyxts', 'blxwjf', 'wfzgszcf', 'xingfscsftg', 'sfczxfypfj61',
         'zypf52', 'zypfdj52', 'beizhuyiwuchu', 'beizhumenban', 'beizhuhuli'];
 
@@ -2048,6 +2101,16 @@ export default {
               title: '是否存在师德师风一票否决的情况',
               dataIndex: 'sdsfypfj',
               width: 120
+            },
+             {
+              title: "是否独立完成一届以上研究生培养工作（截止申报年度10月31日）",
+              dataIndex: "sfdlwcyjspy",
+              width: 120,
+            },
+             {
+              title: "培养质量是否优良",
+              dataIndex: "pyzlsfyl",
+              width: 120,
             }
           ]
         },
@@ -2245,7 +2308,7 @@ export default {
         {
           title: '退审原因',
           dataIndex: 'ntyy',
-          width: 100,
+          width: 250,
           scopedSlots: { customRender: 'ntyy' }
         },
         {
@@ -2283,23 +2346,25 @@ export default {
             {
               title: '援疆援藏援非援滇',
               dataIndex: 'help',
-              width: 150,
+              width: 170,
               scopedSlots: { customRender: 'splitHang' }
             },
             {
               title: '其他指令性支援情况',
               dataIndex: 'qtzlxzy',
-              width: 150,
+              width: 170,
               scopedSlots: { customRender: 'splitHang' }
             },
             {
               title: '支援类型',
               dataIndex: 'zhiyuanchuguo',
+              scopedSlots: { customRender: 'splitHang' },
               width: 100
             },
             {
               title: '时长（月）',
               dataIndex: 'helpmonth',
+              scopedSlots: { customRender: 'splitHang' },
               width: 60
             }
           ]

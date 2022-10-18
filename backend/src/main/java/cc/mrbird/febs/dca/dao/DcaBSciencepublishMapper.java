@@ -31,4 +31,8 @@ public interface DcaBSciencepublishMapper extends BaseMapper<DcaBSciencepublish>
 
 @Select(" select user_account ,patent_ranknum from dca_b_user  ")
 List<userXuhao> getXuhao();
+
+
+    @Update(" update dca_b_sciencepublish set state=1,audit_state=0  where user_account=#{useraccount}  and state=0 ")
+    void updateStateByAccount(@Param("useraccount") String useraccount);
         }

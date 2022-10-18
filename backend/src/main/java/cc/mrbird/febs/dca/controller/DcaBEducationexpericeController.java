@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.service.IDcaBEducationexpericeService;
 import cc.mrbird.febs.dca.entity.DcaBEducationexperice;
 
@@ -194,20 +195,31 @@ public void deleteDcaBEducationexperices(@NotBlank(message = "{required}") @Path
         throw new FebsException(message);
         }
         }
-@PostMapping("excel")
-@RequiresPermissions("dcaBEducationexperice:export")
-public void export(QueryRequest request, DcaBEducationexperice dcaBEducationexperice,HttpServletResponse response)throws FebsException{
-        try{
-        List<DcaBEducationexperice> dcaBEducationexperices=this.iDcaBEducationexpericeService.findDcaBEducationexperices(request, dcaBEducationexperice).getRecords();
-        ExcelKit.$Export(DcaBEducationexperice.class,response).downXlsx(dcaBEducationexperices,false);
-        }catch(Exception e){
-        message="导出Excel失败";
-        log.error(message,e);
-        throw new FebsException(message);
-        }
-        }
 
-@GetMapping("/{id}")
+    @PostMapping("excel")
+    public void export(QueryRequest request, DcaBEducationexperice dcaBSciencesearch,String dataJson,HttpServletResponse response)throws FebsException{
+        try{
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            User currentUser = FebsUtil.getCurrentUser();
+
+            dcaBSciencesearch.setIsDeletemark(1);
+            request.setSortField("user_account asc,state asc,display_Index");
+            request.setSortOrder("ascend");
+            List<DcaBEducationexperice> dcaBSciencepublishList=  this.iDcaBEducationexpericeService.findDcaBEducationexperices(request, dcaBSciencesearch).getRecords();
+
+
+            //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
+        }catch(Exception e){
+            message="导出Excel失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
+    }
+
+
+    @GetMapping("/{id}")
 public DcaBEducationexperice detail(@NotBlank(message = "{required}") @PathVariable String id){
     DcaBEducationexperice dcaBEducationexperice=this.iDcaBEducationexpericeService.getById(id);
         return dcaBEducationexperice;

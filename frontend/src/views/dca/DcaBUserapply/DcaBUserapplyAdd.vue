@@ -284,7 +284,7 @@ export default {
   },
   computed: {
     yearArr() {
-      let arr = [{ value: 2022, text: 2022 }];
+      let arr = [{ value: 2021, text: 2021 },{ value: 2022, text: 2022 }];
       // var myDate = new Date()
       // var startYear = myDate.getFullYear() - 2//起始年份
       // var endYear = myDate.getFullYear() + 1//结束年份
@@ -307,6 +307,7 @@ export default {
     },
     handleChange(value) {
       this.dcaYear = value;
+      this.gwdj='';
        this.form.getFieldDecorator("hk2");
       this.form.setFieldsValue({
         hk2: ''
@@ -314,9 +315,12 @@ export default {
       // if(this.dcaYear=='2022'){
       //   this.arrDj =[{text: '正高',value: '正高' },{text: '副高',value: '副高'}];
       // }
-      // if(this.dcaYear=='2021'){
-      //   this.arrDj =[{text: '二三级',value: '二三级' }];
-      // }
+      if(this.dcaYear=='2021'){
+        this.arrDj =[{text: '中级',value: '中级' },{text: '初级',value: '初级' }];
+      }
+      else {
+        this.arrDj = [{text: '正高', value: '正高'} ,{text: '副高', value: '副高'} ,{text: '二三级', value: '二三级'} ];
+      }
     },
     handleChangezc(value) {
      this.yjShow = false;
@@ -355,11 +359,14 @@ export default {
       this.npPositionName= '';
     },
     handleSubmitTotal() {
-      if(this.gwdj=='正高'||this.gwdj=='副高'){
-        this.handleSubmit();
-      }
+      // if(this.gwdj=='正高'||this.gwdj=='副高'){
+      //   this.handleSubmit();
+      // }
       if(this.gwdj=='二三级'){
         this.handleSubmit23();
+      }
+      else{
+        this.handleSubmit();
       }
     },
     handleSubmit23() {

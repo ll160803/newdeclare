@@ -163,7 +163,7 @@ export default {
       }
       this.fetch2({ //材料审核结果，合同制，申报职称，申报类型,科室排序字段（护理），科室名称，非医师非护理科室排序，人员姓名
         sortField:
-          "paixu1,paixu2,paixu3,paixu4,kspaixu,convert(ks using gbk) collate gbk_chinese_ci,paixu5,convert(user_account_name using gbk) collate gbk_chinese_ci",
+          "paixu1,paixu2,paixu3,paixu4,cast(kspaixu as unsigned integer),convert(ks using gbk) collate gbk_chinese_ci,cast(paixu5 as unsigned integer),convert(user_account_name using gbk) collate gbk_chinese_ci",
         sortOrder: "ascend",
         ...this.queryParams,
       });
@@ -185,7 +185,7 @@ export default {
         params.pageNum = this.pagination.defaultCurrent;
       }
       params.sortField =
-        "paixu1,paixu2,paixu3,paixu4,kspaixu,convert(ks using gbk) collate gbk_chinese_ci,paixu5,convert(user_account_name using gbk) collate gbk_chinese_ci";
+        "paixu1,paixu2,paixu3,paixu4,cast(kspaixu as unsigned integer),convert(ks using gbk) collate gbk_chinese_ci,cast(paixu5 as unsigned integer),convert(user_account_name using gbk) collate gbk_chinese_ci";
       params.sortOrder = "ascend";
       this.$get("dcaBReport", {
         state: this.state,
@@ -322,7 +322,7 @@ export default {
         params.pageNum = this.paginationInfo.defaultCurrent;
       }
       params.sortField =
-        "paixu1,paixu2,paixu3,paixu4,kspaixu,convert(ks using gbk) collate gbk_chinese_ci,paixu5,convert(user_account_name using gbk) collate gbk_chinese_ci";
+        "paixu1,paixu2,paixu3,paixu4,cast(kspaixu as unsigned integer),convert(ks using gbk) collate gbk_chinese_ci,cast(paixu5 as unsigned integer),convert(user_account_name using gbk) collate gbk_chinese_ci";
       params.sortOrder = "ascend";
       params.userAccount = userAccount;
       this.$get("dcaBReport", {
@@ -342,7 +342,7 @@ export default {
       this.paginationInfo = pagination;
       this.fetch2({
         sortField:
-          "paixu1,paixu2,paixu3,paixu4,kspaixu,convert(ks using gbk) collate gbk_chinese_ci,paixu5,convert(user_account_name using gbk) collate gbk_chinese_ci",
+          "paixu1,paixu2,paixu3,paixu4,cast(kspaixu as unsigned integer),convert(ks using gbk) collate gbk_chinese_ci,cast(paixu5 as unsigned integer),convert(user_account_name using gbk) collate gbk_chinese_ci",
         sortOrder: "ascend",
         ...this.queryParams,
       });
@@ -907,7 +907,7 @@ export default {
 
       this.$export("dcaUserAudit/excelBigTable", {
         sortField:
-          "paixu1,paixu2,paixu3,paixu4,kspaixu,convert(ks using gbk) collate gbk_chinese_ci,paixu5,convert(user_account_name using gbk) collate gbk_chinese_ci",
+          "paixu1,paixu2,paixu3,paixu4,cast(kspaixu as unsigned integer),convert(ks using gbk) collate gbk_chinese_ci,cast(paixu5 as unsigned integer),convert(user_account_name using gbk) collate gbk_chinese_ci",
         sortOrder: "ascend",
         state: this.state,
         excelIndex: 1,

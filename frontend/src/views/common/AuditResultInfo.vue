@@ -74,7 +74,9 @@ export default {
           dataIndex: 'auditResult',
           width: 100,
           customRender: (text, row, index) => {
-            if (row.auditTitletype != "sfbsds" && row.auditTitletype != "sfssds" && row.auditTitletype != "ynjbzr"){
+            if (row.auditTitletype != "sfbsds" && row.auditTitletype != "sfssds" && row.auditTitletype != "ynjbzr"
+            && row.auditTitletype != "sfyszgzs" && row.auditTitletype != "sfjyhlzgzs" && row.auditTitletype != "sfdlwcyjspy"&& row.auditTitletype != "pyzlsfyl"
+            ){
               if (text == "是") {
                 if (row.state == 1) {
                   return <a-tag color="green">是</a-tag>

@@ -7,6 +7,7 @@
       <div style="text-align:center;font-size:20px;">
         <p style="font-size:20px!important;font-weight:bold;">个人承诺</p>
         <p style="font-size:20px!important;font-weight:bold;">本人慎重承诺所从事的学术研究符合学术道德规范，所填写内容真实准确，如有不实之处，本人愿意承担相关责任。</p>
+       <p style="font-size:22px!important;font-weight:bold;color:red;">本系统上传所有PDF文件不能加密!!!</p>
         <a-button
           @click="handlePromise"
           type="primary"

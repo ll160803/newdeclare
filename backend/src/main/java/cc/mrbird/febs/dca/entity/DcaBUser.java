@@ -25,6 +25,7 @@ import java.util.TimeZone;
 
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -544,6 +545,11 @@ public class DcaBUser implements Serializable {
     }
 
     public String getXl() {
+        //hsc 20200921 新增
+        if(StringUtils.isNotEmpty(xl)){
+            return  xl;
+        }
+
         String name = "";
         if (npPositionName == null) {
             return "";

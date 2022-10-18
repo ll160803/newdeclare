@@ -43,6 +43,14 @@
                 @click="showModal"
                 >推送用户确认</a-button
               >
+               <span style="float:left;">
+                <import-excel
+          templateUrl="dcaBReport/downTemplateZj"
+          @succ="handleRefesh"
+          url="dcaBReport/importZj"
+          :queryParams="queryParams"
+        >
+        </import-excel> </span>
               <a-button type="primary" @click="exportExcel">导出</a-button>
               <a-button type="primary" @click="search">查询</a-button>
               <a-button style="margin-left: 8px" @click="reset">重置</a-button>
@@ -488,6 +496,7 @@ import moment from "moment";
 import DcaBReportUnsure from "./DcaBReportUnsureZj";
 import AuditUserInfo from "../../common/AuditUserInfo";
 import AuditResultInfo from "../../common/AuditResultInfo";
+import ImportExcel from "../../common/ImportExcelQuery";
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -519,7 +528,8 @@ export default {
         userAccount: "",
         dcaYear: "",
         ks: "中级,初级",
-        yuangongzu: "在编,选留,合同制"
+        yuangongzu: "在编,选留,合同制",
+        activeKey: 1
       },
       sortedInfo: null,
       paginationInfo: null,
@@ -766,7 +776,7 @@ export default {
       modalVisible: false,
     };
   },
-  components: { DcaBReportUnsure, AuditUserInfo, AuditResultInfo },
+  components: { DcaBReportUnsure, AuditUserInfo, AuditResultInfo, ImportExcel },
   mounted() {
     // this.fetchUseraudit()
     this.search();
@@ -778,6 +788,9 @@ export default {
     },
     showModal() {
       this.modalVisible = true;
+    },
+    handleRefesh(){
+      this.search();
     },
     bulkSave() {
       if (!this.selectedRowKeys.length) {

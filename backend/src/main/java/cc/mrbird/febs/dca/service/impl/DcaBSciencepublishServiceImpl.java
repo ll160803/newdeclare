@@ -149,6 +149,11 @@ public class DcaBSciencepublishServiceImpl extends ServiceImpl<DcaBSciencepublis
         dcaBSciencepublish.setModifyTime(new Date());
         this.baseMapper.updateDcaBSciencepublish(dcaBSciencepublish);
     }
+    @Override
+    @Transactional
+    public void updateStateByUserAccount(String userAccount){
+        this.baseMapper.updateStateByAccount(userAccount);
+    }
 
     @Override
     @Transactional
@@ -163,9 +168,20 @@ public class DcaBSciencepublishServiceImpl extends ServiceImpl<DcaBSciencepublis
         this.baseMapper.deleteByAccount(userAccount);
     }
 
+
+
     @Override
     @Transactional
     public int getMaxDisplayIndexByuseraccount(String userAccount) {
         return this.baseMapper.getMaxDisplayIndexByuseraccount(userAccount);
+    }
+
+    @Override
+    @Transactional
+    public void deleteRealByuseraccount(String userAccount) {
+        LambdaQueryWrapper<DcaBSciencepublish> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(DcaBSciencepublish::getUserAccount,userAccount);
+        lambdaQueryWrapper.eq(DcaBSciencepublish::getIsDeletemark,0);
+        this.baseMapper.delete(lambdaQueryWrapper);
     }
 }

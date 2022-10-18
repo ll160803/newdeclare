@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.service.IDcaBTeacherqualifyService;
 import cc.mrbird.febs.dca.entity.DcaBTeacherqualify;
 
@@ -194,11 +195,17 @@ public void deleteDcaBTeacherqualifys(@NotBlank(message = "{required}") @PathVar
         }
         }
 @PostMapping("excel")
-@RequiresPermissions("dcaBTeacherqualify:export")
-public void export(QueryRequest request, DcaBTeacherqualify dcaBTeacherqualify,HttpServletResponse response)throws FebsException{
+public void export(QueryRequest request, DcaBTeacherqualify dcaBTeacherqualify,String dataJson,HttpServletResponse response)throws FebsException{
         try{
+            request.setPageNum(1);
+            request.setPageSize(10000);
+            User currentUser = FebsUtil.getCurrentUser();
+
+            dcaBTeacherqualify.setIsDeletemark(1);
+            request.setSortField("user_account asc,state ");
+            request.setSortOrder("ascend");
         List<DcaBTeacherqualify> dcaBTeacherqualifys=this.iDcaBTeacherqualifyService.findDcaBTeacherqualifys(request, dcaBTeacherqualify).getRecords();
-        ExcelKit.$Export(DcaBTeacherqualify.class,response).downXlsx(dcaBTeacherqualifys,false);
+            ExportExcelUtils.exportCustomExcel_han(response, dcaBTeacherqualifys,dataJson,"");
         }catch(Exception e){
         message="导出Excel失败";
         log.error(message,e);

@@ -257,6 +257,24 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
             "AND IsUse = 1")
     List<DcaBSciencesearch> getScientSearchAudit();
 
+
+ /**
+  * 承担的本科教学改革及建设项目 用于高级 大表  第7大列
+  * @return
+  */
+ @Select("SELECT\n" +
+            "\tuser_account,\n" +
+            "\tproject_type AS audit_lb,\n" +
+            "\trank_num AS audit_rank,\n" +
+            "\tcontract_fund AS audit_fund\n" +
+            "FROM\n" +
+            "\tdca_b_innovatebuild\n" +
+            "WHERE\n" +
+            "\tstate = 3\n" +
+            "AND IsUse = 1\n" +
+            "AND IS_DELETEMARK = 1")
+ List<DcaBSciencesearch> getInnovatebuild();
+
     /**
      * 国家、省部级科研奖
      * @return
@@ -390,6 +408,8 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
             "AND state = 3\n" +
             "AND IsUse = 1")
     List<DcaBYoungprize> getYoungprize();
+
+
 
     /**
      * 新技术新业务
@@ -563,7 +583,7 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
             "\t\t)\n" +
             "\t)\n" +
             "AND b.show_type = 1\n" +
-            "AND b.field_name NOT IN ('sfssds', 'sfbsds', 'ynjbzr')")
+            "AND b.field_name NOT IN ('sfssds', 'sfbsds', 'ynjbzr','sfyszgzs','sfjyhlzgzs','sfdlwcyjspy','pyzlsfyl')")
     List<String> getDynamicIsOk();
 
     @Select("SELECT\n" +

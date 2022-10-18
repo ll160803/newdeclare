@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import cc.mrbird.febs.common.converter.AuditStateConverter;
+import cc.mrbird.febs.common.converter.BooleanConverter;
+import cc.mrbird.febs.common.converter.DateConverter;
+import cc.mrbird.febs.common.converter.StateConverter;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
@@ -90,7 +93,7 @@ public class DcaBPatent implements Serializable {
     /**
      * 批准年月
      */
-    @ExcelField(value = "批准年月")
+    @ExcelField(value = "批准年月", writeConverter = DateConverter.class)
     private Date patentDate;
     private transient String patentDateFrom;
     private transient String patentDateTo;
@@ -122,7 +125,7 @@ public class DcaBPatent implements Serializable {
     /**
      * 状态
      */
-    @ExcelField(value = "状态")
+    @ExcelField(value = "状态", writeConverter = StateConverter.class)
     private Integer state;
 
     /**
@@ -204,7 +207,7 @@ public class DcaBPatent implements Serializable {
      * 是否用于本次评审
      */
     @TableField("IsUse")
-    @ExcelField(value = "是否用于本次评审")
+    @ExcelField(value = "是否用于本次评审", writeConverter = BooleanConverter.class)
     private Boolean IsUse;
 
     private  transient Integer auditXuhao;

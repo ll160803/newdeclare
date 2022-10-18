@@ -16,6 +16,7 @@ import java.util.List;
 
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * <p>
@@ -211,6 +212,11 @@ private static final long serialVersionUID=1L;
     private Long modifyUserId;
 
     public  String getXl (){
+
+        if(StringUtils.isNotEmpty(xl)){
+            return  xl;
+        }
+
         String name = "";
         if(npPositionName==null) {
             return "";

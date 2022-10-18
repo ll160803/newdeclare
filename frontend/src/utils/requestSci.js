@@ -10,7 +10,7 @@ moment.locale('zh-cn')
 
 // 统一配置
 let FEBS_REQUEST = axios.create({
-  baseURL: 'http://101.43.164.65:5999/',
+  baseURL: 'https://rclw.hbwsrc.cn:5999/',
   //baseURL: 'http://localhost:1099/',
   responseType: 'json',
   validateStatus(status) {
@@ -31,6 +31,7 @@ FEBS_REQUEST.interceptors.request.use((config) => {
 FEBS_REQUEST.interceptors.response.use((config) => {
   return config
 }, (error) => {
+  console.info(error,'3333333333')
   if (error.response) {
     let errorMessage = error.response.data === null ? '系统内部异常，请联系网站管理员' : error.response.data.message
     switch (error.response.status) {
@@ -58,11 +59,16 @@ FEBS_REQUEST.interceptors.response.use((config) => {
         break
     }
   }
+  notification.warn({
+    message: '系统提示',
+    description: '很抱歉，智能搜索网络不通，请手工录入或者联系管理员',
+    duration: 4
+  })
   return Promise.reject(error)
 })
 const request = {
   baseURL: 'https://whuhhrmapi.asclepius.whxh.com.cn/',
-  post(url, params) {
+  post(url, params, token) {
     return FEBS_REQUEST.post(url, params, {
       transformRequest: [(params) => {
         let result = ''
@@ -74,11 +80,12 @@ const request = {
         return result
       }],
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'token': token==undefined ?'': token
       }
     })
   },
-  put(url, params) {
+  put(url, params, token ) {
     return FEBS_REQUEST.put(url, params, {
       transformRequest: [(params) => {
         let result = ''
@@ -90,11 +97,12 @@ const request = {
         return result
       }],
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+         'token': token==undefined?'':token
       }
     })
   },
-  get(url, params) {
+  get(url, params,token) {
     let _params
     if (Object.is(params, undefined)) {
       _params = ''
@@ -106,7 +114,9 @@ const request = {
         }
       }
     }
-    return FEBS_REQUEST.get(`${url}${_params}`)
+      return FEBS_REQUEST.get(`${url}${_params}`,{headers: {
+         'token': token==undefined?'':token
+      }})
   },
   delete(url, params) {
     let _params

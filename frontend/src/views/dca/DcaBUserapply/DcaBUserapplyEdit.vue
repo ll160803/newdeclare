@@ -414,11 +414,14 @@ export default {
      // this.npPositionName= '';
     },
      handleSubmitTotal() {
-      if(this.gwdj=='正高'||this.gwdj=='副高'){
-        this.handleSubmit();
-      }
+      // if(this.gwdj=='正高'||this.gwdj=='副高'){
+      //   this.handleSubmit();
+      // }
       if(this.gwdj=='二三级'){
         this.handleSubmit23();
+      }
+      else{
+        this.handleSubmit();
       }
     },
     handleSubmit23() {

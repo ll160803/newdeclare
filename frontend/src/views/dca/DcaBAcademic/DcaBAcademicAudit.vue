@@ -151,6 +151,21 @@
               value="担任全国医学相关一级学会专科分会的现任副主任委员以上职务（限附属医院使用）"
               >担任全国医学相关一级学会专科分会的现任副主任委员以上职务（限附属医院使用）</a-select-option
             >
+              <a-select-option value="青年长江学者"
+              >青年长江学者</a-select-option
+            >
+               <a-select-option value="优秀青年基金获得者"
+              >优秀青年基金获得者</a-select-option
+            >
+             <a-select-option value="青年千人"
+              >青年千人</a-select-option
+            >
+            <a-select-option value="海外优青"
+              >海外优青</a-select-option
+            >
+             <a-select-option value="青年拔尖"
+              >青年拔尖</a-select-option
+            >
           </a-select>
         </div>
       </template>

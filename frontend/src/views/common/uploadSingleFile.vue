@@ -1,11 +1,4 @@
 <template>
-  <a-modal
-    title="附件上传"
-    :visible="fileVisiable"
-    :footer="null"
-    @cancel="cancelAudit"
-    :maskClosable="false"
-  >
     <a-upload
       accept=".pdf"
       :fileList="fileList"
@@ -17,40 +10,37 @@
         <a-icon type="upload"  /> 选择文件
       </a-button>
     </a-upload>
-  </a-modal>
-
 </template>
-  
-  <script>
+<script>
 export default {
   name: "file",
   data () {
     return {
       tstyle: { "color": "#0785fd", "font-weight": "bold", "background-color": "#ececec" },
-      fileList: [],
       isShow: 1,
+      fileList: [],
       uploading: false,
-      fileUrl: '',
       fileId: ''
     }
   },
   props: {
-    fileVisiable: {
-      default: false
-    }
+    title: '',
+
+    fileName: '',
+    showFileOnly: false
   },
   methods: {
+    reset() {
+       this.fileId =''
+       this.fileList = []
+    },
     handleRemove (file) {
       const index = this.fileList.indexOf(file)
       const newFileList = this.fileList.slice()
       newFileList.splice(index, 1)
       this.fileList = newFileList
-      this.fileId = ''// 空 清空
-      this.fileUrl = ''
       this.isShow = 1
-    },
-    onChange (date, dateString) {
-      console.log(date, dateString);
+      this.$emit("uploadRemove")
     },
     beforeUpload (file) {
       const isJPG = (file.type === 'application/pdf')
@@ -68,10 +58,25 @@ export default {
       return isJPG && isLt2M;
     },
     handleChange (info) {
-      debugger
+      console.info(info.file)
       if (info.file.status === 'uploading') {
         this.handleUpload()
       }
+    },
+    setForm (fileID) {
+      if(fileID!=null&&fileID!=''){
+     this.fetch(fileID)
+     }
+    },
+    fetch (fileId) {
+      this.fileId = fileId
+      this.fileList=[]
+      this.$get('comFile/' + fileId).then((r) => {
+        let data = r.data
+        this.fileUrl = data.url
+        data.url = data.url
+        this.fileList.push(data)
+      })
     },
     handleUpload () {
       const { fileList } = this
@@ -83,37 +88,29 @@ export default {
       this.$upload('comFile/upload', formData).then((r) => {
         let comfile = r.data.data
         this.fileId = comfile.uid
+        var fileServer = comfile.url
         this.fileUrl = comfile.url
+        comfile.url= this.fileUrl
         this.fileList=[]
         this.fileList.push(comfile)
+        //this.fileList = []
         this.isShow = 0
         this.uploading = false
         this.$message.success('上传成功.')
-      }).catch(() => {
+        this.$emit("uploadSuc",this.fileId,fileServer)
+      }).catch((r) => {
+        this.fileList= []
+        this.fileId = ''
+        this.isShow = 1
         this.uploading = false
         this.$message.error('上传失败或加密文件不能上传')
       })
-    },
-    fetch (fileId) {
-      this.fileId = fileId
-      this.fileList=[]
-      this.$get('comFile/' + fileId).then((r) => {
-        let data = r.data
-        this.fileUrl = data.url
-        this.fileList.push(data)
-      })
-    },
-    cancelAudit () {
-      console.log(this.fileId)
-      this.$emit("setFileId", this.fileId, this.fileUrl)
-      this.fileList = []
-      this.fileId = ''
-      this.fileUrl = ''
-    },
+    }
+  },
+  watch: {
 
+  },
+  mounted () {
   }
 }
-  </script>
-  
-  <style>
-</style>
+</script>

@@ -435,6 +435,16 @@ export default {
       },
     };
   },
+  watch: {
+    '$route.path': {
+      handler(v) {
+        if (v.includes("=")){
+          this.dcaYear = v.split("=")[1]
+        }
+      },
+      immediate: true,
+    }
+  },
   mounted() {
     this.fetch();
   },

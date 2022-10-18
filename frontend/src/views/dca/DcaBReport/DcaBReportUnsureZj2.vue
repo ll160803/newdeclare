@@ -47,6 +47,15 @@
             >
               确认表
             </a-button>
+             <a-button
+              v-hasNoPermission="['dca:audit']"
+              style="width: 100%; padding-left: 2px; padding-right: 2px"
+              type="dashed"
+              block
+              @click="handleBack(record)"
+            >
+              退回待处理
+            </a-button>
           </div>
           <div v-else-if="record.state == 1">
             <a-button
@@ -114,7 +123,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 2600,
+        x: 2700,
         y: window.innerHeight - 200 - 100 - 20 - 80,
       },
       visibleUserInfo: false,
@@ -224,6 +233,37 @@ export default {
         },
         record.year + record.userAccount + ".pdf"
       );
+    },
+      handleBack(record) {
+      // let jsonStr = JSON.stringify(record)
+      let vRecord = {};
+      vRecord.id = record.id;
+      vRecord.userAccount = record.userAccount;
+      vRecord.state = 0;
+      var that = this;
+      that.$confirm({
+        title: "确定退回所选中的记录?",
+        content: "当您点击确定按钮后，此记录将退回待处理状态！",
+        centered: true,
+        onOk() {
+          // vRecord.dcaBAuditdynamicList=''
+          that.loading = true;
+          that
+            .$put("dcaBReport", {
+              ...vRecord,
+            })
+            .then(() => {
+              // this.reset()
+              that.$message.success("退回成功");
+              that.search();
+              that.loading = false;
+            })
+            .catch(() => {
+              that.loading = false;
+            });
+        },
+        onCancel() {},
+      });
     },
     handleSave(record) {
       // let jsonStr = JSON.stringify(record)
@@ -932,7 +972,7 @@ export default {
         {
           title: "学会任职",
           dataIndex: "xhrzqk",
-          width: 120,
+          width: 250,
           scopedSlots: { customRender: "splitHang" },
         },
           {

@@ -153,7 +153,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 4500,
+        x: 4600,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -649,7 +649,7 @@ export default {
         {
           title: "学会任职",
           dataIndex: "xhrzqk",
-          width: 100,
+          width: 200,
           scopedSlots: { customRender: "splitHang" },
         },
          {

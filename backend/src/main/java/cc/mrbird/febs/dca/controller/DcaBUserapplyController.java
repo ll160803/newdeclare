@@ -126,16 +126,24 @@ public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs,Str
 
            // 2021年中初级 需要判断是否在2020年中初级里 此人是否已经申报，且 审核结果为  确定或者评聘
 
-            LambdaQueryWrapper<DcaBUserapply> queryWrapper= new LambdaQueryWrapper<>();
-           queryWrapper.eq(DcaBUserapply::getUserAccount,dcaBUserapply.getUserAccount());
-           queryWrapper.eq(DcaBUserapply::getDcaYear,"2021");
-           queryWrapper.eq(DcaBUserapply::getNpPositionName,dcaBUserapply.getNpPositionName());
-          // queryWrapper.eq(DcaBReport::getClshjg,"合格");
-           List<DcaBUserapply> bReportList= this.iDcaBUserapplyService.list(queryWrapper);
-           if(bReportList.size()>0){
-               throw new FebsException("2021年已经申报，请勿须重复申报");
-           }
+            if( !"中级,初级".contains(dcaBUserapply.getGwdj())) {
+//                LambdaQueryWrapper<DcaBUserapply> queryWrapper = new LambdaQueryWrapper<>();
+//                queryWrapper.eq(DcaBUserapply::getUserAccount, dcaBUserapply.getUserAccount());
+//                queryWrapper.eq(DcaBUserapply::getDcaYear, "2021");
+//                queryWrapper.eq(DcaBUserapply::getNpPositionName, dcaBUserapply.getNpPositionName());
+//                // queryWrapper.eq(DcaBReport::getClshjg,"合格");
+//                List<DcaBUserapply> bReportList = this.iDcaBUserapplyService.list(queryWrapper);
+//                if (bReportList.size() > 0) {
+//                    throw new FebsException("2021年已经申报，请勿须重复申报");
+//                }
 
+            }
+            else{
+                int count= this.iDcaBUserapplyService.countAccount(dcaBUserapply.getUserAccount(),dcaBUserapply.getGwdj(),dcaBUserapply.getDcaYear());
+                if(count>0){
+                    throw new FebsException("该年度你已经通过评审，请勿须重复申报");
+                }
+            }
             if(this.iDcaBUserapplyService.IsExistApply(dcaBUserapply)){
                 this.iDcaBUserapplyService.createDcaBUserapply(dcaBUserapply);
             }else {
@@ -146,9 +154,9 @@ public void addDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs,Str
                String[] areaIds = yjIDs.split(StringPool.COMMA);
                setUserYj(currentUser, areaIds,dcaBUserapply.getDcaYear());
            }
-           if(StringUtils.isNotEmpty(deleFlag) && deleFlag.equals("1")){ //删除考核表
-               this.iDcaBAuditdynamicService.DeleteByAccount(currentUser.getUsername());
-           }
+//           if(StringUtils.isNotEmpty(deleFlag) && deleFlag.equals("1")){ //删除考核表
+//               this.iDcaBAuditdynamicService.DeleteByAccount(currentUser.getUsername());
+//           }
         }catch(Exception e){
         //message="新增/按钮失败" ;
         log.error(message,e);
@@ -182,15 +190,22 @@ public void updateDcaBUserapply(@Valid DcaBUserapply dcaBUserapply,String yjIDs)
 
 
             // 2021年高级 需要判断是否在2020年中初级里 此人是否已经申报，且 审核结果为  确定或者评聘
-
-            LambdaQueryWrapper<DcaBUserapply> queryWrapper= new LambdaQueryWrapper<>();
-            queryWrapper.eq(DcaBUserapply::getUserAccount,dcaBUserapply.getUserAccount());
-            queryWrapper.eq(DcaBUserapply::getDcaYear,"2021");
-            queryWrapper.eq(DcaBUserapply::getNpPositionName,dcaBUserapply.getNpPositionName());
-            // queryWrapper.eq(DcaBReport::getClshjg,"合格");
-            List<DcaBUserapply> bReportList= this.iDcaBUserapplyService.list(queryWrapper);
-            if(bReportList.size()>0){
-                throw new FebsException("2021年已经申报，请勿须重复申报");
+            if( !"中级,初级".contains(dcaBUserapply.getGwdj())) {
+//                LambdaQueryWrapper<DcaBUserapply> queryWrapper = new LambdaQueryWrapper<>();
+//                queryWrapper.eq(DcaBUserapply::getUserAccount, dcaBUserapply.getUserAccount());
+//                queryWrapper.eq(DcaBUserapply::getDcaYear, "2021");
+//                queryWrapper.eq(DcaBUserapply::getNpPositionName, dcaBUserapply.getNpPositionName());
+//                // queryWrapper.eq(DcaBReport::getClshjg,"合格");
+//                List<DcaBUserapply> bReportList = this.iDcaBUserapplyService.list(queryWrapper);
+//                if (bReportList.size() > 0) {
+//                    throw new FebsException("2021年已经申报，请勿须重复申报");
+//                }
+            }
+            else{
+                int count= this.iDcaBUserapplyService.countAccount(dcaBUserapply.getUserAccount(),dcaBUserapply.getGwdj(),dcaBUserapply.getDcaYear());
+                if(count>0){
+                    throw new FebsException("该年度你已经通过评审，请勿须重复申报");
+                }
             }
 
             if(this.iDcaBUserapplyService.IsExistApply(dcaBUserapply)){

@@ -20,6 +20,19 @@
             @click="showUserInfo(text)"
           >{{text}}</a>
         </template>
+        <template
+                slot="action"
+                slot-scope="text, record"
+              >
+                <a-button
+                  type="dashed"
+                  block
+                  @click="handleAuditNext(record)"
+                >
+                  退回待审核
+                </a-button>
+              </template>
+              
       </a-table>
       <audit-userInfo
         ref="userinfo"
@@ -112,6 +125,34 @@ export default {
         this.pagination = pagination
       }
       )
+    },
+    handleAuditNext (record) {
+      let that = this
+      this.$confirm({
+        title: '确定退回此记录?',
+        content: '当您点击确定按钮后，此记录将退回一审待审核',
+        centered: true,
+        onOk () {
+          record.auditState = 0
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBTurtor/updateNew', {
+            jsonStr: jsonStr,
+            state: 1,
+            auditState: -1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+            that.fetch2(that.queryParams)
+           // that.freshTabs()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
     },
     fetch (userAccount) {
       this.loading = true
@@ -224,6 +265,12 @@ export default {
             return ''
           },
           width: 80
+        },
+         {
+          title: '退回一审待审核',
+          key: 'action',
+          scopedSlots: { customRender: 'action' },
+          width: 150
         }
       ]
     }

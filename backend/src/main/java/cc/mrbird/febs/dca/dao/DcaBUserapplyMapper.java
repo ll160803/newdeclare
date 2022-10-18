@@ -55,4 +55,15 @@ public interface DcaBUserapplyMapper extends BaseMapper<DcaBUserapply> {
                 "\t'二三级' \n" +
                 "\t)")
         List<String> GetDj(String dcaYear);
+
+
+        @Select("SELECT\n" +
+                "\tcount( * ) cu \n" +
+                "FROM\n" +
+                "\tdca_b_userapplylimit \n" +
+                "WHERE\n" +
+                "\tuser_account = #{userAccount} \n" +
+                "\tAND gwdj = #{gwdj} \n" +
+                "\tAND dca_year = #{dcaYear} ")
+        int countAccount(@Param("userAccount")String userAccount,@Param("gwdj")String gwdj,@Param("dcaYear")String dcaYear);
         }

@@ -256,8 +256,18 @@
                     <a-select-option value="国科进">
                       国科进
                     </a-select-option>
+                     <a-select-option value="国发明">
+                      国发明
+                    </a-select-option>
+                     <a-select-option value="国自然">
+                      国自然
+                    </a-select-option>
+
                     <a-select-option value="省科进">
                       省科进
+                    </a-select-option>
+                      <a-select-option value="省自然">
+                      省自然
                     </a-select-option>
                     <a-select-option value="省发明">
                       省发明
@@ -277,11 +287,17 @@
                       <a-select-option value="部科进">
                       部科进
                     </a-select-option>
+                     <a-select-option value="部自然">
+                      部自然
+                    </a-select-option>
                     <a-select-option value="部发明">
                       部发明
                     </a-select-option>
                     <a-select-option value="部推广">
                       部推广
+                    </a-select-option>
+                    <a-select-option value="学会及其他">
+                      学会及其他
                     </a-select-option>
                   </a-select>
                 </div>
@@ -307,6 +323,12 @@
                     </a-select-option>
                     <a-select-option value="三">
                       三
+                    </a-select-option>
+                    <a-select-option value="优秀奖">
+                      优秀奖
+                    </a-select-option>
+                    <a-select-option value="其他">
+                      其他
                     </a-select-option>
                   </a-select>
                 </div>

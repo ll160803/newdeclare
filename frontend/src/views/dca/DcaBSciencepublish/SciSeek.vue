@@ -1,44 +1,22 @@
 <template>
-  <a-card title="搜索数据">
+  <a-card title="搜索数据(如果文章没有搜索到，请检查论文名的全称是否正确)" :headStyle="{
+        fontWeight: 'bold',
+        fontSize: '20px',
+        color: 'red'
+      }">
     <a-row>
-      <a-col :sm="12">
+      <a-col :span="16">
         <a-form-item v-bind="formItemLayout" label="论文名">
           <a-input placeholder="请输入论文名" v-model="sciName" />
         </a-form-item>
       </a-col>
-      <a-col :sm="4">
-        <a-form-item v-bind="formItemLayout" label="作者">
-          <a-input placeholder="请输入作者" v-model="sciAuthor" />
-        </a-form-item>
-      </a-col>
-
-      <a-col :sm="3">
-        <a-button @click="handleSubmit" type="primary" :loading="loading"
-          >搜索期刊</a-button
+      <a-col :span="3" :offset="1">
+        <a-button @click="handleSubmit" type="primary" :loading="loading" 
+          >智能搜索</a-button
         >
       </a-col>
-     <!-- <a-col :sm="2">
-        <a-button @click="searchAll" type="primary" :loading="loading"
-          >搜索全部</a-button
-        >
-      </a-col>
-      <a-col :sm="2">
-        <a-button @click="AddIndex" type="primary" :loading="loading"
-          >索引+1</a-button
-        >
-      </a-col>
-       <a-col :sm="4">
-        <a-button @click="handleSearch" type="primary" :loading="loading"
-          >搜索因子</a-button
-        >
-      </a-col>
-      <a-col :sm="4">
-        <a-button @click="handleSearch_zw" type="primary" :loading="loading"
-          >搜索中文ISSN</a-button
-        >
-      </a-col> -->
     </a-row>
-    <a-card title="返回值">
+     <!-- <a-card title="返回值" v-if="auditShow">
       <a-row>
         <a-col :sm="8">
           <a-form-item v-bind="formItemLayout" label="发表年">
@@ -62,7 +40,9 @@
         </a-col>
         <a-col :sm="8">
           <a-form-item v-bind="formItemLayout" label="期刊号">
-            <a-input v-model="jifData.issn==''?artData.issn:jifData.issn" />
+            <a-input
+              v-model="jifData.issn == '' ? artData.issn : jifData.issn"
+            />
           </a-form-item>
         </a-col>
         <a-col :sm="8">
@@ -94,19 +74,14 @@
           </a-form-item>
         </a-col>
       </a-row>
-    </a-card>
-    <a-card title="文章值">
+    </a-card>-->
+    <a-card title="文章值" v-if="auditShow">
       <a-row>
         <a-col :sm="8">
           <a-form-item v-bind="formItemLayout" label="发表年月">
             <a-input v-model="artData.pub_year + month" />
           </a-form-item>
         </a-col>
-        <!-- <a-col :sm="8">
-          <a-form-item v-bind="formItemLayout" label="发表月">
-            <a-input v-model="month" />
-          </a-form-item>
-        </a-col> -->
         <a-col :sm="8">
           <a-form-item v-bind="formItemLayout" label="他引次数">
             <a-input v-model="cited_count" />
@@ -152,8 +127,13 @@
             <a-input v-model="isBest" />
           </a-form-item>
         </a-col>
+        <a-col :sm="8">
+          <a-form-item v-bind="formItemLayout" label="相似度">
+            <a-input v-model="artData.jw_sim" />
+          </a-form-item>
+        </a-col>
       </a-row>
-    </a-card>
+    </a-card>  
   </a-card>
 </template>
 
@@ -166,6 +146,10 @@ const formItemLayout = {
 export default {
   data() {
     return {
+      headStyle: {
+        fontWeight: 'bold',
+        fontSize: '20px'
+      },
       loading: false,
       formItemLayout,
       artData: {
@@ -179,6 +163,7 @@ export default {
         sd_chinese_journal_meta: {
           CSTPCD: "",
         },
+        title: ""
       },
       jifData: {
         jif: "",
@@ -194,14 +179,11 @@ export default {
         centered: "",
       },
       month: "",
-      sciName: "",
-      sciAuthor: "",
       cited_count: "",
       paperShoulu: "", //收录情况
       isBest: "否", //是否一流
       qkjb: "",
       issn: "",
-      jbLbList: [], //ISSN 等级库
       rankValue: "",
       journalName: "", //期刊名称
       isSci: "",
@@ -209,82 +191,104 @@ export default {
       monthData: [
         { key: "January", value: "01" },
         { key: "Jan", value: "01" },
-         { key: "01", value: "01" },
-          { key: "1", value: "01" },
+        { key: "01", value: "01" },
+        { key: "1", value: "01" },
         { key: "February", value: "02" },
         { key: "Feb", value: "02" },
-          { key: "02", value: "02" },
-           { key: "2", value: "02" },
+        { key: "02", value: "02" },
+        { key: "2", value: "02" },
         { key: "March", value: "03" },
         { key: "Mar", value: "03" },
         { key: "03", value: "03" },
-          { key: "3", value: "03" },
+        { key: "3", value: "03" },
         { key: "April", value: "04" },
         { key: "Apr", value: "04" },
         { key: "04", value: "04" },
         { key: "4", value: "04" },
         { key: "May", value: "05" },
         { key: "05", value: "05" },
-           { key: "5", value: "05" },
+        { key: "5", value: "05" },
         { key: "June", value: "06" },
         { key: "Jun", value: "06" },
-          { key: "06", value: "06" },
-            { key: "6", value: "06" },
+        { key: "06", value: "06" },
+        { key: "6", value: "06" },
         { key: "July", value: "07" },
         { key: "Jul", value: "07" },
-         { key: "07", value: "07" },
-            { key: "7", value: "07" },
+        { key: "07", value: "07" },
+        { key: "7", value: "07" },
         { key: "August", value: "08" },
         { key: "Aug", value: "08" },
-          { key: "08", value: "08" },
-             { key: "8", value: "08" },
+        { key: "08", value: "08" },
+        { key: "8", value: "08" },
         { key: "September", value: "09" },
         { key: "Sep", value: "09" },
-              { key: "09", value: "09" },
-                 { key: "9", value: "09" },
+        { key: "09", value: "09" },
+        { key: "9", value: "09" },
         { key: "October", value: "10" },
         { key: "Oct", value: "10" },
-         { key: "10", value: "10" },
+        { key: "10", value: "10" },
         { key: "November", value: "11" },
         { key: "Nov", value: "11" },
-             { key: "11", value: "11" },
+        { key: "11", value: "11" },
         { key: "December", value: "12" },
         { key: "Dec", value: "12" },
-           { key: "12", value: "12" },
+        { key: "12", value: "12" },
       ],
       searchIndex: -1,
       article: [],
       flag: 0,
-      token: ''
+      token: "",
+      sciName: '',
+      isShow2: false, 
     };
+  },
+  props: {
+    jbLbList2: {
+      type: Array,
+      default: () => [],
+    },
+    isAudit: {
+      default: false
+    }
+  },
+  computed: {
+    jbLbList() {
+      return this.jbLbList2;
+    },
+    sciAuthor() {
+      return this.$store.state.account.user.realname;
+    },
+    auditShow() {
+      return this.isAudit;
+    }
   },
   watch: {
     searchIndex() {
-      if (this.flag == 1) {
-        if (this.searchIndex > 0) {
-         // console.info(this.searchIndex)
-          this.$put("dcaBAuditsuggestion", {
-            id: this.article[this.searchIndex-1].ID,
-            auditManName: this.qkjb,
-          })
-            .then(() => {})
-            .catch(() => {});
-        }
-        if (this.searchIndex < this.article.length) {
-          this.sciName = this.article[this.searchIndex].NAME;
-          this.sciAuthor = this.article[this.searchIndex].XM;
-          this.handleSubmit();
-        }
+      //往主页面传值
+      if (this.searchIndex >= 0) {
+        let dcaBSciencepublish = {
+          paperName: this.artData.title,
+          journalName: this.journalName,
+          journalCode: this.issn,
+          paperPublishdate: this.handleYearMonth(this.artData.pub_year, this.month),
+          qkjb: this.qkjb,
+          paperShoulu: this.slqk,
+          paperCause: this.jifData.jif,
+          isBest: this.isBest,
+          otherTimes: this.cited_count,
+          sciValue: this.isSci,
+          rankValue: this.rankValue,
+          xsd: this.artData.jw_sim,
+          rankSear: this.jifData.rank
+        };
+        this.$emit("setValue", dcaBSciencepublish);
       }
     },
   },
-  mounted() {
-    this.getSB_Token();
-    this.fetchJb();
-    this.fetchPublish();
-  },
   methods: {
     reset() {
+      console.info("seek reset");
+      
       this.artData = {
         pub_year: "",
         pub_month: "",
@@ -295,6 +299,52 @@ export default {
         sd_chinese_journal_meta: {
           CSTPCD: "",
         },
+        title: ""
+      };
+      this.jifData = {
+        jif: "",
+        rank_q: "",
+        rank: "",
+        isSci: "",
+        issn: "",
+      };
+      this.cscd = {
+        is_cscd: "",
+        journal_name: "",
+        issn: "",
+        centered: "",
+      };
+      this.month = "";
+
+      this.cited_count = "";
+
+      this.isBest = "否";
+      this.qkjb = "";
+      this.issn = "";
+
+      this.rankValue = "";
+      this.journalName = "";
+      this.isSci = "否";
+      this.slqk = ""; //收录情况
+      this.isShow2 = false;
+      this.sciName = '';
+      this.loading = false;
+      this.searchIndex= -1;
+    },
+    reset2() {
+ console.info("seek reset");
+      
+      this.artData = {
+        pub_year: "",
+        pub_month: "",
+        cited_count: "",
+        journal: "",
+        journalCode: "",
+        jw_sim: "",
+        sd_chinese_journal_meta: {
+          CSTPCD: "",
+        },
+        title: ""
       };
       this.jifData = {
         jif: "",
@@ -322,35 +372,70 @@ export default {
       this.isSci = "否";
       this.slqk = ""; //收录情况
     },
-    searchAll() {
-      this.searchIndex = 0;
-      this.flag = 1;
+    handleYearMonth(year, month) {
+      if (year != "") {
+        if (month != "") {
+          return year + "-" + month + "-01";
+        } else {
+          return year + "-01" + "-01";
+        }
+      }
+      return "";
     },
-
-    AddIndex() {
-      this.searchIndex += 1;
+    getSB_Token() {
+     
+      requestSci
+        .get("login", {
+          username: this.$store.state.account.user.username,
+          password: 2,
+        })
+        .then((r) => {
+          console.info(r);
+          this.token = r.data.token;
+          console.info(this.token);
+        }).catch(()=>{
+         
+        });
     },
-    getSB_Token(){
-       requestSci
-          .get("login", {
-            username: this.$store.state.account.user.username,
-            password: 2
-          })
-          .then((r) => {
-            console.info(r)
-            this.token =r.data.token
-            console.info(this.token)
-          });
+    editSearch(sciName){
+       this.sciName =sciName;
     },
     handleSubmit() {
+      if(this.sciName.trim()==''){
+        this.$message.warn('请输入论文名')
+      }
+      else{
       this.loading = true;
-      this.reset();
+       console.info(this.$store.state.account.user)
+      requestSci
+        .get("login", {
+          username: this.$store.state.account.user.username,
+          password: 2,
+        })
+        .then((r) => {
+          console.info(r);
+          this.token = r.data.token;
+          this.handlePaperSeach(r.data.token);
+        }).catch((error)=>{
+           this.loading = false;
+           this.searchIndex += 1;
+        
+          
+        });
+      }
+    },
+    handlePaperSeach(token) {
+      this.reset2();
       if (this.sciName != "" && !this.isChina(this.sciName)) {
         requestSci
-          .get("title", {
-            title: this.sciName,
-            author: this.sciAuthor,
-          },this.token)
+          .get(
+            "title",
+            {
+              title: this.sciName,
+              author: this.sciAuthor,
+            },
+            token
+          )
           .then((r) => {
             console.info("first");
             console.info(r);
@@ -368,7 +453,7 @@ export default {
               if (arMonth.length > 0) {
                 this.month = arMonth[0].value;
               }
-              this.handleSearch();
+              this.handleSearch(token);
             } else {
               setTimeout(() => {
                 this.searchIndex += 1;
@@ -377,12 +462,16 @@ export default {
           });
 
         requestSci
-          .get("title", {
-            //获取他因次数
-            title: this.sciName,
-            author: this.sciAuthor,
-            source: "wos",
-          },this.token)
+          .get(
+            "title",
+            {
+              //获取他因次数
+              title: this.sciName,
+              author: this.sciAuthor,
+              source: "wos",
+            },
+            this.token
+          )
           .then((r) => {
             console.info(r);
             // this.loading = false;
@@ -398,11 +487,15 @@ export default {
       } else if (this.sciName != "" && this.isChina(this.sciName)) {
         //中文搜索
         requestSci
-          .get("title", {
-            title: this.sciName,
-            author: this.sciAuthor,
-            source: "chinese",
-          },this.token)
+          .get(
+            "title",
+            {
+              title: this.sciName,
+              author: this.sciAuthor,
+              source: "chinese",
+            },
+            this.token
+          )
           .then((r) => {
             console.info(r);
             this.loading = false;
@@ -421,7 +514,7 @@ export default {
               if (arMonth.length > 0) {
                 this.month = arMonth[0].value;
               }
-              this.handleSearch_zw();
+              this.handleSearch_zw(token);
             } else {
               setTimeout(() => {
                 this.searchIndex += 1;
@@ -430,15 +523,19 @@ export default {
           });
       }
     },
-    handleSearch() {
+    handleSearch(token) {
       this.loading = true;
       console.info("hgh:" + this.journalName.replace(/\&/g, "%26"));
       requestSci
-        .get("jif", {
-          journal_title: this.journalName.replace(/\&/g, "%26"),
-          year: this.artData.pub_year < 2021 ? this.artData.pub_year : "2020",
-          issn: this.artData.issn
-        },this.token)
+        .get(
+          "jif",
+          {
+            journal_title: this.journalName.replace(/\&/g, "%26"),
+            year: this.artData.pub_year < 2021 ? this.artData.pub_year : "2020",
+            issn: this.artData.issn,
+          },
+          token
+        )
         .then((r) => {
           this.loading = false;
           console.info(r);
@@ -472,7 +569,7 @@ export default {
           }, 200);
         });
     },
-    handleSearch_zw() {
+    handleSearch_zw(token) {
       this.loading = true;
       this.cscd = {
         is_cscd: "",
@@ -481,9 +578,13 @@ export default {
         centered: "",
       };
       requestSci
-        .get("cscd", {
-          journal_title: this.journalName.replace(/&/, "%26"),
-        },this.token)
+        .get(
+          "cscd",
+          {
+            journal_title: this.journalName.replace(/&/, "%26"),
+          },
+          this.token
+        )
         .then((r) => {
           this.loading = false;
           console.info(r);
@@ -676,26 +777,9 @@ export default {
         return true;
       }
     },
-    fetchJb() {
-      this.$get("dcaBSciencepublish/jbLb", {}).then((r) => {
-        this.jbLbList = r.data;
-      });
-    },
-    fetchPublish() {
-      this.$get("dcaBAuditsuggestion", {pageNum:1,pageSize:10000}).then((r) => {
-        this.article = [];
-        r.data.rows.forEach((element) => {
-          if(element.auditManName==null ){
-          this.article.push({
-            ID: element.id,
-            NAME: element.preGoal,
-            XM: element.auditMan,
-          });
-          }
-        });
-        //console.info(this.article)
-      });
-    },
+    setIsShow(){
+      this.isShow2 = true;
+    }
   },
 };
 </script>

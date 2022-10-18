@@ -1826,7 +1826,7 @@ export default {
         {
           title: "学会任职",
           dataIndex: "xhrzqk",
-          width: 120,
+          width: 250,
           scopedSlots: { customRender: "splitHang" },
         },
         {

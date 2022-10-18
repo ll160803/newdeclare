@@ -43,9 +43,17 @@
                 @click="showModal"
                 >推送用户确认</a-button
               >
+              <span style="float:left;">
+                <import-excel
+          templateUrl="dcaBReport/downTemplate"
+          @succ="handleRefesh"
+          url="dcaBReport/import"
+          :queryParams="queryParams"
+        >
+        </import-excel> </span>
               <a-button type="primary" @click="exportExcel">导出</a-button>
               <a-button type="primary" @click="search">查询</a-button>
-              <a-button style="margin-left: 8px" @click="reset">重置</a-button>
+              <!-- <a-button style="margin-left: 8px" @click="reset">重置</a-button> -->
             </span>
           </a-row>
         </a-form>
@@ -428,6 +436,57 @@
               </div>
             </template>
 
+<template slot="schoolprizeName" slot-scope="text, record">
+              <div v-if="record.state == 3 || record.state == 1">
+                {{ text }}
+              </div>
+              <div v-else>
+                <a-textarea
+                  @blur="(e) => inputChange(e.target.value, record, 'schoolprizeName')"
+                  :value="record.schoolprizeName"
+                >
+                </a-textarea>
+              </div>
+            </template>
+            <template slot="schoolprizeDengji" slot-scope="text, record">
+              <div v-if="record.state == 3 || record.state == 1">
+                {{ text }}
+              </div>
+              <div v-else>
+                <a-textarea
+                  @blur="(e) => inputChange(e.target.value, record, 'schoolprizeDengji')"
+                  :value="record.schoolprizeDengji"
+                >
+                </a-textarea>
+              </div>
+            </template>
+            <template slot="schoolprizeRanknum" slot-scope="text, record">
+              <div v-if="record.state == 3 || record.state == 1">
+                {{ text }}
+              </div>
+              <div v-else>
+                <a-textarea
+                  @blur="(e) => inputChange(e.target.value, record, 'schoolprizeRanknum')"
+                  :value="record.schoolprizeRanknum"
+                >
+                </a-textarea>
+              </div>
+            </template>
+            <template slot="schoolprizeDate" slot-scope="text, record">
+              <div v-if="record.state == 3 || record.state == 1">
+                {{ text }}
+              </div>
+              <div v-else>
+                <a-textarea
+                  @blur="(e) => inputChange(e.target.value, record, 'schoolprizeDate')"
+                  :value="record.schoolprizeDate"
+                >
+                </a-textarea>
+              </div>
+            </template>
+
+
+
             <template slot="npqk" slot-scope="text, record">
               <div v-if="record.state == 3 || record.state == 1">
                 {{ text }}
@@ -526,6 +585,7 @@ import moment from "moment";
 import DcaBReportUnsure from "./DcaBReportUnsure";
 import AuditUserInfo from "../../common/AuditUserInfo";
 import AuditResultInfo from "../../common/AuditResultInfo";
+import ImportExcel from "../../common/ImportExcelQuery";
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -553,19 +613,21 @@ export default {
         showTotal: (total, range) =>
           `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`,
       },
+      activeKey: 1,
       queryParams: {
         userAccount: "",
         dcaYear: "",
         ks: "正高,副高",
+        activeKey: 1
       },
       sortedInfo: null,
       paginationInfo: null,
       visibleUserInfo: false,
       scroll: {
-        x: 4000,
+        x: 4100,
         y: window.innerHeight - 200 - 100 - 20 - 80,
       },
-      listAuditInfo: [
+      listAuditInfo: [// 所有需要计算的值
         {
           fieldName: "edu",
         },
@@ -770,6 +832,10 @@ export default {
         { fieldName: "sftgsdsf" },
         { fieldName: "sdsfypfj" },
         { fieldName: "sdsfypfj2" },
+
+{ fieldName: "sfdlwcyjspy" },
+{ fieldName: "pyzlsfyl" },
+
         { fieldName: "ynjbzr" },
         { fieldName: "j5njxgz" },
         { fieldName: "mzylpf" },
@@ -809,12 +875,12 @@ export default {
       userAccount_right: "",
       visibleUserInfo_right: false,
       pSize: 0,
-      activeKey: 1,
+      
       sendInfo: "",
       modalVisible: false,
     };
   },
-  components: { DcaBReportUnsure, AuditUserInfo, AuditResultInfo },
+  components: { DcaBReportUnsure, AuditUserInfo, AuditResultInfo, ImportExcel },
   mounted() {
     // this.fetchUseraudit()
     this.search();
@@ -823,6 +889,7 @@ export default {
     moment,
     callback(activeKey) {
       this.activeKey = activeKey;
+      //this.queryParams.activeKey =activeKey;
     },
 
     showModal() {
@@ -868,6 +935,9 @@ export default {
           onCancel() {},
         });
       }
+    },
+    handleRefesh(){
+      this.search();
     },
     mutiSend() {
       if (!this.selectedRowKeys.length) {
@@ -1691,6 +1761,16 @@ export default {
           dataIndex: "sdsfypfj",
           width: 120,
         },
+         {
+              title: "是否独立完成一届以上研究生培养工作（截止申报年度10月31日）",
+              dataIndex: "sfdlwcyjspy",
+              width: 120,
+            },
+             {
+              title: "培养质量是否优良",
+              dataIndex: "pyzlsfyl",
+              width: 120,
+            },
         {
           title: "教学评分(百分制)76",
           dataIndex: "jxpf",
@@ -1706,6 +1786,7 @@ export default {
           dataIndex: "sdsfypfj2",
           width: 120,
         },
+        
         {
           title: "是否担任一年辅导员或班主任并考核合格79",
           dataIndex: "ynjbzr",
@@ -1982,6 +2063,8 @@ export default {
         "jxpf",
         "jxpfdj",
         "sdsfypfj2",
+"sfdlwcyjspy","pyzlsfyl",
+
         "ynjbzr",
         "j5njxgz",
         "mzylpf",
@@ -2500,25 +2583,25 @@ export default {
                       title: "名称",
                       dataIndex: "schoolprizeName",
                       width: 100,
-                      scopedSlots: { customRender: "splitHang" },
+                      scopedSlots: { customRender: "schoolprizeName" },
                     },
                     {
                       title: "等级",
                       dataIndex: "schoolprizeDengji",
                       width: 100,
-                      scopedSlots: { customRender: "splitHang" },
+                      scopedSlots: { customRender: "schoolprizeDengji" },
                     },
                     {
                       title: "排名",
                       dataIndex: "schoolprizeRanknum",
                       width: 100,
-                      scopedSlots: { customRender: "splitHang" },
+                      scopedSlots: { customRender: "schoolprizeRanknum" },
                     },
                     {
                       title: "时间",
                       dataIndex: "schoolprizeDate",
                       width: 100,
-                      scopedSlots: { customRender: "splitHang" },
+                      scopedSlots: { customRender: "schoolprizeDate" },
                     },
                   ],
                 },
@@ -2661,9 +2744,12 @@ export default {
                       title: "门办",
                       children: [
                         {
-                          title: "等级",
-                          dataIndex: "mzylpfdj",
-                          width: 100,
+                           title: "等级",
+                      dataIndex: "mzylpfdj3",
+                      width: 100,
+                      customRender: (text, row, index) => {
+                        return row.mzylpfdj;
+                      },
                         },
                         {
                           title: "评分",
@@ -2924,6 +3010,16 @@ export default {
               dataIndex: "sdsfypfj",
               width: 120,
             },
+             {
+              title: "是否独立完成一届以上研究生培养工作（截止申报年度10月31日）",
+              dataIndex: "sfdlwcyjspy",
+              width: 120,
+            },
+             {
+              title: "培养质量是否优良",
+              dataIndex: "pyzlsfyl",
+              width: 120,
+            },
           ],
         },
         {
@@ -2931,13 +3027,19 @@ export default {
           children: [
             {
               title: "教学评分(百分制)",
-              dataIndex: "jxpf",
+              dataIndex: "jxpf3",
               width: 100,
+              customRender: (text, row, index) => {
+                        return row.jxpf;
+                      },
             },
             {
               title: "教学评分等级",
-              dataIndex: "jxpfdj",
+              dataIndex: "jxpfdj3",
               width: 120,
+               customRender: (text, row, index) => {
+                    return row.jxpfdj;
+                  },
             },
             {
               title: "是否存在师德师风一票否决的情况",
@@ -2961,8 +3063,12 @@ export default {
           children: [
             {
               title: "门诊医疗评分(百分制)",
-              dataIndex: "mzylpf",
+              dataIndex: "mzylpf3",
               width: 100,
+              customRender: (text, row, index) => {
+                return row.mzylpf;
+              },
+                        
             },
             {
               title: "门诊医疗评分等级",
@@ -3121,7 +3227,7 @@ export default {
         {
           title: "退审原因",
           dataIndex: "ntyy",
-          width: 150,
+          width: 250,
           scopedSlots: { customRender: "ntyy" },
         },
         {
@@ -3158,23 +3264,25 @@ export default {
             {
               title: "援疆援藏援非援滇",
               dataIndex: "help",
-              width: 150,
+              width: 170,
               scopedSlots: { customRender: "splitHang" },
             },
             {
               title: "其他指令性支援情况",
               dataIndex: "qtzlxzy",
-              width: 150,
+              width: 170,
               scopedSlots: { customRender: "splitHang" },
             },
              {
               title: '支援类型',
               dataIndex: 'zhiyuanchuguo',
+              scopedSlots: { customRender: "splitHang" },
               width: 100
             },
             {
               title: "时长（月）",
               dataIndex: "helpmonth",
+              scopedSlots: { customRender: "splitHang" },
               width: 60,
             },
           ],

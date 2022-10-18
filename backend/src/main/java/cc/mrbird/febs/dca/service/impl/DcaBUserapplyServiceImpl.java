@@ -320,5 +320,12 @@ public class DcaBUserapplyServiceImpl extends ServiceImpl<DcaBUserapplyMapper, D
             log.error("获取字典信息失败", e);
             return null;
         }
+
+
+    }
+    @Override
+    @Transactional
+    public   int countAccount(String userAccount,String gwdj,String dcaYear){
+              return  this.baseMapper.countAccount(userAccount,gwdj,dcaYear);
     }
 }

@@ -298,7 +298,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1200,
+        x: 1500,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,

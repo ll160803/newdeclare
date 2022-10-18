@@ -33,6 +33,8 @@ public interface IDcaBUserapplyService extends IService<DcaBUserapply> {
 
          List<String> getApplyAccount(String dcaYear,String type);
 
+    int countAccount(String userAccount,String gwdj,String dcaYear);
+
     /**
      * 部门审核的结果
      * @param request

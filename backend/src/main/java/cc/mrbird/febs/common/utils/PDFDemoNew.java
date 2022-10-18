@@ -738,10 +738,13 @@ public class PDFDemoNew {
         }
 
         float sypyH=contentHeight50;// 完成上一聘期工作任务情况 高度
-
-        if(value1_8_1.length()>200){
-            sypyH= value1_8_1.length()*0.25f;
+        if(value1_8_1.length()>166){
+            sypyH= value1_8_1.length()*0.3f;
         }
+        if(value1_8_1.length()>2280){
+            sypyH= value1_8_1.length()*0.23f;
+        }
+
         cell = new PdfPCell(new Phrase(title1_8_1, fontgoal));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -878,8 +881,19 @@ public class PDFDemoNew {
         cell = new PdfPCell(new Phrase(value2_1_1, fontgoal));
         cell.setVerticalAlignment(Element.ALIGN_TOP);
         cell.setPadding(5);
-        cell.setFixedHeight(210);
+        cell.setFixedHeight(650);
         table.addCell(cell);
+
+        document.add(table);
+        //申报拟聘岗位理由（限3000字以内）
+        document.newPage();
+        table = new PdfPTable(1);
+        //table总Width宽度
+        table.setTotalWidth(totalWidth);
+        //设置总Width宽度 生效
+        table.setLockedWidth(true);
+        //列布局
+        table.setWidths(new int[]{1});
 
         cell = new PdfPCell(new Phrase(title2_2_1, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -889,7 +903,7 @@ public class PDFDemoNew {
 
         cell = new PdfPCell(new Phrase(value2_2_1, fontgoal));
         cell.setPadding(5);
-        cell.setFixedHeight(440);
+        cell.setFixedHeight(550);
         table.addCell(cell);
         document.add(table);
         //endregion
@@ -4303,7 +4317,7 @@ public class PDFDemoNew {
 
         pdfStyleex.setHorizontalAlignment(Element.ALIGN_LEFT);
         pdfStyleex.setVerticalAlignment(Element.ALIGN_TOP);
-        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getGrsxzzjsdsf(), numColumns, 260,fontgr));
+        listCells.add(generatePdfValue(pdfStyleex, customApplyFirst.getGrsxzzjsdsf(), numColumns, 550,fontgr));
         //   cell = new PdfPCell(new Phrase(value2_1_1, fontgr));
 
         listCells.add(generatePdfValue(pdfStyle_t, title2_2_1, numColumns, 0, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE));

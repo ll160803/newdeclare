@@ -9,10 +9,13 @@ import store from '../store'
 import db from 'utils/localstorage'
 moment.locale('zh-cn')
 
+//const bUrl=  'http://localhost:1099/';
+const bUrl= 'https://whuhhrmapi.asclepius.whxh.com.cn/';
+
 // 统一配置
 let FEBS_REQUEST = axios.create({
-  baseURL: 'https://whuhhrmapi.asclepius.whxh.com.cn/',
-  //baseURL: 'http://localhost:1099/',
+  //baseURL: 'https://whuhhrmapi.asclepius.whxh.com.cn/',
+  baseURL: bUrl,
   responseType: 'json',
   validateStatus(status) {
     // 200 外的状态码都认定为失败
@@ -151,7 +154,7 @@ FEBS_REQUEST.interceptors.response.use((config) => {
   return Promise.reject(error)
 })
 const request = {
-  baseURL: 'https://whuhhrmapi.asclepius.whxh.com.cn/',
+  baseURL: bUrl,
   post(url, params) {
     return FEBS_REQUEST.post(url, params, {
       transformRequest: [(params) => {
@@ -262,7 +265,7 @@ const request = {
       responseType: 'arraybuffer',
       timeout: 90000
     }).then((r) => {
-      debugger
+      //debugger
       const content = r.data
       const blob = new Blob([content])
       if ('download' in document.createElement('a')) {
