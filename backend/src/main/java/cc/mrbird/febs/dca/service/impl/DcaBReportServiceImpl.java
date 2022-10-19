@@ -78,7 +78,7 @@ public IPage<DcaBReport> findDcaBReports(QueryRequest request, DcaBReport dcaBRe
             IPage<DcaBReport> result =this.page(page,queryWrapper);
             List<DcaBReport> list =result.getRecords();
             String[] arr= {"ylpfbfz","ylpfdj","ydyf","ydyffj","zzsc","zzscypfj","jlsc","xsddsc","xsddscypfj","yyxtsc","sfssds","sfbsds","sftgsdsf",
-                    "sdsfypfj","sdsfypfj2","ynjbzr","j5njxgz","mzylpf","mzylpfdj","mzylsgypfj","jlscypfj","yyxtypfj"
+                    "sdsfypfj","sdsfypfj2","ynjbzr","j5njxgz","mzylpf","mzylpfdj","mzylsgypfj","jlscypfj","yyxtypfj","sfdlwcyjspy","pyzlsfyl"
                     ,"sfypfjyl","hlylpf","hlylpfdj","hljxpfbfz","hljxpfdl","hlhlzrypfj","sshbdts","sshkyxts","blxwjf","wfzgszcf"
                     ,"zypfyjxl","zypfdjyjxl","zypfbfz58","zypfdj59","sfyszgzs","sfjyhlzgzs","xingfscsftg","sfczxfypfj61","zypf52","zypfdj52","beizhumenban","beizhuhuli","beizhuyiwuchu"};
 
@@ -100,6 +100,8 @@ public IPage<DcaBReport> findDcaBReports(QueryRequest request, DcaBReport dcaBRe
                   else {
                       fy.setAuditTitletype(item.getAuditTitletype());
                   }
+                  fy.setDcaYear(item.getDcaYear());
+                  fy.setGwdj(item.getGwdj());
                   fy.setAuditTitle(item.getAuditTitle());
                   fy.setAuditResult(item.getAuditResult());
                   fy.setId(item.getId());
@@ -109,7 +111,8 @@ public IPage<DcaBReport> findDcaBReports(QueryRequest request, DcaBReport dcaBRe
 
               for (DcaBReport dca : list
               ) {
-                  List<DcaBAuditdynamic> dcaBAuditds = auditdynamicAuditList2.stream().filter(p -> p.getUserAccount().equals(dca.getUserAccount())).collect(Collectors.toList());
+                  List<DcaBAuditdynamic> dcaBAuditds = auditdynamicAuditList2.stream().filter(p -> p.getUserAccount().equals(dca.getUserAccount())
+                          &&p.getGwdj().equals(dca.getGwdj()) && p.getDcaYear().equals(dca.getYear())).collect(Collectors.toList());
 
                   dca.setDcaBAuditdynamicList(dcaBAuditds);
               }

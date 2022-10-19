@@ -433,14 +433,15 @@ public interface DcaBUserMapper extends BaseMapper<DcaBUser> {
      */
     @Select("SELECT\n" +
             "\tuser_account,\n" +
+            "\tisUse, \n" +
             "\tjz_zw, \n" +
             "\tjz_content \n" +
             "FROM\n" +
             "\tdca_b_parttimejob\n" +
             "WHERE\n" +
             "\tIS_DELETEMARK = 1\n" +
-            "\tAND state = 3" )
-           // "\tAND IsUse = 1")
+            "\tAND state = 3\n" +
+            "AND IsUse = 1")
     List<DcaBParttimejob> getPartTimejob();
 
     /**

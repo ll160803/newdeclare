@@ -402,8 +402,8 @@ public class DcaUserAuditController extends BaseController {
                 /**
                  * 2021 0713 新增数据
                  */
-                String[] arr= {"ydyf","ydyffj","zzsc","zzscypfj","jlsc","xsddsc","xsddscypfj","yyxtsc","sfssds","sfbsds","sftgsdsf",
-                        "sdsfypfj","sdsfypfj2","ynjbzr","j5njxgz","mzylpf","mzylpfdj","mzylsgypfj","jlscypfj","yyxtypfj"
+             /**   String[] arr= {"ylpfbfz","ylpfdj","ydyf","ydyffj","zzsc","zzscypfj","jlsc","xsddsc","xsddscypfj","yyxtsc","sfssds","sfbsds","sftgsdsf",
+                        "sdsfypfj","sdsfypfj2","ynjbzr","j5njxgz","mzylpf","mzylpfdj","mzylsgypfj","jlscypfj","yyxtypfj","sfdlwcyjspy","pyzlsfyl"
                         ,"sfypfjyl","hlylpf","hlylpfdj","hljxpfbfz","hljxpfdl","hlhlzrypfj","sshbdts","sshkyxts","blxwjf","wfzgszcf"
                         ,"zypfyjxl","zypfdjyjxl","zypfbfz58","zypfdj59","sfyszgzs","sfjyhlzgzs","xingfscsftg","sfczxfypfj61","zypf52","zypfdj52","beizhumenban","beizhuhuli","beizhuyiwuchu"};
                 LambdaQueryWrapper<DcaBCopyAuditdynamic> ql = new LambdaQueryWrapper<>();
@@ -417,20 +417,29 @@ public class DcaUserAuditController extends BaseController {
                      ) {
                     DcaBAuditdynamic fy= new DcaBAuditdynamic();
                     fy.setUserAccount(item.getUserAccount());
-                    fy.setAuditTitletype(item.getAuditTitletype());
+                    if(item.getAuditTitletype().equals("ylpfbfz") ||item.getAuditTitletype().equals("ylpfdj")){
+                        fy.setAuditTitletype(item.getAuditTitletype()+"2022");
+                    }
+                    else {
+                        fy.setAuditTitletype(item.getAuditTitletype());
+                    }
                     fy.setAuditTitle(item.getAuditTitle());
                     fy.setAuditResult(item.getAuditResult());
+                    fy.setDcaYear(item.getDcaYear());
+                    fy.setGwdj(item.getGwdj());
                     fy.setId(item.getId());
                     auditdynamicAuditList2.add(fy);
                 }
 
                 for (DcaBReport dca:dcaBAuditdynamics
                      ) {
-                    List<DcaBAuditdynamic> dcaBAuditds=auditdynamicAuditList2.stream().filter(p->p.getUserAccount().equals(dca.getUserAccount())).collect(Collectors.toList());
+                    List<DcaBAuditdynamic> dcaBAuditds=auditdynamicAuditList2.stream().filter(p->p.getUserAccount().equals(dca.getUserAccount())
+&&p.getGwdj().equals(dca.getGwdj()) && p.getDcaYear().equals(dca.getYear())
+                    ).collect(Collectors.toList());
 
                     dca.setDcaBAuditdynamicList(dcaBAuditds);
 
-                }
+                }*/
 
             }
             else {
@@ -439,7 +448,7 @@ public class DcaUserAuditController extends BaseController {
                  * 2021 0713 新增数据
                  */
                 String[] arr= {"ydyf","ydyffj","zzsc","zzscypfj","jlsc","xsddsc","xsddscypfj","yyxtsc","sfssds","sfbsds","sftgsdsf",
-                        "sdsfypfj","sdsfypfj2","ynjbzr","j5njxgz","mzylpf","mzylpfdj","mzylsgypfj","jlscypfj","yyxtypfj"
+                        "sdsfypfj","sdsfypfj2","ynjbzr","j5njxgz","mzylpf","mzylpfdj","mzylsgypfj","jlscypfj","yyxtypfj","sfdlwcyjspy","pyzlsfyl"
                         ,"sfypfjyl","hlylpf","hlylpfdj","hljxpfbfz","hljxpfdl","hlhlzrypfj","sshbdts","sshkyxts","blxwjf","wfzgszcf"
                         ,"zypfyjxl","zypfdjyjxl","zypfbfz58","zypfdj59","sfyszgzs","sfjyhlzgzs","xingfscsftg","sfczxfypfj61","zypf52","zypfdj52","beizhumenban","beizhuhuli","beizhuyiwuchu"};
                 LambdaQueryWrapper<DcaBAuditdynamic> ql = new LambdaQueryWrapper<>();

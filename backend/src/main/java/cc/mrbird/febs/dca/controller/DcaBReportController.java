@@ -408,6 +408,9 @@ public class DcaBReportController extends BaseController {
                 DcaBReport dcaBReport = new DcaBReport();
                 BeanUtil.copyProperties(dcaBReportImport, dcaBReport, CopyOptions.create().setIgnoreNullValue(true));
 
+                if(StringUtils.isNotEmpty(dcaBReport.getChoosepos())){
+                    dcaBReport.setChoosepos(dcaBReport.getChoosepos().replace("#","\r\n"));
+                }
                 this.iDcaBReportService.update(dcaBReport, queryWrapperD);
             }
         }

@@ -576,9 +576,9 @@ export default {
         {
           fieldName: "jxpf",
         },
-        {
-          fieldName: "jxpfdj",
-        },
+        // {
+        //   fieldName: "jxpfdj",
+        // },
         {
           fieldName: "sciName",
         },
@@ -1370,7 +1370,7 @@ export default {
         "ylpfbfz",
         "ylpfdj",
         "jxpf",
-        "jxpfdj",
+      //  "jxpfdj",
         "sciName",
         "sciDengji",
         "sciRanknum",

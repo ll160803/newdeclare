@@ -117,6 +117,9 @@ private static final long serialVersionUID=1L;
             @ExcelField(value ="修改人")
     private Long modifyUserId;
 
+    private transient  String dcaYear;
+
+    private transient String gwdj;
 
 
     public static final String ID ="id" ;
