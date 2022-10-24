@@ -28,12 +28,13 @@
                     <result column="auditDate" property="auditDate"/>
                     <result column="auditSuggestion" property="auditSuggestion"/>
                     <result column="IsUse" property="IsUse"/>
+            <result column="lxhj" property="lxhj"/>
                     <result column="display_index" property="displayIndex"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, dca_year, gwdj, file_id, file_url, user_account_name, user_account, achievement_name, rank_index, achievement_grade, achievement_date, achievement_define, achievement_content, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse, display_index
+        id, dca_year, gwdj, file_id, file_url, user_account_name, user_account, achievement_name, rank_index, achievement_grade, achievement_date, achievement_define, achievement_content, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse,lxhj, display_index
     </sql>
     <update id="updateDcaBCopyAchievement" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopyAchievement">
         update dca_b_copy_achievement
@@ -60,6 +61,7 @@
 <if test="auditDate != null">auditDate=#{auditDate},</if>
 <if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
 <if test="IsUse != null">IsUse=#{IsUse},</if>
+            <if test="lxhj != null">lxhj=#{lxhj},</if>
 <if test="displayIndex != null">display_index=#{displayIndex},</if>
         </trim>
                 where id=#{id}

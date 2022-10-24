@@ -16,6 +16,7 @@ import cc.mrbird.febs.dca.entity.DcaBSciencepublish;
 
 import cc.mrbird.febs.dca.service.IDcaBUserapplyService;
 import cc.mrbird.febs.dca.service.IDcaDJbService;
+import cc.mrbird.febs.dcacopy.entity.DcaBCopySciencepublish;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.map.MapUtil;
@@ -105,7 +106,13 @@ public Map<String, Object> List2(QueryRequest request, DcaBSciencepublish dcaBSc
     dcaBSciencepublish.setIsDeletemark(1);
         request.setSortField("user_account asc,state asc,display_Index");
         request.setSortOrder("ascend");
+        if(dcaBSciencepublish.getState()!=null && dcaBSciencepublish.getState().equals(9)){
+        return getDataTable(this.iDcaBSciencepublishService.findDcaBCopySciencepublishs(request, dcaBSciencepublish));
+    }
+    else {
         return getDataTable(this.iDcaBSciencepublishService.findDcaBSciencepublishs(request, dcaBSciencepublish));
+    }
+
         }
 @Log("新增/按钮")
 @PostMapping("addNew")
@@ -320,11 +327,16 @@ public void deleteDcaBSciencepublishs(@NotBlank(message = "{required}") @PathVar
             dcaBSciencepublish.setIsDeletemark(1);
             request.setSortField("user_account asc,state asc,display_Index");
             request.setSortOrder("ascend");
-         List<DcaBSciencepublish> dcaBSciencepublishList=  this.iDcaBSciencepublishService.findDcaBSciencepublishs(request, dcaBSciencepublish).getRecords();
-
-
+            if(dcaBSciencepublish.getState()!=null && dcaBSciencepublish.getState().equals(9)) {
+                List<DcaBCopySciencepublish> dcaBSciencepublishList = this.iDcaBSciencepublishService.findDcaBCopySciencepublishs(request, dcaBSciencepublish).getRecords();
+                ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
+            }
+            else {
+                List<DcaBSciencepublish> dcaBSciencepublishList = this.iDcaBSciencepublishService.findDcaBSciencepublishs(request, dcaBSciencepublish).getRecords();
+                ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
+            }
             //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
-            ExportExcelUtils.exportCustomExcel_han(response, dcaBSciencepublishList,dataJson,"");
+
         }catch(Exception e){
             message="导出Excel失败";
             log.error(message,e);

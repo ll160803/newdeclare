@@ -164,6 +164,31 @@
             <a-select-option value="三">
               三
             </a-select-option>
+             <a-select-option value="四">
+              四
+            </a-select-option>
+          </a-select>
+        </div>
+      </template>
+        <template
+        slot="lxhj"
+        slot-scope="text, record"
+      >
+        <div v-if="record.state==3">
+          {{text}}
+        </div>
+        <div v-else>
+          <a-select
+            :value="record.lxhj"
+            style="width: 100%"
+            @change="(e,f) => handleSelectChange(e,f,record,'lxhj')"
+          >
+            <a-select-option value="立项">
+              立项
+            </a-select-option>
+            <a-select-option value="获奖">
+              获奖
+            </a-select-option>
           </a-select>
         </div>
       </template>
@@ -713,6 +738,12 @@ export default {
           width: 80,
           scopedSlots: { customRender: 'achievementDefine' }
         },
+         {
+        title: '立项/获奖',
+        dataIndex: 'lxhj',
+        width: 80,
+        scopedSlots: { customRender: 'lxhj' }
+      },
         {
           title: '备注',
           dataIndex: 'achievementContent',

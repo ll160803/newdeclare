@@ -7,11 +7,8 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
-import cc.mrbird.febs.dca.entity.DcaBAcademic;
-import cc.mrbird.febs.dca.entity.DcaBReportImport;
-import cc.mrbird.febs.dca.entity.DcaBReportImportZj;
+import cc.mrbird.febs.dca.entity.*;
 import cc.mrbird.febs.dca.service.IDcaBReportService;
-import cc.mrbird.febs.dca.entity.DcaBReport;
 
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.system.domain.User;
@@ -398,6 +395,98 @@ public class DcaBReportController extends BaseController {
         if (CollectionUtil.isEmpty(errorList)) {
 
             for (DcaBReportImport dcaBReportImport : successList
+            ) {
+                LambdaQueryWrapper<DcaBReport> queryWrapperD = new LambdaQueryWrapper<>();
+                queryWrapperD.eq(DcaBReport::getUserAccount, dcaBReportImport.getUserAccount());
+                queryWrapperD.eq(DcaBReport::getYear, dcaBReportImport.getYear());
+                queryWrapperD.eq(DcaBReport::getGwdj, dcaBReportImport.getGwdj());
+                queryWrapperD.eq(DcaBReport::getNpPositionName, dcaBReportImport.getNpPositionName());
+
+                DcaBReport dcaBReport = new DcaBReport();
+                BeanUtil.copyProperties(dcaBReportImport, dcaBReport, CopyOptions.create().setIgnoreNullValue(true));
+
+                if(StringUtils.isNotEmpty(dcaBReport.getChoosepos())){
+                    dcaBReport.setChoosepos(dcaBReport.getChoosepos().replace("#","\r\n"));
+                }
+                this.iDcaBReportService.update(dcaBReport, queryWrapperD);
+            }
+        }
+
+        resultList.add(MapUtil.of("data", successList));
+        resultList.add(MapUtil.of("haveError", !CollectionUtil.isEmpty(errorList)));
+        resultList.add(MapUtil.of("error", errorList));
+        resultList.add(MapUtil.of("timeConsuming", (System.currentTimeMillis() - beginMillis) / 1000L));
+        return ResponseEntity.ok(resultList);
+    }
+
+
+    @RequestMapping(value = "downTemplate23", method = RequestMethod.POST)
+    public void downTemplate23(HttpServletResponse response, QueryRequest request, DcaBReport dcaBReport, int activeKey,String dcaYear) {
+        List<DcaBReportImport> publishList = new ArrayList<>();
+
+        request.setPageNum(1);
+        request.setPageSize(20000);
+        LambdaQueryWrapper<DcaBReport> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.isNotBlank(dcaBReport.getKs())) {
+            queryWrapper.in(DcaBReport::getGwdj, dcaBReport.getKs().split(","));
+        }
+        if (StringUtils.isNotBlank(dcaBReport.getUserAccount())) {
+            queryWrapper.and(wrap -> wrap.eq(DcaBReport::getUserAccount, dcaBReport.getUserAccount()).or().like(DcaBReport::getUserAccountName, dcaBReport.getUserAccount()));
+        }
+        if (StringUtils.isNotBlank(dcaYear)) {
+            queryWrapper.eq(DcaBReport::getYear, dcaYear);
+        }
+        queryWrapper.eq(DcaBReport::getState,0);
+        List<DcaBReport> bReportList = this.iDcaBReportService.list(queryWrapper);
+
+
+
+        List<DcaBReportImport23> dcaBReportImportList = new ArrayList<>();
+        for (DcaBReport report : bReportList) {
+            DcaBReportImport23 bReportImport = new DcaBReportImport23();
+            BeanUtil.copyProperties(report, bReportImport, CopyOptions.create().setIgnoreNullValue(true));
+            dcaBReportImportList.add(bReportImport);
+        }
+
+        ExcelKit.$Export(DcaBReportImport23.class, response).downXlsx(dcaBReportImportList, false);
+
+
+    }
+
+    @RequestMapping(value = "import23", method = RequestMethod.POST)
+    public ResponseEntity<?> importUser23(@RequestParam MultipartFile file)
+            throws IOException {
+        long beginMillis = System.currentTimeMillis();
+
+        List<DcaBReportImport23> successList = Lists.newArrayList();
+        List<Map<String, Object>> errorList = Lists.newArrayList();
+        List<Map<String, Object>> resultList = Lists.newArrayList();
+
+        User currentUser = FebsUtil.getCurrentUser();
+
+
+        ExcelKit.$Import(DcaBReportImport23.class)
+                .readXlsx(file.getInputStream(), new ExcelReadHandler<DcaBReportImport23>() {
+
+                    @Override
+                    public void onSuccess(int sheetIndex, int rowIndex, DcaBReportImport23 entity) {
+                        successList.add(entity); // 单行读取成功，加入入库队列。
+                    }
+
+                    @Override
+                    public void onError(int sheetIndex, int rowIndex,
+                                        java.util.List<ExcelErrorField> errorFields) {
+                        // 读取数据失败，记录了当前行所有失败的数据
+                        errorList.add(MapUtil.of("sheetIndex", sheetIndex));
+                        errorList.add(MapUtil.of("rowIndex", rowIndex));
+                        errorList.add(MapUtil.of("errorFields", errorFields));
+                    }
+                });
+
+        // TODO: 执行successList的入库操作。
+        if (CollectionUtil.isEmpty(errorList)) {
+
+            for (DcaBReportImport23 dcaBReportImport : successList
             ) {
                 LambdaQueryWrapper<DcaBReport> queryWrapperD = new LambdaQueryWrapper<>();
                 queryWrapperD.eq(DcaBReport::getUserAccount, dcaBReportImport.getUserAccount());

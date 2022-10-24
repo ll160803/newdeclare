@@ -43,6 +43,14 @@
                 @click="showModal"
                 >推送用户确认</a-button
               >
+               <span style="float:left;">
+                <import-excel
+          templateUrl="dcaBReport/downTemplate23"
+          @succ="handleRefesh"
+          url="dcaBReport/import23"
+          :queryParams="queryParams"
+        >
+        </import-excel> </span>
               <a-button type="primary" @click="exportExcel">导出</a-button>
               <a-button type="primary" @click="search">查询</a-button>
               <a-button style="margin-left: 8px" @click="reset">重置</a-button>
@@ -518,6 +526,7 @@ import moment from "moment";
 import DcaBReportUnsure from "./DcaBReportUnsureZj2";
 import AuditUserInfo from "../../common/AuditUserInfo";
 import AuditResultInfo from "../../common/AuditResultInfo";
+import ImportExcel from "../../common/ImportExcelQuery";
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -549,6 +558,7 @@ export default {
         userAccount: "",
         dcaYear: "",
         ks: "二三级",
+        activeKey: 1
       },
       sortedInfo: null,
       paginationInfo: null,
@@ -709,7 +719,7 @@ export default {
       modalVisible: false,
     };
   },
-  components: { DcaBReportUnsure, AuditUserInfo, AuditResultInfo },
+  components: { DcaBReportUnsure, AuditUserInfo, AuditResultInfo, ImportExcel},
   mounted() {
     // this.fetchUseraudit()
     this.search();
@@ -1702,11 +1712,13 @@ export default {
               title: "负责开展的新技术新业务",
               dataIndex: "xjsxyw",
               width: 100,
+               scopedSlots: { customRender: "splitHang" },
             },
             {
               title: "负责的新技术新业务获奖情况",
               dataIndex: "xjsxywprize",
               width: 100,
+               scopedSlots: { customRender: "splitHang" },
             },
           ],
         },

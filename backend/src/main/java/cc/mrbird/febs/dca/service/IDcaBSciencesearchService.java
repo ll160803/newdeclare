@@ -1,6 +1,7 @@
 package cc.mrbird.febs.dca.service;
 
 import cc.mrbird.febs.dca.entity.DcaBSciencesearch;
+import cc.mrbird.febs.dcacopy.entity.DcaBCopySciencesearch;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
@@ -19,6 +20,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 public interface IDcaBSciencesearchService extends IService<DcaBSciencesearch> {
 
         IPage<DcaBSciencesearch> findDcaBSciencesearchs(QueryRequest request, DcaBSciencesearch dcaBSciencesearch);
+
+        IPage<DcaBCopySciencesearch> findDcaBCopySciencesearchs(QueryRequest request, DcaBSciencesearch dcaBSciencesearch);
 
         IPage<DcaBSciencesearch> findDcaBSciencesearchList(QueryRequest request, DcaBSciencesearch dcaBSciencesearch);
 

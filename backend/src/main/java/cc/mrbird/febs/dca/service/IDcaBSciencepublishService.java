@@ -1,6 +1,7 @@
 package cc.mrbird.febs.dca.service;
 
 import cc.mrbird.febs.dca.entity.DcaBSciencepublish;
+import cc.mrbird.febs.dcacopy.entity.DcaBCopySciencepublish;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public interface IDcaBSciencepublishService extends IService<DcaBSciencepublish>
 
         IPage<DcaBSciencepublish> findDcaBSciencepublishs(QueryRequest request, DcaBSciencepublish dcaBSciencepublish);
 
+        IPage<DcaBCopySciencepublish> findDcaBCopySciencepublishs(QueryRequest request, DcaBSciencepublish dcaBSciencepublish);
         IPage<DcaBSciencepublish> findDcaBSciencepublishList(QueryRequest request, DcaBSciencepublish dcaBSciencepublish);
 
         void createDcaBSciencepublish(DcaBSciencepublish dcaBSciencepublish);

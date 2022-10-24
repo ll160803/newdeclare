@@ -26,6 +26,7 @@
               >
                 <a-button
                   type="dashed"
+                  v-if="state!=9"
                   block
                   @click="handleAuditNext(record)"
                 >

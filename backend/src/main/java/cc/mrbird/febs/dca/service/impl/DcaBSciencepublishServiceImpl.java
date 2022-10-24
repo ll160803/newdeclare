@@ -2,12 +2,13 @@ package cc.mrbird.febs.dca.service.impl;
 
 import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.utils.SortUtil;
-import cc.mrbird.febs.dca.entity.DcaBSciencepublish;
+import cc.mrbird.febs.dca.entity.*;
 import cc.mrbird.febs.dca.dao.DcaBSciencepublishMapper;
-import cc.mrbird.febs.dca.entity.DcaDJb;
-import cc.mrbird.febs.dca.entity.userXuhao;
 import cc.mrbird.febs.dca.service.IDcaBSciencepublishService;
 import cc.mrbird.febs.dca.service.IDcaDJbService;
+import cc.mrbird.febs.dca.service.IDcaDYearsettingService;
+import cc.mrbird.febs.dcacopy.entity.DcaBCopySciencepublish;
+import cc.mrbird.febs.dcacopy.service.IDcaBCopySciencepublishService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -44,9 +45,94 @@ public class DcaBSciencepublishServiceImpl extends ServiceImpl<DcaBSciencepublis
     @Autowired
     IDcaDJbService iDcaDJbService;
 
+    @Autowired
+    IDcaDYearsettingService iDcaDYearsettingService;
+
+    @Autowired
+    IDcaBCopySciencepublishService iDcaBCopySciencepublishService;
+
+
+    private boolean IsExistInYearSetting(String dcaYear, String gwdj) {
+        if(StringUtils.isEmpty(dcaYear)){
+            return true;
+        }
+        List<DcaDYearsetting> yearsettings = this.iDcaDYearsettingService.list();
+        if (yearsettings.stream().filter(p -> p.getDcaYear().equals(dcaYear) && p.getGwdj().equals(gwdj)).count() > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    @Override
+    public IPage<DcaBCopySciencepublish> findDcaBCopySciencepublishs(QueryRequest request, DcaBSciencepublish dcaBSciencepublish){
+
+        if(IsExistInYearSetting(dcaBSciencepublish.getAuditMan(), dcaBSciencepublish.getAuditManName())){
+            IPage<DcaBCopySciencepublish> result2 = new Page<>();
+            return result2;
+        }
+        LambdaQueryWrapper<DcaBCopySciencepublish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(DcaBCopySciencepublish::getIsDeletemark, 1);//1是未删 0是已删
+
+        if (StringUtils.isNotBlank(dcaBSciencepublish.getUserAccount())) {
+            queryWrapper.and(wrap -> wrap.eq(DcaBCopySciencepublish::getUserAccount, dcaBSciencepublish.getUserAccount()).or()
+                    .like(DcaBCopySciencepublish::getUserAccountName, dcaBSciencepublish.getUserAccount()));
+
+        }
+        if (StringUtils.isNotBlank(dcaBSciencepublish.getAuditManName())) {// 年度 和高级、中级、初级
+            if (dcaBSciencepublish.getAuditManName().equals("高级")) {
+
+                queryWrapper.in(DcaBCopySciencepublish::getGwdj,new String[]{"正高","副高"} );
+            }
+            if (dcaBSciencepublish.getAuditManName().equals("中级")) {
+                queryWrapper.in(DcaBCopySciencepublish::getGwdj,new String[]{"中级","初级"} );
+            }
+            if (dcaBSciencepublish.getAuditManName().equals("初级")) {
+                queryWrapper.in(DcaBCopySciencepublish::getGwdj,new String[]{"二三级"} );
+            }
+            if (StringUtils.isNotBlank(dcaBSciencepublish.getAuditMan())) {// 年度 和高级、中级、初级
+                queryWrapper.eq(DcaBCopySciencepublish::getDcaYear, dcaBSciencepublish.getAuditMan());
+            }
+        }
+
+
+
+        if (dcaBSciencepublish.getAuditState() != null && (dcaBSciencepublish.getAuditState() >= 0)) {
+            queryWrapper.eq(DcaBCopySciencepublish::getAuditState, dcaBSciencepublish.getAuditState());
+        }
+        if (dcaBSciencepublish.getAuditXuhaoS() != null && (dcaBSciencepublish.getAuditXuhaoS() > 0)) {
+            if (dcaBSciencepublish.getAuditXuhaoE() == null || dcaBSciencepublish.getAuditXuhaoE().equals(0)) {
+                dcaBSciencepublish.setAuditXuhaoE(dcaBSciencepublish.getAuditXuhaoS());
+            }
+            queryWrapper.apply(" dca_b_copy_sciencepublish.user_account in (select user_account from dca_b_user where patent_ranknum between " + dcaBSciencepublish.getAuditXuhaoS() + " and " + dcaBSciencepublish.getAuditXuhaoE() + ")");
+        }
+        if (StringUtils.isNotBlank(dcaBSciencepublish.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBSciencepublish.getCreateTimeTo())) {
+            queryWrapper
+                    .ge(DcaBCopySciencepublish::getCreateTime, dcaBSciencepublish.getCreateTimeFrom())
+                    .le(DcaBCopySciencepublish::getCreateTime, dcaBSciencepublish.getCreateTimeTo());
+        }
+        if (StringUtils.isNotBlank(dcaBSciencepublish.getModifyTimeFrom()) && StringUtils.isNotBlank(dcaBSciencepublish.getModifyTimeTo())) {
+            queryWrapper
+                    .ge(DcaBCopySciencepublish::getModifyTime, dcaBSciencepublish.getModifyTimeFrom())
+                    .le(DcaBCopySciencepublish::getModifyTime, dcaBSciencepublish.getModifyTimeTo());
+        }
+
+        Page<DcaBCopySciencepublish> page = new Page<>();
+        SortUtil.handlePageSort(request, page, false);//true 是属性  false是数据库字段可两个
+        IPage<DcaBCopySciencepublish> result = this.iDcaBCopySciencepublishService.page(page, queryWrapper);
+
+
+        return result;
+    }
+
+
     @Override
     public IPage<DcaBSciencepublish> findDcaBSciencepublishs(QueryRequest request, DcaBSciencepublish dcaBSciencepublish) {
         try {
+
+            if(!IsExistInYearSetting(dcaBSciencepublish.getAuditMan(), dcaBSciencepublish.getAuditManName())){
+                    IPage<DcaBSciencepublish> result2 = new Page<>();
+                    return result2;
+            }
             LambdaQueryWrapper<DcaBSciencepublish> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(DcaBSciencepublish::getIsDeletemark, 1);//1是未删 0是已删
 
@@ -98,7 +184,7 @@ public class DcaBSciencepublishServiceImpl extends ServiceImpl<DcaBSciencepublis
                 if (list2.size() > 0) {
                     item.setAuditXuhao(list2.get(0).getPatentRanknum());
                 }
-                if( item.getState()!=null && item.getState().equals(1)) {
+                if (item.getState() != null && item.getState().equals(1)) {
                     List<DcaDJb> jb = jbList.stream().filter(p -> p.getJournalCode().equals(item.getJournalCode())).collect(Collectors.toList());
                     if (jb.size() > 0) {
                         item.setCodejb(jb.get(0).getJb());
@@ -149,9 +235,10 @@ public class DcaBSciencepublishServiceImpl extends ServiceImpl<DcaBSciencepublis
         dcaBSciencepublish.setModifyTime(new Date());
         this.baseMapper.updateDcaBSciencepublish(dcaBSciencepublish);
     }
+
     @Override
     @Transactional
-    public void updateStateByUserAccount(String userAccount){
+    public void updateStateByUserAccount(String userAccount) {
         this.baseMapper.updateStateByAccount(userAccount);
     }
 
@@ -169,7 +256,6 @@ public class DcaBSciencepublishServiceImpl extends ServiceImpl<DcaBSciencepublis
     }
 
 
-
     @Override
     @Transactional
     public int getMaxDisplayIndexByuseraccount(String userAccount) {
@@ -179,9 +265,9 @@ public class DcaBSciencepublishServiceImpl extends ServiceImpl<DcaBSciencepublis
     @Override
     @Transactional
     public void deleteRealByuseraccount(String userAccount) {
-        LambdaQueryWrapper<DcaBSciencepublish> lambdaQueryWrapper=new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(DcaBSciencepublish::getUserAccount,userAccount);
-        lambdaQueryWrapper.eq(DcaBSciencepublish::getIsDeletemark,0);
+        LambdaQueryWrapper<DcaBSciencepublish> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(DcaBSciencepublish::getUserAccount, userAccount);
+        lambdaQueryWrapper.eq(DcaBSciencepublish::getIsDeletemark, 0);
         this.baseMapper.delete(lambdaQueryWrapper);
     }
 }

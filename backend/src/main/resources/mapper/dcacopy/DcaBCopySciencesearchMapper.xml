@@ -22,6 +22,7 @@
                     <result column="end_date" property="endDate"/>
                     <result column="rank_num" property="rankNum"/>
                     <result column="audit_typetp" property="auditTypetp"/>
+            <result column="audit_typetpjx" property="auditTypetpjx"/>
                     <result column="audit_lb" property="auditLb"/>
                     <result column="audit_fund" property="auditFund"/>
                     <result column="audit_rank" property="auditRank"/>
@@ -42,7 +43,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id,   dca_year, gwdj, file_id, display_index, file_url, user_account_name, user_account, project_name, project_type, project_source, contract_fund, real_fund, audit_date, start_date, end_date, rank_num, audit_typetp, audit_lb, audit_fund, audit_rank, audit_state, state, audit_xuhao, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
+        id,   dca_year, gwdj, file_id, display_index, file_url, user_account_name, user_account, project_name, project_type, project_source, contract_fund, real_fund, audit_date, start_date, end_date, rank_num, audit_typetp,audit_typetpjx, audit_lb, audit_fund, audit_rank, audit_state, state, audit_xuhao, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
     </sql>
     <update id="updateDcaBCopySciencesearch" parameterType="cc.mrbird.febs.dcacopy.entity.DcaBCopySciencesearch">
         update dca_b_copy_sciencesearch
@@ -63,6 +64,7 @@
 <if test="endDate != null">end_date=#{endDate},</if>
 <if test="rankNum != null">rank_num=#{rankNum},</if>
 <if test="auditTypetp != null">audit_typetp=#{auditTypetp},</if>
+            <if test="auditTypetpjx != null">audit_typetpjx=#{auditTypetpjx},</if>
 <if test="auditLb != null">audit_lb=#{auditLb},</if>
 <if test="auditFund != null">audit_fund=#{auditFund},</if>
 <if test="auditRank != null">audit_rank=#{auditRank},</if>

@@ -261,7 +261,7 @@
       >
         <a-row>
           <a-col :span="7">
-            <a-form-item label="是否能用于教学职称申报">
+            <a-form-item label="是否能用于教学职称申报" style="font-weight:bold;">
                  <a-select
                 style="width: 100%"
                 placeholder="请输入是否能用于教学职称申报"
@@ -280,7 +280,7 @@
             </a-form-item></a-col
           ><a-col :span="7" :offset="1">
             <a-form-item
-              label="是否能用于临床职称申报"
+              label="是否能用于临床职称申报" style="font-weight:bold;"
             >
             <a-select
                 style="width: 100%"
@@ -300,7 +300,7 @@
               </a-form-item
           ></a-col>
           <a-col :span="7" :offset="1">
-            <a-form-item label="期刊级别(审核)">
+            <a-form-item label="期刊级别(审核)" style="font-weight:bold;">
               <a-select
                 placeholder="请输入期刊级别"
                 v-decorator="[
@@ -321,7 +321,7 @@
         </a-row>
        <a-row
           ><a-col :span="7" >
-            <a-form-item label="第一作者或通讯作者共几人">
+            <a-form-item label="第一作者或通讯作者共几人" style="font-weight:bold;">
               <a-input-number
                 placeholder="请输入第一作者或通讯作者共几人"
                 @blur="e => inputChange(e.target.value,'auditTotalnum')"
@@ -330,13 +330,13 @@
               >
               </a-input-number> </a-form-item></a-col
           ><a-col :span="7" :offset="1">
-            <a-form-item label="教学职称文章认定数量">
+            <a-form-item label="教学职称文章认定数量" style="font-weight:bold;">
               <a-input
                 placeholder="请输入教学职称文章认定数量"
                 v-decorator="['jxzcsl']"
               /> </a-form-item></a-col
           ><a-col :span="7" :offset="1">
-            <a-form-item label="临床职称文章认定数量">
+            <a-form-item label="临床职称文章认定数量" style="font-weight:bold;">
               <a-input
                 placeholder="请输入临床职称文章认定数量"
                 v-decorator="['lczcsl']"
@@ -344,7 +344,7 @@
               </a-row
         ><a-row
           ><a-col :span="7" >
-            <a-form-item label="非第一作者或通讯作者">
+            <a-form-item label="非第一作者或通讯作者" style="font-weight:bold;">
               <a-checkbox
                 v-decorator="['auditIsfirst',{
                     valuePropName: 'checked'
@@ -371,18 +371,20 @@
               </a-select>
               </a-form-item
           >
-                
-                </a-form-item
-          >
-          
           </a-col>
           <a-col :span="7" :offset="1">
-           
+             <a-form-item label="发表年月" style="font-weight:bold;">
+              <a-date-picker
+                v-decorator="[
+                  'paperPublishdate',
+                  { rules: [{ required: true, message: '发表年月不能为空' }] },
+                ]"
+              /> </a-form-item>
           </a-col>
         </a-row>
         <a-row
           ><a-col :span="7" >
-             <a-form-item label="审核意见">
+             <a-form-item label="审核意见" style="font-weight:bold;">
               <a-textarea
                 placeholder="请输入审核意见"
                 v-decorator="['auditSuggestion']"
@@ -497,9 +499,8 @@ export default {
       this.$emit("close");
     },
     inputCheckChange (blFlag, f, filedName) {
-    
       if (filedName == "isJxzcsb") {
-        if (blFlag) {
+       if (blFlag=='是') {
           this.form.getFieldDecorator("jxzcsl");
           if (this.form.getFieldValue("auditTotalnum") != '' && this.form.getFieldValue("auditTotalnum") != null) {
             var gjr = parseInt(this.form.getFieldValue("auditTotalnum"))
@@ -508,13 +509,13 @@ export default {
           }
         }
         else {
-          record["jxzcsl"] = ''
+          // record["jxzcsl"] = ''
         }
       }
       if (filedName == "sciValue") {
         console.info(this.dcaBSciencepublish["codejb"],9999)
         this.form.getFieldDecorator("auditQkjb");
-        if (blFlag) {
+        if (blFlag=='是') {
           if (this.form.getFieldValue("rankValue") != '') {
             var rankValue = parseFloat(this.form.getFieldValue("rankValue"))
             let auditQkjb = ''
@@ -537,6 +538,16 @@ export default {
         else {
           this.form.setFieldsValue({auditQkjb: this.dcaBSciencepublish["namejb"]})
         }
+      }
+      if (filedName == "isLczcsb"){
+         this.form.getFieldDecorator("lczcsl");
+         console.info(blFlag)
+          if (blFlag=='是') {
+            this.form.setFieldsValue({lczcsl: '1'});
+          }
+          else{
+            this.form.setFieldsValue({lczcsl: ''});
+          }
       }
     },
     inputChange (value, filedName) {

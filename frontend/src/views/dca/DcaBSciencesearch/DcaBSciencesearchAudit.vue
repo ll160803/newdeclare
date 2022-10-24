@@ -504,6 +504,17 @@
             >
             </dcaBSciencesearch-done>
           </a-tab-pane>
+           <a-tab-pane
+            key="4"
+            tab="已完成"
+            :forceRender="true"
+          >
+            <dcaBSciencesearch-done
+              ref="TableInfo4"
+              :state="9"
+            >
+            </dcaBSciencesearch-done>
+          </a-tab-pane>
         </a-tabs>
       </a-card>
     </a-spin>
@@ -608,23 +619,34 @@ export default {
       this.$refs.TableInfo3.queryParams.userAccount = this.queryParams.userAccount
       this.$refs.TableInfo3.queryParams.auditMan = this.queryParams.auditMan
       this.$refs.TableInfo3.queryParams.auditManName = this.queryParams.auditManName
+
+        this.$refs.TableInfo4.queryParams.userAccount = this.queryParams.userAccount
+      this.$refs.TableInfo4.queryParams.auditMan = this.queryParams.auditMan
+      this.$refs.TableInfo4.queryParams.auditManName = this.queryParams.auditManName
+
       if (this.queryParams.auditXuhaoS !== undefined) {
         this.$refs.TableInfo2.queryParams.auditXuhaoS = this.queryParams.auditXuhaoS
         this.$refs.TableInfo3.queryParams.auditXuhaoS = this.queryParams.auditXuhaoS
+        this.$refs.TableInfo4.queryParams.auditXuhaoS = this.queryParams.auditXuhaoS
       }
       if (this.queryParams.auditXuhaoE !== undefined) {
         this.$refs.TableInfo2.queryParams.auditXuhaoE = this.queryParams.auditXuhaoE
         this.$refs.TableInfo3.queryParams.auditXuhaoE = this.queryParams.auditXuhaoE
+        this.$refs.TableInfo4.queryParams.auditXuhaoE = this.queryParams.auditXuhaoE
       }
 
       if (this.$refs.TableInfo2.paginationInfo) {
         this.$refs.TableInfo2.paginationInfo.current = 1
       }
+      if (this.$refs.TableInfo4.paginationInfo) {
+        this.$refs.TableInfo4.paginationInfo.current = 1
+      }
       if (this.$refs.TableInfo3.paginationInfo) {
         this.$refs.TableInfo3.paginationInfo.current = 1
       }
       this.$refs.TableInfo2.fetch2(this.$refs.TableInfo2.queryParams)
-      this.$refs.TableInfo3.fetch2(this.$refs.TableInfo2.queryParams)
+      this.$refs.TableInfo3.fetch2(this.$refs.TableInfo3.queryParams)
+      this.$refs.TableInfo4.fetch2(this.$refs.TableInfo4.queryParams)
     },
     exportCustomExcel () {
       let { sortedInfo } = this
@@ -651,6 +673,10 @@ export default {
       }
        if(this.activeKey==3){
          state = 2
+         delete queryParams.auditState
+      }
+       if(this.activeKey==4){
+         state = 9
          delete queryParams.auditState
       }
       this.$export('dcaBSciencesearch/excel', {

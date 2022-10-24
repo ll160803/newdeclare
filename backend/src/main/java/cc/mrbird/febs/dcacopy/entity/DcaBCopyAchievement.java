@@ -192,6 +192,8 @@ private static final long serialVersionUID=1L;
      */
             @ExcelField(value ="排序")
     private Integer displayIndex;
+    @ExcelField(value ="立项/获奖")
+            private  String lxhj;
 
 
 

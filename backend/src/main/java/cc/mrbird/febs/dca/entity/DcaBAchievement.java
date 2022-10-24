@@ -202,6 +202,10 @@ public class DcaBAchievement implements Serializable {
     private  transient  Integer auditXuhaoE;
 
 
+    @ExcelField(value ="立项/获奖")
+    private  String lxhj;
+
+
     public static final String ID = "id";
 
     public static final String FILE_ID = "file_id";

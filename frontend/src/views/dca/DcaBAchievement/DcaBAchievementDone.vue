@@ -244,6 +244,11 @@ export default {
           dataIndex: 'achievementDefine',
           width: 80
         },
+         {
+        title: '立项/获奖',
+        dataIndex: 'lxhj',
+        width: 80
+      },
         {
           title: '备注',
           dataIndex: 'achievementContent',

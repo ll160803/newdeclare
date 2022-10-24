@@ -103,7 +103,7 @@ public class DcaBReportImportZj {
      * 申报类型
      */
     @ExcelField(value ="申报类型" )
-    private String sbleix;
+    private String sblx;
 
     @ExcelField(value ="科室排序（护理）" )
     private String kspaixu;

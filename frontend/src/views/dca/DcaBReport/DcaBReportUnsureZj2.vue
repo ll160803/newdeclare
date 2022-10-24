@@ -824,22 +824,26 @@ export default {
           title: "近三年医疗综合评分",
           dataIndex: "j3ylzhpf",
           width: 100,
+          scopedSlots: { customRender: "splitHang" },
         },
         {
           title: "近三年手术台次",
           dataIndex: "j3nssztc",
           width: 100,
+          scopedSlots: { customRender: "splitHang" },
         },
 
         {
           title: "近三年收治住院病人数",
           dataIndex: "j3nzyszbrsl",
           width: 100,
+          scopedSlots: { customRender: "splitHang" },
         },
         {
           title: "近三年门诊收治病人数",
           dataIndex: "j3nmzszbrsl",
           width: 100,
+          scopedSlots: { customRender: "splitHang" },
         },
         {
           title: "近三年新技术新业务",
@@ -848,11 +852,13 @@ export default {
               title: "负责开展的新技术新业务",
               dataIndex: "xjsxyw",
               width: 100,
+               scopedSlots: { customRender: "splitHang" },
             },
             {
               title: "负责的新技术新业务获奖情况",
               dataIndex: "xjsxywprize",
               width: 100,
+               scopedSlots: { customRender: "splitHang" },
             },
           ],
         },
