@@ -436,7 +436,7 @@ export default {
       requestSci
         .get("jif", {
           journal_title: this.journalName.replace(/\&/g, "%26"),
-          year: this.artData.pub_year < 2021 ? this.artData.pub_year : "2020",
+          year: this.artData.pub_year < 2022 ? this.artData.pub_year : "2021",
           issn: this.artData.issn
         },this.token)
         .then((r) => {
@@ -518,12 +518,12 @@ export default {
     },
     handleRank(rankValue) {
       //取最小值，去掉“无”   例如 无|2/3|无|34/56 ,
-      if (rankValue == "" || rankValue == "无") return "";
+      if (rankValue == "" || rankValue == "无" || rankValue == "N/A") return "";
       if (rankValue.indexOf("|") != -1) {
         var arr = rankValue.split("|");
         var r_v = 0;
         for (var i = 0; i < arr.length; i++) {
-          if (arr[i] != "无") {
+          if (arr[i] != "无" && arr[i] != 'N/A') {
             var v = eval(arr[i]);
             console.info("rankValue:" + v);
             var v2 = Math.round(v * 10000) / 100;
@@ -533,7 +533,7 @@ export default {
           }
         }
       } else {
-        if (rankValue != "无") {
+        if (rankValue != "无" && rankValue !='N/A') {
           var v = eval(rankValue);
           var v2 = Math.round(v * 10000) / 100;
           v2 = v2.toFixed(2);

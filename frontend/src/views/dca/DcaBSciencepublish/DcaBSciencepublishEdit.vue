@@ -472,7 +472,8 @@ export default {
         "sciValue",
         "rankValue",
          "isBest",
-         "rankSear"
+         "rankSear",
+         "state"
       ];
       let fieldDates = ["paperPublishdate"];
       Object.keys(dcaBSciencepublish).forEach((key) => {
@@ -582,9 +583,7 @@ export default {
       }
       else{
          this.isNoEdit = false;
-         this.form.getFieldDecorator("isPermit");
-         this.form.setFieldsValue({isPermit: '否'});
-         this.dcaBSciencepublish.isPermit ='否';
+        
          this.dcaBSciencepublish.auditQkjb= ''
       }
       

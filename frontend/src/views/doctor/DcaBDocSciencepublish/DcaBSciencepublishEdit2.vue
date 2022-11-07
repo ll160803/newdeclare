@@ -1,12 +1,12 @@
 <template>
   <a-drawer
-    title="新增"
+    title="编辑查看"
     :maskClosable="false"
-    width="90%"
+    width="80%"
     placement="right"
     :closable="false"
     @close="onClose"
-    :visible="addVisiable"
+    :visible="editVisiable"
     style="height: calc(100% - 5px); overflow: auto; padding-bottom: 53px"
   >
     <a-row>
@@ -14,43 +14,21 @@
         <sci-seek
           :jbLbList2="jbLbList"
           @setValue="getSearchValue"
+          :isAudit="true"
           ref="seek"
         ></sci-seek>
       </a-col>
     </a-row>
-    <a-card title="论文信息" v-if="isShow" :headStyle="{
-        fontWeight: 'bold',
-        fontSize: '20px'
-      }">
-      <a-form :form="form" layout="vertical">
-        <a-row
-          >
-           <a-col :span="7"  >
-            <a-form-item label="智能搜索相似度" :style="{fontWeight: 'bold'}">
-            <a-input
-            :disabled="true"
-             v-decorator="[
-                  'xsd',
-                 
-                ]"
-          />
-          </a-form-item></a-col
-          ><a-col :span="7" :offset="1" >
-            <a-form-item label="是否智能搜索结果" :style="{fontWeight: 'bold'}">
-            <a-input
-            :disabled="true"
-             v-decorator="[
-                  'isPermit',
-                 
-                ]"
-          />
-         
-          </a-form-item></a-col
-          ><a-col :span="7"  :offset="1">
-           </a-col
-          >
-         </a-row>
-        <a-row
+    <a-form :form="form" layout="vertical">
+      <a-card
+        title="个人论文信息填写"
+        :headStyle="{
+          fontWeight: 'bold',
+          fontSize: '20px',
+        }"
+      >
+   
+              <a-row
           ><a-col :span="23">
             <a-form-item label="论文名">
               <a-input
@@ -180,7 +158,6 @@
           ></a-col
           ></a-row>
           <a-row>
-    
           <a-col :sm="7" >
             <a-form-item label="论文附件">
               <upload-single-file
@@ -192,21 +169,21 @@
             </a-form-item>
           </a-col>
         </a-row>
-      </a-form>
-    </a-card>
-    <div class="drawer-bootom-button" >
+      </a-card>
+    </a-form>
+    <div class="drawer-bootom-button">
       <a-popconfirm
         title="确定放弃编辑？"
         @confirm="onClose"
         okText="确定"
         cancelText="取消"
       >
-        <a-button style="margin-right: 3rem">取消</a-button>
+        <a-button style="margin-right: 3rem" type="primary">取消</a-button>
       </a-popconfirm>
-       <a-button @click="handleSubmit(0)" v-if="isShow" type="primary" :loading="loading"
+                <a-button @click="handleSubmit(0)" v-if="state==0||state==2" type="primary" :loading="loading"
         >保存草稿不提交</a-button
       >
-      <a-button @click="handleSubmit(1)" v-if="isShow" type="primary" :loading="loading"
+      <a-button @click="handleSubmit(1)" v-if="state==0||state==2" type="primary" :loading="loading"
         >直接提交</a-button
       >
     </div>
@@ -222,9 +199,9 @@ const formItemLayout = {
 };
 export default {
   components: { SciSeek, UploadSingleFile },
-  name: "DcaBSciencepublishAdd",
+  name: "DcaBSciencepublishEdit",
   props: {
-    addVisiable: {
+    editVisiable: {
       default: false,
     },
   },
@@ -233,43 +210,35 @@ export default {
       loading: false,
       formItemLayout,
       form: this.$form.createForm(this),
-      dcaBSciencepublish: {
-        fileId: ''
-      },
-      pulishDate: '',
+      dcaBSciencepublish: {},
       dcaSearch: {},
       jbLbList: [],
-      isShow: false,
+      pulishDate: "",
+      isShow: true,
       isNoEdit: true,
-      id: ''
+      id: "",
+      state: 1,
     };
   },
   watch: {
-    addVisiable() {
-      if (this.addVisiable) {
+    editVisiable() {
+      if (this.editVisiable) {
         this.fetchJb();
+       
       }
     },
   },
   methods: {
     moment,
-    handleLogin(){
-      
-
-       this.pulishDate= '';
-       
-    },
     reset() {
       this.loading = false;
       this.dcaBSciencepublish = {};
       this.dcaSearch = {};
-      this.isShow =false;
+      this.isShow = true;
       this.isNoEdit = true;
-     
+
       this.$refs.seek.reset();
-      if(this.$refs.fileagent3){
-       this.$refs.fileagent3.reset();
-      }
+      this.$refs.fileagent3.reset();
       this.form.resetFields();
     },
     uploadAgent_3(fileId, fileUrl) {
@@ -284,43 +253,140 @@ export default {
       this.reset();
       this.$emit("close");
     },
-    inputPermitCheckChange(e){
-       if(e=='是'){
-        this.isNoEdit = true;
-        this.setFormValues(this.dcaSearch);
-       }
-       else{
-          this.isNoEdit = false;
-       }
+   
+   
+    fetchJb() {
+      this.$get("dcaBSciencepublish/jbLb", {}).then((r) => {
+        this.jbLbList = r.data;
+      });
+    },
+    handleAuditNext () {
+      let that = this
+      
+      this.$confirm({
+        title: '确定审核通过此记录?',
+        content: '当您点击确定按钮后，此记录将进入下一个审核人',
+        centered: true,
+        onOk () {
+           that.setFields()
+           console.info(that.dcaBSciencepublish.auditState)
+         let jsonStr = JSON.stringify({...that.dcaBSciencepublish})
+          that.loading = true
+          that.$post('dcaBDocSciencepublish/updateNew', {
+            jsonStr: jsonStr,
+            state: 1,
+            auditState: that.dcaBSciencepublish.auditState
+          }).then(() => {
+            //this.reset()
+            that.loading = false
+            that.reset();
+            that.$emit("success");
+            
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
+    handleSave () {
+      let that = this
+      this.$confirm({
+        title: '确定保存通过此记录?',
+        content: '当您点击确定按钮后，此记录将保存',
+        centered: true,
+        onOk () {
+           that.setFields()
+          let jsonStr = JSON.stringify({...that.dcaBSciencepublish})
+          that.loading = true
+          that.$post('dcaBDocSciencepublish/updateNew', {
+            jsonStr: jsonStr,
+            state:  that.dcaBSciencepublish.state,
+            auditState: -1
+          }).then(() => {
+            that.loading = false
+            that.reset();
+            that.$emit("success");
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
+    handleAudit () {
+      let that = this
+      this.$confirm({
+        title: '确定审核通过此记录?',
+        content: '当您点击确定按钮后，此记录将审核通过',
+        centered: true,
+        onOk () {
+           that.setFields()
+          let jsonStr = JSON.stringify({...that.dcaBSciencepublish})
+          that.loading = true
+          that.$post('dcaBDocSciencepublish/updateNew', {
+            jsonStr: jsonStr,
+            state: 3,
+            auditState: -1
+          }).then(() => {
+             that.loading = false
+             that.reset();
+             that.$emit("success");
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
+    },
+    handleAuditNo () {
+      let that = this
+      this.$confirm({
+        title: '确定审核不通过此记录?',
+        content: '当您点击确定按钮后，此记录将审核不通过',
+        centered: true,
+        onOk () {
+           that.setFields()
+          let jsonStr = JSON.stringify({...that.dcaBSciencepublish})
+          that.loading = true
+          that.$post('dcaBDocSciencepublish/updateNew', {
+            jsonStr: jsonStr,
+            state: 2,
+            auditState: 0
+          }).then(() => {
+            that.loading = false
+            that.reset();
+            that.$emit("success");
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
     },
     handleSubmit(state) {
-      console.info(this.dcaBSciencepublish.fileId,'33333333')
-      if( this.dcaBSciencepublish.fileId=='' && state==1){
-          this.$message.warning('请上传论文附件')
-        return
-      }
-      else{
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          this.setFields();
-
-          this.$post("dcaBDocSciencepublish/add", {
-            ...this.dcaBSciencepublish,
-            state: state,
-            auditState: 0
-          })
-            .then((r) => {
-             
+        this.form.validateFields((err, values) => {
+          if (!err) {
+            this.setFields();
+            
+            this.$post("dcaBDocSciencepublish/update", {
+              ...this.dcaBSciencepublish,
+              state: state,
+              auditState: 0,
+            })
+              .then((r) => {
                 this.reset();
                 this.$emit("success");
-              
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        }
-      });
-      }
+              })
+              .catch(() => {
+                this.loading = false;
+              });
+          }
+        });
     },
     setFields() {
       let values = this.form.getFieldsValue([
@@ -341,9 +407,18 @@ export default {
         "isPermit",
         "sciValue",
         "rankValue",
-        "auditState",
+        "isJxzcsb",
+        "isLczcsb",
+        "auditQkjb",
+        "jxzcsl",
+        "lczcsl",
+        "auditTotalnum",
+        "auditIsfirst",
+        "isUse",
+        "auditSuggestion",
         "rankSear",
-        "firstUnitAuthor"
+        "firstUnitAuthor",
+        "state"
       ]);
       if (typeof values !== "undefined") {
         Object.keys(values).forEach((_key) => {
@@ -352,6 +427,7 @@ export default {
       }
     },
     setFormValues({ ...dcaBSciencepublish }) {
+    
       let fields = [
         "userAccountName",
         "userAccount",
@@ -368,12 +444,21 @@ export default {
         "xsd",
         "authorRank",
         "otherTimes",
-         "isPermit",
+        "isPermit",
         "sciValue",
         "rankValue",
-         "isBest",
-         "rankSear",
-         "firstUnitAuthor"
+        "isBest",
+         "isJxzcsb",
+        "isLczcsb",
+        "auditQkjb",
+        "jxzcsl",
+        "lczcsl",
+        "auditTotalnum",
+        "auditIsfirst",
+        "isUse",
+        "auditSuggestion",
+        "rankSear",
+        "firstUnitAuthor"
       ];
       let fieldDates = ["paperPublishdate"];
       Object.keys(dcaBSciencepublish).forEach((key) => {
@@ -387,48 +472,40 @@ export default {
               obj[key] = "";
             }
           } else {
-            obj[key] = dcaBSciencepublish[key];
+            if (key == "authorRank") {
+              if (
+                dcaBSciencepublish[key] !== null &&
+                dcaBSciencepublish[key] !== ""
+              ) {
+                
+                  obj[key]= (dcaBSciencepublish[key].toString()).split(",")
+                
+              }
+            } else {
+              obj[key] = dcaBSciencepublish[key];
+            }
           }
           this.form.setFieldsValue(obj);
         }
       });
       this.dcaBSciencepublish.id = dcaBSciencepublish.id;
+      this.state= dcaBSciencepublish.state;
+      this.dcaBSciencepublish.state = dcaBSciencepublish.state;
+    
+      let that = this;
+      setTimeout(() => {
+        that.$refs.fileagent3.setForm(dcaBSciencepublish.fileId);
+      }, 500);
+       setTimeout(()=>{
+          that.$refs.seek.editSearch(dcaBSciencepublish.paperName)
+        },500)
     },
-    fetchJb() {
-      this.$get("dcaBSciencepublish/jbLb", {}).then((r) => {
-        this.jbLbList = r.data;
-      });
-    },
+   
     getSearchValue(dcaSearch) {
 
-      // this.dcaBSciencepublish = {
-      //   fileId: ''
-      // };
-      this.dcaSearch = {};
-      this.isNoEdit = true;
-      this.form.resetFields();
-      this.isShow =true
-      this.$refs.seek.setIsShow();
-      if(dcaSearch.xsd!==''&&dcaSearch.xsd>0.9){
-        this.dcaBSciencepublish.isPermit ='是';
-        this.dcaBSciencepublish.xsd= dcaSearch.xsd;
-        this.pulishDate= dcaSearch.paperPublishdate;
-        dcaSearch.isPermit  ='是';
-        this.dcaSearch = { ...dcaSearch };
-        this.setFormValues(dcaSearch);
-      }
-      else{
-         this.isNoEdit = false;
-         this.form.getFieldDecorator("isPermit");
-         this.pulishDate= '';
-         this.form.setFieldsValue({isPermit: '否'});
-        this.dcaBSciencepublish.isPermit ='否';
-      }
     },
   },
 };
 </script>
 <style lang="less" scoped >
-   
-   
 </style>

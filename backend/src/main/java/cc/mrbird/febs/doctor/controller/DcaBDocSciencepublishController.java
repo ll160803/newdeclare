@@ -2,11 +2,14 @@ package cc.mrbird.febs.doctor.controller;
 
 import cc.mrbird.febs.common.annotation.Log;
 import cc.mrbird.febs.common.controller.BaseController;
+import cc.mrbird.febs.common.domain.FebsResponse;
 import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.utils.ExportExcelUtils;
 
+import cc.mrbird.febs.dca.entity.DcaBSciencepublish;
+import cc.mrbird.febs.dcacopy.entity.DcaBCopySciencepublish;
 import cc.mrbird.febs.doctor.service.IDcaBDocSciencepublishService;
 import cc.mrbird.febs.doctor.entity.DcaBDocSciencepublish;
 
@@ -15,10 +18,12 @@ import com.alibaba.fastjson.TypeReference;
 
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.system.domain.User;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
 import lombok.extern.slf4j.Slf4j;
 import cn.hutool.core.date.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -182,7 +187,51 @@ public void updateDcaBDocSciencepublish(@Valid DcaBDocSciencepublish dcaBDocScie
         }
         }
 
+    @Log("新增单独添加")
+    @PostMapping("add")
+    public FebsResponse addDcaBSciencepublish2(@Valid DcaBDocSciencepublish dcaBSciencepublish)throws FebsException{
+        try{
+            User currentUser=FebsUtil.getCurrentUser();
+            dcaBSciencepublish.setCreateUserId(currentUser.getUserId());
+            dcaBSciencepublish.setUserAccount(currentUser.getUsername());
+            dcaBSciencepublish.setUserAccountName(currentUser.getRealname());
+            if(this.iDcaBDocSciencepublishService.isExistPaperName(currentUser.getUsername(),dcaBSciencepublish.getPaperName(),"")){
+                throw new FebsException("此论文已经存在，请勿重复添加");
+            }
+            this.iDcaBDocSciencepublishService.deleteByuseraccount(currentUser.getUsername());
+            this.iDcaBDocSciencepublishService.createDcaBDocSciencepublish(dcaBSciencepublish);
+            return  new FebsResponse().data(dcaBSciencepublish.getId());
+        }catch(Exception e){
 
+            throw new FebsException(e.getMessage());
+        }
+    }
+
+    @Log("新增单独编辑")
+    @PostMapping("update")
+    public FebsResponse updateDcaBSciencepublish2(@Valid DcaBDocSciencepublish dcaBSciencepublish)throws FebsException{
+        try{
+            User currentUser=FebsUtil.getCurrentUser();
+            dcaBSciencepublish.setModifyUserId(currentUser.getUserId());
+
+            if(this.iDcaBDocSciencepublishService.isExistPaperName(currentUser.getUsername(),dcaBSciencepublish.getPaperName(),dcaBSciencepublish.getId())){
+                throw new FebsException("此论文已经存在，请勿重复添加");
+            }
+            this.iDcaBDocSciencepublishService.updateDcaBDocSciencepublish(dcaBSciencepublish);
+            return  new FebsResponse().data(dcaBSciencepublish.getId());
+        }catch(Exception e){
+            message="新增/按钮失败";
+            log.error(message,e);
+            throw new FebsException(e.getMessage());
+        }
+    }
+
+    @Log("全部提交更新状态")
+    @PostMapping("updateState")
+    public void updateAllState(){
+        User currentUser=FebsUtil.getCurrentUser();
+        this.iDcaBDocSciencepublishService.updateStateByUserAccount(currentUser.getUsername());
+    }
 @Log("删除")
 @DeleteMapping("/{ids}")
 @RequiresPermissions("dcaBDocSciencepublish:delete")

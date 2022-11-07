@@ -31,4 +31,8 @@ public interface IDcaBDocSciencepublishService extends IService<DcaBDocSciencepu
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
+
+        void updateStateByUserAccount(String userAccount);
+
+        boolean isExistPaperName(String userAccount,String paperName,String id);
         }

@@ -24,4 +24,7 @@ public interface DcaBDocSciencepublishMapper extends BaseMapper<DcaBDocSciencepu
         void deleteByAccount(@Param("useraccount") String useraccount);
 @Select(" select IFNULL(max(display_index),0) As maxIndex from  dca_b_doc_sciencepublish  where user_account=#{useraccount} ")
         int getMaxDisplayIndexByuseraccount(@Param("useraccount") String useraccount);
+
+        @Update(" update dca_b_doc_sciencepublish set state=1 where user_account=#{useraccount}  and state=0 ")
+        void updateStateByAccount(@Param("useraccount") String useraccount);
         }

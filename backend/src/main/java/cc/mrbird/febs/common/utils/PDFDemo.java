@@ -10268,8 +10268,8 @@ public class PDFDemo {
 
         List<DcaBCopyAchievement> dcaBSCopySureachievementList=customApplyFirst.getDcaBCopyAchievementList();
         rowSp=5;
-        if(dcaBSCopySureachievementList.size()>4){
-            rowSp=dcaBSCopySureachievementList.size()+1;
+        if(dcaBSCopySureachievementList.size()>3){
+            rowSp=dcaBSCopySureachievementList.size()+2;
         }
         listCells.add(generatePdfValue(pdfStyle_t, "主要医疗业绩", 2, 0,rowSp));
         //至何年月
@@ -10291,7 +10291,19 @@ public class PDFDemo {
             listCells.add(generatePdfValue(pdfStyle_t, DateStr(sureachievement.getAchievementDate(),"yyyyMM"), 7, 0));
             listCells.add(generatePdfValue(pdfStyle_t,StringUtils.isEmpty(sureachievement.getAchievementGrade())?"":("等级"+sureachievement.getAchievementGrade()), 4, 0));
         }
-        sum = rowSp-dcaBSCopySureachievementList.size()-1;
+        if(customApplyFirst.getNpgw().equals("二级")) {
+            listCells.add(generatePdfValue(pdfStyle_t, "医疗技术精湛", 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, " ", 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, " ", 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "管理部门评价；同行专家推荐；发表相应论文；学会任职。", 4, 0));
+        }
+        else{
+            listCells.add(generatePdfValue(pdfStyle_t, "医疗技术精良", 10, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, " ", 2, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, " ", 7, 0));
+            listCells.add(generatePdfValue(pdfStyle_t, "管理部门评价；同行专家推荐；发表相应论文；学会任职。", 4, 0));
+        }
+        sum = rowSp-dcaBSCopySureachievementList.size()-2;
         for(int n = 0; n < sum; n++){
             listCells.add(generatePdfValue(pdfStyle_t, " ", 10, 0));
             listCells.add(generatePdfValue(pdfStyle_t, " ", 2, 0));

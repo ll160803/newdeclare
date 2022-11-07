@@ -482,27 +482,9 @@
                   @click="showUserInfo(text)"
                 >{{text}}</a>
               </template>
-              <template
-                slot="action"
-                slot-scope="text, record"
-              >
-               
-                <a-button
-                v-hasNoPermission="['dca:audit']"
-                  
-                  type="dashed"
-                  block
-                  @click="handleAudit(record)"
-                >
-                  通过
-                </a-button>
-                <a-button
-                v-hasNoPermission="['dca:audit']"
-                  type="danger"
-                  block
-                  @click="handleAuditNo(record)"
-                >
-                  审核不通过
+             <template slot="action" slot-scope="text, record">
+                <a-button type="dashed" block @click="edit(record)">
+                  审核
                 </a-button>
               </template>
             </a-table>
@@ -537,7 +519,13 @@
           :visibleUserInfo="visibleUserInfo"
           :userAccount="userAccount"
         ></audit-userInfo>
-
+  <dcaBSciencepublish-edit
+          ref="dcaBSciencepublishEdit"
+          @close="handleEditClose"
+          @success="handleEditSuccess"
+          :editVisiable="editVisiable"
+        >
+        </dcaBSciencepublish-edit>
       </a-card>
     </a-spin>
   </div>
@@ -547,7 +535,7 @@
 import moment from 'moment';
 import DcaBSciencepublishDone from './DcaBSciencepublishDone'
 import AuditUserInfo from '../../common/AuditUserDocInfo'
-
+import DcaBSciencepublishEdit from "./DcaBSciencepublishEdit.vue";
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -581,6 +569,7 @@ export default {
       },
       sortedInfo: null,
       visibleUserInfo: false,
+      editVisiable: false,
       paginationInfo: null,
       scroll: {
         x: 2600,
@@ -590,7 +579,7 @@ export default {
       activeKey: 1,
     }
   },
-  components: { DcaBSciencepublishDone, AuditUserInfo },
+  components: { DcaBSciencepublishDone, AuditUserInfo, DcaBSciencepublishEdit },
   mounted () {
     this.search()
   },
@@ -612,6 +601,19 @@ export default {
        this.paginationInfo.current = this.pagination.defaultCurrent
      }
      this.search()
+    },
+    edit(record) {
+      this.showUserInfo(record.userAccount);
+      this.$refs.dcaBSciencepublishEdit.setFormValues(record);
+      this.editVisiable = true;
+    },
+     handleEditSuccess() {
+      this.editVisiable = false;
+      this.$message.success("审核成功");
+      this.search();
+    },
+        handleEditClose() {
+      this.editVisiable = false;
     },
     search () {
       let { sortedInfo } = this
@@ -884,90 +886,85 @@ export default {
           title: '论文名',
           dataIndex: 'paperName',
           width: 200,
-          scopedSlots: { customRender: 'paperName' },
+        //  scopedSlots: { customRender: 'paperName' },
           fixed: 'left'
         },
         {
           title: '期刊名',
           dataIndex: 'journalName',
           width: 200,
-          scopedSlots: { customRender: 'journalName' },
+        //  scopedSlots: { customRender: 'journalName' },
           fixed: 'left'
         },
         {
           title: '期刊号（ISSN）',
           dataIndex: 'journalCode',
           width: 120,
-          scopedSlots: { customRender: 'journalCode' },
+       //   scopedSlots: { customRender: 'journalCode' },
           fixed: 'left'
         },
         {
           title: '发表年月',
           dataIndex: 'paperPublishdate',
           width: 130,
-          scopedSlots: { customRender: 'paperPublishdate' },
+       //   scopedSlots: { customRender: 'paperPublishdate' },
           fixed: 'left'
         },
         {
           title: '收录情况',
           dataIndex: 'paperShoulu',
           width: 120,
-          scopedSlots: { customRender: 'paperShoulu' }
+       //   scopedSlots: { customRender: 'paperShoulu' }
         },
         {
           title: '影响因子',
           dataIndex: 'paperCause',
           width: 120,
-          scopedSlots: { customRender: 'paperCause' }
+       //   scopedSlots: { customRender: 'paperCause' }
         },
         {
           title: '是否一流期刊',
           dataIndex: 'isBest',
           width: 120,
-          scopedSlots: { customRender: 'isBest' }
+       //   scopedSlots: { customRender: 'isBest' }
         },
         {
           title: '他引次数',
           dataIndex: 'otherTimes',
           width: 120,
-          scopedSlots: { customRender: 'otherTimes' }
+       //   scopedSlots: { customRender: 'otherTimes' }
         },
         {
           title: '期刊级别',
           dataIndex: 'qkjb',
           width: 100,
-          scopedSlots: { customRender: 'qkjb' }
+        //  scopedSlots: { customRender: 'qkjb' }
         },
         {
           title: '第一或通讯作者',
           dataIndex: 'authorRank',
           width: 120,
-          scopedSlots: { customRender: 'authorRank' }
+        //  scopedSlots: { customRender: 'authorRank' }
         },
-         {
-        title: '第一作者或通讯作者共几人',
-        dataIndex: 'lczcsl',
-        width: 120,
-        scopedSlots: { customRender: 'lczcsl' }
-      },
+        
         {
           title: '排第几',
           dataIndex: 'djzz',
           width: 80,
-          scopedSlots: { customRender: 'djzz' }
+        //  scopedSlots: { customRender: 'djzz' }
         },
         
         {
           title: '第一作者第一单位',
           dataIndex: 'firstUnitAuthor',
           width: 150, 
-          scopedSlots: { customRender: 'firstUnitAuthor' }
+        //  scopedSlots: { customRender: 'firstUnitAuthor' }
         },
         {
           title: '期刊类型',
           dataIndex: 'wzlx',
           width: 80,
-          scopedSlots: { customRender: 'wzlx' }
+         // scopedSlots: { customRender: 'wzlx' }
         },
         // {
         //   title: '是否能用于教学职称申报',

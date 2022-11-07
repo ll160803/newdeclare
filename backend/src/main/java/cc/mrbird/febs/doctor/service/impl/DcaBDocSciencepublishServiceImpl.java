@@ -81,6 +81,12 @@ public IPage<DcaBDocSciencepublish> findDcaBDocSciencepublishList (QueryRequest 
         return null;
         }
         }
+        @Override
+        @Transactional
+        @DS("slave")
+        public void updateStateByUserAccount(String userAccount) {
+                this.baseMapper.updateStateByAccount(userAccount);
+        }
 @Override
 @Transactional
 @DS("slave")
@@ -90,7 +96,25 @@ public void createDcaBDocSciencepublish(DcaBDocSciencepublish dcaBDocSciencepubl
         dcaBDocSciencepublish.setIsDeletemark(1);
         this.save(dcaBDocSciencepublish);
         }
-
+        @Override
+        @Transactional
+        @DS("slave")
+        public boolean isExistPaperName(String userAccount,String paperName,String id){
+                LambdaQueryWrapper<DcaBDocSciencepublish> queryWrapper= new LambdaQueryWrapper<>();
+                queryWrapper.eq(DcaBDocSciencepublish::getUserAccount,userAccount);
+                queryWrapper.eq(DcaBDocSciencepublish::getIsDeletemark,1);
+                queryWrapper.eq(DcaBDocSciencepublish::getPaperName,paperName.trim());
+                if(StringUtils.isNotEmpty(id)){
+                        queryWrapper.ne(DcaBDocSciencepublish::getId,id);
+                }
+                int cou= this.baseMapper.selectCount(queryWrapper);
+                if(cou>0){
+                        return  true;
+                }
+                else{
+                        return  false;
+                }
+        }
 @Override
 @Transactional
 @DS("slave")
