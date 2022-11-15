@@ -116,6 +116,7 @@
           ><a-col :span="7" :offset="1">
             <a-form-item label="影响因子">
               <a-input
+                 @blur="(e)=>inputCauseChange(e.target.value)"
                 placeholder="请输入影响因子"
                 v-decorator="['paperCause']"
               /> </a-form-item></a-col></a-row
@@ -156,32 +157,97 @@
             </a-form-item> </a-col
           ></a-row
         ><a-row>
-          <a-col :span="7">
+          <a-col :span="7" >
+           <a-form-item label="第一或通讯作者">
+               <a-select
+                style="width: 100%"
+                mode="multiple"
+                v-decorator="[
+                  'authorRank',
+                  {
+                    rules: [
+                     
+                    ],
+                  },
+                ]"
+              >
+                <a-select-option value="第一作者" key="第一作者">
+                  第一作者
+                </a-select-option>
+                <a-select-option value="通讯作者" key="通讯作者">
+                  通讯作者
+                </a-select-option>
+                <a-select-option value="共同第一作者" key="共同第一作者">
+                  共同第一作者
+                </a-select-option>
+                <a-select-option value="共同通讯作者" key="共同通讯作者">
+                  共同通讯作者
+                </a-select-option>
+                <a-select-option value="其他" key="其他">
+                  其他
+                </a-select-option>
+              </a-select> </a-form-item
+          ></a-col
+          >
+           <a-col :span="7" :offset="1">
+             <a-form-item label="第一作者或通讯作者共几人">
+              <a-input-number
+              @change="changeAuditTotalnum"
+                :precision="0"
+                placeholder="请输入第一作者或通讯作者共几人"
+                v-decorator="['auditTotalnum']"
+              /> </a-form-item
+          >
+          </a-col
+          >
+          <a-col :span="7" :offset="1">
             <a-form-item label="排第几">
-              <a-input
+              <a-input-number
+                :precision="0"
+                @change="changeDjzz"
                 placeholder="请输入排第几"
                 v-decorator="['djzz']"
               /> </a-form-item
           ></a-col>
-          <a-col :span="7" :offset="1">
-           <a-form-item label="第一作者第一单位">
+         
+           </a-row>
+          <a-row>
+      <a-col :span="7" >
+           <a-form-item label="文章类型">
+              <a-select
+                placeholder="文章类型"
+                v-decorator="['jxzcsl']"
+                @change="changeWzlx"
+              >
+              <a-select-option value="Article">Article</a-select-option>
+              <a-select-option value="研究型Letter">研究型Letter</a-select-option>
+              <a-select-option value="Review">Review</a-select-option>
+              <a-select-option value="Case Report">Case Report</a-select-option>
+              <a-select-option value="Editorial material/commentary">Editorial material/commentary</a-select-option>
+               <a-select-option value="Meta分析">Meta分析</a-select-option>
+              </a-select>
+               </a-form-item
+          ></a-col
+          >  <a-col :span="7" :offset="1">
+           <a-form-item label="文章分数">
+              <a-input-number
+                :disabled="true"
+                placeholder="请输入文章分数"
+                v-decorator="['cdzs']"
+              /> </a-form-item
+          ></a-col
+          >
+          <a-col :sm="7" :offset="1">
+             <a-form-item label="第一作者第一单位">
               <a-input
                 placeholder="请输入第一作者第一单位"
                 v-decorator="['firstUnitAuthor']"
               /> </a-form-item
-          ></a-col
           >
-           <a-col :span="7" :offset="1">
-           <a-form-item label="第一或通讯作者">
-              <a-input
-                placeholder="请输入第一或通讯作者"
-                v-decorator="['authorRank']"
-              /> </a-form-item
-          ></a-col
-          ></a-row>
-          <a-row>
-    
-          <a-col :sm="7" >
+          </a-col>
+        </a-row>
+         <a-row>
+      <a-col :span="7" >
             <a-form-item label="论文附件">
               <upload-single-file
                 ref="fileagent3"
@@ -191,7 +257,7 @@
               </upload-single-file>
             </a-form-item>
           </a-col>
-        </a-row>
+         </a-row>
       </a-form>
     </a-card>
     <div class="drawer-bootom-button" >
@@ -234,14 +300,14 @@ export default {
       formItemLayout,
       form: this.$form.createForm(this),
       dcaBSciencepublish: {
-        fileId: ''
+        fileId: "",
       },
-      pulishDate: '',
+      pulishDate: "",
       dcaSearch: {},
       jbLbList: [],
       isShow: false,
       isNoEdit: true,
-      id: ''
+      id: "",
     };
   },
   watch: {
@@ -253,22 +319,19 @@ export default {
   },
   methods: {
     moment,
-    handleLogin(){
-      
-
-       this.pulishDate= '';
-       
+    handleLogin() {
+      this.pulishDate = "";
     },
     reset() {
       this.loading = false;
       this.dcaBSciencepublish = {};
       this.dcaSearch = {};
-      this.isShow =false;
+      this.isShow = false;
       this.isNoEdit = true;
-     
+
       this.$refs.seek.reset();
-      if(this.$refs.fileagent3){
-       this.$refs.fileagent3.reset();
+      if (this.$refs.fileagent3) {
+        this.$refs.fileagent3.reset();
       }
       this.form.resetFields();
     },
@@ -284,42 +347,132 @@ export default {
       this.reset();
       this.$emit("close");
     },
-    inputPermitCheckChange(e){
-       if(e=='是'){
+    inputPermitCheckChange(e) {
+      if (e == "是") {
         this.isNoEdit = true;
         this.setFormValues(this.dcaSearch);
-       }
-       else{
-          this.isNoEdit = false;
-       }
+      } else {
+        this.isNoEdit = false;
+      }
     },
-    handleSubmit(state) {
-      console.info(this.dcaBSciencepublish.fileId,'33333333')
-      if( this.dcaBSciencepublish.fileId=='' && state==1){
-          this.$message.warning('请上传论文附件')
-        return
+      calcResult(cause,djzz,wzlx,auditTotalnum){
+    let cdzs=0 
+     let sci =this.calcWzfs(parseFloat(cause))
+    if (wzlx == "Article" || wzlx == "研究型Letter") {
+        cdzs = sci;
+      }
+      if (wzlx == "Review") {
+        cdzs = sci * 0.3;
+      }
+      if (wzlx == "Case Report" || wzlx == "Editorial material/commentary") {
+        cdzs = sci * 0.1;
+      }
+      if (wzlx == "Meta分析") {
+         if (parseFloat(cause) >= 10) {
+          cdzs = sci * 0.5;
+        }
+      }
+      if(parseFloat(djzz)==1){ //
+        this.form.setFieldsValue({ cdzs: cdzs.toFixed(2) });
       }
       else{
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          this.setFields();
+        //  this.form.getFieldDecorator("auditTotalnum");
+        //  let auditTotalnum= this.form.getFieldValue("auditTotalnum")
+         if(parseFloat(auditTotalnum)>0){
+           this.form.setFieldsValue({ cdzs: (cdzs/auditTotalnum).toFixed(2) });
+         }
+         else{
+           this.form.setFieldsValue({ cdzs: cdzs.toFixed(2) });
+         }
+      }
+   },
 
-          this.$post("dcaBDocSciencepublish/add", {
-            ...this.dcaBSciencepublish,
-            state: state,
-            auditState: 0
-          })
-            .then((r) => {
-             
+     inputCauseChange(cause){
+       this.form.getFieldDecorator("jxzcsl");
+       let wzlx= this.form.getFieldValue("jxzcsl")
+       this.form.getFieldDecorator("djzz");
+       let djzz= this.form.getFieldValue("djzz")
+
+         this.form.getFieldDecorator("auditTotalnum");
+         let auditTotalnum= this.form.getFieldValue("auditTotalnum")
+        this.calcResult(cause,djzz,wzlx,auditTotalnum);
+      },
+    calcWzfs(sci) {
+      if (sci == "" || sci == undefined || sci == null) {
+        return 0;
+      }
+      let sci_num = parseFloat(sci);
+      if (sci_num > 15) {
+        return 15 * 5 + (sci_num - 15) * 6;
+      }
+      if (sci_num > 10 && sci_num <= 15) {
+        return 5 * sci_num - 10;
+      }
+      if (sci_num > 5 && sci_num <= 10) {
+        return 4 * sci_num - 5;
+      }
+      if (sci_num > 3 && sci_num <= 5) {
+        return 3 * sci_num - 3;
+      }
+      if (sci_num <= 3) {
+        return 2 * sci_num;
+      }
+    },
+changeAuditTotalnum(auditTotalnum){
+   this.form.getFieldDecorator("paperCause");
+      let cause = this.form.getFieldValue("paperCause")
+      this.form.getFieldDecorator("jxzcsl");
+       let wzlx= this.form.getFieldValue("jxzcsl")
+ this.form.getFieldDecorator("djzz");
+       let djzz= this.form.getFieldValue("djzz")
+        
+        this.calcResult(cause,djzz,wzlx,auditTotalnum);
+},
+    changeDjzz(djzz){
+
+this.form.getFieldDecorator("paperCause");
+      let cause = this.form.getFieldValue("paperCause")
+      this.form.getFieldDecorator("jxzcsl");
+       let wzlx= this.form.getFieldValue("jxzcsl")
+
+         this.form.getFieldDecorator("auditTotalnum");
+         let auditTotalnum= this.form.getFieldValue("auditTotalnum")
+        this.calcResult(cause,djzz,wzlx,auditTotalnum);
+    },
+    changeWzlx(wzlx) {
+      this.form.getFieldDecorator("paperCause");
+      let cause = this.form.getFieldValue("paperCause")
+       this.form.getFieldDecorator("djzz");
+       let djzz= this.form.getFieldValue("djzz")
+
+         this.form.getFieldDecorator("auditTotalnum");
+         let auditTotalnum= this.form.getFieldValue("auditTotalnum")
+        this.calcResult(cause,djzz,wzlx,auditTotalnum);
+      
+    },
+    handleSubmit(state) {
+      if (this.dcaBSciencepublish.fileId == "" && state == 1) {
+        this.$message.warning("请上传论文附件");
+        return;
+      } else {
+        this.form.validateFields((err, values) => {
+          if (!err) {
+            this.setFields();
+
+            this.$post("dcaBDocSciencepublish/add", {
+              ...this.dcaBSciencepublish,
+              state: state,
+              auditState: 0,
+            })
+              .then((r) => {
                 this.reset();
                 this.$emit("success");
-              
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        }
-      });
+              })
+              .catch(() => {
+                this.loading = false;
+              });
+          }
+        });
       }
     },
     setFields() {
@@ -329,6 +482,7 @@ export default {
         "journalCode",
         "paperPublishdate",
         "wzlx",
+        "jxzcsl",
         "djzz",
         "qkjb",
         "cdzs",
@@ -343,7 +497,8 @@ export default {
         "rankValue",
         "auditState",
         "rankSear",
-        "firstUnitAuthor"
+        "firstUnitAuthor",
+        "auditTotalnum"
       ]);
       if (typeof values !== "undefined") {
         Object.keys(values).forEach((_key) => {
@@ -360,6 +515,7 @@ export default {
         "journalCode",
         "paperPublishdate",
         "wzlx",
+        "jxzcsl",
         "djzz",
         "qkjb",
         "cdzs",
@@ -368,12 +524,13 @@ export default {
         "xsd",
         "authorRank",
         "otherTimes",
-         "isPermit",
+        "isPermit",
         "sciValue",
         "rankValue",
-         "isBest",
-         "rankSear",
-         "firstUnitAuthor"
+        "isBest",
+        "rankSear",
+        "firstUnitAuthor",
+        "auditTotalnum"
       ];
       let fieldDates = ["paperPublishdate"];
       Object.keys(dcaBSciencepublish).forEach((key) => {
@@ -400,35 +557,31 @@ export default {
       });
     },
     getSearchValue(dcaSearch) {
-
       // this.dcaBSciencepublish = {
       //   fileId: ''
       // };
       this.dcaSearch = {};
       this.isNoEdit = true;
       this.form.resetFields();
-      this.isShow =true
+      this.isShow = true;
       this.$refs.seek.setIsShow();
-      if(dcaSearch.xsd!==''&&dcaSearch.xsd>0.9){
-        this.dcaBSciencepublish.isPermit ='是';
-        this.dcaBSciencepublish.xsd= dcaSearch.xsd;
-        this.pulishDate= dcaSearch.paperPublishdate;
-        dcaSearch.isPermit  ='是';
+      if (dcaSearch.xsd !== "" && dcaSearch.xsd > 0.9) {
+        this.dcaBSciencepublish.isPermit = "是";
+        this.dcaBSciencepublish.xsd = dcaSearch.xsd;
+        this.pulishDate = dcaSearch.paperPublishdate;
+        dcaSearch.isPermit = "是";
         this.dcaSearch = { ...dcaSearch };
         this.setFormValues(dcaSearch);
-      }
-      else{
-         this.isNoEdit = false;
-         this.form.getFieldDecorator("isPermit");
-         this.pulishDate= '';
-         this.form.setFieldsValue({isPermit: '否'});
-        this.dcaBSciencepublish.isPermit ='否';
+      } else {
+        this.isNoEdit = false;
+        this.form.getFieldDecorator("isPermit");
+        this.pulishDate = "";
+        this.form.setFieldsValue({ isPermit: "否" });
+        this.dcaBSciencepublish.isPermit = "否";
       }
     },
   },
 };
 </script>
 <style lang="less" scoped >
-   
-   
 </style>

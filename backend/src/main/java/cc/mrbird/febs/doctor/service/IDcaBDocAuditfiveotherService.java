@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * <p>
- * 中期考核和出站考核 服务类
+ * 中期考核 服务类
  * </p>
  *
  * @author viki
- * @since 2021-01-13
+ * @since 2022-11-14
  */
 public interface IDcaBDocAuditfiveotherService extends IService<DcaBDocAuditfiveother> {
 
@@ -28,7 +28,5 @@ public interface IDcaBDocAuditfiveotherService extends IService<DcaBDocAuditfive
 
         void deleteDcaBDocAuditfiveothers(String[]Ids);
 
-        void deleteByuseraccount(String userAccount);
-
-        int getMaxDisplayIndexByuseraccount(String userAccount);
+        List<DcaBDocAuditfiveother> getAll(String userAccount,String dcaYear);
         }

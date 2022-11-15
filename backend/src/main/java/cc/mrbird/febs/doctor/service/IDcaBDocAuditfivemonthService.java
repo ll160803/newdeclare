@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
  * </p>
  *
  * @author viki
- * @since 2021-01-13
+ * @since 2022-11-14
  */
 public interface IDcaBDocAuditfivemonthService extends IService<DcaBDocAuditfivemonth> {
 
@@ -28,7 +28,5 @@ public interface IDcaBDocAuditfivemonthService extends IService<DcaBDocAuditfive
 
         void deleteDcaBDocAuditfivemonths(String[]Ids);
 
-        void deleteByuseraccount(String userAccount);
-
-        int getMaxDisplayIndexByuseraccount(String userAccount);
+        List<DcaBDocAuditfivemonth> getAll(String userAccount,String dcaYear);
         }

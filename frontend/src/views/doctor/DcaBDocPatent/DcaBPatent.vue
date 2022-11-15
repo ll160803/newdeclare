@@ -59,11 +59,21 @@
           {{text}}
         </div>
         <div v-else>
-          <a-textarea
-            @blur="e => inputChange(e.target.value,record,'patentType')"
+          <a-select
             :value="record.patentType"
+            style="width: 100%"
+            @change="(e,f) => handleSelectChange(e,f,record,'patentType')"
           >
-          </a-textarea>
+            <a-select-option value="国家发明专利">
+              国家发明专利
+            </a-select-option>
+            <a-select-option value="实用新型专利">
+              实用新型专利
+            </a-select-option>
+             <a-select-option value="其他">
+              其他
+            </a-select-option>
+          </a-select>
         </div>
       </template>
       <template
@@ -227,7 +237,7 @@ export default {
         fileId: ''
       },
       scroll: {
-        x: 1800,
+        x: 2000,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
     }
@@ -260,6 +270,17 @@ export default {
       this.editRecord["fileUrl"] = fileUrl
       //this.dataSource =[...dataSource]
     },
+    handleSelectChange (value, option, record, filedName) {
+      let fenshu ='0'
+      record[filedName] = value
+      if(filedName=='patentType' ){
+        if(record['patentRanknum']==1 && value =='国家发明专利'){
+          fenshu = '3'
+        }
+        record['fenshu'] = fenshu
+      }
+     
+    },
     onSelectChange (selectedRowKeys, selectedRows) {
       if (selectedRows.length > 0) {
         if (selectedRows[0].state != 3 && selectedRows[0].state != 1) {
@@ -277,6 +298,13 @@ export default {
     inputChange (value, record, filedName) {
       console.info(value)
       record[filedName] = value
+      let fenshu ='0'
+      if(filedName=='patentRanknum' ){
+        if(record['patentType']=='国家发明专利' && value == 1){
+          fenshu = '3'
+        }
+        record['fenshu'] = fenshu
+      }
     },
     onIsUseChange (e, record, filedName) {
       record[filedName] = e.target.checked;
@@ -297,6 +325,7 @@ export default {
           isAuthority: '',
           isZhuanrang: '',
           patentGood: '',
+          fenshu: '',
           isUse: false
         })
       }
@@ -416,6 +445,7 @@ export default {
             isAuthority: '',
             isZhuanrang: '',
             patentGood: '',
+            fenshu: '',
             isUse: false
           })
           this.idNums = this.idNums + 4
@@ -441,7 +471,7 @@ export default {
       {
         title: '专利类别',
         dataIndex: 'patentType',
-        width: 130,
+        width: 150,
         scopedSlots: { customRender: 'patentType' }
       },
       {
@@ -450,12 +480,18 @@ export default {
         width: 130,
         scopedSlots: { customRender: 'patentDate' }
       },
+     
       {
         title: '本人排名',
         dataIndex: 'patentRanknum',
         width: 100,
         scopedSlots: { customRender: 'patentRanknum' }
       },
+        {
+          title: '分数',
+          dataIndex: 'fenshu',
+          width: 80,
+        },
        {
         title: '合作导师排名',
         dataIndex: 'daoshiRanknum',

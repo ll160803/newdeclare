@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,11 +25,11 @@ import java.util.UUID;
 import java.time.LocalDate;
 /**
  * <p>
- * 中期考核和出站考核 服务实现类
+ * 中期考核 服务实现类
  * </p>
  *
  * @author viki
- * @since 2021-01-13
+ * @since 2022-11-14
  */
 @Slf4j
 @Service("IDcaBDocAuditfiveotherService")
@@ -38,27 +38,13 @@ public class DcaBDocAuditfiveotherServiceImpl extends ServiceImpl<DcaBDocAuditfi
 
 
 @Override
-@DS("slave")
 public IPage<DcaBDocAuditfiveother> findDcaBDocAuditfiveothers(QueryRequest request, DcaBDocAuditfiveother dcaBDocAuditfiveother){
         try{
         LambdaQueryWrapper<DcaBDocAuditfiveother> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(DcaBDocAuditfiveother::getIsDeletemark, 1);//1是未删 0是已删
 
-        if (StringUtils.isNotBlank(dcaBDocAuditfiveother.getUserAccount())) {
-        queryWrapper.and(wrap->  wrap.eq(DcaBDocAuditfiveother::getUserAccount, dcaBDocAuditfiveother.getUserAccount()).or()
-        .like(DcaBDocAuditfiveother::getUserAccountName, dcaBDocAuditfiveother.getUserAccount()));
-
-        }
-        if (dcaBDocAuditfiveother.getState()!=null) {
-        queryWrapper.eq(DcaBDocAuditfiveother::getState, dcaBDocAuditfiveother.getState());
-        }
-       /** if (dcaBDocAuditfiveother.getAuditState()!=null && (dcaBDocAuditfiveother.getAuditState()>=0)) {
-        queryWrapper.eq(DcaBDocAuditfiveother::getAuditState, dcaBDocAuditfiveother.getAuditState());
-        }*/
-                                if (StringUtils.isNotBlank(dcaBDocAuditfiveother.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBDocAuditfiveother.getCreateTimeTo())) {
-                                queryWrapper
-                                .ge(DcaBDocAuditfiveother::getCreateTime, dcaBDocAuditfiveother.getCreateTimeFrom())
-                                .le(DcaBDocAuditfiveother::getCreateTime, dcaBDocAuditfiveother.getCreateTimeTo());
+                                if (StringUtils.isNotBlank(dcaBDocAuditfiveother.getUserAccount())) {
+                                queryWrapper.like(DcaBDocAuditfiveother::getUserAccount, dcaBDocAuditfiveother.getUserAccount());
                                 }
 
         Page<DcaBDocAuditfiveother> page=new Page<>();
@@ -70,20 +56,18 @@ public IPage<DcaBDocAuditfiveother> findDcaBDocAuditfiveothers(QueryRequest requ
         }
         }
 @Override
-@DS("slave")
 public IPage<DcaBDocAuditfiveother> findDcaBDocAuditfiveotherList (QueryRequest request, DcaBDocAuditfiveother dcaBDocAuditfiveother){
         try{
         Page<DcaBDocAuditfiveother> page=new Page<>();
         SortUtil.handlePageSort(request,page,false);//true 是属性  false是数据库字段可两个
         return  this.baseMapper.findDcaBDocAuditfiveother(page,dcaBDocAuditfiveother);
         }catch(Exception e){
-        log.error("获取中期考核和出站考核失败" ,e);
+        log.error("获取中期考核失败" ,e);
         return null;
         }
         }
 @Override
 @Transactional
-@DS("slave")
 public void createDcaBDocAuditfiveother(DcaBDocAuditfiveother dcaBDocAuditfiveother){
                 dcaBDocAuditfiveother.setId(UUID.randomUUID().toString());
         dcaBDocAuditfiveother.setCreateTime(new Date());
@@ -93,7 +77,6 @@ public void createDcaBDocAuditfiveother(DcaBDocAuditfiveother dcaBDocAuditfiveot
 
 @Override
 @Transactional
-@DS("slave")
 public void updateDcaBDocAuditfiveother(DcaBDocAuditfiveother dcaBDocAuditfiveother){
         dcaBDocAuditfiveother.setModifyTime(new Date());
         this.baseMapper.updateDcaBDocAuditfiveother(dcaBDocAuditfiveother);
@@ -101,21 +84,19 @@ public void updateDcaBDocAuditfiveother(DcaBDocAuditfiveother dcaBDocAuditfiveot
 
 @Override
 @Transactional
-@DS("slave")
 public void deleteDcaBDocAuditfiveothers(String[]Ids){
         List<String> list=Arrays.asList(Ids);
         this.baseMapper.deleteBatchIds(list);
         }
 @Override
 @Transactional
-@DS("slave")
-public  void deleteByuseraccount(String userAccount){
-        this.baseMapper.deleteByAccount(userAccount);
+public List<DcaBDocAuditfiveother> getAll(String userAccount,String dcaYear){
+        LambdaQueryWrapper<DcaBDocAuditfiveother> queryWrapper=new LambdaQueryWrapper<>();
+        if (StringUtils.isNotBlank(userAccount)) {
+        queryWrapper.eq(DcaBDocAuditfiveother::getUserAccount, userAccount);
         }
-@Override
-@Transactional
-@DS("slave")
-public  int getMaxDisplayIndexByuseraccount(String userAccount){
-        return this.baseMapper.getMaxDisplayIndexByuseraccount(userAccount);
+
+      return  this.baseMapper.selectList(queryWrapper);
         }
+
         }

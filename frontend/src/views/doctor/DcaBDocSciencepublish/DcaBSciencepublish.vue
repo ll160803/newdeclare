@@ -228,7 +228,14 @@ export default {
           width: 120,
           scopedSlots: { customRender: 'authorRank' }
         },
-        {
+    
+         {
+          title: '第一作者或通讯作者共几人',
+          dataIndex: 'auditTotalnum',
+          width: 100,
+          scopedSlots: { customRender: 'auditTotalnum' }
+        },
+            {
           title: '排第几',
           dataIndex: 'djzz',
           width: 80,
@@ -288,15 +295,7 @@ export default {
         //   },
         //   scopedSlots: { customRender: 'lczcsl' }
         // },
-        //  {
-        //   title: '第一作者或通讯作者共几人',
-        //   dataIndex: 'auditTotalnum',
-        //   width: 100,
-        //   customHeaderCell: function () {
-        //     return { style: { color: 'red' } }
-        //   },
-        //   scopedSlots: { customRender: 'auditTotalnum' }
-        // },
+        
         // {
         //   title: '非第一作者或通讯作者',
         //   dataIndex: 'auditIsfirst',
@@ -315,6 +314,16 @@ export default {
         //   },
         //   scopedSlots: { customRender: 'cdzs' }
         // }, 
+         {
+          title: '文章类型',
+          dataIndex: 'jxzcsl',
+          width: 100,
+        },
+         {
+          title: '文章分数',
+          dataIndex: 'cdzs',
+          width: 100,
+        },
         {
           title: '状态',
           dataIndex: 'state',
@@ -527,6 +536,8 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.pagination.defaultCurrent;
       }
+      params.sortField="createTime"
+      params.sortOrder="descend"
       this.$get("dcaBDocSciencepublish/custom", {
         ...params,
       }).then((r) => {

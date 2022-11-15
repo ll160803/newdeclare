@@ -198,7 +198,7 @@ public void updateDcaBDocSciencepublish(@Valid DcaBDocSciencepublish dcaBDocScie
             if(this.iDcaBDocSciencepublishService.isExistPaperName(currentUser.getUsername(),dcaBSciencepublish.getPaperName(),"")){
                 throw new FebsException("此论文已经存在，请勿重复添加");
             }
-            this.iDcaBDocSciencepublishService.deleteByuseraccount(currentUser.getUsername());
+           // this.iDcaBDocSciencepublishService.deleteByuseraccount(currentUser.getUsername());
             this.iDcaBDocSciencepublishService.createDcaBDocSciencepublish(dcaBSciencepublish);
             return  new FebsResponse().data(dcaBSciencepublish.getId());
         }catch(Exception e){

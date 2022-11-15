@@ -411,7 +411,15 @@ export default {
     search2 () {
       if (this.paginationInfo) {
         this.paginationInfo.current = this.pagination.defaultCurrent
+         
+         this.$refs.TableInfo3.paginationInfo.current = this.pagination.defaultCurrent
       }
+       if (this.$refs.TableInfo2.paginationInfo) {
+this.$refs.TableInfo2.paginationInfo.current = this.pagination.defaultCurrent
+       }
+       if (this.$refs.TableInfo3.paginationInfo) {
+this.$refs.TableInfo3.paginationInfo.current = this.pagination.defaultCurrent
+       }
       this.search()
     },
     search () {

@@ -52,6 +52,12 @@ public IPage<DcaBDocSciencepublish> findDcaBDocSciencepublishs(QueryRequest requ
         if (dcaBDocSciencepublish.getState()!=null) {
         queryWrapper.eq(DcaBDocSciencepublish::getState, dcaBDocSciencepublish.getState());
         }
+                if (StringUtils.isNotBlank(dcaBDocSciencepublish.getPaperName())) {
+                        queryWrapper.like(DcaBDocSciencepublish::getPaperName, dcaBDocSciencepublish.getPaperName());
+                }
+                if (StringUtils.isNotBlank(dcaBDocSciencepublish.getJournalName())) {
+                        queryWrapper.like(DcaBDocSciencepublish::getJournalName, dcaBDocSciencepublish.getJournalName());
+                }
        /** if (dcaBDocSciencepublish.getAuditState()!=null && (dcaBDocSciencepublish.getAuditState()>=0)) {
         queryWrapper.eq(DcaBDocSciencepublish::getAuditState, dcaBDocSciencepublish.getAuditState());
         }*/

@@ -202,6 +202,46 @@
           </a-button>
         </div>
       </template>
+       <template
+        slot="auditTypetp"
+        slot-scope="text, record"
+      >
+        <div v-if="record.state==3 || record.state==1">
+          {{text}}
+        </div>
+        <div v-else>
+          <a-select
+            :value="record.auditTypetp"
+            style="width: 100%"
+            @change="(e,f) => handleSelectChange(e,f,record,'auditTypetp')"
+          >
+            <a-select-option value="国家自然科学基金面上项目">
+              国家自然科学基金面上项目
+            </a-select-option>
+            <a-select-option value="博士后创新人才支持计划">
+              博士后创新人才支持计划
+            </a-select-option>
+            <a-select-option value="青年科学基金项目">
+              青年科学基金项目
+            </a-select-option>
+            <a-select-option value="中国博士后科学基金-特别项目">
+              中国博士后科学基金-特别项目
+            </a-select-option>
+            <a-select-option value="中国博士后科学基金-面上项目">
+              中国博士后科学基金-面上项目
+            </a-select-option>
+            <a-select-option value="博士后国际交流项目">
+              博士后国际交流项目
+            </a-select-option>
+            <a-select-option value="省级课题">
+              省级课题
+            </a-select-option>
+             <a-select-option value="其他">
+              其他
+            </a-select-option>
+          </a-select>
+        </div>
+      </template>
     </a-table>
     <div>
       <a-button
@@ -242,7 +282,7 @@ export default {
         fileId: ''
       },
        scroll: {
-        x: 1800,
+        x: 2400,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
     }
@@ -285,6 +325,34 @@ export default {
         this.selectedRowKeys = selectedRowKeys
       }
     },
+    handleSelectChange(v, f, record, filedName) {
+      record[filedName] = v;
+      if (v == "国家自然科学基金面上项目") {
+          record["auditFund"] = 20;
+      }
+       if (v == "博士后创新人才支持计划") {
+          record["auditFund"] = 20;
+      }
+      if (v == "青年科学基金项目") {
+          record["auditFund"] = 10;
+      }
+       if (v == "中国博士后科学基金-特别项目") {
+          record["auditFund"] = 8;
+      }
+       if (v == "中国博士后科学基金-面上项目") {
+          record["auditFund"] = 5;
+      }
+       if (v == "博士后国际交流项目") {
+          record["auditFund"] = 5;
+      }
+       if (v == "省级课题") {
+          record["auditFund"] = 3;
+      }
+       if (v == "其他") {
+          record["auditFund"] = 0;
+      }
+    
+    },
     handleChange (date, dateStr, record, filedName) {
       const value = dateStr
       record[filedName] = value
@@ -313,7 +381,9 @@ export default {
           endDate: '',
           rankNum: '',
           daoshiRanknum: '',
-          isUse: false
+          isUse: false,
+          auditTypetp: '',
+          auditFund: ''
         })
       }
       this.idNums = this.idNums + 4
@@ -433,7 +503,9 @@ export default {
             endDate: '',
             rankNum: '',
             daoshiRanknum: '',
-            isUse: false
+            isUse: false,
+            auditTypetp: '',
+            auditFund: ''
           })
           this.idNums = this.idNums + 4
         }
@@ -460,6 +532,21 @@ export default {
         width: 130,
         scopedSlots: { customRender: 'projectSource' }
       },
+       {
+          title: '项目类型',
+          dataIndex: 'auditTypetp',
+          width: 250,
+          scopedSlots: { customRender: 'auditTypetp' },
+         
+        },
+       
+        {
+          title: ' 分数',
+          dataIndex: 'auditFund',
+          width: 130,
+          scopedSlots: { customRender: 'auditFund' },
+        
+        },
       {
         title: '合同经费(单位：万)',
         dataIndex: 'contractFund',

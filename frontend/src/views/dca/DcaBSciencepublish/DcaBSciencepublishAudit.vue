@@ -596,18 +596,18 @@ export default {
         this.loading = false;
         const pagination = { ...this.pagination };
         pagination.total = data.total;
-        data.rows.forEach((element) => {
-          element["aus"] = 0;
-          if (
-            element["authorRank"] != null &&
-            element["authorRank"].indexOf("[") >= 0
-          ) {
-            element["authorRank"] = JSON.parse(element["authorRank"]);
-          }
-          if (element["authorRank"] == "") {
-            element["authorRank"] = [];
-          }
-        });
+        // data.rows.forEach((element) => {
+        //   element["aus"] = 0;
+        //   if (
+        //     element["authorRank"] != null &&
+        //     element["authorRank"].indexOf("[") >= 0
+        //   ) {
+        //     element["authorRank"] = JSON.parse(element["authorRank"]);
+        //   }
+        //   if (element["authorRank"] == "") {
+        //     element["authorRank"] = [];
+        //   }
+        // });
         this.dataSource = data.rows;
         this.pagination = pagination;
       });

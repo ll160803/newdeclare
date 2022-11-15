@@ -1,5 +1,6 @@
 package cc.mrbird.febs.doctor.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -14,11 +15,11 @@ import cc.mrbird.febs.common.converter.*;
 
 /**
  * <p>
- * 中期考核和出站考核
+ * 中期考核
  * </p>
  *
  * @author viki
- * @since 2021-01-13
+ * @since 2022-11-14
  */
 
 @Excel("dca_b_doc_auditfiveother")
@@ -85,6 +86,36 @@ private static final long serialVersionUID=1L;
         
         @ExcelField(value ="人事编号")
     private String userAccount;
+
+    /**
+     * 填写日期
+     */
+        
+        @ExcelField(value ="填写日期", writeConverter = DateConverter.class)
+    private Date txDate;
+    private transient String txDateFrom;
+    private transient String txDateTo;
+
+    /**
+     * 成果概述
+     */
+        
+        @ExcelField(value ="成果概述")
+    private String cggs;
+
+    /**
+     * 主持研究的项目名称及研究计划
+     */
+        
+        @ExcelField(value ="主持研究的项目名称及研究计划")
+    private String zcyjxmyj;
+
+    /**
+     * 博士后本人中期工作小结
+     */
+        
+        @ExcelField(value ="博士后本人中期工作小结")
+    private String bshbrzqxj;
 
     /**
      * 备注
@@ -210,6 +241,14 @@ private static final long serialVersionUID=1L;
     public static final String USER_ACCOUNT_NAME ="user_account_name" ;
 
     public static final String USER_ACCOUNT ="user_account" ;
+
+    public static final String TX_DATE ="tx_date" ;
+
+    public static final String CGGS ="cggs" ;
+
+    public static final String ZCYJXMYJ ="zcyjxmyj" ;
+
+    public static final String BSHBRZQXJ ="bshbrzqxj" ;
 
     public static final String AD_CONTENT ="ad_content" ;
 

@@ -44,11 +44,24 @@
           {{text}}
         </div>
         <div v-else>
-          <a-textarea
-            @blur="e => inputChange(e.target.value,record,'srProjectGrade')"
+          <a-select
             :value="record.srProjectGrade"
+            style="width: 100%"
+            @change="(e,f) => handleSelectChange(e,f,record,'srProjectGrade')"
           >
-          </a-textarea>
+            <a-select-option value="国家级">
+              国家级
+            </a-select-option>
+            <a-select-option value="省部级">
+              省部级
+            </a-select-option>
+            <a-select-option value="校级">
+              校级
+            </a-select-option>
+            <a-select-option value="其他">
+              其他
+            </a-select-option>
+          </a-select>
         </div>
       </template>
       <template
@@ -59,11 +72,24 @@
           {{text}}
         </div>
         <div v-else>
-          <a-textarea
-            @blur="e => inputChange(e.target.value,record,'srProjectLevel')"
+           <a-select
             :value="record.srProjectLevel"
+            style="width: 100%"
+            @change="(e,f) => handleSelectChange(e,f,record,'srProjectLevel')"
           >
-          </a-textarea>
+            <a-select-option value="一等奖">
+              一等奖
+            </a-select-option>
+            <a-select-option value="二等奖">
+              二等奖
+            </a-select-option>
+            <a-select-option value="三等奖">
+              三等奖
+            </a-select-option>
+             <a-select-option value="其他">
+              其他
+            </a-select-option>
+          </a-select>
         </div>
       </template>
       <template
@@ -197,7 +223,7 @@ export default {
         fileId: ''
       },
        scroll: {
-        x: 1300,
+        x: 1600,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
     }
@@ -245,11 +271,17 @@ export default {
       record[filedName] = value
     },
     inputChange (value, record, filedName) {
-      console.info(value)
       record[filedName] = value
+      if(filedName=='srPrizeRanknum'){
+         record["auditName"] = this.calcFenShu(record['srProjectGrade'],record['srProjectLevel'],record['srPrizeRanknum'])
+      }
     },
     onIsUseChange (e, record, filedName) {
       record[filedName] = e.target.checked;
+    },
+    handleSelectChange(v, f, record, filedName) {
+      record[filedName] = v;
+      record["auditName"] = this.calcFenShu(record['srProjectGrade'],record['srProjectLevel'],record['srPrizeRanknum'])
     },
     handleAdd () {
       for (let i = 0; i < 4; i++) {
@@ -265,10 +297,28 @@ export default {
           srPrizeDate: '',
           srPrizeRanknum: '',
           daoshiRanknum: '',
+          auditName: '0',
           isUse: false
         })
       }
       this.idNums = this.idNums + 4
+    },
+    calcFenShu(jb,dj,rank){
+      let fs='0';
+       if (rank==1){
+         if(jb=='国家级'|| jb=='省部级'){
+           if(dj=='一等奖'){
+            fs= '10'
+           }
+           if(dj=='二等奖'){
+            fs= '5'
+           }
+           if(dj=='三等奖'){
+            fs= '3'
+           }
+         }
+       }
+       return fs;
     },
     handleSave () {
       const dataSourceAll = [...this.dataSource]
@@ -382,6 +432,7 @@ export default {
             srPrizeDate: '',
             srPrizeRanknum: '',
             daoshiRanknum: '',
+            auditName: '0',
             isUse: false
           })
           this.idNums = this.idNums + 4
@@ -433,6 +484,12 @@ export default {
         dataIndex: 'daoshiRanknum',
         width: 130,
         scopedSlots: { customRender: 'daoshiRanknum' }
+      },
+       {
+        title: '分数',
+        dataIndex: 'auditName',
+        width: 80,
+     
       },
       {
         title: '状态',

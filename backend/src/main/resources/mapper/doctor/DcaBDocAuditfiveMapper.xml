@@ -11,6 +11,12 @@
                     <result column="file_url" property="fileUrl"/>
                     <result column="user_account_name" property="userAccountName"/>
                     <result column="user_account" property="userAccount"/>
+                    <result column="zzbx" property="zzbx"/>
+                    <result column="zydd" property="zydd"/>
+                    <result column="ljzl" property="ljzl"/>
+                    <result column="ywnlgztd" property="ywnlgztd"/>
+                    <result column="grkyjz" property="grkyjz"/>
+                    <result column="xndkykt" property="xndkykt"/>
                     <result column="ad_content" property="adContent"/>
                     <result column="state" property="state"/>
                     <result column="IS_DELETEMARK" property="isDeletemark"/>
@@ -28,7 +34,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, file_id, khjg, year, file_url, user_account_name, user_account, ad_content, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
+        id, file_id, khjg, year, file_url, user_account_name, user_account, zzbx, zydd, ljzl, ywnlgztd, grkyjz, xndkykt, ad_content, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
     </sql>
     <update id="updateDcaBDocAuditfive" parameterType="cc.mrbird.febs.doctor.entity.DcaBDocAuditfive">
         update dca_b_doc_auditfive
@@ -39,6 +45,12 @@
 <if test="fileUrl != null">file_url=#{fileUrl},</if>
 <if test="userAccountName != null">user_account_name=#{userAccountName},</if>
 <if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="zzbx != null">zzbx=#{zzbx},</if>
+<if test="zydd != null">zydd=#{zydd},</if>
+<if test="ljzl != null">ljzl=#{ljzl},</if>
+<if test="ywnlgztd != null">ywnlgztd=#{ywnlgztd},</if>
+<if test="grkyjz != null">grkyjz=#{grkyjz},</if>
+<if test="xndkykt != null">xndkykt=#{xndkykt},</if>
 <if test="adContent != null">ad_content=#{adContent},</if>
 <if test="state != null">state=#{state},</if>
 <if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
@@ -59,38 +71,44 @@
     <select id="findDcaBDocAuditfive" resultType="cc.mrbird.febs.doctor.entity.DcaBDocAuditfive" parameterType="cc.mrbird.febs.doctor.entity.DcaBDocAuditfive">
         select  *  from dca_b_doc_auditfive
         where  1=1
-            <if test="dcaBDocAuditfive.id != null and dcaBDocAuditfive.id != ''"> and dca_b_doc_auditfive.id =#{ dcaBDocAuditfive.id} </if>
-            <if test="dcaBDocAuditfive.fileId != null and dcaBDocAuditfive.fileId != ''"> and dca_b_doc_auditfive.file_id like concat('%', #{ dcaBDocAuditfive.fileId} ,'%')</if>
-            <if test="dcaBDocAuditfive.khjg != null and dcaBDocAuditfive.khjg != ''"> and dca_b_doc_auditfive.khjg like concat('%', #{ dcaBDocAuditfive.khjg} ,'%')</if>
-            <if test="dcaBDocAuditfive.year != null and dcaBDocAuditfive.year != ''"> and dca_b_doc_auditfive.year like concat('%', #{ dcaBDocAuditfive.year} ,'%')</if>
-            <if test="dcaBDocAuditfive.fileUrl != null and dcaBDocAuditfive.fileUrl != ''"> and dca_b_doc_auditfive.file_url like concat('%', #{ dcaBDocAuditfive.fileUrl} ,'%')</if>
-            <if test="dcaBDocAuditfive.userAccountName != null and dcaBDocAuditfive.userAccountName != ''"> and dca_b_doc_auditfive.user_account_name like concat('%', #{ dcaBDocAuditfive.userAccountName} ,'%')</if>
-            <if test="dcaBDocAuditfive.userAccount != null and dcaBDocAuditfive.userAccount != ''"> and dca_b_doc_auditfive.user_account like concat('%', #{ dcaBDocAuditfive.userAccount} ,'%')</if>
-            <if test="dcaBDocAuditfive.adContent != null and dcaBDocAuditfive.adContent != ''"> and dca_b_doc_auditfive.ad_content like concat('%', #{ dcaBDocAuditfive.adContent} ,'%')</if>
-        <if test="dcaBDocAuditfive.state != null"> and dca_b_doc_auditfive.state =#{ dcaBDocAuditfive.state} </if>
-        <if test="dcaBDocAuditfive.isDeletemark != null"> and dca_b_doc_auditfive.IS_DELETEMARK =#{ dcaBDocAuditfive.isDeletemark} </if>
+            <if test="dcaBDocAuditfive.id != null and dcaBDocAuditfive.id != ''"> and dcaBDocAuditfive.id =#{ dcaBDocAuditfive.id} </if>
+            <if test="dcaBDocAuditfive.fileId != null and dcaBDocAuditfive.fileId != ''"> and dcaBDocAuditfive.file_id like concat('%', #{ dcaBDocAuditfive.fileId} ,'%')</if>
+            <if test="dcaBDocAuditfive.khjg != null and dcaBDocAuditfive.khjg != ''"> and dcaBDocAuditfive.khjg like concat('%', #{ dcaBDocAuditfive.khjg} ,'%')</if>
+            <if test="dcaBDocAuditfive.year != null and dcaBDocAuditfive.year != ''"> and dcaBDocAuditfive.year like concat('%', #{ dcaBDocAuditfive.year} ,'%')</if>
+            <if test="dcaBDocAuditfive.fileUrl != null and dcaBDocAuditfive.fileUrl != ''"> and dcaBDocAuditfive.file_url like concat('%', #{ dcaBDocAuditfive.fileUrl} ,'%')</if>
+            <if test="dcaBDocAuditfive.userAccountName != null and dcaBDocAuditfive.userAccountName != ''"> and dcaBDocAuditfive.user_account_name like concat('%', #{ dcaBDocAuditfive.userAccountName} ,'%')</if>
+            <if test="dcaBDocAuditfive.userAccount != null and dcaBDocAuditfive.userAccount != ''"> and dcaBDocAuditfive.user_account like concat('%', #{ dcaBDocAuditfive.userAccount} ,'%')</if>
+            <if test="dcaBDocAuditfive.zzbx != null and dcaBDocAuditfive.zzbx != ''"> and dcaBDocAuditfive.zzbx like concat('%', #{ dcaBDocAuditfive.zzbx} ,'%')</if>
+            <if test="dcaBDocAuditfive.zydd != null and dcaBDocAuditfive.zydd != ''"> and dcaBDocAuditfive.zydd like concat('%', #{ dcaBDocAuditfive.zydd} ,'%')</if>
+            <if test="dcaBDocAuditfive.ljzl != null and dcaBDocAuditfive.ljzl != ''"> and dcaBDocAuditfive.ljzl like concat('%', #{ dcaBDocAuditfive.ljzl} ,'%')</if>
+            <if test="dcaBDocAuditfive.ywnlgztd != null and dcaBDocAuditfive.ywnlgztd != ''"> and dcaBDocAuditfive.ywnlgztd like concat('%', #{ dcaBDocAuditfive.ywnlgztd} ,'%')</if>
+            <if test="dcaBDocAuditfive.grkyjz != null and dcaBDocAuditfive.grkyjz != ''"> and dcaBDocAuditfive.grkyjz like concat('%', #{ dcaBDocAuditfive.grkyjz} ,'%')</if>
+            <if test="dcaBDocAuditfive.xndkykt != null and dcaBDocAuditfive.xndkykt != ''"> and dcaBDocAuditfive.xndkykt like concat('%', #{ dcaBDocAuditfive.xndkykt} ,'%')</if>
+            <if test="dcaBDocAuditfive.adContent != null and dcaBDocAuditfive.adContent != ''"> and dcaBDocAuditfive.ad_content like concat('%', #{ dcaBDocAuditfive.adContent} ,'%')</if>
+        <if test="dcaBDocAuditfive.state != null"> and dcaBDocAuditfive.state =#{ dcaBDocAuditfive.state} </if>
+        <if test="dcaBDocAuditfive.isDeletemark != null"> and dcaBDocAuditfive.IS_DELETEMARK =#{ dcaBDocAuditfive.isDeletemark} </if>
         <if test="dcaBDocAuditfive.createTimeFrom!= null">
-            AND dca_b_doc_auditfive.CREATE_TIME <![CDATA[ >= ]]>  #{dcaBDocAuditfive.createTimeFrom}
+            AND dcaBDocAuditfive.CREATE_TIME <![CDATA[ >= ]]>  #{dcaBDocAuditfive.createTimeFrom}
         </if>
         <if test="dcaBDocAuditfive.createTimeTo!= null">
-            AND dca_b_doc_auditfive.CREATE_TIME <![CDATA[ <= ]]>  #{dcaBDocAuditfive.createTimeTo}
+            AND dcaBDocAuditfive.CREATE_TIME <![CDATA[ <= ]]>  #{dcaBDocAuditfive.createTimeTo}
         </if>
-        <if test="dcaBDocAuditfive.displayIndex != null"> and dca_b_doc_auditfive.display_index =#{ dcaBDocAuditfive.displayIndex} </if>
+        <if test="dcaBDocAuditfive.displayIndex != null"> and dcaBDocAuditfive.display_index =#{ dcaBDocAuditfive.displayIndex} </if>
         <if test="dcaBDocAuditfive.modifyTimeFrom!= null">
-            AND dca_b_doc_auditfive.MODIFY_TIME <![CDATA[ >= ]]>  #{dcaBDocAuditfive.modifyTimeFrom}
+            AND dcaBDocAuditfive.MODIFY_TIME <![CDATA[ >= ]]>  #{dcaBDocAuditfive.modifyTimeFrom}
         </if>
         <if test="dcaBDocAuditfive.modifyTimeTo!= null">
-            AND dca_b_doc_auditfive.MODIFY_TIME <![CDATA[ <= ]]>  #{dcaBDocAuditfive.modifyTimeTo}
+            AND dcaBDocAuditfive.MODIFY_TIME <![CDATA[ <= ]]>  #{dcaBDocAuditfive.modifyTimeTo}
         </if>
-            <if test="dcaBDocAuditfive.auditMan != null and dcaBDocAuditfive.auditMan != ''"> and dca_b_doc_auditfive.auditMan like concat('%', #{ dcaBDocAuditfive.auditMan} ,'%')</if>
-            <if test="dcaBDocAuditfive.auditManName != null and dcaBDocAuditfive.auditManName != ''"> and dca_b_doc_auditfive.auditManName like concat('%', #{ dcaBDocAuditfive.auditManName} ,'%')</if>
+            <if test="dcaBDocAuditfive.auditMan != null and dcaBDocAuditfive.auditMan != ''"> and dcaBDocAuditfive.auditMan like concat('%', #{ dcaBDocAuditfive.auditMan} ,'%')</if>
+            <if test="dcaBDocAuditfive.auditManName != null and dcaBDocAuditfive.auditManName != ''"> and dcaBDocAuditfive.auditManName like concat('%', #{ dcaBDocAuditfive.auditManName} ,'%')</if>
         <if test="dcaBDocAuditfive.auditDateFrom!= null">
-            AND dca_b_doc_auditfive.auditDate <![CDATA[ >= ]]>  #{dcaBDocAuditfive.auditDateFrom}
+            AND dcaBDocAuditfive.auditDate <![CDATA[ >= ]]>  #{dcaBDocAuditfive.auditDateFrom}
         </if>
         <if test="dcaBDocAuditfive.auditDateTo!= null">
-            AND dca_b_doc_auditfive.auditDate <![CDATA[ <= ]]>  #{dcaBDocAuditfive.auditDateTo}
+            AND dcaBDocAuditfive.auditDate <![CDATA[ <= ]]>  #{dcaBDocAuditfive.auditDateTo}
         </if>
-            <if test="dcaBDocAuditfive.auditSuggestion != null and dcaBDocAuditfive.auditSuggestion != ''"> and dca_b_doc_auditfive.auditSuggestion like concat('%', #{ dcaBDocAuditfive.auditSuggestion} ,'%')</if>
+            <if test="dcaBDocAuditfive.auditSuggestion != null and dcaBDocAuditfive.auditSuggestion != ''"> and dcaBDocAuditfive.auditSuggestion like concat('%', #{ dcaBDocAuditfive.auditSuggestion} ,'%')</if>
 </select>
 
 </mapper>

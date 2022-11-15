@@ -114,7 +114,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 4000,
+        x: 4300,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       userAccount: '',
@@ -494,6 +494,25 @@ export default {
             return ''
           },
           width: 120
+        },
+        {
+          title: '是否预留院博后',
+          dataIndex: 'isYlybh',
+          width: 130,
+        },
+          {
+          title: '出站日期',
+          dataIndex: 'czDate',
+          width: 130,
+           customRender: (text, row, index) => {
+            if(text == null) return ''
+            return moment(text).format('YYYY-MM-DD')
+          },
+        },
+          {
+          title: '是否在职博后',
+          dataIndex: 'isZzbh',
+          width: 130,
         },
        ]
     }

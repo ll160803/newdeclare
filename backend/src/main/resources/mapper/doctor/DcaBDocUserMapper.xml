@@ -53,11 +53,15 @@
                     <result column="picture_id" property="pictureId"/>
                     <result column="picture_url" property="pictureUrl"/>
                     <result column="pinqi" property="pinqi"/>
+            <result column="is_ylybh" property="isYlybh"/>
+            <result column="cz_date" property="czDate"/>
+            <result column="is_zzbh" property="isZzbh"/>
+
         </resultMap>
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, user_account_name, user_account, dept_desc, yggh, telephone, hkrsbh, zslx, ldz, sex_name, birthday, school_date, shenfen, xueli, boshidaoshi, biye_date, pinqi_ranknum, is_authority, file_id, is_zhuanrang, file_url, hezuodaoshi, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, biyexuexiao, zhuanye, in_date, goal, IsUse, yq_date, file_id_lc, file_url_lc, yuangongzu, nation, xrgwjbprsj, jiguan, dca_year, political_status, country, id_card, staff_date, picture_id, picture_url, pinqi
+        id, user_account_name, user_account,is_ylybh,  cz_date,  is_zzbh, dept_desc, yggh, telephone, hkrsbh, zslx, ldz, sex_name, birthday, school_date, shenfen, xueli, boshidaoshi, biye_date, pinqi_ranknum, is_authority, file_id, is_zhuanrang, file_url, hezuodaoshi, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, biyexuexiao, zhuanye, in_date, goal, IsUse, yq_date, file_id_lc, file_url_lc, yuangongzu, nation, xrgwjbprsj, jiguan, dca_year, political_status, country, id_card, staff_date, picture_id, picture_url, pinqi
     </sql>
     <update id="updateDcaBDocUser" parameterType="cc.mrbird.febs.doctor.entity.DcaBDocUser">
         update dca_b_doc_user
@@ -110,6 +114,10 @@
 <if test="pictureId != null">picture_id=#{pictureId},</if>
 <if test="pictureUrl != null">picture_url=#{pictureUrl},</if>
 <if test="pinqi != null">pinqi=#{pinqi},</if>
+            <if test="isYlybh != null">is_ylybh=#{isYlybh},</if>
+            <if test="czDate != null">cz_date=#{czDate},</if>
+            <if test="isZzbh != null">is_zzbh=#{isZzbh},</if>
+
         </trim>
                 where id=#{id}
 

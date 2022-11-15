@@ -5,20 +5,15 @@ import cc.mrbird.febs.common.controller.BaseController;
 import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
-import cc.mrbird.febs.common.utils.ExportExcelUtils;
 
 import cc.mrbird.febs.doctor.service.IDcaBDocAuditfivemonthService;
 import cc.mrbird.febs.doctor.entity.DcaBDocAuditfivemonth;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.system.domain.User;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
 import lombok.extern.slf4j.Slf4j;
-import cn.hutool.core.date.DateUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -34,7 +29,7 @@ import java.util.Map;
 /**
  *
  * @author viki
- * @since 2021-01-13
+ * @since 2022-11-14
  */
 @Slf4j
 @Validated
@@ -46,6 +41,15 @@ public class DcaBDocAuditfivemonthController extends BaseController{
 private String message;
 @Autowired
 public IDcaBDocAuditfivemonthService iDcaBDocAuditfivemonthService;
+
+/**
+ INSERT into t_menu(parent_id,menu_name,path,component,perms,icon,type,order_num,CREATE_time)
+ VALUES (0,'月度考核','/dca/DcaBDocAuditfivemonth/DcaBDocAuditfivemonth','dca/DcaBDocAuditfivemonth/DcaBDocAuditfivemonth','dcaBDocAuditfivemonth:view','fork',0,1,NOW())
+ SELECT MAX(MENU_ID) from t_menu;
+ INSERT into t_menu(parent_id,MENU_NAME,perms,type,order_num,CREATE_time) VALUES(0,'月度考核新增','dcaBDocAuditfivemonth:add',1,1,NOW())
+ INSERT into t_menu(parent_id,MENU_NAME,perms,type,order_num,CREATE_time) VALUES(0,'月度考核编辑','dcaBDocAuditfivemonth:update',1,1,NOW())
+ INSERT into t_menu(parent_id,MENU_NAME,perms,type,order_num,CREATE_time) VALUES(0,'月度考核删除','dcaBDocAuditfivemonth:delete',1,1,NOW())
+*/
 
 
 /**
@@ -59,87 +63,6 @@ public IDcaBDocAuditfivemonthService iDcaBDocAuditfivemonthService;
 public Map<String, Object> List(QueryRequest request, DcaBDocAuditfivemonth dcaBDocAuditfivemonth){
         return getDataTable(this.iDcaBDocAuditfivemonthService.findDcaBDocAuditfivemonths(request, dcaBDocAuditfivemonth));
         }
-@GetMapping("custom")
-public Map<String, Object> ListCustom(QueryRequest request, DcaBDocAuditfivemonth dcaBDocAuditfivemonth){
-        User currentUser= FebsUtil.getCurrentUser();
-    dcaBDocAuditfivemonth.setUserAccount(currentUser.getUsername());
-    dcaBDocAuditfivemonth.setIsDeletemark(1);
-        request.setPageSize(1000);
-        request.setSortField("display_Index");
-        request.setSortOrder("ascend");
-        return getDataTable(this.iDcaBDocAuditfivemonthService.findDcaBDocAuditfivemonths(request, dcaBDocAuditfivemonth));
-        }
-@GetMapping("audit")
-public Map<String, Object> List2(QueryRequest request, DcaBDocAuditfivemonth dcaBDocAuditfivemonth){
-        User currentUser= FebsUtil.getCurrentUser();
-    dcaBDocAuditfivemonth.setIsDeletemark(1);
-        request.setSortField("user_account asc,state asc,display_Index");
-        request.setSortOrder("ascend");
-        return getDataTable(this.iDcaBDocAuditfivemonthService.findDcaBDocAuditfivemonths(request, dcaBDocAuditfivemonth));
-        }
-@Log("新增/按钮")
-@PostMapping("addNew")
-public void addDcaBDocAuditfivemonthCustom(@Valid String jsonStr,int state)throws FebsException{
-        try{
-        User currentUser=FebsUtil.getCurrentUser();
-        List<DcaBDocAuditfivemonth> list=JSON.parseObject(jsonStr,new TypeReference<List<DcaBDocAuditfivemonth>>(){
-        });
-        int countid=0;
-        /**
-         * 先删除数据，然后再添加
-         */
-        this.iDcaBDocAuditfivemonthService.deleteByuseraccount(currentUser.getUsername());
-        int display=this.iDcaBDocAuditfivemonthService.getMaxDisplayIndexByuseraccount(currentUser.getUsername())+1;
-        for(DcaBDocAuditfivemonth dcaBDocAuditfivemonth:list
-        ){
-        if(dcaBDocAuditfivemonth.getState()!=null&&dcaBDocAuditfivemonth.getState().equals(3)) {
-    dcaBDocAuditfivemonth.setState(3);
-        }
-        else{
-    dcaBDocAuditfivemonth.setState(state);
-        }
-    dcaBDocAuditfivemonth.setDisplayIndex(display);
-        display+=1;
-    dcaBDocAuditfivemonth.setCreateUserId(currentUser.getUserId());
-    dcaBDocAuditfivemonth.setUserAccount(currentUser.getUsername());
-    dcaBDocAuditfivemonth.setUserAccountName(currentUser.getRealname());
-        this.iDcaBDocAuditfivemonthService.createDcaBDocAuditfivemonth(dcaBDocAuditfivemonth);
-        }
-        }catch(Exception e){
-        message="新增/按钮失败";
-        log.error(message,e);
-        throw new FebsException(message);
-        }
-        }
-@Log("审核/按钮")
-@PostMapping("updateNew")
-public void updateNewDcaBDocAuditfivemonth(@Valid String jsonStr ,int state )throws FebsException{
-        try{
-        User currentUser= FebsUtil.getCurrentUser();
-    DcaBDocAuditfivemonth dcaBDocAuditfivemonth= JSON.parseObject(jsonStr, new TypeReference<DcaBDocAuditfivemonth>() {
-        });
-    dcaBDocAuditfivemonth.setState(state);
-    /**
-        if (auditState >= 0) {
-        if(state==2){
-    dcaBDocAuditfivemonth.setAuditState(0);
-        }
-        else {
-    dcaBDocAuditfivemonth.setAuditState(auditState+1);
-        }
-
-        }*/
-    dcaBDocAuditfivemonth.setAuditMan(currentUser.getUsername());
-    dcaBDocAuditfivemonth.setAuditManName(currentUser.getRealname());
-    dcaBDocAuditfivemonth.setAuditDate(DateUtil.date());
-        this.iDcaBDocAuditfivemonthService.updateDcaBDocAuditfivemonth(dcaBDocAuditfivemonth);
-
-        }catch(Exception e){
-        message="审核/按钮失败" ;
-        log.error(message,e);
-        throw new FebsException(message);
-        }
-        }
 
 /**
  * 添加
@@ -150,13 +73,11 @@ public void updateNewDcaBDocAuditfivemonth(@Valid String jsonStr ,int state )thr
 @PostMapping
 public void addDcaBDocAuditfivemonth(@Valid DcaBDocAuditfivemonth dcaBDocAuditfivemonth)throws FebsException{
         try{
-        User currentUser=FebsUtil.getCurrentUser();
-    dcaBDocAuditfivemonth.setCreateUserId(currentUser.getUserId());
-    dcaBDocAuditfivemonth.setUserAccount(currentUser.getUsername());
-        this.iDcaBDocAuditfivemonthService.deleteByuseraccount(currentUser.getUsername());
+        User currentUser= FebsUtil.getCurrentUser();
+        dcaBDocAuditfivemonth.setCreateUserId(currentUser.getUserId());
         this.iDcaBDocAuditfivemonthService.createDcaBDocAuditfivemonth(dcaBDocAuditfivemonth);
         }catch(Exception e){
-        message="新增/按钮失败";
+        message="新增/按钮失败" ;
         log.error(message,e);
         throw new FebsException(message);
         }
@@ -169,14 +90,13 @@ public void addDcaBDocAuditfivemonth(@Valid DcaBDocAuditfivemonth dcaBDocAuditfi
  */
 @Log("修改")
 @PutMapping
-@RequiresPermissions("dcaBDocAuditfivemonth:update")
 public void updateDcaBDocAuditfivemonth(@Valid DcaBDocAuditfivemonth dcaBDocAuditfivemonth)throws FebsException{
         try{
-        User currentUser=FebsUtil.getCurrentUser();
-    dcaBDocAuditfivemonth.setModifyUserId(currentUser.getUserId());
+        User currentUser= FebsUtil.getCurrentUser();
+      dcaBDocAuditfivemonth.setModifyUserId(currentUser.getUserId());
         this.iDcaBDocAuditfivemonthService.updateDcaBDocAuditfivemonth(dcaBDocAuditfivemonth);
         }catch(Exception e){
-        message="修改失败";
+        message="修改失败" ;
         log.error(message,e);
         throw new FebsException(message);
         }
@@ -185,39 +105,30 @@ public void updateDcaBDocAuditfivemonth(@Valid DcaBDocAuditfivemonth dcaBDocAudi
 
 @Log("删除")
 @DeleteMapping("/{ids}")
-@RequiresPermissions("dcaBDocAuditfivemonth:delete")
 public void deleteDcaBDocAuditfivemonths(@NotBlank(message = "{required}") @PathVariable String ids)throws FebsException{
         try{
         String[]arr_ids=ids.split(StringPool.COMMA);
         this.iDcaBDocAuditfivemonthService.deleteDcaBDocAuditfivemonths(arr_ids);
         }catch(Exception e){
-        message="删除失败";
+        message="删除失败" ;
         log.error(message,e);
         throw new FebsException(message);
         }
         }
-
 @PostMapping("excel")
-public void export(QueryRequest request, DcaBDocAuditfivemonth dcaBDocAuditfivemonth,String dataJson,HttpServletResponse response)throws FebsException{
-        try{
-        request.setPageNum(1);
-        request.setPageSize(10000);
-        User currentUser = FebsUtil.getCurrentUser();
-
-    dcaBDocAuditfivemonth.setIsDeletemark(1);
-        request.setSortField("user_account asc,state ");
-        request.setSortOrder("ascend");
-        List<DcaBDocAuditfivemonth> dcaBDocAuditfivemonthList=  this.iDcaBDocAuditfivemonthService.findDcaBDocAuditfivemonths(request, dcaBDocAuditfivemonth).getRecords();
-        //ExcelKit.$Export(DcaBAuditdynamic.class,response).downXlsx(dcaBAuditdynamics,false);
-        ExportExcelUtils.exportCustomExcel_han(response, dcaBDocAuditfivemonthList,dataJson,"");
-        }catch(Exception e){
-        message="导出Excel失败";
-        log.error(message,e);
+public void export(QueryRequest request, DcaBDocAuditfivemonth dcaBDocAuditfivemonth, HttpServletResponse response) throws FebsException {
+        try {
+        List<DcaBDocAuditfivemonth> dcaBDocAuditfivemonths = this.iDcaBDocAuditfivemonthService.findDcaBDocAuditfivemonths(request, dcaBDocAuditfivemonth).getRecords();
+        ExcelKit.$Export(DcaBDocAuditfivemonth.class, response).downXlsx(dcaBDocAuditfivemonths, false);
+        } catch (Exception e) {
+        message = "导出Excel失败";
+        log.error(message, e);
         throw new FebsException(message);
         }
         }
+
 @GetMapping("/{id}")
-public DcaBDocAuditfivemonth detail(@NotBlank(message = "{required}") @PathVariable String id){
+public DcaBDocAuditfivemonth detail(@NotBlank(message = "{required}") @PathVariable String id) {
     DcaBDocAuditfivemonth dcaBDocAuditfivemonth=this.iDcaBDocAuditfivemonthService.getById(id);
         return dcaBDocAuditfivemonth;
         }

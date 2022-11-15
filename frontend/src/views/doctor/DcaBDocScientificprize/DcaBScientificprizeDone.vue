@@ -20,6 +20,18 @@
             @click="showUserInfo(text)"
           >{{text}}</a>
         </template>
+         <template
+                slot="action"
+                slot-scope="text, record"
+              >
+                <a-button
+                  type="dashed"
+                  block
+                  @click="handleAuditNext(record)"
+                >
+                  退回待审核
+                </a-button>
+              </template>
       </a-table>
     </a-spin>
     <audit-userInfo
@@ -82,6 +94,34 @@ export default {
 
     onCloseUserInfo () {
       this.visibleUserInfo = false
+    },
+     handleAuditNext (record) {
+      let that = this
+      this.$confirm({
+        title: '确定退回此记录?',
+        content: '当您点击确定按钮后，此记录将退回待审核',
+        centered: true,
+        onOk () {
+          record.auditState = 0
+          let jsonStr = JSON.stringify(record)
+          that.loading = true
+          that.$post('dcaBDocScientificprize/updateNew', {
+            jsonStr: jsonStr,
+            state: 1,
+            auditState: -1
+          }).then(() => {
+            //this.reset()
+            that.$message.success('保存成功')
+            that.fetch2(that.queryParams)
+           // that.freshTabs()
+            that.loading = false
+          }).catch(() => {
+            that.loading = false
+          })
+        },
+        onCancel () {
+        }
+      })
     },
     fetch2 (params = {}) {
       this.loading = true
@@ -205,15 +245,12 @@ export default {
         dataIndex: 'daoshiRanknum',
         width: 130
       },
-        //  {
-        //   title: '名称',
-        //   dataIndex: 'auditName',
-        //   width: 130,
-        //   scopedSlots: { customRender: 'auditName' },
-        //   customHeaderCell: function () {
-        //     return { style: { color: 'red' } }
-        //   },
-        // },
+        {
+          title: '分数',
+          dataIndex: 'auditName',
+          width: 80,
+         
+        },
         // {
         //   title: '等级',
         //   dataIndex: 'auditGrade',
@@ -265,6 +302,11 @@ export default {
             return ''
           },
           width: 80
+        }, {
+          title: '审核',
+          key: 'action',
+          scopedSlots: { customRender: 'action' },
+          width: 150
         }
       ]
     }

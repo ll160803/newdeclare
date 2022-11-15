@@ -258,7 +258,7 @@ export default {
       this.calcHeight.height = window.innerHeight - 59 - 39 - 100 + 'px';
     },
     fetch () {
-      let codes="3,60,130,140,170,180,190,200,210,212,290,300,310,320,50,150,160,240,110,340,6,7,401,120,250"
+      let codes="3,60,130,140,170,180,190,200,210,212,290,300,310,320,50,150,160,240,110,340,6,7,401,120,250,500,332,600,380"
       this.$get('dcaDMudules/doctree/'+codes).then((r) => {
         //console.info(222)
         this.mouduleTreeData = r.data.rows.children

@@ -86,6 +86,13 @@ private static final long serialVersionUID=1L;
     private String patentType;
 
     /**
+     * 分数
+     */
+
+    @ExcelField(value ="分数")
+    private String fenshu;
+
+    /**
      * 批准年月
      */
         

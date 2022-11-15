@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class hanBaseGenerator {
     // 数据库 URL
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/xhdeclare?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/xhdoctor?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     // 数据库驱动
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     // 数据库用户名
@@ -66,7 +66,7 @@ public class hanBaseGenerator {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         //strategy.setTablePrefix(new String[] { "tlog_", "tsys_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[]{"dca_d_yearSetting"}); // 需要生成的表
+        strategy.setInclude(new String[]{"dca_b_doc_auditfive","dca_b_doc_auditfivemiddle","dca_b_doc_auditfivemonth","dca_b_doc_auditfiveother"}); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         // strategy.setSuperEntityClass("com.baomidou.demo.TestEntity");
@@ -96,7 +96,7 @@ public class hanBaseGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         //自定义模块名
-        final String moduleName = "dca";
+        final String moduleName = "doctor";
         pc.setModuleName(moduleName);
         pc.setParent("cc.mrbird.febs");//《==== 包名（自己手动设置）
         pc.setMapper("dao");

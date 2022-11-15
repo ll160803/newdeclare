@@ -537,17 +537,17 @@ export default {
           title: "任现岗位以来",
           children: [
              {
-              title: "单篇SCI高分文章≥20",
+              title: "单篇SCI高分文章≥20（折算后）",
               dataIndex: "dpsci20",
               width: 60,
             },
             {
-              title: "单篇SCI高分文章≥10且<20",
+              title: "单篇SCI高分文章≥10且<20（折算后）",
               dataIndex: "dpsci10",
               width: 60,
             },
             {
-              title: "发表主要文章",
+              title: "发表主要文章（折算后）",
               children: [
                 {
                   title: "A 类",

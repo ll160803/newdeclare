@@ -18,7 +18,7 @@ import cc.mrbird.febs.common.converter.*;
  * </p>
  *
  * @author viki
- * @since 2021-01-13
+ * @since 2022-11-14
  */
 
 @Excel("dca_b_doc_auditfivemonth")
@@ -76,6 +76,41 @@ private static final long serialVersionUID=1L;
         
         @ExcelField(value ="人事编号")
     private String userAccount;
+
+    /**
+     * 成果概述
+     */
+        
+        @ExcelField(value ="成果概述")
+    private String cggs;
+
+    /**
+     * 思想政治表现
+     */
+        
+        @ExcelField(value ="思想政治表现")
+    private String sxzzbx;
+
+    /**
+     * 考勤状况
+     */
+        
+        @ExcelField(value ="考勤状况")
+    private String kqzk;
+
+    /**
+     * 工作态度
+     */
+        
+        @ExcelField(value ="工作态度")
+    private String gztd;
+
+    /**
+     * 工作进展
+     */
+        
+        @ExcelField(value ="工作进展")
+    private String gzjz;
 
     /**
      * 备注
@@ -199,6 +234,16 @@ private static final long serialVersionUID=1L;
     public static final String USER_ACCOUNT_NAME ="user_account_name" ;
 
     public static final String USER_ACCOUNT ="user_account" ;
+
+    public static final String CGGS ="cggs" ;
+
+    public static final String SXZZBX ="sxzzbx" ;
+
+    public static final String KQZK ="kqzk" ;
+
+    public static final String GZTD ="gztd" ;
+
+    public static final String GZJZ ="gzjz" ;
 
     public static final String AD_CONTENT ="ad_content" ;
 

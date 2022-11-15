@@ -304,7 +304,14 @@ export default {
           width: 120,
           scopedSlots: { customRender: 'authorRank' }
         },
-        {
+       
+         {
+          title: '第一作者或通讯作者共几人',
+          dataIndex: 'auditTotalnum',
+          width: 100,
+         
+        },
+         {
           title: '排第几',
           dataIndex: 'djzz',
           width: 80,
@@ -357,14 +364,8 @@ export default {
         //   customHeaderCell: function () {
         //     return { style: { color: 'red' } }
         //   }
-        // }, {
-        //   title: '第一作者或通讯作者共几人',
-        //   dataIndex: 'auditTotalnum',
-        //   width: 100,
-        //   customHeaderCell: function () {
-        //     return { style: { color: 'red' } }
-        //   },
-        // },
+        // }, 
+       
         // {
         //   title: '非第一作者或通讯作者',
         //   dataIndex: 'auditIsfirst',
@@ -377,6 +378,16 @@ export default {
         //     return "否"
         //   }
         // },
+         {
+          title: '文章类型',
+          dataIndex: 'jxzcsl',
+          width: 100,
+        },
+         {
+          title: '文章分数',
+          dataIndex: 'cdzs',
+          width: 100,
+        },
         {
           title: '状态',
           dataIndex: 'state',

@@ -105,11 +105,21 @@
                   {{text}}
                 </div>
                 <div v-else>
-                  <a-textarea
-                    @blur="e => inputChange(e.target.value,record,'patentType')"
-                    :value="record.patentType"
-                  >
-                  </a-textarea>
+                     <a-select
+            :value="record.patentType"
+            style="width: 100%"
+            @change="(e,f) => handleSelectChange(e,f,record,'patentType')"
+          >
+            <a-select-option value="国家发明专利">
+              国家发明专利
+            </a-select-option>
+            <a-select-option value="实用新型专利">
+              实用新型专利
+            </a-select-option>
+             <a-select-option value="其他">
+              其他
+            </a-select-option>
+          </a-select>
                 </div>
               </template>
               <template
@@ -348,7 +358,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1800,
+        x: 2000,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -446,9 +456,27 @@ export default {
     inputCheckChange (blFlag, f, record, filedName) {
       record[filedName] = blFlag ? '是' : '否'
     },
+    handleSelectChange (value, option, record, filedName) {
+      let fenshu ='0'
+      record[filedName] = value
+      if(filedName=='patentType' ){
+        if(record['patentRanknum']==1 && value =='国家发明专利'){
+          fenshu = '3'
+        }
+        record['fenshu'] = fenshu
+      }
+     
+    },
     inputChange (value, record, filedName) {
       console.info(value)
       record[filedName] = value
+      let fenshu ='0'
+      if(filedName=='patentRanknum' ){
+        if(record['patentType']=='国家发明专利' && value == 1){
+          fenshu = '3'
+        }
+        record['fenshu'] = fenshu
+      }
     },
     onIsUseChange (e, record, filedName) {
       record[filedName] = e.target.checked;
@@ -634,10 +662,11 @@ export default {
         {
           title: '专利类别',
           dataIndex: 'patentType',
-          width: 130,
+          width: 150,
           scopedSlots: { customRender: 'patentType' },
           fixed: 'left'
         },
+         
         {
           title: '批准年月',
           dataIndex: 'patentDate',
@@ -645,12 +674,18 @@ export default {
           scopedSlots: { customRender: 'patentDate' },
           fixed: 'left'
         },
-        {
+         {
           title: '本人排名',
           dataIndex: 'patentRanknum',
           width: 130,
           scopedSlots: { customRender: 'patentRanknum' }
         },
+        {
+          title: '分数',
+          dataIndex: 'fenshu',
+          width: 80,
+        },
+       
         {
         title: '合作导师排名',
         dataIndex: 'daoshiRanknum',

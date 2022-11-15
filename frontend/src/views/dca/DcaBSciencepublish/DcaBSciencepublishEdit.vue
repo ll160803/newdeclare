@@ -548,7 +548,12 @@ export default {
           } else {
             if(key=='authorRank'){
               if(dcaBSciencepublish[key]!==null && dcaBSciencepublish[key]!==''){
-                obj[key]= (dcaBSciencepublish[key].toString()).split(",")
+                if(dcaBSciencepublish[key].indexOf("]")>0){
+                  obj[key]= JSON.parse(dcaBSciencepublish[key].toString())
+                }
+                else{
+                  obj[key]= dcaBSciencepublish[key].toString().split(",")
+                }
               }
               
             }

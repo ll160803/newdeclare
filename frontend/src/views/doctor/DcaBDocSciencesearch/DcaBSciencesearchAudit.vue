@@ -258,12 +258,30 @@
                     style="width: 100%"
                     @change="(e,f) => handleSelectChange(e,f,record,'auditTypetp')"
                   >
-                    <a-select-option value="按等级">
-                      按等级
-                    </a-select-option>
-                    <a-select-option value="按经费">
-                      按经费
-                    </a-select-option>
+                     <a-select-option value="国家自然科学基金面上项目">
+              国家自然科学基金面上项目
+            </a-select-option>
+            <a-select-option value="博士后创新人才支持计划">
+              博士后创新人才支持计划
+            </a-select-option>
+            <a-select-option value="青年科学基金项目">
+              青年科学基金项目
+            </a-select-option>
+            <a-select-option value="中国博士后科学基金-特别项目">
+              中国博士后科学基金-特别项目
+            </a-select-option>
+            <a-select-option value="中国博士后科学基金-面上项目">
+              中国博士后科学基金-面上项目
+            </a-select-option>
+            <a-select-option value="博士后国际交流项目">
+              博士后国际交流项目
+            </a-select-option>
+            <a-select-option value="省级课题">
+              省级课题
+            </a-select-option>
+             <a-select-option value="其他">
+              其他
+            </a-select-option>
                   </a-select>
                 </div>
               </template>
@@ -461,7 +479,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 2800,
+        x: 2600,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
@@ -593,9 +611,34 @@ export default {
         ...this.queryParams
       })
     },
-    handleSelectChange (value, option, record, filedName) {
-      console.info(value)
-      record[filedName] = value
+    handleSelectChange (v, option, record, filedName) {
+      record[filedName] = v
+      if(filedName=='auditTypetp'){
+         if (v == "国家自然科学基金面上项目") {
+          record["auditFund"] = 20;
+      }
+       if (v == "博士后创新人才支持计划") {
+          record["auditFund"] = 20;
+      }
+      if (v == "青年科学基金项目") {
+          record["auditFund"] = 10;
+      }
+       if (v == "中国博士后科学基金-特别项目") {
+          record["auditFund"] = 8;
+      }
+       if (v == "中国博士后科学基金-面上项目") {
+          record["auditFund"] = 5;
+      }
+       if (v == "博士后国际交流项目") {
+          record["auditFund"] = 5;
+      }
+       if (v == "省级课题") {
+          record["auditFund"] = 3;
+      }
+       if (v == "其他") {
+          record["auditFund"] = 0;
+      }
+      }
     },
     handleChangeState (state) {
       this.queryParams.auditState = state
@@ -821,15 +864,13 @@ export default {
           scopedSlots: { customRender: 'daoshiRanknum' }
         },
         
-        // {
-        //   title: '类型',
-        //   dataIndex: 'auditTypetp',
-        //   width: 130,
-        //   scopedSlots: { customRender: 'auditTypetp' },
-        //   customHeaderCell: function () {
-        //     return { style: { color: 'red' } }
-        //   },
-        // },
+        {
+          title: '项目类型',
+          dataIndex: 'auditTypetp',
+          width: 250,
+          scopedSlots: { customRender: 'auditTypetp' },
+        
+        },
         // {
         //   title: '类别',
         //   dataIndex: 'auditLb',
@@ -839,15 +880,13 @@ export default {
         //     return { style: { color: 'red' } }
         //   },
         // },
-        // {
-        //   title: ' 经费（万）',
-        //   dataIndex: 'auditFund',
-        //   width: 130,
-        //   scopedSlots: { customRender: 'auditFund' },
-        //   customHeaderCell: function () {
-        //     return { style: { color: 'red' } }
-        //   },
-        // },
+        {
+          title: ' 分数',
+          dataIndex: 'auditFund',
+          width: 130,
+          scopedSlots: { customRender: 'auditFund' },
+        
+        },
         // {
         //   title: '排名',
         //   dataIndex: 'auditRank',

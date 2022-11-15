@@ -30,11 +30,12 @@
                     <result column="auditDate" property="auditDate"/>
                     <result column="auditSuggestion" property="auditSuggestion"/>
                     <result column="IsUse" property="IsUse"/>
+            <result column="fenshu" property="fenshu"/>
         </resultMap>
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-        id, file_id, file_url, user_account_name, user_account, patent_code, patent_name, patent_type, patent_date, daoshi_ranknum, patent_ranknum, is_authority, is_zhuanrang, patent_good, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
+        id, file_id, file_url, user_account_name, user_account,fenshu, patent_code, patent_name, patent_type, patent_date, daoshi_ranknum, patent_ranknum, is_authority, is_zhuanrang, patent_good, state, IS_DELETEMARK, CREATE_TIME, display_index, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID, auditMan, auditManName, auditDate, auditSuggestion, IsUse
     </sql>
     <update id="updateDcaBDocPatent" parameterType="cc.mrbird.febs.doctor.entity.DcaBDocPatent">
         update dca_b_doc_patent
@@ -64,6 +65,7 @@
 <if test="auditDate != null">auditDate=#{auditDate},</if>
 <if test="auditSuggestion != null">auditSuggestion=#{auditSuggestion},</if>
 <if test="IsUse != null">IsUse=#{IsUse},</if>
+            <if test="fenshu != null">fenshu=#{fenshu},</if>
         </trim>
                 where id=#{id}
 

@@ -57,7 +57,7 @@ export default {
       sortedInfo: null,
       paginationInfo: null,
       scroll: {
-        x: 1800,
+        x: 1900,
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
         visibleUserInfo: false,
@@ -191,11 +191,17 @@ export default {
             return moment(text).format('YYYY-MM-DD')
           },
         },
-        {
+         {
           title: '本人排名',
           dataIndex: 'patentRanknum',
           width: 130
         },
+         {
+          title: '分数',
+          dataIndex: 'fenshu',
+          width: 80,
+        },
+       
          {
         title: '合作导师排名',
         dataIndex: 'daoshiRanknum',

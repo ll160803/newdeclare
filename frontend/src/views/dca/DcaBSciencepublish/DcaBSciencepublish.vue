@@ -135,7 +135,7 @@ export default {
       loading: false,
       bordered: true,
       scroll: { 
-        x: 2700,
+        x: 3400,
         y: window.innerHeight - 200 - 100  - 80,
        }
     };
@@ -266,6 +266,45 @@ export default {
              return <a-tag color="red">否</a-tag>
           }
         },  {
+          title: '是否能用于教学职称申报(审核)',
+          dataIndex: 'isJxzcsb',
+         
+          width: 120,
+        }, {
+          title: '是否能用于临床职称申报(审核)',
+          dataIndex: 'isLczcsb',
+          width: 120
+        }, {
+          title: '期刊级别(审核)',
+          dataIndex: 'auditQkjb',
+          width: 80,
+         
+        }, {
+          title: '教学职称文章认定数量(审核)',
+          dataIndex: 'jxzcsl',
+          width: 80,
+         
+        }, {
+          title: '临床职称文章认定数量(审核)',
+          dataIndex: 'lczcsl',
+          width: 80,
+         
+        }, {
+          title: '第一作者或通讯作者共几人(审核)',
+          dataIndex: 'auditTotalnum',
+          width: 100,
+         
+        },
+        {
+          title: '非第一作者或通讯作者(审核)',
+          dataIndex: 'auditIsfirst',
+          width: 100,
+          
+          customRender: (text, row, index) => {
+            if (text) return "是"
+            return "否"
+          }
+        }, {
           title: '附件',
           dataIndex: 'fileId',
           customRender: (text, row, index) => {

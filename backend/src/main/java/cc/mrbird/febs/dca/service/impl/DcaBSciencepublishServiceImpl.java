@@ -148,6 +148,12 @@ public class DcaBSciencepublishServiceImpl extends ServiceImpl<DcaBSciencepublis
                 }
                 queryWrapper.in(DcaBSciencepublish::getUserAccount, userAccountsList);
             }
+            if (StringUtils.isNotBlank(dcaBSciencepublish.getPaperName())) {
+                queryWrapper.like(DcaBSciencepublish::getPaperName, dcaBSciencepublish.getPaperName());
+            }
+            if (StringUtils.isNotBlank(dcaBSciencepublish.getJournalName())) {
+                queryWrapper.like(DcaBSciencepublish::getJournalName, dcaBSciencepublish.getJournalName());
+            }
             if (dcaBSciencepublish.getState() != null) {
                 queryWrapper.eq(DcaBSciencepublish::getState, dcaBSciencepublish.getState());
             }

@@ -344,7 +344,26 @@ private static final long serialVersionUID=1L;
             @ExcelField(value ="聘期")
     private String pinqi;
 
+    /**
+     * 出站日期
+     */
+    @ExcelField(value ="出站日期", writeConverter = DateConverter.class)
+    private Date czDate;
+    private transient String czDateFrom;
+    private transient String czDateTo;
 
+    /**
+     * 是否预留院博后
+     */
+    @ExcelField(value ="是否预留院博后")
+    private String isYlybh;
+
+
+    /**
+     * 是否在职博后
+     */
+    @ExcelField(value ="是否在职博后")
+    private String isZzbh;
 
     public static final String ID ="id" ;
 

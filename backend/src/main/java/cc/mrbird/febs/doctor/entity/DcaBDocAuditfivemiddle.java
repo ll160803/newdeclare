@@ -1,5 +1,6 @@
 package cc.mrbird.febs.doctor.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -14,17 +15,17 @@ import cc.mrbird.febs.common.converter.*;
 
 /**
  * <p>
- * 年度考核
+ * 中期考核
  * </p>
  *
  * @author viki
  * @since 2022-11-14
  */
 
-@Excel("dca_b_doc_auditfive")
+@Excel("dca_b_doc_auditfivemiddle")
 @Data
 @Accessors(chain = true)
-public class DcaBDocAuditfive implements Serializable{
+public class DcaBDocAuditfivemiddle implements Serializable{
 
 private static final long serialVersionUID=1L;
 
@@ -50,11 +51,20 @@ private static final long serialVersionUID=1L;
     private String khjg;
 
     /**
-     * 起止年度
+     * 考核类型
      */
         
-        @ExcelField(value ="起止年度")
-    private String year;
+        @ExcelField(value ="考核类型")
+    private String khtype;
+
+    /**
+     * 考核时间
+     */
+        
+        @ExcelField(value ="考核时间", writeConverter = DateConverter.class)
+    private Date khdate;
+    private transient String khdateFrom;
+    private transient String khdateTo;
 
     /**
      * 附件地址
@@ -78,46 +88,20 @@ private static final long serialVersionUID=1L;
     private String userAccount;
 
     /**
-     * 政治表现
+     * 考核日期
      */
         
-        @ExcelField(value ="政治表现")
-    private String zzbx;
+        @ExcelField(value ="考核日期", writeConverter = DateConverter.class)
+    private Date khDate;
+    private transient String khDateFrom;
+    private transient String khDateTo;
 
     /**
-     * 职业道德
+     * 出站考核总结
      */
         
-        @ExcelField(value ="职业道德")
-    private String zydd;
-
-    /**
-     * 廉洁自律
-     */
-        
-        @ExcelField(value ="廉洁自律")
-    private String ljzl;
-
-    /**
-     * 业务能力工作态度总结
-     */
-        
-        @ExcelField(value ="业务能力工作态度总结")
-    private String ywnlgztd;
-
-    /**
-     * 个人科研进展较为详细的成果总结
-     */
-        
-        @ExcelField(value ="个人科研进展较为详细的成果总结")
-    private String grkyjz;
-
-    /**
-     * 下年度科研课题较为详细计划
-     */
-        
-        @ExcelField(value ="下年度科研课题较为详细计划")
-    private String xndkykt;
+        @ExcelField(value ="出站考核总结")
+    private String czkhzj;
 
     /**
      * 备注
@@ -234,7 +218,9 @@ private static final long serialVersionUID=1L;
 
     public static final String KHJG ="khjg" ;
 
-    public static final String YEAR ="year" ;
+    public static final String KHTYPE ="khtype" ;
+
+    public static final String KHDATE ="khdate" ;
 
     public static final String FILE_URL ="file_url" ;
 
@@ -242,17 +228,9 @@ private static final long serialVersionUID=1L;
 
     public static final String USER_ACCOUNT ="user_account" ;
 
-    public static final String ZZBX ="zzbx" ;
+    public static final String KH_DATE ="kh_date" ;
 
-    public static final String ZYDD ="zydd" ;
-
-    public static final String LJZL ="ljzl" ;
-
-    public static final String YWNLGZTD ="ywnlgztd" ;
-
-    public static final String GRKYJZ ="grkyjz" ;
-
-    public static final String XNDKYKT ="xndkykt" ;
+    public static final String CZKHZJ ="czkhzj" ;
 
     public static final String AD_CONTENT ="ad_content" ;
 
