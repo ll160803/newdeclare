@@ -20,6 +20,15 @@
             @click="showUserInfo(text)"
           >{{text}}</a>
         </template>
+        <template slot="action" slot-scope="text, record">
+          <a-icon
+            type="setting"
+            theme="twoTone"
+            twoToneColor="#4a9ff5"
+            @click="edit(record)"
+            title="查看"
+          ></a-icon>
+        </template>
       </a-table>
       <audit-userInfo
         ref="userinfo"
@@ -34,6 +43,7 @@
 <script>
 import moment from 'moment';
 import AuditUserInfo from '../../common/AuditUserInfo'
+import DcaBDocAuditfiveotherEdit from "./DcaBDocAuditfiveotherEdit2";
 export default {
   data () {
     return {
@@ -60,10 +70,11 @@ export default {
         y: window.innerHeight - 200 - 100 - 20 - 80
       },
       visibleUserInfo: false,
-      userAccount: ''
+      userAccount: '',
+      editVisiable: false,
     }
   },
-  components: { AuditUserInfo },
+  components: { AuditUserInfo, DcaBDocAuditfiveotherEdit },
   props: {
     state: {
       default: 3
@@ -74,6 +85,18 @@ export default {
   },
   methods: {
     moment,
+     handleEditSuccess() {
+      this.editVisiable = false;
+      this.$message.success("修改成功");
+      this.search();
+    },
+    handleEditClose() {
+      this.editVisiable = false;
+    },
+    edit(record) {
+      this.$refs.dcaBDocAuditfiveotherEdit.setFormValues(record);
+      this.editVisiable = true;
+    },
     fetch2 (params = {}) {
       this.loading = true
       if (this.paginationInfo) {
@@ -165,21 +188,12 @@ export default {
           dataIndex: 'userAccountName',
           width: 80
         },
-        {
-          title: '考核结果',
-          dataIndex: 'khjg',
-          width: 130
+         {
+          title: "填写日期",
+          dataIndex: "txDate",
+          width: 100,
         },
-        {
-          title: '考核类型',
-          dataIndex: 'khtype',
-          width: 130
-        },
-        {
-          title: '考核时间',
-          dataIndex: 'khdate',
-          width: 130
-        },
+       
         {
           title: '备注',
           dataIndex: 'adContent',
@@ -219,6 +233,12 @@ export default {
             return ''
           },
           width: 80
+        },
+         {
+          title: '审核',
+          key: 'action',
+          scopedSlots: { customRender: 'action' },
+          width: 100
         }
       ]
     }

@@ -216,6 +216,7 @@
                 placeholder="请输入期刊类型"
                 v-decorator="[
                   'wzlx',
+                   { rules: [{ required: true, message: '期刊类型不能为空' }] },
                 ]"
                 style="width: 100%"
               >

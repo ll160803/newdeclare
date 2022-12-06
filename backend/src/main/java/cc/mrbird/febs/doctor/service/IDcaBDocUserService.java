@@ -1,5 +1,6 @@
 package cc.mrbird.febs.doctor.service;
 
+import cc.mrbird.febs.doctor.entity.DataUser;
 import cc.mrbird.febs.doctor.entity.DcaBDocUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
@@ -33,4 +34,6 @@ public interface IDcaBDocUserService extends IService<DcaBDocUser> {
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
+
+        DataUser generateDataUser(String userAccount);
         }

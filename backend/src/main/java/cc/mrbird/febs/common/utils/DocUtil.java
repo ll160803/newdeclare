@@ -72,6 +72,10 @@ public class DocUtil {
                         run.setFontSize(20);
                         handleStrObject(ReflectUtil.getFieldValue(customApplyFirst, bookmark_title), run);
                     }
+                    else if(bookmark_title.equals("title")){
+                        run.setFontSize(18);
+                        handleStrObject(ReflectUtil.getFieldValue(customApplyFirst, bookmark_title), run);
+                    }
                     else {
                         run.setFontSize(fontSize);
                         handleStrObject(ReflectUtil.getFieldValue(customApplyFirst, bookmark_title), run);

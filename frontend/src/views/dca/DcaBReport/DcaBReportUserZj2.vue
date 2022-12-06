@@ -890,6 +890,13 @@ export default {
       this.$refs.TableInfo2.queryParams.ks = this.queryParams.ks;
       this.$refs.TableInfo3.queryParams.ks = this.queryParams.ks;
 
+        if (this.$refs.TableInfo2.paginationInfo) {
+        this.$refs.TableInfo2.paginationInfo.current = 1;
+      }
+      if (this.$refs.TableInfo3.paginationInfo) {
+        this.$refs.TableInfo3.paginationInfo.current = 1;
+      }
+
       this.$refs.TableInfo2.queryParams.yuangongzu =
         this.queryParams.yuangongzu;
       this.$refs.TableInfo3.queryParams.yuangongzu =

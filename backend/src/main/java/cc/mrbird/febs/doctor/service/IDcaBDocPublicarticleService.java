@@ -31,4 +31,6 @@ public interface IDcaBDocPublicarticleService extends IService<DcaBDocPublicarti
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
-        }
+
+        List<DcaBDocPublicarticle> getAll(String userAccount, String dcaYear);
+}

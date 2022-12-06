@@ -63,7 +63,24 @@ public IDcaBDocAuditfivemiddleService iDcaBDocAuditfivemiddleService;
 public Map<String, Object> List(QueryRequest request, DcaBDocAuditfivemiddle dcaBDocAuditfivemiddle){
         return getDataTable(this.iDcaBDocAuditfivemiddleService.findDcaBDocAuditfivemiddles(request, dcaBDocAuditfivemiddle));
         }
-
+    @GetMapping("custom")
+    public Map<String, Object> ListCustom(QueryRequest request, DcaBDocAuditfivemiddle dcaBDocEmploy){
+        User currentUser= FebsUtil.getCurrentUser();
+        dcaBDocEmploy.setUserAccount(currentUser.getUsername());
+        dcaBDocEmploy.setIsDeletemark(1);
+        request.setPageSize(1000);
+        request.setSortField("display_Index");
+        request.setSortOrder("ascend");
+        return getDataTable(this.iDcaBDocAuditfivemiddleService.findDcaBDocAuditfivemiddles(request, dcaBDocEmploy));
+    }
+    @GetMapping("audit")
+    public Map<String, Object> List2(QueryRequest request, DcaBDocAuditfivemiddle dcaBDocEmploy){
+        User currentUser= FebsUtil.getCurrentUser();
+        dcaBDocEmploy.setIsDeletemark(1);
+        request.setSortField("user_account asc,state asc,display_Index");
+        request.setSortOrder("ascend");
+        return getDataTable(this.iDcaBDocAuditfivemiddleService.findDcaBDocAuditfivemiddles(request, dcaBDocEmploy));
+    }
 /**
  * 添加
  * @param  dcaBDocAuditfivemiddle

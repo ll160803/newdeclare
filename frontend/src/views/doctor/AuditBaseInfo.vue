@@ -166,6 +166,9 @@
             <dcaB-auditDynamicAudit v-if="index==401">
               <!--部门审核结果-->
             </dcaB-auditDynamicAudit>
+              <dcaB-auditfivemiddleAudit v-if="index==601">
+                <!--中期考核-->
+              </dcaB-auditfivemiddleAudit>
           </div>
         </a-layout-content>
       </a-layout>
@@ -220,7 +223,7 @@ import DcaBUserList from '../doctor/DcaBDocUser/DcaBDocUserList'
 //import DcaBAuditDynamicAudit from '../doctor/DcaBDocUserapply/DcaBAuditDynamicAudit'
 import DcaBAuditfivemonthAudit from '../doctor/DcaBDocAuditfivemonth/DcaBDocAuditfivemonthAudit'
 import DcaBAuditfiveotherAudit from '../doctor/DcaBDocAuditfiveother/DcaBDocAuditfiveotherAudit'
-
+import DcaBAuditfivemiddleAudit from '../doctor/DcaBDocAuditfivemiddle/DcaBDocAuditfivemiddleAudit'
 export default {
   name: 'AuditBaseInfo',
   components: {
@@ -229,6 +232,7 @@ export default {
     DcaBScientificprizeAudit, DcaBTalentAudit, DcaBTeacherqualifyAudit, DcaBTurtorAudit, DcaBUndergraduateAudit, DcaBApplyjobAudit,
     DcaBAuditfiveAudit, DcaBLastemployAudit, DcaBPersonalsummaryAudit, DcaBPolitalshowAudit, DcaBSciencesearchAudit, DcaBFivecommentAudit, DcaBGoalAudit, DcaBAttachfileAudit, DcaBWorknumAudit, DcaBUndergraduateprizeAudit, DcaBExportcountryAudit
     , DcaBMedicalaccidentAudit, DcaBAcademicAudit, DcaBAchievementAudit, DcaBQualificationAudit, DcaBUserList, DcaBAuditfiveotherAudit, DcaBAuditfivemonthAudit
+  ,DcaBAuditfivemiddleAudit
   },//DcaBAuditDynamicAudit,  DcaBDoctorturtorAudit,
   data () {
     return {

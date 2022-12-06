@@ -31,4 +31,6 @@ public interface IDcaBDocParttimejobService extends IService<DcaBDocParttimejob>
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
+
+        List<DcaBDocParttimejob> getAll(String userAccount, String dcaYear);
         }

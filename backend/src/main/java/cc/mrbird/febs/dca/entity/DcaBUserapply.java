@@ -96,6 +96,7 @@ private static final long serialVersionUID=1L;
         }
         return  na;
     }
+
     /**
      * 手机号
      */

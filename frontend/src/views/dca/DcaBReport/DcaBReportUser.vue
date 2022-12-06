@@ -51,6 +51,7 @@
           :queryParams="queryParams"
         >
         </import-excel> </span>
+        <a-button type="primary" @click="exportExcel8">导出高级职称统计表</a-button>
               <a-button type="primary" @click="exportExcel">导出</a-button>
               <a-button type="primary" @click="search">查询</a-button>
               <!-- <a-button style="margin-left: 8px" @click="reset">重置</a-button> -->
@@ -1057,6 +1058,12 @@ export default {
 
       this.$refs.TableInfo2.queryParams.ks = this.queryParams.ks;
       this.$refs.TableInfo3.queryParams.ks = this.queryParams.ks;
+        if (this.$refs.TableInfo2.paginationInfo) {
+        this.$refs.TableInfo2.paginationInfo.current = 1;
+      }
+      if (this.$refs.TableInfo3.paginationInfo) {
+        this.$refs.TableInfo3.paginationInfo.current = 1;
+      }
 
       if (this.activeKey == "2") {
         this.$refs.TableInfo2.search();
@@ -2108,6 +2115,16 @@ export default {
         excelIndex: 0,
         ...this.queryParams,
       });
+    },
+    exportExcel8(){
+        if(this.queryParams.dcaYear!=''){
+           this.$export("dcaBReport/excelReport", {
+            year: this.queryParams.dcaYear
+          });
+        }
+        else{
+          this.$message.warn("请填写申报年度");
+        }
     },
     fetchUseraudit() {
       this.listAuditInfo.forEach((element) => {

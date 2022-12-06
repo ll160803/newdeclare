@@ -164,8 +164,14 @@ public class DcaBUser implements Serializable {
     private transient String age;
 
     public String getAge() {
-        int age2 = DateUtil.age(birthday, DateUtil.parse((DateUtil.year(DateUtil.date())-1) + "-10-31"));
-        return String.valueOf(age2);
+        if(StringUtils.isNotEmpty(dcaYear)) {
+            int age2 = DateUtil.age(birthday, DateUtil.parse(dcaYear + "-10-31"));
+            return String.valueOf(age2);
+        }
+        else{
+            return  "";
+        }
+
     }
 
     /**

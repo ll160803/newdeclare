@@ -7,6 +7,8 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
+import cc.mrbird.febs.common.utils.ExportExcelTemplate;
+import cc.mrbird.febs.common.utils.ExportExcelUtils;
 import cc.mrbird.febs.dca.entity.*;
 import cc.mrbird.febs.dca.service.IDcaBReportService;
 
@@ -510,4 +512,23 @@ public class DcaBReportController extends BaseController {
         resultList.add(MapUtil.of("timeConsuming", (System.currentTimeMillis() - beginMillis) / 1000L));
         return ResponseEntity.ok(resultList);
     }
+    @PostMapping("excelReport")
+    public void export4(String year,HttpServletResponse response)throws FebsException {
+      try {
+
+          String url="D:/report_gaoji.xlsx";
+          LambdaQueryWrapper<DcaBReport> lambdaQueryWrapper= new LambdaQueryWrapper<>();
+          lambdaQueryWrapper.eq(DcaBReport::getYear,year);
+          lambdaQueryWrapper.eq(DcaBReport::getClshjg,"正常");
+          lambdaQueryWrapper.in(DcaBReport::getGwdj,new String[]{"正高","副高"});
+          List<DcaBReport> list= this.iDcaBReportService.list(lambdaQueryWrapper);
+
+          ExportExcelTemplate.exportCustomExcelCutome3(response,list,url);
+      }catch(Exception e){
+          message="导出Excel失败";
+          log.error(message,e);
+          throw new FebsException(message);
+      }
+    }
+
 }

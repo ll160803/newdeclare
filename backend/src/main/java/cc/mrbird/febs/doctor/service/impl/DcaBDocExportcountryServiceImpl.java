@@ -4,6 +4,7 @@ import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.doctor.entity.DcaBDocExportcountry;
 import cc.mrbird.febs.doctor.dao.DcaBDocExportcountryMapper;
+import cc.mrbird.febs.doctor.entity.DcaBDocPrizeorpunish;
 import cc.mrbird.febs.doctor.service.IDcaBDocExportcountryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
@@ -117,5 +118,17 @@ public  void deleteByuseraccount(String userAccount){
 @DS("slave")
 public  int getMaxDisplayIndexByuseraccount(String userAccount){
         return this.baseMapper.getMaxDisplayIndexByuseraccount(userAccount);
+        }
+        @Override
+        @Transactional
+        @DS("slave")
+        public List<DcaBDocExportcountry> getAll(String userAccount, String dcaYear) {
+                LambdaQueryWrapper<DcaBDocExportcountry> queryWrapper = new LambdaQueryWrapper<>();
+                if (StringUtils.isNotBlank(userAccount)) {
+                        queryWrapper.eq(DcaBDocExportcountry::getUserAccount, userAccount);
+                }
+                queryWrapper.in(DcaBDocExportcountry::getState,  new String[] {"1","3"});
+                queryWrapper.eq(DcaBDocExportcountry::getIsDeletemark, 1);
+                return this.baseMapper.selectList(queryWrapper);
         }
         }

@@ -31,4 +31,6 @@ public interface IDcaBDocEducationexpericeService extends IService<DcaBDocEducat
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
+
+        List<DcaBDocEducationexperice> getAll(String userAccount,String dcaYear);
         }

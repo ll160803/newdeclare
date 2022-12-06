@@ -31,4 +31,6 @@ public interface IDcaBDocPrizeorpunishService extends IService<DcaBDocPrizeorpun
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
+
+        List<DcaBDocPrizeorpunish> getAll(String userAccount, String dcaYear);
         }

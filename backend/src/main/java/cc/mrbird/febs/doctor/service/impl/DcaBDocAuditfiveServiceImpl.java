@@ -33,11 +33,13 @@ import java.time.LocalDate;
  */
 @Slf4j
 @Service("IDcaBDocAuditfiveService")
+@DS("slave")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class DcaBDocAuditfiveServiceImpl extends ServiceImpl<DcaBDocAuditfiveMapper, DcaBDocAuditfive> implements IDcaBDocAuditfiveService {
 
 
 @Override
+@DS("slave")
 public IPage<DcaBDocAuditfive> findDcaBDocAuditfives(QueryRequest request, DcaBDocAuditfive dcaBDocAuditfive){
         try{
         LambdaQueryWrapper<DcaBDocAuditfive> queryWrapper=new LambdaQueryWrapper<>();
@@ -56,6 +58,7 @@ public IPage<DcaBDocAuditfive> findDcaBDocAuditfives(QueryRequest request, DcaBD
         }
         }
 @Override
+@DS("slave")
 public IPage<DcaBDocAuditfive> findDcaBDocAuditfiveList (QueryRequest request, DcaBDocAuditfive dcaBDocAuditfive){
         try{
         Page<DcaBDocAuditfive> page=new Page<>();
@@ -68,6 +71,7 @@ public IPage<DcaBDocAuditfive> findDcaBDocAuditfiveList (QueryRequest request, D
         }
 @Override
 @Transactional
+@DS("slave")
 public void createDcaBDocAuditfive(DcaBDocAuditfive dcaBDocAuditfive){
                 dcaBDocAuditfive.setId(UUID.randomUUID().toString());
         dcaBDocAuditfive.setCreateTime(new Date());
@@ -77,6 +81,7 @@ public void createDcaBDocAuditfive(DcaBDocAuditfive dcaBDocAuditfive){
 
 @Override
 @Transactional
+@DS("slave")
 public void updateDcaBDocAuditfive(DcaBDocAuditfive dcaBDocAuditfive){
         dcaBDocAuditfive.setModifyTime(new Date());
         this.baseMapper.updateDcaBDocAuditfive(dcaBDocAuditfive);
@@ -90,13 +95,21 @@ public void deleteDcaBDocAuditfives(String[]Ids){
         }
 @Override
 @Transactional
+@DS("slave")
 public List<DcaBDocAuditfive> getAll(String userAccount,String dcaYear){
         LambdaQueryWrapper<DcaBDocAuditfive> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
         queryWrapper.eq(DcaBDocAuditfive::getUserAccount, userAccount);
         }
-
+        queryWrapper.eq(DcaBDocAuditfive::getState, 3);
       return  this.baseMapper.selectList(queryWrapper);
         }
 
+
+        @Override
+        @Transactional
+        @DS("slave")
+        public    void deleteAll(){
+                this.baseMapper.deleteAll();
+        }
         }

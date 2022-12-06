@@ -38,6 +38,7 @@ public class DcaBDocAuditfiveotherServiceImpl extends ServiceImpl<DcaBDocAuditfi
 
 
 @Override
+@DS("slave")
 public IPage<DcaBDocAuditfiveother> findDcaBDocAuditfiveothers(QueryRequest request, DcaBDocAuditfiveother dcaBDocAuditfiveother){
         try{
         LambdaQueryWrapper<DcaBDocAuditfiveother> queryWrapper=new LambdaQueryWrapper<>();
@@ -56,6 +57,7 @@ public IPage<DcaBDocAuditfiveother> findDcaBDocAuditfiveothers(QueryRequest requ
         }
         }
 @Override
+@DS("slave")
 public IPage<DcaBDocAuditfiveother> findDcaBDocAuditfiveotherList (QueryRequest request, DcaBDocAuditfiveother dcaBDocAuditfiveother){
         try{
         Page<DcaBDocAuditfiveother> page=new Page<>();
@@ -68,6 +70,7 @@ public IPage<DcaBDocAuditfiveother> findDcaBDocAuditfiveotherList (QueryRequest 
         }
 @Override
 @Transactional
+@DS("slave")
 public void createDcaBDocAuditfiveother(DcaBDocAuditfiveother dcaBDocAuditfiveother){
                 dcaBDocAuditfiveother.setId(UUID.randomUUID().toString());
         dcaBDocAuditfiveother.setCreateTime(new Date());
@@ -77,6 +80,7 @@ public void createDcaBDocAuditfiveother(DcaBDocAuditfiveother dcaBDocAuditfiveot
 
 @Override
 @Transactional
+@DS("slave")
 public void updateDcaBDocAuditfiveother(DcaBDocAuditfiveother dcaBDocAuditfiveother){
         dcaBDocAuditfiveother.setModifyTime(new Date());
         this.baseMapper.updateDcaBDocAuditfiveother(dcaBDocAuditfiveother);
@@ -84,12 +88,14 @@ public void updateDcaBDocAuditfiveother(DcaBDocAuditfiveother dcaBDocAuditfiveot
 
 @Override
 @Transactional
+@DS("slave")
 public void deleteDcaBDocAuditfiveothers(String[]Ids){
         List<String> list=Arrays.asList(Ids);
         this.baseMapper.deleteBatchIds(list);
         }
 @Override
 @Transactional
+@DS("slave")
 public List<DcaBDocAuditfiveother> getAll(String userAccount,String dcaYear){
         LambdaQueryWrapper<DcaBDocAuditfiveother> queryWrapper=new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(userAccount)) {
@@ -98,5 +104,10 @@ public List<DcaBDocAuditfiveother> getAll(String userAccount,String dcaYear){
 
       return  this.baseMapper.selectList(queryWrapper);
         }
-
+        @Override
+        @Transactional
+        @DS("slave")
+        public    void deleteAll(){
+                this.baseMapper.deleteAll();
+        }
         }

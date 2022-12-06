@@ -35,4 +35,6 @@ public interface IDcaBDocSciencepublishService extends IService<DcaBDocSciencepu
         void updateStateByUserAccount(String userAccount);
 
         boolean isExistPaperName(String userAccount,String paperName,String id);
+
+        List<DcaBDocSciencepublish> getAll(String userAccount,String dcaYear);
         }

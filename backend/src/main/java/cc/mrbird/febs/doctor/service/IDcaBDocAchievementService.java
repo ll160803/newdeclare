@@ -31,4 +31,6 @@ public interface IDcaBDocAchievementService extends IService<DcaBDocAchievement>
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
+
+        List<DcaBDocAchievement> getAll(String userAccount,String dcaYear);
         }

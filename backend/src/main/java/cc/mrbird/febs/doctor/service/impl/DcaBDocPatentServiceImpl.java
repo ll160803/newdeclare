@@ -118,4 +118,16 @@ public  void deleteByuseraccount(String userAccount){
 public  int getMaxDisplayIndexByuseraccount(String userAccount){
         return this.baseMapper.getMaxDisplayIndexByuseraccount(userAccount);
         }
+        @Override
+        @Transactional
+        @DS("slave")
+        public List<DcaBDocPatent> getAll(String userAccount, String dcaYear) {
+                LambdaQueryWrapper<DcaBDocPatent> queryWrapper = new LambdaQueryWrapper<>();
+                if (StringUtils.isNotBlank(userAccount)) {
+                        queryWrapper.eq(DcaBDocPatent::getUserAccount, userAccount);
+                }
+                queryWrapper.eq(DcaBDocPatent::getState, 3);
+                queryWrapper.eq(DcaBDocPatent::getIsDeletemark, 1);
+                return this.baseMapper.selectList(queryWrapper);
+        }
         }

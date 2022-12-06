@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.time.LocalDate;
+
 /**
  * <p>
  * 学习工作经历 服务实现类
@@ -37,85 +38,103 @@ import java.time.LocalDate;
 public class DcaBDocEducationexpericeServiceImpl extends ServiceImpl<DcaBDocEducationexpericeMapper, DcaBDocEducationexperice> implements IDcaBDocEducationexpericeService {
 
 
-@Override
-@DS("slave")
-public IPage<DcaBDocEducationexperice> findDcaBDocEducationexperices(QueryRequest request, DcaBDocEducationexperice dcaBDocEducationexperice){
-        try{
-        LambdaQueryWrapper<DcaBDocEducationexperice> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.eq(DcaBDocEducationexperice::getIsDeletemark, 1);//1是未删 0是已删
+    @Override
+    @DS("slave")
+    public IPage<DcaBDocEducationexperice> findDcaBDocEducationexperices(QueryRequest request, DcaBDocEducationexperice dcaBDocEducationexperice) {
+        try {
+            LambdaQueryWrapper<DcaBDocEducationexperice> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(DcaBDocEducationexperice::getIsDeletemark, 1);//1是未删 0是已删
 
-        if (StringUtils.isNotBlank(dcaBDocEducationexperice.getUserAccount())) {
-        queryWrapper.and(wrap->  wrap.eq(DcaBDocEducationexperice::getUserAccount, dcaBDocEducationexperice.getUserAccount()).or()
-        .like(DcaBDocEducationexperice::getUserAccountName, dcaBDocEducationexperice.getUserAccount()));
+            if (StringUtils.isNotBlank(dcaBDocEducationexperice.getUserAccount())) {
+                queryWrapper.and(wrap -> wrap.eq(DcaBDocEducationexperice::getUserAccount, dcaBDocEducationexperice.getUserAccount()).or()
+                        .like(DcaBDocEducationexperice::getUserAccountName, dcaBDocEducationexperice.getUserAccount()));
 
-        }
-        if (dcaBDocEducationexperice.getState()!=null) {
-        queryWrapper.eq(DcaBDocEducationexperice::getState, dcaBDocEducationexperice.getState());
-        }
-       /** if (dcaBDocEducationexperice.getAuditState()!=null && (dcaBDocEducationexperice.getAuditState()>=0)) {
-        queryWrapper.eq(DcaBDocEducationexperice::getAuditState, dcaBDocEducationexperice.getAuditState());
-        }*/
-                                if (StringUtils.isNotBlank(dcaBDocEducationexperice.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBDocEducationexperice.getCreateTimeTo())) {
-                                queryWrapper
-                                .ge(DcaBDocEducationexperice::getCreateTime, dcaBDocEducationexperice.getCreateTimeFrom())
-                                .le(DcaBDocEducationexperice::getCreateTime, dcaBDocEducationexperice.getCreateTimeTo());
-                                }
+            }
+            if (dcaBDocEducationexperice.getState() != null) {
+                queryWrapper.eq(DcaBDocEducationexperice::getState, dcaBDocEducationexperice.getState());
+            }
+            /** if (dcaBDocEducationexperice.getAuditState()!=null && (dcaBDocEducationexperice.getAuditState()>=0)) {
+             queryWrapper.eq(DcaBDocEducationexperice::getAuditState, dcaBDocEducationexperice.getAuditState());
+             }*/
+            if (StringUtils.isNotBlank(dcaBDocEducationexperice.getCreateTimeFrom()) && StringUtils.isNotBlank(dcaBDocEducationexperice.getCreateTimeTo())) {
+                queryWrapper
+                        .ge(DcaBDocEducationexperice::getCreateTime, dcaBDocEducationexperice.getCreateTimeFrom())
+                        .le(DcaBDocEducationexperice::getCreateTime, dcaBDocEducationexperice.getCreateTimeTo());
+            }
 
-        Page<DcaBDocEducationexperice> page=new Page<>();
-        SortUtil.handlePageSort(request,page,false);//true 是属性  false是数据库字段可两个
-        return this.page(page,queryWrapper);
-        }catch(Exception e){
-        log.error("获取字典信息失败" ,e);
-        return null;
+            Page<DcaBDocEducationexperice> page = new Page<>();
+            SortUtil.handlePageSort(request, page, false);//true 是属性  false是数据库字段可两个
+            return this.page(page, queryWrapper);
+        } catch (Exception e) {
+            log.error("获取字典信息失败", e);
+            return null;
         }
+    }
+
+    @Override
+    @DS("slave")
+    public IPage<DcaBDocEducationexperice> findDcaBDocEducationexpericeList(QueryRequest request, DcaBDocEducationexperice dcaBDocEducationexperice) {
+        try {
+            Page<DcaBDocEducationexperice> page = new Page<>();
+            SortUtil.handlePageSort(request, page, false);//true 是属性  false是数据库字段可两个
+            return this.baseMapper.findDcaBDocEducationexperice(page, dcaBDocEducationexperice);
+        } catch (Exception e) {
+            log.error("获取学习工作经历失败", e);
+            return null;
         }
-@Override
-@DS("slave")
-public IPage<DcaBDocEducationexperice> findDcaBDocEducationexpericeList (QueryRequest request, DcaBDocEducationexperice dcaBDocEducationexperice){
-        try{
-        Page<DcaBDocEducationexperice> page=new Page<>();
-        SortUtil.handlePageSort(request,page,false);//true 是属性  false是数据库字段可两个
-        return  this.baseMapper.findDcaBDocEducationexperice(page,dcaBDocEducationexperice);
-        }catch(Exception e){
-        log.error("获取学习工作经历失败" ,e);
-        return null;
-        }
-        }
-@Override
-@Transactional
-@DS("slave")
-public void createDcaBDocEducationexperice(DcaBDocEducationexperice dcaBDocEducationexperice){
-                dcaBDocEducationexperice.setId(UUID.randomUUID().toString());
+    }
+
+    @Override
+    @Transactional
+    @DS("slave")
+    public void createDcaBDocEducationexperice(DcaBDocEducationexperice dcaBDocEducationexperice) {
+        dcaBDocEducationexperice.setId(UUID.randomUUID().toString());
         dcaBDocEducationexperice.setCreateTime(new Date());
         dcaBDocEducationexperice.setIsDeletemark(1);
         this.save(dcaBDocEducationexperice);
-        }
+    }
 
-@Override
-@Transactional
-@DS("slave")
-public void updateDcaBDocEducationexperice(DcaBDocEducationexperice dcaBDocEducationexperice){
+    @Override
+    @Transactional
+    @DS("slave")
+    public void updateDcaBDocEducationexperice(DcaBDocEducationexperice dcaBDocEducationexperice) {
         dcaBDocEducationexperice.setModifyTime(new Date());
         this.baseMapper.updateDcaBDocEducationexperice(dcaBDocEducationexperice);
-        }
+    }
 
-@Override
-@Transactional
-@DS("slave")
-public void deleteDcaBDocEducationexperices(String[]Ids){
-        List<String> list=Arrays.asList(Ids);
+    @Override
+    @Transactional
+    @DS("slave")
+    public void deleteDcaBDocEducationexperices(String[] Ids) {
+        List<String> list = Arrays.asList(Ids);
         this.baseMapper.deleteBatchIds(list);
-        }
-@Override
-@Transactional
-@DS("slave")
-public  void deleteByuseraccount(String userAccount){
+    }
+
+    @Override
+    @Transactional
+    @DS("slave")
+    public void deleteByuseraccount(String userAccount) {
         this.baseMapper.deleteByAccount(userAccount);
-        }
-@Override
-@Transactional
-@DS("slave")
-public  int getMaxDisplayIndexByuseraccount(String userAccount){
+    }
+
+    @Override
+    @Transactional
+    @DS("slave")
+    public int getMaxDisplayIndexByuseraccount(String userAccount) {
         return this.baseMapper.getMaxDisplayIndexByuseraccount(userAccount);
+    }
+
+    @Override
+    @Transactional
+    @DS("slave")
+    public List<DcaBDocEducationexperice> getAll(String userAccount, String dcaYear) {
+        LambdaQueryWrapper<DcaBDocEducationexperice> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.isNotBlank(userAccount)) {
+            queryWrapper.eq(DcaBDocEducationexperice::getUserAccount, userAccount);
         }
-        }
+        queryWrapper.in(DcaBDocEducationexperice::getState, new String[] {"1","3"});
+        queryWrapper.eq(DcaBDocEducationexperice::getIsDeletemark, 1);
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+}

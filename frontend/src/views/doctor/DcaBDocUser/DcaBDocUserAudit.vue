@@ -845,6 +845,15 @@ export default {
         ...this.queryParams
       })
     },
+    handlePdf(userAccount){
+      this.$download(
+        "dcaBDocUser/pdf",
+        {
+          userAccount: userAccount
+        },
+        userAccount + ".pdf"
+      );
+    },
     showUserInfo (text) {
       //debugger
       this.visibleUserInfo = true
@@ -995,7 +1004,9 @@ export default {
           title: '发薪号',
           dataIndex: 'userAccount',
           width: 80,
-          scopedSlots: { customRender: 'userAccount' }
+          customRender: (text, row, index) => {
+            return <a href="#" onclick={handlePdf(text)} >{text}</a>
+          }
         },
         {
           title: '姓名',

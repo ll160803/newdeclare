@@ -31,4 +31,6 @@ public interface IDcaBDocPatentService extends IService<DcaBDocPatent> {
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
-        }
+
+        List<DcaBDocPatent> getAll(String userAccount, String dcaYear);
+}

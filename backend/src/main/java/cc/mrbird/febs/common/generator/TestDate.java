@@ -14,6 +14,7 @@ import com.ruiyun.jvppeteer.options.LaunchOptionsBuilder;
 import com.ruiyun.jvppeteer.options.PDFOptions;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,16 +26,17 @@ import java.util.concurrent.ExecutionException;
 public class TestDate {
 
     public static void main(String[] args) throws IOException, InterruptedException, ParseException, ExecutionException {
-        String stringDate = "Sun Sep 15 1991 00:00:00 GMT+0800";
+//        String stringDate = "Sun Sep 15 1991 00:00:00 GMT+0800";
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM ddHH:mm:ss 'GMT' yyyy", Locale.US);
+//
+//        Date date =sdf.parse(stringDate);
+//
+////     System.out.println(date.toString());
+//
+//        sdf=new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM ddHH:mm:ss 'GMT' yyyy", Locale.US);
-
-        Date date =sdf.parse(stringDate);
-
-//     System.out.println(date.toString());
-
-        sdf=new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
-
-        System.out.println(sdf.format(date));
+       BigDecimal a= new BigDecimal("344.555").setScale(2,BigDecimal.ROUND_DOWN);
+        System.out.println(a.toString());
     }
 }

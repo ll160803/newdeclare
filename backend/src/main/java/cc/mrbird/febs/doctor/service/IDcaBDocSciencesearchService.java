@@ -31,4 +31,6 @@ public interface IDcaBDocSciencesearchService extends IService<DcaBDocSciencesea
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
-        }
+
+        List<DcaBDocSciencesearch> getAll(String userAccount, String dcaYear);
+}

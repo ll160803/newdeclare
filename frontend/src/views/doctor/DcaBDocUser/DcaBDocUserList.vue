@@ -68,7 +68,7 @@
         >
           <a
             href="#"
-            @click="showUserInfo(record)"
+            @click="handlePdf(record.userAccount)"
           >{{text}}</a>
         </template>
 
@@ -138,6 +138,15 @@ export default {
     moment,
     callback () {
 
+    },
+    handlePdf(userAccount){
+      this.$download(
+        "dcaBDocUser/pdf",
+        {
+          userAccount: userAccount
+        },
+        userAccount + ".pdf"
+      );
     },
     showUserInfo (record) {
       //debugger
@@ -274,6 +283,7 @@ export default {
           title: '发薪号',
           dataIndex: 'userAccount',
           width: 80,
+          scopedSlots: { customRender: 'userAccount' }
         },
         {
           title: '姓名',

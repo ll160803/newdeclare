@@ -911,7 +911,12 @@ private static final long serialVersionUID=1L;
 
     private transient List<DcaBAuditdynamic> dcaBAuditdynamicList;
 
+    private transient String title;
+
+
     private transient int  applyState;
+
+    private transient int  showState;
 
     public static final String ID ="id" ;
 

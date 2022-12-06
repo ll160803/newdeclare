@@ -5,8 +5,10 @@ import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.dca.entity.DcaBAuditdynamic;
 import cc.mrbird.febs.dca.entity.DcaBReport;
 import cc.mrbird.febs.dca.dao.DcaBReportMapper;
+import cc.mrbird.febs.dca.entity.DcaDYearsetting;
 import cc.mrbird.febs.dca.service.IDcaBAuditdynamicService;
 import cc.mrbird.febs.dca.service.IDcaBReportService;
+import cc.mrbird.febs.dca.service.IDcaDYearsettingService;
 import cc.mrbird.febs.dcacopy.entity.DcaBCopyAuditdynamic;
 import cc.mrbird.febs.dcacopy.service.IDcaBCopyAuditdynamicService;
 import cn.hutool.core.collection.CollUtil;
@@ -46,6 +48,9 @@ public class DcaBReportServiceImpl extends ServiceImpl<DcaBReportMapper, DcaBRep
 
     @Autowired
     public IDcaBAuditdynamicService iDcaBAuditdynamicService;
+
+    @Autowired
+    private IDcaDYearsettingService iDcaDYearsettingService;
 
 @Override
 public IPage<DcaBReport> findDcaBReports(QueryRequest request, DcaBReport dcaBReport){
@@ -107,7 +112,7 @@ public IPage<DcaBReport> findDcaBReports(QueryRequest request, DcaBReport dcaBRe
                   fy.setId(item.getId());
                   auditdynamicAuditList2.add(fy);
               }
-
+              List<DcaDYearsetting> dcaDYearsettingList= this.iDcaDYearsettingService.list();
 
               for (DcaBReport dca : list
               ) {
@@ -115,6 +120,33 @@ public IPage<DcaBReport> findDcaBReports(QueryRequest request, DcaBReport dcaBRe
                           &&p.getGwdj().equals(dca.getGwdj()) && p.getDcaYear().equals(dca.getYear())).collect(Collectors.toList());
 
                   dca.setDcaBAuditdynamicList(dcaBAuditds);
+                  if(dca.getGwdj()!=null&&dca.getGwdj().equals("正高")||dca.getGwdj().equals("副高")) {
+                     long cu= dcaDYearsettingList.stream().filter(p -> p.getDcaYear().equals(dca.getYear()) && p.getGwdj().equals("高级")).count();
+                     if(cu>0){
+                         dca.setShowState(1);
+                     }
+                     else{
+                         dca.setShowState(0);
+                     }
+                  }
+                  if(dca.getGwdj()!=null&&dca.getGwdj().equals("中级")||dca.getGwdj().equals("初级")) {
+                      long cu= dcaDYearsettingList.stream().filter(p -> p.getDcaYear().equals(dca.getYear()) && p.getGwdj().equals("中级")).count();
+                      if(cu>0){
+                          dca.setShowState(1);
+                      }
+                      else{
+                          dca.setShowState(0);
+                      }
+                  }
+                  if(dca.getGwdj()!=null&&dca.getGwdj().equals("二三级")) {
+                      long cu= dcaDYearsettingList.stream().filter(p -> p.getDcaYear().equals(dca.getYear()) && p.getGwdj().equals("初级")).count();
+                      if(cu>0){
+                          dca.setShowState(1);
+                      }
+                      else{
+                          dca.setShowState(0);
+                      }
+                  }
               }
           }
 

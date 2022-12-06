@@ -62,104 +62,17 @@
               :bordered="true"
               :scroll="scroll"
             >
-              <template
-                slot="khjg"
-                slot-scope="text, record"
-              >
-                <div v-if="record.state==3">
-                  {{text}}
-                </div>
-                <div v-else>
-                  <a-input
-                    @blur="e => inputChange(e.target.value,record,'khjg')"
-                    :value="record.khjg"
-                  >
-                  </a-input>
-                </div>
-              </template>
-              <template
-                slot="year"
-                slot-scope="text, record"
-              >
-                <div v-if="record.state==3">
-                  {{text}}
-                </div>
-                <div v-else>
-                 <a-input-number
-                    @blur="e => inputChange(e.target.value,record,'year')"
-                    :value="record.year"
-                    :precision="0"
-                  >
-                  </a-input-number>
-                </div>
-              </template>
-              <template
-                slot="adContent"
-                slot-scope="text, record"
-              >
-                <div v-if="record.state==3">
-                  {{text}}
-                </div>
-                <div v-else>
-                  <a-textarea
-                    @blur="e => inputChange(e.target.value,record,'adContent')"
-                    :value="record.adContent"
-                  >
-                  </a-textarea>
-                </div>
-              </template>
-              <template
-                slot="isUse"
-                slot-scope="text, record"
-              >
-                <a-checkbox
-                  @change="e => onIsUseChange(e,record,'isUse')"
-                  :checked="text"
-                ></a-checkbox>
-              </template>
-              <template
-                slot="auditSuggestion"
-                slot-scope="text, record"
-              >
-                <div v-if="record.state==3">
-                  {{text}}
-                </div>
-                <div v-else>
-                  <a-textarea
-                    @blur="e => inputChange(e.target.value,record,'auditSuggestion')"
-                    :value="record.auditSuggestion"
-                  >
-                  </a-textarea>
-                </div>
-              </template>
-              <template
-                slot="userAccount"
-                slot-scope="text, record"
-              >
-                <a
-                  href="#"
-                  @click="showUserInfo(text)"
-                >{{text}}</a>
-              </template>
-              <template
-                slot="action"
-                slot-scope="text, record"
-              >
-                <a-button
-                  type="dashed"
-                  block
-                  @click="handleAudit(record)"
-                >
-                  通过
-                </a-button>
-                <a-button
-                  type="danger"
-                  block
-                  @click="handleAuditNo(record)"
-                >
-                  审核不通过
-                </a-button>
-              </template>
+            
+              <template slot="action" slot-scope="text, record">
+          <a-icon
+            type="setting"
+            theme="twoTone"
+            twoToneColor="#4a9ff5"
+            @click="edit(record)"
+            title="查看"
+          ></a-icon>
+         
+        </template>
             </a-table>
           </a-tab-pane>
           <a-tab-pane
@@ -191,6 +104,13 @@
           :visibleUserInfo="visibleUserInfo"
           :userAccount="userAccount"
         ></audit-userInfo>
+         <dcaBDocAuditfivemonth-edit
+      ref="dcaBDocAuditfivemonthEdit"
+      @close="handleEditClose"
+      @success="handleEditSuccess"
+      :editVisiable="editVisiable"
+    >
+    </dcaBDocAuditfivemonth-edit>
       </a-card>
     </a-spin>
   </div>
@@ -200,6 +120,7 @@
 import moment from 'moment';
 import DcaBAuditfiveDone from './DcaBDocAuditfivemonthDone'
 import AuditUserInfo from '../../common/AuditUserDocInfo'
+import DcaBDocAuditfivemonthEdit from "./DcaBDocAuditfivemonthEdit2";
 
 const formItemLayout = {
   labelCol: { span: 8 },
@@ -237,10 +158,11 @@ export default {
       },
       visibleUserInfo: false,
       userAccount: '',
-      activeKey: 1
+      activeKey: 1,
+       editVisiable: false,
     }
   },
-  components: { DcaBAuditfiveDone, AuditUserInfo },
+  components: { DcaBAuditfiveDone, AuditUserInfo, DcaBDocAuditfivemonthEdit  },
   mounted () {
     this.search()
   },
@@ -256,6 +178,18 @@ export default {
     moment,
     callback (activeKey) {
       this.activeKey = activeKey
+    },
+    handleEditSuccess() {
+      this.editVisiable = false;
+      this.$message.success("修改成功");
+      this.search();
+    },
+    handleEditClose() {
+      this.editVisiable = false;
+    },
+    edit(record) {
+      this.$refs.dcaBDocAuditfivemonthEdit.setFormValues(record);
+      this.editVisiable = true;
     },
     search2 () {
       if (this.paginationInfo) {

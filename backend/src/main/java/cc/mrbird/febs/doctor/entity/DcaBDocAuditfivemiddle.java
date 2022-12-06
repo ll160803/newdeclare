@@ -57,14 +57,14 @@ private static final long serialVersionUID=1L;
         @ExcelField(value ="考核类型")
     private String khtype;
 
-    /**
-     * 考核时间
-     */
-        
-        @ExcelField(value ="考核时间", writeConverter = DateConverter.class)
-    private Date khdate;
-    private transient String khdateFrom;
-    private transient String khdateTo;
+//    /**
+//     * 考核时间
+//     */
+//        @TableField("khdate")
+//        @ExcelField(value ="考核时间", writeConverter = DateConverter.class)
+//    private Date khdate;
+//    private transient String khdateFrom;
+//    private transient String khdateTo;
 
     /**
      * 附件地址
@@ -89,7 +89,7 @@ private static final long serialVersionUID=1L;
 
     /**
      * 考核日期
-     */
+     */@TableField("kh_date")
         
         @ExcelField(value ="考核日期", writeConverter = DateConverter.class)
     private Date khDate;

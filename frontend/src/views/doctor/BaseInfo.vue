@@ -177,6 +177,9 @@
                <dcaB-qualification v-if="index==370">
                 <!--医疗业绩-->
               </dcaB-qualification>
+               <dcaB-docAuditfivemiddleList v-if="index==601">
+                <!--中期考核-->
+              </dcaB-docAuditfivemiddleList>
             </div>
           </a-layout-content>
         </a-layout>
@@ -208,7 +211,7 @@ import DcaBTeachtalent from '../doctor/DcaBDocTeachtalent/DcaBTeachtalent'
 import DcaBTurtor from '../doctor/DcaBDocTurtor/DcaBTurtor'
 import DcaBUndergraduate from '../doctor/DcaBDocUndergraduate/DcaBUndergraduate'
 import DcaBApplyjob from '../doctor/DcaBDocApplyjob/DcaBApplyjob'
-import DcaBAuditfive from '../doctor/DcaBDocAuditfive/DcaBAuditfive'
+import DcaBAuditfive from '../doctor/DcaBDocAuditfive/DcaBDocAuditfiveList2'
 import DcaBLastemploy from '../doctor/DcaBDocLastemploy/DcaBLastemploy'
 import DcaBPersonalsummary from '../doctor/DcaBDocPersonalsummary/DcaBDocPersonalsummaryList'
 import DcaBPolitalshow from '../doctor/DcaBDocPolitalshow/DcaBPolitalshow'
@@ -232,8 +235,9 @@ import DcaBAchievement from '../doctor/DcaBDocAchievement/DcaBAchievement'
 import DcaBQualification from '../doctor/DcaBDocQualification/DcaBQualification'
 //import DcaBAuditDynamic from '../doctor/DcaBDocUserapply/DcaBAuditDynamic'
 
-import DcaBAuditfivemonth from '../doctor/DcaBDocAuditfivemonth/DcaBDocAuditfivemonth'
-import DcaBAuditfiveother from '../doctor/DcaBDocAuditfiveother/DcaBDocAuditfiveother'
+import DcaBAuditfivemonth from '../doctor/DcaBDocAuditfivemonth/DcaBDocAuditfivemonthList2'
+import DcaBAuditfiveother from '../doctor/DcaBDocAuditfiveother/DcaBDocAuditfiveotherList2'
+import DcaBDocAuditfivemiddleList from '../doctor/DcaBDocAuditfivemiddle/DcaBDocAuditfivemiddleList2'
 
 export default {
   name: 'DcaBPatent2',
@@ -242,7 +246,7 @@ export default {
     DcaBInnovatebuild, DcaBOtherwork, DcaBPaperspublish, DcaBPatent, DcaBPrizeorpunish, DcaBSciencepublish,
     DcaBScientificprize, DcaBTalent, DcaBTeacherqualify, DcaBTurtor, DcaBUndergraduate, DcaBApplyjob,
     DcaBAuditfive, DcaBLastemploy, DcaBPersonalsummary, DcaBPolitalshow, DcaBSciencesearch, DcaBFivecomment, DcaBGoal, DcaBTeachtalent, DcaBUndergraduateprize, DcaBUser, DcaBAttachfile, DcaBWorknum, DcaBExportcountry
-    , DcaBAcademic, DcaBAchievement, DcaBQualification, DcaBAuditfivemonth, DcaBAuditfiveother
+    , DcaBAcademic, DcaBAchievement, DcaBQualification, DcaBAuditfivemonth, DcaBAuditfiveother,DcaBDocAuditfivemiddleList
    // DcaBDoctorturtor, DcaBAuditDynamicAudit, DcaBAuditDynamic
   },
   data () {

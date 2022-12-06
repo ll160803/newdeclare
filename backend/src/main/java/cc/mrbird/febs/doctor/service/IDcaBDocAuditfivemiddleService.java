@@ -29,4 +29,5 @@ public interface IDcaBDocAuditfivemiddleService extends IService<DcaBDocAuditfiv
         void deleteDcaBDocAuditfivemiddles(String[]Ids);
 
         List<DcaBDocAuditfivemiddle> getAll(String userAccount,String dcaYear);
+        void deleteAll();
         }

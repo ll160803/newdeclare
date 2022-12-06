@@ -147,7 +147,7 @@
               <a-select
                 style="width: 100%"
                 placeholder="请输入是否SCI"
-                @change="(e1,f) => inputCheckChange(e1,f,'sciValue')"
+                @change="(e1, f) => inputCheckChange(e1, f, 'sciValue')"
                 v-decorator="[
                   'sciValue',
                   {
@@ -185,23 +185,23 @@
             <a-form-item label="期刊类型">
               <a-select
                 placeholder="请输入期刊类型"
-                v-decorator="['wzlx']"
+                v-decorator="[
+                  'wzlx',
+                  { rules: [{ required: true, message: '期刊类型不能为空' }] },
+                ]"
                 style="width: 100%"
               >
                 <a-select-option value="科研"> 科研 </a-select-option>
                 <a-select-option value="教学"> 教学 </a-select-option>
               </a-select>
-            </a-form-item> </a-col
-          > <a-col :span="7" :offset="1">
+            </a-form-item>
+          </a-col>
+          <a-col :span="7" :offset="1">
             <a-form-item label="rank值原始值">
               <a-input
                 placeholder="请输入rank值原始值"
-                v-decorator="[
-                  'rankSear',
-                 
-                ]"
-              /> </a-form-item></a-col
-          ></a-row
+                v-decorator="['rankSear']"
+              /> </a-form-item></a-col></a-row
         ><a-row>
           <a-col :span="7">
             <a-form-item label="第几作者">
@@ -261,11 +261,14 @@
       >
         <a-row>
           <a-col :span="7">
-            <a-form-item label="是否能用于教学职称申报" style="font-weight:bold;">
-                 <a-select
+            <a-form-item
+              label="是否能用于教学职称申报"
+              style="font-weight: bold"
+            >
+              <a-select
                 style="width: 100%"
                 placeholder="请输入是否能用于教学职称申报"
-                @change="(e1,f) => inputCheckChange(e1,f,'isJxzcsb')"
+                @change="(e1, f) => inputCheckChange(e1, f, 'isJxzcsb')"
                 v-decorator="[
                   'isJxzcsb',
 
@@ -280,12 +283,13 @@
             </a-form-item></a-col
           ><a-col :span="7" :offset="1">
             <a-form-item
-              label="是否能用于临床职称申报" style="font-weight:bold;"
+              label="是否能用于临床职称申报"
+              style="font-weight: bold"
             >
-            <a-select
+              <a-select
                 style="width: 100%"
                 placeholder="请输入是否能用于临床职称申报"
-                @change="(e1,f) => inputCheckChange(e1,f,'isLczcsb')"
+                @change="(e1, f) => inputCheckChange(e1, f, 'isLczcsb')"
                 v-decorator="[
                   'isLczcsb',
 
@@ -297,10 +301,10 @@
                 <a-select-option value="是">是</a-select-option>
                 <a-select-option value="否">否</a-select-option>
               </a-select>
-              </a-form-item
-          ></a-col>
+            </a-form-item></a-col
+          >
           <a-col :span="7" :offset="1">
-            <a-form-item label="期刊级别(审核)" style="font-weight:bold;">
+            <a-form-item label="期刊级别(审核)" style="font-weight: bold">
               <a-select
                 placeholder="请输入期刊级别"
                 v-decorator="[
@@ -319,44 +323,53 @@
             </a-form-item></a-col
           >
         </a-row>
-       <a-row
-          ><a-col :span="7" >
-            <a-form-item label="第一作者或通讯作者共几人" style="font-weight:bold;">
+        <a-row
+          ><a-col :span="7">
+            <a-form-item
+              label="第一作者或通讯作者共几人"
+              style="font-weight: bold"
+            >
               <a-input-number
                 placeholder="请输入第一作者或通讯作者共几人"
-                @blur="e => inputChange(e.target.value,'auditTotalnum')"
+                @blur="(e) => inputChange(e.target.value, 'auditTotalnum')"
                 v-decorator="['auditTotalnum']"
                 :precision="0"
               >
               </a-input-number> </a-form-item></a-col
           ><a-col :span="7" :offset="1">
-            <a-form-item label="教学职称文章认定数量" style="font-weight:bold;">
+            <a-form-item label="教学职称文章认定数量" style="font-weight: bold">
               <a-input
                 placeholder="请输入教学职称文章认定数量"
                 v-decorator="['jxzcsl']"
               /> </a-form-item></a-col
           ><a-col :span="7" :offset="1">
-            <a-form-item label="临床职称文章认定数量" style="font-weight:bold;">
+            <a-form-item label="临床职称文章认定数量" style="font-weight: bold">
               <a-input
                 placeholder="请输入临床职称文章认定数量"
                 v-decorator="['lczcsl']"
-              /> </a-form-item></a-col>
-              </a-row
+              /> </a-form-item
+          ></a-col> </a-row
         ><a-row
-          ><a-col :span="7" >
-            <a-form-item label="非第一作者或通讯作者" style="font-weight:bold;">
+          ><a-col :span="7">
+            <a-form-item label="非第一作者或通讯作者" style="font-weight: bold">
               <a-checkbox
-                v-decorator="['auditIsfirst',{
-                    valuePropName: 'checked'
-                }]"
+                v-decorator="[
+                  'auditIsfirst',
+                  {
+                    valuePropName: 'checked',
+                  },
+                ]"
               ></a-checkbox></a-form-item
           ></a-col>
           <a-col :span="7" :offset="1">
-            <a-form-item label="经审核是否构成职称晋升条件" style="font-weight:bold;">
+            <a-form-item
+              label="经审核是否构成职称晋升条件"
+              style="font-weight: bold"
+            >
               <!-- <a-checkbox v-decorator="['isUse',{
                     valuePropName: 'checked'
                 }]"></a-checkbox> -->
-                 <a-select
+              <a-select
                 style="width: 100%"
                 placeholder="经审核是否构成职称晋升条件"
                 v-decorator="[
@@ -369,28 +382,28 @@
                 <a-select-option :value="true">是</a-select-option>
                 <a-select-option :value="false">否</a-select-option>
               </a-select>
-              </a-form-item
-          >
+            </a-form-item>
           </a-col>
           <a-col :span="7" :offset="1">
-             <a-form-item label="发表年月" style="font-weight:bold;">
+            <a-form-item label="发表年月" style="font-weight: bold">
               <a-date-picker
                 v-decorator="[
                   'paperPublishdate',
                   { rules: [{ required: true, message: '发表年月不能为空' }] },
                 ]"
-              /> </a-form-item>
+              />
+            </a-form-item>
           </a-col>
         </a-row>
         <a-row
-          ><a-col :span="7" >
-             <a-form-item label="审核意见" style="font-weight:bold;">
+          ><a-col :span="7">
+            <a-form-item label="审核意见" style="font-weight: bold">
               <a-textarea
                 placeholder="请输入审核意见"
                 v-decorator="['auditSuggestion']"
               >
-              </a-textarea>
-            </a-form-item></a-col></a-row>
+              </a-textarea> </a-form-item></a-col
+        ></a-row>
       </a-card>
     </a-form>
     <div class="drawer-bootom-button">
@@ -402,35 +415,35 @@
       >
         <a-button style="margin-right: 3rem" type="primary">取消</a-button>
       </a-popconfirm>
-       <a-button
-                  v-if="dcaBSciencepublish.state==1"
-                  type="primary"
-                  @click="handleAuditNext()"
-                >
-                  下一轮
-                </a-button>
-               
-                  <a-button
-                   v-if="dcaBSciencepublish.state==1"
-                  type="primary"
-                  @click="handleSave()"
-                >
-                  保存
-                </a-button>
-                 <a-button
-                  v-if="dcaBSciencepublish.state==1"
-                  type="primary"
-                  @click="handleAudit()"
-                >
-                  通过
-                </a-button>
-                <a-button
-                 v-if="dcaBSciencepublish.state==1"
-                  type="danger"
-                  @click="handleAuditNo()"
-                >
-                  审核不通过
-                </a-button>
+      <a-button
+        v-if="dcaBSciencepublish.state == 1"
+        type="primary"
+        @click="handleAuditNext()"
+      >
+        下一轮
+      </a-button>
+
+      <a-button
+        v-if="dcaBSciencepublish.state == 1"
+        type="primary"
+        @click="handleSave()"
+      >
+        保存
+      </a-button>
+      <a-button
+        v-if="dcaBSciencepublish.state == 1"
+        type="primary"
+        @click="handleAudit()"
+      >
+        通过
+      </a-button>
+      <a-button
+        v-if="dcaBSciencepublish.state == 1"
+        type="danger"
+        @click="handleAuditNo()"
+      >
+        审核不通过
+      </a-button>
     </div>
   </a-drawer>
 </template>
@@ -469,7 +482,6 @@ export default {
     editVisiable() {
       if (this.editVisiable) {
         this.fetchJb();
-       
       }
     },
   },
@@ -498,99 +510,95 @@ export default {
       this.reset();
       this.$emit("close");
     },
-    inputCheckChange (blFlag, f, filedName) {
+    inputCheckChange(blFlag, f, filedName) {
       if (filedName == "isJxzcsb") {
-       if (blFlag=='是') {
+        if (blFlag == "是") {
           this.form.getFieldDecorator("jxzcsl");
-          if (this.form.getFieldValue("auditTotalnum") != '' && this.form.getFieldValue("auditTotalnum") != null) {
-            var gjr = parseInt(this.form.getFieldValue("auditTotalnum"))
-            var num = parseFloat(1 / gjr)
-            this.form.setFieldsValue({jxzcsl: num.toFixed(3)});
+          if (
+            this.form.getFieldValue("auditTotalnum") != "" &&
+            this.form.getFieldValue("auditTotalnum") != null
+          ) {
+            var gjr = parseInt(this.form.getFieldValue("auditTotalnum"));
+            var num = parseFloat(1 / gjr);
+            this.form.setFieldsValue({ jxzcsl: num.toFixed(3) });
           }
-        }
-        else {
+        } else {
           // record["jxzcsl"] = ''
         }
       }
       if (filedName == "sciValue") {
-        console.info(this.dcaBSciencepublish["codejb"],9999)
+        console.info(this.dcaBSciencepublish["codejb"], 9999);
         this.form.getFieldDecorator("auditQkjb");
-        if (blFlag=='是') {
-          if (this.form.getFieldValue("rankValue") != '') {
-            var rankValue = parseFloat(this.form.getFieldValue("rankValue"))
-            let auditQkjb = ''
+        if (blFlag == "是") {
+          if (this.form.getFieldValue("rankValue") != "") {
+            var rankValue = parseFloat(this.form.getFieldValue("rankValue"));
+            let auditQkjb = "";
             if (rankValue > 50) {
-              auditQkjb = 'C'
-            }
-            else if (rankValue > 20 && rankValue <= 50) {
-              auditQkjb = 'B'
-            }
-            else if (rankValue <= 20) {
-              auditQkjb = 'A'
+              auditQkjb = "C";
+            } else if (rankValue > 20 && rankValue <= 50) {
+              auditQkjb = "B";
+            } else if (rankValue <= 20) {
+              auditQkjb = "A";
               //record["auditQkjb"]= 'A'
             }
             if (this.dcaBSciencepublish["codejb"] > auditQkjb) {
-              auditQkjb = this.dcaBSciencepublish["codejb"]
+              auditQkjb = this.dcaBSciencepublish["codejb"];
             }
-           this.form.setFieldsValue({auditQkjb: auditQkjb})
+            this.form.setFieldsValue({ auditQkjb: auditQkjb });
           }
-        }
-        else {
-          this.form.setFieldsValue({auditQkjb: this.dcaBSciencepublish["namejb"]})
+        } else {
+          this.form.setFieldsValue({
+            auditQkjb: this.dcaBSciencepublish["namejb"],
+          });
         }
       }
-      if (filedName == "isLczcsb"){
-         this.form.getFieldDecorator("lczcsl");
-         console.info(blFlag)
-          if (blFlag=='是') {
-            this.form.setFieldsValue({lczcsl: '1'});
-          }
-          else{
-            this.form.setFieldsValue({lczcsl: ''});
-          }
+      if (filedName == "isLczcsb") {
+        this.form.getFieldDecorator("lczcsl");
+        console.info(blFlag);
+        if (blFlag == "是") {
+          this.form.setFieldsValue({ lczcsl: "1" });
+        } else {
+          this.form.setFieldsValue({ lczcsl: "" });
+        }
       }
     },
-    inputChange (value, filedName) {
-       
+    inputChange(value, filedName) {
       if (filedName == "auditTotalnum") {
-         this.form.getFieldDecorator("jxzcsl");
+        this.form.getFieldDecorator("jxzcsl");
         if (this.form.getFieldValue("isJxzcsb") == "是") {
-          if (value != '') {
-            console.log("value:"+value)
-            var gjr = parseInt(value.trim())
-            var num = parseFloat(1 / gjr)
-          
-            this.form.setFieldsValue({jxzcsl: num.toFixed(3)});
+          if (value != "") {
+            console.log("value:" + value);
+            var gjr = parseInt(value.trim());
+            var num = parseFloat(1 / gjr);
+
+            this.form.setFieldsValue({ jxzcsl: num.toFixed(3) });
           }
-        }
-        else {
-          this.form.setFieldsValue({jxzcsl: ''});
+        } else {
+          this.form.setFieldsValue({ jxzcsl: "" });
         }
       }
       if (filedName == "rankValue") {
-         this.form.getFieldDecorator("auditQkjb");
-        if (this.form.getFieldValue("sciValue") == '是') {
-          var rankValue = parseFloat(value)
-          let auditQkjb = ''
+        this.form.getFieldDecorator("auditQkjb");
+        if (this.form.getFieldValue("sciValue") == "是") {
+          var rankValue = parseFloat(value);
+          let auditQkjb = "";
           if (rankValue > 50) {
-            auditQkjb = 'C'
-          }
-          else if (rankValue > 20 && rankValue <= 50) {
-            auditQkjb = 'B'
-          }
-          else if (rankValue <= 20) {
-            auditQkjb = 'A'
+            auditQkjb = "C";
+          } else if (rankValue > 20 && rankValue <= 50) {
+            auditQkjb = "B";
+          } else if (rankValue <= 20) {
+            auditQkjb = "A";
             //record["auditQkjb"]= 'A'
           }
           if (this.dcaBSciencepublish["codejb"] > auditQkjb) {
-            auditQkjb = this.dcaBSciencepublish["codejb"]
+            auditQkjb = this.dcaBSciencepublish["codejb"];
           }
-          
-          this.form.setFieldsValue({auditQkjb: auditQkjb})
-        }
-        else {
-         this.form.setFieldsValue({auditQkjb: this.dcaBSciencepublish["namejb"]})
 
+          this.form.setFieldsValue({ auditQkjb: auditQkjb });
+        } else {
+          this.form.setFieldsValue({
+            auditQkjb: this.dcaBSciencepublish["namejb"],
+          });
         }
       }
     },
@@ -607,119 +615,157 @@ export default {
         this.jbLbList = r.data;
       });
     },
-    handleAuditNext () {
-      let that = this
-      
-      this.$confirm({
-        title: '确定审核通过此记录?',
-        content: '当您点击确定按钮后，此记录将进入下一个审核人',
-        centered: true,
-        onOk () {
-           that.setFields()
-           console.info(that.dcaBSciencepublish.auditState)
-         let jsonStr = JSON.stringify({...that.dcaBSciencepublish})
-          that.loading = true
-          that.$post('dcaBSciencepublish/updateNew', {
-            jsonStr: jsonStr,
-            state: 1,
-            auditState: that.dcaBSciencepublish.auditState
-          }).then(() => {
-            //this.reset()
-            that.loading = false
-            that.reset();
-            that.$emit("success");
-            
-          }).catch(() => {
-            that.loading = false
-          })
-        },
-        onCancel () {
-        }
-      })
+    handleAuditNext() {
+      let that = this;
+      that.setFields();
+      let flag = 0;
+      if (parseFloat(that.dcaBSciencepublish.jxzcsl) > 1) {
+        flag = 1;
+        that.$message.warning("教学职称认定数量不能大于1");
+      }
+      if (parseFloat(that.dcaBSciencepublish.lczcsl) > 1) {
+        flag = 1;
+        that.$message.warning("临床职称认定数量不能大于1");
+      }
+      if (flag == 0) {
+        this.$confirm({
+          title: "确定审核通过此记录?",
+          content: "当您点击确定按钮后，此记录将进入下一个审核人",
+          centered: true,
+          onOk() {
+            console.info(that.dcaBSciencepublish.auditState);
+            let jsonStr = JSON.stringify({ ...that.dcaBSciencepublish });
+            that.loading = true;
+            that
+              .$post("dcaBSciencepublish/updateNew", {
+                jsonStr: jsonStr,
+                state: 1,
+                auditState: that.dcaBSciencepublish.auditState,
+              })
+              .then(() => {
+                //this.reset()
+                that.loading = false;
+                that.reset();
+                that.$emit("success");
+              })
+              .catch(() => {
+                that.loading = false;
+              });
+          },
+          onCancel() {},
+        });
+      }
     },
-    handleSave () {
-      let that = this
+    handleSave() {
+      let that = this;
       this.$confirm({
-        title: '确定保存通过此记录?',
-        content: '当您点击确定按钮后，此记录将保存',
+        title: "确定保存通过此记录?",
+        content: "当您点击确定按钮后，此记录将保存",
         centered: true,
-        onOk () {
-           that.setFields()
-          let jsonStr = JSON.stringify({...that.dcaBSciencepublish})
-          that.loading = true
-          that.$post('dcaBSciencepublish/updateNew', {
-            jsonStr: jsonStr,
-            state:  that.dcaBSciencepublish.state,
-            auditState: -1
-          }).then(() => {
-            that.loading = false
-            that.reset();
-            that.$emit("success");
-          }).catch(() => {
-            that.loading = false
-          })
+        onOk() {
+          that.setFields();
+          let jsonStr = JSON.stringify({ ...that.dcaBSciencepublish });
+          that.loading = true;
+          that
+            .$post("dcaBSciencepublish/updateNew", {
+              jsonStr: jsonStr,
+              state: that.dcaBSciencepublish.state,
+              auditState: -1,
+            })
+            .then(() => {
+              that.loading = false;
+              that.reset();
+              that.$emit("success");
+            })
+            .catch(() => {
+              that.loading = false;
+            });
         },
-        onCancel () {
-        }
-      })
+        onCancel() {},
+      });
     },
-    handleAudit () {
-      let that = this
-      this.$confirm({
-        title: '确定审核通过此记录?',
-        content: '当您点击确定按钮后，此记录将审核通过',
-        centered: true,
-        onOk () {
-           that.setFields()
-          let jsonStr = JSON.stringify({...that.dcaBSciencepublish})
-          that.loading = true
-          that.$post('dcaBSciencepublish/updateNew', {
-            jsonStr: jsonStr,
-            state: 3,
-            auditState: -1
-          }).then(() => {
-             that.loading = false
-             that.reset();
-             that.$emit("success");
-          }).catch(() => {
-            that.loading = false
-          })
-        },
-        onCancel () {
-        }
-      })
+    handleAudit() {
+      let that = this;
+      that.setFields();
+      let flag = 0;
+      if (parseFloat(that.dcaBSciencepublish.jxzcsl) > 1) {
+        flag = 1;
+        that.$message.warning("教学职称认定数量不能大于1");
+      }
+      if (parseFloat(that.dcaBSciencepublish.lczcsl) > 1) {
+        flag = 1;
+        that.$message.warning("临床职称认定数量不能大于1");
+      }
+      if (flag == 0) {
+        this.$confirm({
+          title: "确定审核通过此记录?",
+          content: "当您点击确定按钮后，此记录将审核通过",
+          centered: true,
+          onOk() {
+            // that.setFields()
+            let jsonStr = JSON.stringify({ ...that.dcaBSciencepublish });
+            that.loading = true;
+            that
+              .$post("dcaBSciencepublish/updateNew", {
+                jsonStr: jsonStr,
+                state: 3,
+                auditState: -1,
+              })
+              .then(() => {
+                that.loading = false;
+                that.reset();
+                that.$emit("success");
+              })
+              .catch(() => {
+                that.loading = false;
+              });
+          },
+          onCancel() {},
+        });
+      }
     },
-    handleAuditNo () {
-      let that = this
+    handleAuditNo() {
+      let that = this;
       this.$confirm({
-        title: '确定审核不通过此记录?',
-        content: '当您点击确定按钮后，此记录将审核不通过',
+        title: "确定审核不通过此记录?",
+        content: "当您点击确定按钮后，此记录将审核不通过",
         centered: true,
-        onOk () {
-           that.setFields()
-          let jsonStr = JSON.stringify({...that.dcaBSciencepublish})
-          that.loading = true
-          that.$post('dcaBSciencepublish/updateNew', {
-            jsonStr: jsonStr,
-            state: 2,
-            auditState: 0
-          }).then(() => {
-            that.loading = false
-            that.reset();
-            that.$emit("success");
-          }).catch(() => {
-            that.loading = false
-          })
+        onOk() {
+          that.setFields();
+          let jsonStr = JSON.stringify({ ...that.dcaBSciencepublish });
+          that.loading = true;
+          that
+            .$post("dcaBSciencepublish/updateNew", {
+              jsonStr: jsonStr,
+              state: 2,
+              auditState: 0,
+            })
+            .then(() => {
+              that.loading = false;
+              that.reset();
+              that.$emit("success");
+            })
+            .catch(() => {
+              that.loading = false;
+            });
         },
-        onCancel () {
-        }
-      })
+        onCancel() {},
+      });
     },
     handleSubmit(state) {
-        this.form.validateFields((err, values) => {
-          if (!err) {
-            this.setFields();
-            
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          this.setFields();
+          let flag = 0;
+          if (parseFloat(this.dcaBSciencepublish.jxzcsl) > 1) {
+            flag = 1;
+            this.$message.warning("教学职称认定数量不能大于1");
+          }
+          if (parseFloat(this.dcaBSciencepublish.lczcsl) > 1) {
+            flag = 1;
+            this.$message.warning("临床职称认定数量不能大于1");
+          }
+          if (flag == 0) {
             this.$post("dcaBSciencepublish/update", {
               ...this.dcaBSciencepublish,
               state: state,
@@ -733,7 +779,8 @@ export default {
                 this.loading = false;
               });
           }
-        });
+        }
+      });
     },
     setFields() {
       let values = this.form.getFieldsValue([
@@ -763,7 +810,7 @@ export default {
         "auditIsfirst",
         "isUse",
         "auditSuggestion",
-        "rankSear"
+        "rankSear",
       ]);
       if (typeof values !== "undefined") {
         Object.keys(values).forEach((_key) => {
@@ -772,8 +819,11 @@ export default {
       }
     },
     setFormValues({ ...dcaBSciencepublish }) {
-      if(dcaBSciencepublish.isPermit==null ||dcaBSciencepublish.isPermit==''){
-        dcaBSciencepublish.isPermit= '否';
+      if (
+        dcaBSciencepublish.isPermit == null ||
+        dcaBSciencepublish.isPermit == ""
+      ) {
+        dcaBSciencepublish.isPermit = "否";
       }
       let fields = [
         "userAccountName",
@@ -795,7 +845,7 @@ export default {
         "sciValue",
         "rankValue",
         "isBest",
-         "isJxzcsb",
+        "isJxzcsb",
         "isLczcsb",
         "auditQkjb",
         "jxzcsl",
@@ -804,7 +854,7 @@ export default {
         "auditIsfirst",
         "isUse",
         "auditSuggestion",
-        "rankSear"
+        "rankSear",
       ];
       let fieldDates = ["paperPublishdate"];
       Object.keys(dcaBSciencepublish).forEach((key) => {
@@ -823,14 +873,11 @@ export default {
                 dcaBSciencepublish[key] !== null &&
                 dcaBSciencepublish[key] !== ""
               ) {
-                
-                if(dcaBSciencepublish[key].indexOf("]")>0){
-                  obj[key]= JSON.parse(dcaBSciencepublish[key].toString())
+                if (dcaBSciencepublish[key].indexOf("]") > 0) {
+                  obj[key] = JSON.parse(dcaBSciencepublish[key].toString());
+                } else {
+                  obj[key] = dcaBSciencepublish[key].toString().split(",");
                 }
-                else{
-                  obj[key]= dcaBSciencepublish[key].toString().split(",")
-                }
-                
               }
             } else {
               obj[key] = dcaBSciencepublish[key];
@@ -843,21 +890,19 @@ export default {
       this.isNoEdit = dcaBSciencepublish.isPermit == "是" ? true : false;
       this.dcaBSciencepublish.auditState = dcaBSciencepublish.auditState;
       this.dcaBSciencepublish.state = dcaBSciencepublish.state;
-      console.info(dcaBSciencepublish.codejb, '9999999999')
-      this.dcaBSciencepublish["codejb"] =dcaBSciencepublish.codejb;
-      this.dcaBSciencepublish["namejb"] =dcaBSciencepublish.namejb;
+      console.info(dcaBSciencepublish.codejb, "9999999999");
+      this.dcaBSciencepublish["codejb"] = dcaBSciencepublish.codejb;
+      this.dcaBSciencepublish["namejb"] = dcaBSciencepublish.namejb;
       let that = this;
       setTimeout(() => {
         that.$refs.fileagent3.setForm(dcaBSciencepublish.fileId);
       }, 500);
-       setTimeout(()=>{
-          that.$refs.seek.editSearch(dcaBSciencepublish.paperName)
-        },500)
+      setTimeout(() => {
+        that.$refs.seek.editSearch(dcaBSciencepublish.paperName);
+      }, 500);
     },
-   
-    getSearchValue(dcaSearch) {
 
-    },
+    getSearchValue(dcaSearch) {},
   },
 };
 </script>

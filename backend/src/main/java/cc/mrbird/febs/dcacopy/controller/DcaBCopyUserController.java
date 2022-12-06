@@ -320,6 +320,13 @@ public class DcaBCopyUserController extends BaseController {
 
             String destfile ="";
             if(dcaBReport.getGwdj().equals("正高")||dcaBReport.getGwdj().equals("副高")){
+
+                if("教授,副教授,研究员,副研究员".contains(dcaBReport.getNpPositionName())){
+                    dbcuser.setTitle("教师");
+                }
+                else{
+                    dbcuser.setTitle("专业技术");
+                }
                  destfile ="D:\\高级职称.docx";
 
             }

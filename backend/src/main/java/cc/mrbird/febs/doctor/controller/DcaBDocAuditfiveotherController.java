@@ -6,8 +6,9 @@ import cc.mrbird.febs.common.domain.router.VueRouter;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.domain.QueryRequest;
 
-import cc.mrbird.febs.doctor.service.IDcaBDocAuditfiveotherService;
 import cc.mrbird.febs.doctor.entity.DcaBDocAuditfiveother;
+import cc.mrbird.febs.doctor.service.IDcaBDocAuditfiveotherService;
+
 
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.system.domain.User;
@@ -63,7 +64,24 @@ public IDcaBDocAuditfiveotherService iDcaBDocAuditfiveotherService;
 public Map<String, Object> List(QueryRequest request, DcaBDocAuditfiveother dcaBDocAuditfiveother){
         return getDataTable(this.iDcaBDocAuditfiveotherService.findDcaBDocAuditfiveothers(request, dcaBDocAuditfiveother));
         }
-
+    @GetMapping("custom")
+    public Map<String, Object> ListCustom(QueryRequest request, DcaBDocAuditfiveother dcaBDocEmploy){
+        User currentUser= FebsUtil.getCurrentUser();
+        dcaBDocEmploy.setUserAccount(currentUser.getUsername());
+        dcaBDocEmploy.setIsDeletemark(1);
+        request.setPageSize(1000);
+        request.setSortField("display_Index");
+        request.setSortOrder("ascend");
+        return getDataTable(this.iDcaBDocAuditfiveotherService.findDcaBDocAuditfiveothers(request, dcaBDocEmploy));
+    }
+    @GetMapping("audit")
+    public Map<String, Object> List2(QueryRequest request, DcaBDocAuditfiveother dcaBDocEmploy){
+        User currentUser= FebsUtil.getCurrentUser();
+        dcaBDocEmploy.setIsDeletemark(1);
+        request.setSortField("user_account asc,state asc,display_Index");
+        request.setSortOrder("ascend");
+        return getDataTable(this.iDcaBDocAuditfiveotherService.findDcaBDocAuditfiveothers(request, dcaBDocEmploy));
+    }
 /**
  * 添加
  * @param  dcaBDocAuditfiveother

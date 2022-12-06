@@ -48,6 +48,7 @@
               导出职称确认表
             </a-button>
             <a-button
+              v-if="record.showState == 0"
               v-hasNoPermission="['dca:audit']"
               style="width: 100%; padding-left: 2px; padding-right: 2px"
               type="dashed"

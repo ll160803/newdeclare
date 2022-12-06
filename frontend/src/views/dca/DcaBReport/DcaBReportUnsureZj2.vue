@@ -48,6 +48,7 @@
               确认表
             </a-button>
              <a-button
+              v-if="record.showState == 0"
               v-hasNoPermission="['dca:audit']"
               style="width: 100%; padding-left: 2px; padding-right: 2px"
               type="dashed"
@@ -161,7 +162,7 @@ export default {
         sortOrder = sortedInfo.order;
       }
       this.fetch2({
-        sortField: "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
+        sortField: "clshjg,prize,np_position_name desc,ifbxyltj,paixu2,paixu3,xrgwjbprsj_back,paixu4,edu_date_back,birthdaystr_back  ",
           sortOrder: "ascend",
         ...this.queryParams,
       });
@@ -182,7 +183,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.pagination.defaultCurrent;
       }
-      params.sortField= "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back";
+      params.sortField= "clshjg,prize,np_position_name desc,ifbxyltj,paixu2,paixu3,xrgwjbprsj_back,paixu4,edu_date_back,birthdaystr_back  ";
           params.sortOrder = "ascend";
       this.$get("dcaBReport", {
         state: this.state,
@@ -319,7 +320,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize;
         params.pageNum = this.paginationInfo.defaultCurrent;
       }
-      params.sortField = "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back";
+      params.sortField = "clshjg,prize,np_position_name desc,ifbxyltj,paixu2,paixu3,xrgwjbprsj_back,paixu4,edu_date_back,birthdaystr_back  ";
           params.sortOrder = "ascend";
       params.userAccount = userAccount;
       this.$get("dcaBReport", {
@@ -338,7 +339,7 @@ export default {
       this.sortedInfo = sorter;
       this.paginationInfo = pagination;
       this.fetch2({
-         sortField: "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
+         sortField: "clshjg,prize,np_position_name desc,ifbxyltj,paixu2,paixu3,xrgwjbprsj_back,paixu4,edu_date_back,birthdaystr_back  ",
           sortOrder: "ascend",
         ...this.queryParams,
       });
@@ -650,7 +651,7 @@ export default {
       let dataJson = JSON.stringify(json);
 
       this.$export("dcaUserAudit/excelBigTable", {
-         sortField: "clshjg,paixu1, np_position_name desc ,ifbxyltj,paixu4,paixu2,xrgwjbprsj_back,paixu3,edu_date_back,birthdaystr_back",
+         sortField: "clshjg,prize,np_position_name desc,ifbxyltj,paixu2,paixu3,xrgwjbprsj_back,paixu4,edu_date_back,birthdaystr_back  ",
           sortOrder: "ascend",
         state: this.state,
         dataJson: dataJson,

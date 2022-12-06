@@ -2,6 +2,16 @@ package cc.mrbird.febs.job.task;
 
 import cc.mrbird.febs.common.utils.WxMessage;
 
+import cc.mrbird.febs.doctor.common.HandleHis;
+import cc.mrbird.febs.doctor.entity.DcaBDocAuditfive;
+import cc.mrbird.febs.doctor.entity.DcaBDocAuditfivemiddle;
+import cc.mrbird.febs.doctor.entity.DcaBDocAuditfivemonth;
+import cc.mrbird.febs.doctor.entity.DcaBDocAuditfiveother;
+import cc.mrbird.febs.doctor.service.IDcaBDocAuditfiveService;
+import cc.mrbird.febs.doctor.service.IDcaBDocAuditfivemiddleService;
+import cc.mrbird.febs.doctor.service.IDcaBDocAuditfivemonthService;
+import cc.mrbird.febs.doctor.service.IDcaBDocAuditfiveotherService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +23,16 @@ import java.util.List;
 @Slf4j
 @Component
 public class MsgValidTask {
+
+    @Autowired
+    IDcaBDocAuditfiveService iDcaBDocAuditfiveService;
+    @Autowired
+    IDcaBDocAuditfivemiddleService iDcaBDocAuditfivemiddleService;
+    @Autowired
+    IDcaBDocAuditfiveotherService iDcaBDocAuditfiveotherService;
+    @Autowired
+    IDcaBDocAuditfivemonthService iDcaBDocAuditfivemonthService;
+
     /**  这是消息提醒  在后台发布时候必须注释掉
     cc.mrbird.febs.webService.OwnToOwn.IScmJobService iScmJobService;
     ScmJobImplService  scmJobImplService=new ScmJobImplService();
@@ -176,4 +196,41 @@ public class MsgValidTask {
 
         }
     }**/
+    public void InsertYear(){
+       List<DcaBDocAuditfive> list=  HandleHis.InsertYearAudit();
+        if(list.size()>0){
+            this.iDcaBDocAuditfiveService.deleteAll();
+        }
+       for (DcaBDocAuditfive five :list){
+           this.iDcaBDocAuditfiveService.createDcaBDocAuditfive(five);
+       }
+    }
+    public void InsertMiddle(){
+        List<DcaBDocAuditfiveother> list=  HandleHis.InsertMiddleAudit();
+        if(list.size()>0){
+            this.iDcaBDocAuditfiveotherService.deleteAll();
+        }
+        for (DcaBDocAuditfiveother five :list){
+            this.iDcaBDocAuditfiveotherService.createDcaBDocAuditfiveother(five);
+        }
+    }
+    public void InsertMonth(){
+        List<DcaBDocAuditfivemonth> list=  HandleHis.InsertMonthAudit();
+        if(list.size()>0){
+            this.iDcaBDocAuditfivemonthService.deleteAll();
+             }
+        for (DcaBDocAuditfivemonth five :list){
+            this.iDcaBDocAuditfivemonthService.createDcaBDocAuditfivemonth(five);
+        }
+    }
+    public void InsertChuZhan(){
+
+        List<DcaBDocAuditfivemiddle> list=  HandleHis.InsertChuZhanAudit();
+        if(list.size()>0){
+            this.iDcaBDocAuditfivemiddleService.deleteAll();
+        }
+        for (DcaBDocAuditfivemiddle five :list){
+            this.iDcaBDocAuditfivemiddleService.createDcaBDocAuditfivemiddle(five);
+        }
+    }
 }

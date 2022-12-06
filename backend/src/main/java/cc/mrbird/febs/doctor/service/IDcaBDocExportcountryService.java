@@ -31,4 +31,6 @@ public interface IDcaBDocExportcountryService extends IService<DcaBDocExportcoun
         void deleteByuseraccount(String userAccount);
 
         int getMaxDisplayIndexByuseraccount(String userAccount);
+
+        List<DcaBDocExportcountry> getAll(String userAccount, String dcaYear);
         }
