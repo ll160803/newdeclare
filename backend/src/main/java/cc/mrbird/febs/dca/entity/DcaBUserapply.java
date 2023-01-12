@@ -212,135 +212,135 @@ private static final long serialVersionUID=1L;
 
     private Long modifyUserId;
 
-    public  String getXl (){
-
-        if(StringUtils.isNotEmpty(xl)){
-            return  xl;
-        }
-
-        String name = "";
-        if(npPositionName==null) {
-            return "";
-        }
-
-        switch (npPositionName) {
-            case "教授主任医师":
-                name = "医师";
-                break;
-            case "教授":
-                name = "医师";
-                break;
-            case "主任医师":
-                name = "医师";
-                break;
-            case "研究员":
-                name = "研究";
-                break;
-            case "主任护师":
-                name = "护理";
-                break;
-            case "主任技师":
-                name = "医技";
-                break;
-            case "主任药师":
-                name = "药技";
-                break;
-            case "教授级高级工程师":
-                name = "技术工程";
-                break;
-            case "编审":
-                name = "技术编辑";
-                break;
-            case "副教授副主任医师":
-                name = "医师";
-                break;
-            case "副教授":
-                name = "医师";
-                break;
-            case "副主任医师":
-                name = "医师";
-                break;
-            case "副研究员":
-                name = "研究";
-                break;
-            case "副主任护师":
-                name = "护理";
-                break;
-            case "副主任技师":
-                name = "医技";
-                break;
-            case "副主任药师":
-                name = "药技";
-                break;
-            case "高级工程师":
-                name = "技术工程";
-                break;
-            case "副编审":
-                name = "技术编辑";
-                break;
-            case "主治医师":
-                name = "医师";
-                break;
-            case "主管药师":
-                name = "药技";
-                break;
-            case "主管护师":
-                name = "护理";
-                break;
-            case "主管技师":
-                name = "医技";
-                break;
-            case "编辑":
-                name = "技术编辑";
-                break;
-            case "工程师":
-                name = "技术工程";
-                break;
-            case "馆员":
-                name = "其他";
-                break;
-            case "会计师":
-                name = "其他";
-                break;
-            case "审计师":
-                name = "其他";
-                break;
-            case "住院医师":
-                name = "医师";
-                break;
-            case "药师":
-                name = "药技";
-                break;
-            case "护师":
-                name = "护理";
-                break;
-            case "技师":
-                name = "医技";
-                break;
-            case "图书管理员":
-                name = "其他";
-                break;
-            case "会计员":
-                name = "其他";
-                break;
-            case "助理编辑":
-                name = "编辑";
-                break;
-            case "助理工程师":
-                name = "技术工程";
-                break;
-            case "助理馆员":
-                name = "其他";
-                break;
-            case "助理会计师":
-                name = "其他";
-                break;
-            case "助理研究员":
-                name = "研究";
-                break;
-        }
-        return name;
-    }
+//    public  String getXl (){
+//
+//        if(StringUtils.isNotEmpty(xl)){
+//            return  xl;
+//        }
+//
+//        String name = "";
+//        if(npPositionName==null) {
+//            return "";
+//        }
+//
+//        switch (npPositionName) {
+//            case "教授主任医师":
+//                name = "医师";
+//                break;
+//            case "教授":
+//                name = "医师";
+//                break;
+//            case "主任医师":
+//                name = "医师";
+//                break;
+//            case "研究员":
+//                name = "研究";
+//                break;
+//            case "主任护师":
+//                name = "护理";
+//                break;
+//            case "主任技师":
+//                name = "医技";
+//                break;
+//            case "主任药师":
+//                name = "药技";
+//                break;
+//            case "教授级高级工程师":
+//                name = "技术工程";
+//                break;
+//            case "编审":
+//                name = "技术编辑";
+//                break;
+//            case "副教授副主任医师":
+//                name = "医师";
+//                break;
+//            case "副教授":
+//                name = "医师";
+//                break;
+//            case "副主任医师":
+//                name = "医师";
+//                break;
+//            case "副研究员":
+//                name = "研究";
+//                break;
+//            case "副主任护师":
+//                name = "护理";
+//                break;
+//            case "副主任技师":
+//                name = "医技";
+//                break;
+//            case "副主任药师":
+//                name = "药技";
+//                break;
+//            case "高级工程师":
+//                name = "技术工程";
+//                break;
+//            case "副编审":
+//                name = "技术编辑";
+//                break;
+//            case "主治医师":
+//                name = "医师";
+//                break;
+//            case "主管药师":
+//                name = "药技";
+//                break;
+//            case "主管护师":
+//                name = "护理";
+//                break;
+//            case "主管技师":
+//                name = "医技";
+//                break;
+//            case "编辑":
+//                name = "技术编辑";
+//                break;
+//            case "工程师":
+//                name = "技术工程";
+//                break;
+//            case "馆员":
+//                name = "其他";
+//                break;
+//            case "会计师":
+//                name = "其他";
+//                break;
+//            case "审计师":
+//                name = "其他";
+//                break;
+//            case "住院医师":
+//                name = "医师";
+//                break;
+//            case "药师":
+//                name = "药技";
+//                break;
+//            case "护师":
+//                name = "护理";
+//                break;
+//            case "技师":
+//                name = "医技";
+//                break;
+//            case "图书管理员":
+//                name = "其他";
+//                break;
+//            case "会计员":
+//                name = "其他";
+//                break;
+//            case "助理编辑":
+//                name = "编辑";
+//                break;
+//            case "助理工程师":
+//                name = "技术工程";
+//                break;
+//            case "助理馆员":
+//                name = "其他";
+//                break;
+//            case "助理会计师":
+//                name = "其他";
+//                break;
+//            case "助理研究员":
+//                name = "研究";
+//                break;
+//        }
+//        return name;
+//    }
     private transient List<DcaBCopyAuditdynamic> dcaBAuditdynamicList;
     private  transient List<DcaBAuditdynamic> dcaBAuditdynamics;
 

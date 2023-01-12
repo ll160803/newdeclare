@@ -51,6 +51,7 @@
           :queryParams="queryParams"
         >
         </import-excel> </span>
+         <a-button type="primary" @click="exportExcel8">导出中初级职称职称统计表</a-button>
               <a-button type="primary" @click="exportExcel">导出</a-button>
               <a-button type="primary" @click="search">查询</a-button>
               <a-button style="margin-left: 8px" @click="reset">重置</a-button>
@@ -765,6 +766,8 @@ export default {
         { fieldName: "beizhumenban" },
         { fieldName: "beizhuyiwuchu" },
         { fieldName: "beizhuhuli" },
+         { fieldName: "gfhyspxqk" }, //规范化医师培训情况
+       //规范化医师培训情况
       ], // 当前用户包含的审核数据
       userAccount: "",
       visibleUserInfo: false,
@@ -1105,6 +1108,16 @@ export default {
         }
       }
       return record.ntyy;
+    },
+    exportExcel8(){
+        if(this.queryParams.dcaYear!=''){
+           this.$export("dcaBReport/excelReportZC", {
+            year: this.queryParams.dcaYear
+          });
+        }
+        else{
+          this.$message.warn("请填写申报年度");
+        }
     },
     exportExcel() {
       this.$refs.TableInfo2.queryParams.userAccount =
@@ -1749,7 +1762,8 @@ export default {
         "beizhuhuli",
         "fdzz",
         "zyjszwzg",
-        "zyjszwzgsj"
+        "zyjszwzgsj",
+        "gfhyspxqk" //规范化医师培训情况
       ];
 
       json.forEach((element) => {

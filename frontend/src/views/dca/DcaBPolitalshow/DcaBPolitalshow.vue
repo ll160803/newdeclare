@@ -20,7 +20,7 @@
         @click="handleSubmit"
         type="primary"
         :loading="loading"
-      >提交</a-button>
+      >全部提交</a-button>
     </div>
   </a-card>
 </template>

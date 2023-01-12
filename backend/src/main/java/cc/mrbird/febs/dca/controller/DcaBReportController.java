@@ -83,6 +83,11 @@ public class DcaBReportController extends BaseController {
     public Map<String, Object> List(QueryRequest request, DcaBReport dcaBReport) {
         return getDataTable(this.iDcaBReportService.findDcaBReports(request, dcaBReport));
     }
+    @GetMapping("dca")
+    public Map<String, Object> ListDca(QueryRequest request, DcaBReport dcaBReport) {
+        dcaBReport.setIsUse(true);
+        return getDataTable(this.iDcaBReportService.findDcaBReports(request, dcaBReport));
+    }
 
     /**
      * 添加
@@ -228,9 +233,10 @@ public class DcaBReportController extends BaseController {
         //  String[] asblx= "评聘,确定".split(","); //中初级
         LambdaQueryWrapper<DcaBReport> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(DcaBReport::getIsDeletemark, 1);//1是未删 0是已删
-        queryWrapper.eq(DcaBReport::getClshjg, "合格"); //正高,二三级
+        queryWrapper.eq(DcaBReport::getClshjg, "正常"); //正高,二三级
         //  queryWrapper.in(DcaBReport::getSblx,asblx); //中初级
-        queryWrapper.in(DcaBReport::getYear, "2020");
+        queryWrapper.in(DcaBReport::getGwdj,new String[] {"正高","副高"});
+        queryWrapper.in(DcaBReport::getYear, "2022");
         queryWrapper.in(DcaBReport::getUserAccount, arr);
         List<DcaBReport> dcaBReports2 = this.iDcaBReportService.list(queryWrapper);
         List<DcaBReport> dcaBReports = new ArrayList<>();
@@ -529,6 +535,24 @@ public class DcaBReportController extends BaseController {
           log.error(message,e);
           throw new FebsException(message);
       }
+    }
+    @PostMapping("excelReportZC")
+    public void export5(String year,HttpServletResponse response)throws FebsException {
+        try {
+
+            String url="D:/report_zc.xlsx";
+            LambdaQueryWrapper<DcaBReport> lambdaQueryWrapper= new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(DcaBReport::getYear,year);
+           lambdaQueryWrapper.and(lam->  lam.eq(DcaBReport::getClshjg,"正常").or().eq(DcaBReport::getClshjg,"合格"));
+            lambdaQueryWrapper.in(DcaBReport::getGwdj,new String[]{"中级","初级"});
+            List<DcaBReport> list= this.iDcaBReportService.list(lambdaQueryWrapper);
+
+            ExportExcelTemplate.exportCustomExcelCutomeZC(response,list,url);
+        }catch(Exception e){
+            message="导出Excel失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
 }

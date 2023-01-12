@@ -20,7 +20,7 @@
         @click="handleSubmit"
         type="primary"
         :loading="loading"
-      >提交</a-button>
+      >全部提交</a-button>
     </div>
   </a-card>
 </template>
@@ -71,7 +71,7 @@ export default {
     handleSubmit () {
       let that = this
       this.$confirm({
-        title: '确定提交全部记录?',
+        title: '确定全部提交全部记录?',
         content: '当您点击确定按钮后，信息将不能修改',
         centered: true,
         onOk () {
@@ -90,7 +90,7 @@ export default {
               that.CustomVisiable = false
               that.loading = false
 
-               setTimeout(() => { //hsc 2021 09 26 提交后跳转下一个
+               setTimeout(() => { //hsc 2021 09 26 全部提交后跳转下一个
               that.$EventBus.$emit('selectMoudles',240)
             }, 300);
             }).catch(() => {

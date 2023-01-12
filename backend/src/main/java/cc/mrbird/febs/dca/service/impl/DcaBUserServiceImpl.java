@@ -1354,9 +1354,9 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
         dcaBReport.setYear(user.getDcaYear());
         dcaBReport.setGwdj(user.getGwdj());
         dcaBReport.setSexName(user.getSexName());
-        if(dcaBReport.getXl()==null || dcaBReport.getXl().equals("")){
+      //  if(dcaBReport.getXl()==null || dcaBReport.getXl().equals("")){
             dcaBReport.setXl(user.getXl());
-        }
+      //  }
 
         dcaBReport.setPositionName(user.getPositionName());
         if (user.getSchoolDate() != null) {
@@ -1380,7 +1380,7 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
         //岗前培训情况
         dcaBReport.setGqpxqk(user.getGqpxqk());
         //规范化医师培训情况
-        dcaBReport.setGfhyspxqk(user.getGfhyspxqk());
+      //  dcaBReport.setGfhyspxqk(user.getGfhyspxqk());
         //中级水平能力测试情况
         dcaBReport.setZjspnlceqk(user.getZjspnlceqk());
 
@@ -1457,7 +1457,7 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
             listreport.setSize(dcaBReportList.size());
             listreport.setPages(listResult.getPages());
             listreport.setCurrent(listResult.getCurrent());
-            return listreport;
+               return listreport;
         } catch (Exception e) {
             log.error("获取字典信息失败", e);
             return null;
@@ -1644,6 +1644,13 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
             else{
                 InsertDynamic(auditdynamicList, userAccount, "", "zyjszwzg");
                 InsertDynamic(auditdynamicList, userAccount,  "", "zyjszwzgsj");
+            }
+            /**
+             * 规范化医师培训情况
+             */
+            List<DcaBQualification> qualifications=dcaBQualificationList.stream().filter(p -> p.getUserAccount().equals(userAccount)&&p.getQualificationName()!=null&&p.getQualificationName().equals("住院医师规范化培训合格证书")).collect(Collectors.toList());
+            if(qualifications.size()>0){
+                InsertDynamic(auditdynamicList, userAccount,GetNullStr(DateUtil.format(qualifications.get(0).getQualificationDate(),"yyyyMM")), "gfhyspxqk");
             }
             /**
              * 学习经历
@@ -2489,6 +2496,9 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
             if(dcaBDoctorturtors.size()>0){
                 InsertDynamic(auditdynamicList, userAccount,GetNullStr(DateUtil.format(dcaBDoctorturtors.get(0).getTurtorDate(),"yyyyMM")), "rbdsj");
             }
+
+
+
 
             /**
              * 学会任职

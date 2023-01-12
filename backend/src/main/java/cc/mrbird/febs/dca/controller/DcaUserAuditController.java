@@ -479,4 +479,71 @@ public class DcaUserAuditController extends BaseController {
             throw new FebsException(message);
         }
     }
+
+    @PostMapping("excelBigTableDca")
+    public void export5(QueryRequest request, DcaBUser dcaBUser,DcaBReport dcaBReport,String dataJson,int excelIndex,HttpServletResponse response)throws FebsException{
+        try{
+            request.setPageNum(1);
+            request.setPageSize(10000);
+
+            List<DcaBReport> dcaBAuditdynamics= new ArrayList<>();
+            if(dcaBUser.getState()==2) {
+                dcaBReport.setIsUse(true);
+
+                dcaBAuditdynamics= this.iDcaBReportService.findDcaBReports(request, dcaBReport).getRecords();
+                /**
+                 * 2021 0713 新增数据
+                 */
+                /**   String[] arr= {"ylpfbfz","ylpfdj","ydyf","ydyffj","zzsc","zzscypfj","jlsc","xsddsc","xsddscypfj","yyxtsc","sfssds","sfbsds","sftgsdsf",
+                 "sdsfypfj","sdsfypfj2","ynjbzr","j5njxgz","mzylpf","mzylpfdj","mzylsgypfj","jlscypfj","yyxtypfj","sfdlwcyjspy","pyzlsfyl"
+                 ,"sfypfjyl","hlylpf","hlylpfdj","hljxpfbfz","hljxpfdl","hlhlzrypfj","sshbdts","sshkyxts","blxwjf","wfzgszcf"
+                 ,"zypfyjxl","zypfdjyjxl","zypfbfz58","zypfdj59","sfyszgzs","sfjyhlzgzs","xingfscsftg","sfczxfypfj61","zypf52","zypfdj52","beizhumenban","beizhuhuli","beizhuyiwuchu"};
+                 LambdaQueryWrapper<DcaBCopyAuditdynamic> ql = new LambdaQueryWrapper<>();
+                 ql.eq(DcaBCopyAuditdynamic::getIsDeletemark, 1);
+                 ql.in(DcaBCopyAuditdynamic::getAuditTitletype,arr);
+                 //动态评分表
+                 List<DcaBCopyAuditdynamic> auditdynamicAuditList = this.iDcaBCopyAuditdynamicService.list(ql);
+
+                 List<DcaBAuditdynamic> auditdynamicAuditList2= new ArrayList<>();
+                 for (DcaBCopyAuditdynamic item:auditdynamicAuditList
+                 ) {
+                 DcaBAuditdynamic fy= new DcaBAuditdynamic();
+                 fy.setUserAccount(item.getUserAccount());
+                 if(item.getAuditTitletype().equals("ylpfbfz") ||item.getAuditTitletype().equals("ylpfdj")){
+                 fy.setAuditTitletype(item.getAuditTitletype()+"2022");
+                 }
+                 else {
+                 fy.setAuditTitletype(item.getAuditTitletype());
+                 }
+                 fy.setAuditTitle(item.getAuditTitle());
+                 fy.setAuditResult(item.getAuditResult());
+                 fy.setDcaYear(item.getDcaYear());
+                 fy.setGwdj(item.getGwdj());
+                 fy.setId(item.getId());
+                 auditdynamicAuditList2.add(fy);
+                 }
+
+                 for (DcaBReport dca:dcaBAuditdynamics
+                 ) {
+                 List<DcaBAuditdynamic> dcaBAuditds=auditdynamicAuditList2.stream().filter(p->p.getUserAccount().equals(dca.getUserAccount())
+                 &&p.getGwdj().equals(dca.getGwdj()) && p.getDcaYear().equals(dca.getYear())
+                 ).collect(Collectors.toList());
+
+                 dca.setDcaBAuditdynamicList(dcaBAuditds);
+
+                 }*/
+
+            }
+
+            String url="D:/bigDca.xlsx";
+
+            //String url= ResourceUtils.getURL("classpath:").getPath()+"/uploadFile/big.xlsx";
+            ExportExcelUtils.exportCustomExcelCutome3(response, dcaBAuditdynamics,dataJson,url,6);
+        }catch(Exception e){
+            message="导出Excel失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
+    }
+
 }

@@ -87,10 +87,14 @@
             </a-form-item></a-col
           ><a-col :span="7" :offset="1">
             <a-form-item label="收录情况">
-              <a-input
+              <a-select
                 placeholder="请输入收录情况"
                 v-decorator="['paperShoulu']"
-              /> </a-form-item></a-col
+                style="width: 100%"
+              >
+                <a-select-option value="SCI"> SCI </a-select-option>
+                <a-select-option value="其他"> 其他 </a-select-option>
+              </a-select></a-form-item></a-col
           ><a-col :span="7" :offset="1">
             <a-form-item label="影响因子">
               <a-input

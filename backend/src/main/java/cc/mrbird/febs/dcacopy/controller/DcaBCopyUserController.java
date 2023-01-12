@@ -236,6 +236,8 @@ public class DcaBCopyUserController extends BaseController {
             String filePath = "D://scm//uploadPdf//" + UUID.randomUUID().toString() +".pdf";
             String filePath2 = "D://scm//uploadPdf//" + UUID.randomUUID().toString() + ".pdf";
             ArrayList<String> mergeAddPdfList = new ArrayList<>();
+            log.info(dcaBCopyUser.getUserAccount());
+            log.info(dcaBCopyUser.getGwdj());
             CustomApplyFirst customApplyFirst = this.iDcaBCopyUserService.getPrintPdf(dcaBCopyUser.getUserAccount(), dcaBCopyUser.getDcaYear(),dcaBCopyUser.getNpPositionName(),dcaBCopyUser.getGwdj());
 
             pdfDemo.attachPdf(customApplyFirst, filePath2, filePath,  dcaBCopyUser.getDcaYear());

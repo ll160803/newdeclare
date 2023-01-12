@@ -333,7 +333,7 @@ export default {
       this.showAdd = true;
     },
     fetch() {
-      let codes = "272,273,121,251,601";
+      let codes = "272,273,121,251,601,600";
       this.$get("dcaDMudules/doctree/" + codes).then((r) => {
         var drows = r.data.rows.children;
         drows[0].children = drows[0].children.filter((p) => p.id != 10);//这里是第一组数据 [1]树的第二组

@@ -243,7 +243,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.pagination.defaultCurrent
       }
-      params.sortField = "user_account"
+      params.sortField = "user_account,year"
       params.sortOrder = "ascend"
       let username = this.currentUser.username
       console.info(username)
@@ -354,7 +354,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = 1
       }
-      params.sortField = "user_account"
+      params.sortField = "user_account,year"
       params.sortOrder = "ascend"
       // params.userAccount = userAccount
       let username = this.currentUser.username

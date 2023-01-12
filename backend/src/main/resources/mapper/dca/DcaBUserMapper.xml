@@ -355,7 +355,7 @@
         dca_b_user.user_account_name,
         dca_b_user.user_account,
         dca_b_user.ks,
-        dca_b_user.xl,
+        dca_b_userapply.xl,
         dca_b_user.telephone,
         dca_b_user.position_name,
 

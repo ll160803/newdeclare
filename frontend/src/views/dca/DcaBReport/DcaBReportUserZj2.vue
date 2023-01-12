@@ -1407,7 +1407,7 @@ export default {
         "publicarticle1",
         "publicarticle2",
         "schoolprizeName",
-
+       
         "sciDjlb",
         "sciDjfund",
         "sciDjranknum",

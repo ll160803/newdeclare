@@ -77,6 +77,9 @@ public IPage<DcaBReport> findDcaBReports(QueryRequest request, DcaBReport dcaBRe
                 String[] listKs=dcaBReport.getKs().split(",");
                 queryWrapper.in(DcaBReport::getGwdj,listKs);
             }
+//            if(dcaBReport.getIsUse()!=null&&dcaBReport.getIsUse()){ //排版系统 行风建设获取数据使用
+//                queryWrapper.and(lam->lam.eq(DcaBReport::getClshjg,"正常").or().eq(DcaBReport::getClshjg,"合格"));
+//            }
 
                 Page<DcaBReport> page=new Page<>();
         SortUtil.handlePageSort(request,page,false);//true 是属性  false是数据库字段可两个

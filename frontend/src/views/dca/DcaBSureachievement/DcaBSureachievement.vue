@@ -159,7 +159,7 @@
         >保存草稿</a-button
       >
       <a-button @click="handleSubmit" type="primary" :loading="loading"
-        >提交</a-button
+        >全部提交</a-button
       >
     </div>
     <tableUpload-file
