@@ -1632,7 +1632,11 @@ public class DcaBUserServiceImpl extends ServiceImpl<DcaBUserMapper, DcaBUser> i
              * 取得湖北省相应专业技术职务资格及时间
              */
             List<DcaBQualification> listquli= dcaBQualificationList.stream()
-                    .filter(p -> p.getUserAccount().equals(userAccount) &&p.getQualificationName()!=null &&p.getAuditGrade()!=null&& p.getQualificationName().equals("湖北省专业技术职务资格证书")&&p.getAuditGrade()!=null&&p.getAuditGrade().equals("中级")).collect(Collectors.toList());
+                    .filter(p -> p.getUserAccount().equals(userAccount) &&p.getQualificationName()!=null &&p.getAuditGrade()!=null&& p.getQualificationName().equals("湖北省专业技术职务资格证书")&&p.getAuditGrade()!=null&&p.getAuditGrade().equals("副高级")).collect(Collectors.toList());
+            if(listquli.size()<=0){
+                listquli= dcaBQualificationList.stream()
+                        .filter(p -> p.getUserAccount().equals(userAccount) &&p.getQualificationName()!=null &&p.getAuditGrade()!=null&& p.getQualificationName().equals("湖北省专业技术职务资格证书")&&p.getAuditGrade().equals("中级")).collect(Collectors.toList());
+            }
             if(listquli.size()<=0){
                 listquli= dcaBQualificationList.stream()
                         .filter(p -> p.getUserAccount().equals(userAccount) &&p.getQualificationName()!=null &&p.getAuditGrade()!=null&& p.getQualificationName().equals("湖北省专业技术职务资格证书")&&p.getAuditGrade().equals("初级（师）")).collect(Collectors.toList());

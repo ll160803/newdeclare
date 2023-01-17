@@ -133,6 +133,9 @@
                      <a-select-option value="初级（士）">
                       初级（士）
                     </a-select-option>
+                      <a-select-option value="副高级">
+                      副高级
+                    </a-select-option>
                   </a-select>
                 </div>
               </template>

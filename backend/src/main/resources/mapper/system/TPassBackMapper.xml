@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.system.dao.TPassBackMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="cc.mrbird.febs.system.entity.TPassBack">
+                    <id column="id" property="id"/>
+                    <result column="tel" property="tel"/>
+                    <result column="user_account" property="userAccount"/>
+                    <result column="six_code" property="sixCode"/>
+                    <result column="code" property="code"/>
+                    <result column="state" property="state"/>
+                    <result column="IS_DELETEMARK" property="isDeletemark"/>
+                    <result column="CREATE_TIME" property="createTime"/>
+                    <result column="MODIFY_TIME" property="modifyTime"/>
+                    <result column="CREATE_USER_ID" property="createUserId"/>
+                    <result column="MODIFY_USER_ID" property="modifyUserId"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, tel, user_account, six_code, code, state, IS_DELETEMARK, CREATE_TIME, MODIFY_TIME, CREATE_USER_ID, MODIFY_USER_ID
+    </sql>
+    <update id="updateTPassBack" parameterType="cc.mrbird.febs.system.entity.TPassBack">
+        update t_pass_back
+        <trim prefix="set" suffixOverrides=",">
+<if test="tel != null">tel=#{tel},</if>
+<if test="userAccount != null">user_account=#{userAccount},</if>
+<if test="sixCode != null">six_code=#{sixCode},</if>
+<if test="code != null">code=#{code},</if>
+<if test="state != null">state=#{state},</if>
+<if test="isDeletemark != null">IS_DELETEMARK=#{isDeletemark},</if>
+<if test="createTime != null">CREATE_TIME=#{createTime},</if>
+<if test="modifyTime != null">MODIFY_TIME=#{modifyTime},</if>
+<if test="createUserId != null">CREATE_USER_ID=#{createUserId},</if>
+<if test="modifyUserId != null">MODIFY_USER_ID=#{modifyUserId},</if>
+        </trim>
+                where id=#{id}
+
+    </update>
+    <select id="findTPassBack" resultType="cc.mrbird.febs.system.entity.TPassBack" parameterType="cc.mrbird.febs.system.entity.TPassBack">
+        select  *  from t_pass_back
+        where  1=1
+        <if test="tPassBack.id != null"> and tPassBack.id =#{ tPassBack.id} </if>
+            <if test="tPassBack.tel != null and tPassBack.tel != ''"> and tPassBack.tel like concat('%', #{ tPassBack.tel} ,'%')</if>
+            <if test="tPassBack.userAccount != null and tPassBack.userAccount != ''"> and tPassBack.user_account like concat('%', #{ tPassBack.userAccount} ,'%')</if>
+            <if test="tPassBack.sixCode != null and tPassBack.sixCode != ''"> and tPassBack.six_code like concat('%', #{ tPassBack.sixCode} ,'%')</if>
+            <if test="tPassBack.code != null and tPassBack.code != ''"> and tPassBack.code like concat('%', #{ tPassBack.code} ,'%')</if>
+        <if test="tPassBack.state != null"> and tPassBack.state =#{ tPassBack.state} </if>
+        <if test="tPassBack.isDeletemark != null"> and tPassBack.IS_DELETEMARK =#{ tPassBack.isDeletemark} </if>
+        <if test="tPassBack.createTimeFrom!= null">
+            AND tPassBack.CREATE_TIME <![CDATA[ >= ]]>  #{tPassBack.createTimeFrom}
+        </if>
+        <if test="tPassBack.createTimeTo!= null">
+            AND tPassBack.CREATE_TIME <![CDATA[ <= ]]>  #{tPassBack.createTimeTo}
+        </if>
+        <if test="tPassBack.modifyTimeFrom!= null">
+            AND tPassBack.MODIFY_TIME <![CDATA[ >= ]]>  #{tPassBack.modifyTimeFrom}
+        </if>
+        <if test="tPassBack.modifyTimeTo!= null">
+            AND tPassBack.MODIFY_TIME <![CDATA[ <= ]]>  #{tPassBack.modifyTimeTo}
+        </if>
+</select>
+
+</mapper>

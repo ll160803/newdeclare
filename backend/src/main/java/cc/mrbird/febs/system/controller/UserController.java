@@ -7,6 +7,8 @@ import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.MD5Util;
 import cc.mrbird.febs.common.utils.WxMessage;
+import cc.mrbird.febs.dca.entity.DcaBUser;
+import cc.mrbird.febs.dca.service.IDcaBUserService;
 import cc.mrbird.febs.scm.entity.ScmBUserandarea;
 import cc.mrbird.febs.scm.entity.ScmDArea;
 import cc.mrbird.febs.scm.service.IScmBUserandareaService;
@@ -15,19 +17,26 @@ import cc.mrbird.febs.system.domain.Role;
 import cc.mrbird.febs.system.domain.User;
 import cc.mrbird.febs.system.domain.UserConfig;
 import cc.mrbird.febs.system.domain.user_extend;
+import cc.mrbird.febs.system.entity.TPassBack;
+import cc.mrbird.febs.system.service.ITPassBackService;
 import cc.mrbird.febs.system.service.RoleService;
 import cc.mrbird.febs.system.service.UserConfigService;
 import cc.mrbird.febs.system.service.UserService;
 import cc.mrbird.febs.webService.Mess.SmsService;
 import cc.mrbird.febs.webService.Mess.SmsServicePortType;
+import cn.hutool.Hutool;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.RandomUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.google.common.collect.Lists;
 import com.wuwenze.poi.ExcelKit;
 import com.wuwenze.poi.handler.ExcelReadHandler;
 import com.wuwenze.poi.pojo.ExcelErrorField;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +69,11 @@ public class UserController extends BaseController {
     private RoleService roleService;
     @Autowired
     private IScmBUserandareaService areaService;
+
+    @Autowired
+    private IDcaBUserService iDcaBUserService;
+    @Autowired
+    private ITPassBackService itPassBackService;
 
     @GetMapping("check/{username}")
     public boolean checkUserName(@NotBlank(message = "{required}") @PathVariable String username) {
@@ -359,20 +373,99 @@ public class UserController extends BaseController {
     @PostMapping("mess")
     public FebsResponse SendMessByTel(String tel, String message) {
         try {
-            SmsService smsService = new SmsService();
-            SmsServicePortType ssp = smsService.getSmsServiceHttpPort();
-            String in0 = "hrp_hr";
-            String in1 = "hrp_hr";
-            String in2 = "MAC";
-            String in3 = "FC";
-            String in4 = tel;
-            String in5 = message;
-            String sms = ssp.service(in0, in1, in2, in3, in4, in5);
+           String sms= getSendMess(tel,message);
            return  new FebsResponse().message(sms);
 
         } catch (Exception e) {
             System.out.print(e.getMessage());
         }
         return  new FebsResponse().message("");
+    }
+
+    private  String  getSendMess(String tel, String message){
+        SmsService smsService = new SmsService();
+        SmsServicePortType ssp = smsService.getSmsServiceHttpPort();
+        String in0 = "hrp_hr";
+        String in1 = "hrp_hr";
+        String in2 = "MAC";
+        String in3 = "FC";
+        String in4 = tel;
+        String in5 = message;
+        String sms = ssp.service(in0, in1, in2, in3, in4, in5);
+        return  sms;
+    }
+
+    @PostMapping("passMess")
+    public FebsResponse SendMessByTel2(String tel) {
+        try {
+            LambdaQueryWrapper<DcaBUser> lam= new LambdaQueryWrapper<>();
+            lam.eq(DcaBUser::getTelephone,tel.trim());
+
+            List<DcaBUser> users= this.iDcaBUserService.list(lam);
+            log.info("rrrrrrr",555555);
+            if(users.size()>0){
+                String userAcccount= users.get(0).getUserAccount();
+                String telephone= users.get(0).getTelephone();
+                String code= RandomUtil.randomNumbers(4);
+                TPassBack pb= new TPassBack();
+                pb.setCode(code);
+                String idCard= users.get(0).getIdCard();
+                pb.setSixCode(idCard.substring(idCard.length()-6));
+                pb.setIsDeletemark(1);
+                pb.setUserAccount(userAcccount);
+                pb.setTel(telephone);
+                pb.setState(0);
+                itPassBackService.createTPassBack(pb);
+                String sms= getSendMess(telephone,code);
+                log.info(sms,555555);
+                return  new FebsResponse().message("发送成功，请查收");
+
+            }
+            else {
+                return  new FebsResponse().message("非协和员工手机号");
+            }
+
+
+
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+        return  new FebsResponse().message("");
+    }
+
+    @PostMapping("resetPass")
+    public FebsResponse resetPass(String tel,String code){
+        String mess= "";
+        LambdaQueryWrapper<TPassBack> queryWrapper= new LambdaQueryWrapper<>();
+        queryWrapper.eq(TPassBack::getCode,code.trim());
+        queryWrapper.eq(TPassBack::getTel,tel.trim());
+        queryWrapper.eq(TPassBack::getState,0);
+        List<TPassBack> backList= this.itPassBackService.list(queryWrapper);
+
+        if(backList.size()>0) {
+            backList.stream().sorted(Comparator.comparing(TPassBack::getCreateTime).reversed()).collect(Collectors.toList());
+            TPassBack pb = backList.get(0);
+            Date a= pb.getCreateTime();
+            Date pass= DateUtil.offsetMinute(a,2);
+            Date now= new Date();
+            if(DateUtil.compare(pass,now)<0){
+                return new FebsResponse().message("验证码已过期");
+            }
+            else {
+                try {
+                    this.userService.updatePassword(pb.getUserAccount(), "XH" + pb.getSixCode());
+                    TPassBack pb2= new TPassBack();
+                    pb2.setState(1);
+                    this.itPassBackService.update(pb2,queryWrapper);
+                    return new FebsResponse().message("XH+身份证后6位");
+                }
+                catch (Exception ex){
+                    return new FebsResponse().message("重置密码失败");
+                }
+            }
+        }
+        return new FebsResponse().message("错误的验证码或已重置密码");
+
+
     }
 }
